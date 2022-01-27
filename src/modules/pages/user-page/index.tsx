@@ -7,6 +7,7 @@ import { IUserComponent, IUserPage } from "../../../store/user/types";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
+import SiteContent from "../../components/site-content";
 
 const UserPage = () => {
   const [componentsList, setComponentsList] = useState<IUserComponent[]>();
@@ -47,24 +48,26 @@ const UserPage = () => {
   if (!page) return <>Página inexistente</>;
 
   return (
-    <Grid
-      container
-      direction="column"
-      style={{
-        width: "80%",
-        overflow: "auto",
-        border: "1px solid grey",
-      }}
-      ref={listContainer}
-    >
-      <DraggableList<IUserComponent, void, DraggableUserComponentClass>
-        itemKey="label"
-        template={DraggableUserComponentClass}
-        list={componentsList}
-        onMoveEnd={(newList) => onListChange(newList)}
-        container={() => listContainer.current}
-      />
-    </Grid>
+    <SiteContent>
+      <Grid
+        container
+        direction="column"
+        style={{
+          width: "80%",
+          overflow: "auto",
+          border: "1px solid grey",
+        }}
+        ref={listContainer}
+      >
+        <DraggableList<IUserComponent, void, DraggableUserComponentClass>
+          itemKey="label"
+          template={DraggableUserComponentClass}
+          list={componentsList}
+          onMoveEnd={(newList) => onListChange(newList)}
+          container={() => listContainer.current}
+        />
+      </Grid>
+    </SiteContent>
   );
 };
 

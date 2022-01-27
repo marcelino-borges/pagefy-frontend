@@ -10,7 +10,7 @@ export const Parent = styled(Grid)`
 
 export const HeaderLink = styled(Link)`
   color: black;
-  padding-bottom: 53px;
+  padding-bottom: 51px; /* distance from text to underline when hover */
   transition: all 0.2s ease-in-out;
   position: relative;
   height: 100%;

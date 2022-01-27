@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
-import UserPage from "../user-page";
+import SiteContent from "../../components/site-content";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state: IApplicationState) => state.user);
 
-  return <>Dashboard</>;
+  return <SiteContent>Dashboard</SiteContent>;
 };
 
 export default Dashboard;

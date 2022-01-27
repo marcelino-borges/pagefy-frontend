@@ -9,7 +9,7 @@ const mockUser = {
     {
       _id: "1",
       name: "Página 1",
-      url: "pg1",
+      url: "pg1/pg1/pg1/pg1/pg1/pg1/pg1/pg1",
       views: 0,
       pageImageUrl:
         "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",

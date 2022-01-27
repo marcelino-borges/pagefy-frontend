@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { IApplicationState } from "../store";
 
-const AppRoutes = () => {
+const AppRoutes = (props: any) => {
   const appState = useSelector((state: IApplicationState) => state);
 
   useEffect(() => {

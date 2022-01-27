@@ -1,7 +1,7 @@
 import AppRoutes from "./routes/index";
 
-const App = () => {
-  return <AppRoutes />;
+const App = (props: any) => {
+  return <AppRoutes {...props} />;
 };
 
 export default App;

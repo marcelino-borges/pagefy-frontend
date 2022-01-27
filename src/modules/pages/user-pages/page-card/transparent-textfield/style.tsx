@@ -6,6 +6,10 @@ export const TransparentTextFieldStyled = styled(TextField)`
     color: black;
     font-weight: 700;
     border: 0;
+    font-size: 1.5em;
+    padding: 0;
+    width: 100%;
+    font-weight: 700;
   }
 
   & .MuiInputBase-root {

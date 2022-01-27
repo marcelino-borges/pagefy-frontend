@@ -2,18 +2,26 @@ import { Grid } from "@mui/material";
 import { HeaderLink, Parent } from "./style";
 import strings from "../../../localization";
 import routes from "./../../../routes/paths";
+import images from "../../../assets/img";
 
 const Header = () => {
   return (
-    <Parent container item alignItems="center">
-      <Grid container item xs={2} justifyContent="center">
+    <Parent container alignItems="center">
+      <Grid
+        container
+        item
+        xs={3}
+        justifyContent="center"
+        padding={3}
+        style={{ height: "100%" }}
+      >
         <img
-          src="https://www.suportegratuito.com.br/wp-content/uploads/2017/06/spotify-logo-primary-horizontal-light-background-rgb.jpg"
-          style={{ height: "auto", width: "100%" }}
+          src={images.logoHeader}
+          style={{ height: "100%", width: "auto" }}
           alt="Logo"
         />
       </Grid>
-      <Grid container item xs={7} justifyContent="center">
+      <Grid container item xs={6} justifyContent="center">
         <Grid item>
           <HeaderLink to={routes.root}>{strings.home}</HeaderLink>
         </Grid>
@@ -24,7 +32,7 @@ const Header = () => {
           <HeaderLink to={routes.support}>{strings.support}</HeaderLink>
         </Grid>
       </Grid>
-      <Grid container item xs={3} justifyContent="center">
+      <Grid container item xs={3} justifyContent="center" padding={3}>
         User Logged In
       </Grid>
     </Parent>

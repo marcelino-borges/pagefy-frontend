@@ -1,5 +1,7 @@
+import SiteContent from "../../components/site-content";
+
 const Support = () => {
-  return <>Suporte</>;
+  return <SiteContent>Suporte</SiteContent>;
 };
 
 export default Support;

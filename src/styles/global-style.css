@@ -1,6 +1,8 @@
 :root {  
-  --primary: #7EBB42ff;
-  --secondary: #9055ba;
+  --primary: #CC3539;
+  --secondary: #3F3D42;
+  --global-light-bg: #F7F9FC;
+  --max-site-width: 900px;
 }
 
 body {
@@ -11,6 +13,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: .02em;
+  background-color: var(--global-light-bg);
+  font-size: 1.2em;
+}
+
+#root {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 code {
