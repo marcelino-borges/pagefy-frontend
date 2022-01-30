@@ -37,7 +37,6 @@ import CustomTooltip from "../../../../components/tooltip";
 import strings from "../../../../../localization";
 import TransparentTextField from "../../../../components/transparent-textfield";
 import { useForm } from "react-hook-form";
-import { LETTER_WIDTH } from "../../../../constants";
 
 const DraggableUserComponent = ({
   item: component,
