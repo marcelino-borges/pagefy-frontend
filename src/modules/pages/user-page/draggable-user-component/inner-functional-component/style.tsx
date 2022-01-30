@@ -5,8 +5,8 @@ import { PRIMARY_COLOR } from "./../../../../../styles/colors";
 
 export const Parent = styled(Grid)`
   position: relative;
-  transform: translateX(30px);
   margin-bottom: 24px;
+  min-width: 320px;
 `;
 
 export const Container = styled(({ isHoveringComponent, ...rest }: any) => (
@@ -50,16 +50,28 @@ export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
   }
 `;
 
+export const ContentRow = styled(Grid)`
+  display: inline-flex;
+
+  @media (max-width: 600px) {
+    margin-left: 8px;
+    .MuiGrid-item,
+    svg {
+      font-size: 16px !important;
+    }
+  }
+`;
+
 export const LabelText = styled(Grid)`
   padding-right: 16px;
   font-size: 24px;
   font-weight: bold;
   transform: translateY(-5px);
   cursor: pointer;
-`;
 
-export const ContentGridItem = styled(Grid)`
-  display: inline-flex;
+  @media (max-width: 600px) {
+    padding-right: 4px;
+  }
 `;
 
 export const UrlIconItem = styled(Grid)`
@@ -74,6 +86,10 @@ export const UrlTextItem = styled(Grid)`
   font-style: italic;
   transform: translateY(-5px);
   cursor: pointer;
+
+  @media (max-width: 600px) {
+    padding: 0px 4px;
+  }
 `;
 
 export const EditIconItem = styled(Grid)`
@@ -88,14 +104,14 @@ export const ToolsColumn = styled(({ isHoveringComponent, ...rest }: any) => (
   background-color: ${PRIMARY_COLOR};
   position: absolute;
   z-index: -10;
-  top: 0;
+  top: ${(props) => (props.isHoveringComponent ? "0px" : "1px")};
   right: ${(props) => (props.isHoveringComponent ? "0px" : "150px")};
   box-shadow: ${(props) =>
     props.isHoveringComponent
       ? "10px 10px 25px rgba(0, 0, 0, 0.2)"
       : "10px 10px 25px rgba(0, 0, 0, 0)"};
-  bottom: 0;
-  left: 0;
+  bottom: ${(props) => (props.isHoveringComponent ? "0px" : "1px")};
+  left: ${(props) => (props.isHoveringComponent ? "0px" : "1px")};
   border-radius: 20px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
