@@ -8,9 +8,9 @@ const mockUser = {
   pages: [
     {
       _id: "1",
-      name: "Página 1",
-      url: "pg1/pg1/pg1/pg1/pg1/pg1/pg1/pg1",
-      views: 0,
+      name: "Marcos Fotografia Estilizada",
+      url: "pg1/pg1/pg1/pg1",
+      views: 151,
       pageImageUrl:
         "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
       components: [
@@ -114,7 +114,7 @@ const mockUser = {
     },
     {
       _id: "2",
-      name: "Página 2",
+      name: "QTR Turismo",
       url: "pg2",
       views: 0,
       pageImageUrl:
@@ -214,6 +214,82 @@ const mockUser = {
           url: "http://www.devbox.eng.br",
           style: "",
           _id: "12",
+          visible: true,
+          clicks: 0,
+        },
+      ],
+    },
+    {
+      _id: "3",
+      name: "Marvel Comics",
+      url: "pg3",
+      views: 0,
+      pageImageUrl:
+        "https://i.pinimg.com/originals/bf/82/f6/bf82f6956a32819af48c2572243e8286.jpg",
+
+      components: [
+        {
+          label: "Devbox",
+          url: "http://www.devbox.eng.br",
+          style: "",
+          _id: "1",
+          visible: true,
+          clicks: 0,
+        },
+      ],
+    },
+    {
+      _id: "4",
+      name: "Max Pinturas a Óleo",
+      url: "pg4",
+      views: 0,
+      pageImageUrl:
+        "https://i0.wp.com/abglt.org.br/wp-content/uploads/2020/10/wallpaper-pc1-scaled-1.jpg?fit=2560%2C1440&ssl=1",
+
+      components: [
+        {
+          label: "Devbox",
+          url: "http://www.devbox.eng.br",
+          style: "",
+          _id: "1",
+          visible: true,
+          clicks: 0,
+        },
+      ],
+    },
+    {
+      _id: "5",
+      name: "3D Sense8",
+      url: "pg5",
+      views: 0,
+      pageImageUrl:
+        "https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=900",
+
+      components: [
+        {
+          label: "Devbox",
+          url: "http://www.devbox.eng.br",
+          style: "",
+          _id: "1",
+          visible: true,
+          clicks: 0,
+        },
+      ],
+    },
+    {
+      _id: "6",
+      name: "Cosplay dos Amigos",
+      url: "pg6",
+      views: 0,
+      pageImageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2UM7_vOR_ghAvYRIYhvpTMNsbOV6lFNxDjQ&usqp=CAU",
+
+      components: [
+        {
+          label: "Devbox",
+          url: "http://www.devbox.eng.br",
+          style: "",
+          _id: "1",
           visible: true,
           clicks: 0,
         },

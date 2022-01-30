@@ -8,12 +8,14 @@ import { useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
 import SiteContent from "../../components/site-content";
+import LoadingSpinner from "../../components/loading-spinner";
 
 const UserPage = () => {
   const [componentsList, setComponentsList] = useState<IUserComponent[]>();
   const [page, setPage] = useState<IUserPage>();
 
-  const navigate = useNavigate();
+  let navigate = useNavigate();
+  let { id } = useParams();
 
   const userProfileState = useSelector(
     (state: IApplicationState) => state.user.profile
@@ -21,52 +23,47 @@ const UserPage = () => {
 
   const listContainer = useRef(null);
 
-  let { pageUrl } = useParams();
-
   useEffect(() => {
     if (
+      id &&
       !!userProfileState &&
       userProfileState.pages &&
       userProfileState.pages.length > 0
     ) {
       const pageFound = userProfileState.pages.find(
-        (page: IUserPage) => page.url === pageUrl
+        (page: IUserPage) => page._id === id
       );
       if (pageFound) {
         setPage(pageFound);
+        setComponentsList(pageFound.components);
       } else {
         navigate(routes.notFound);
       }
     }
-  }, [pageUrl]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const onListChange = (newList: any) => {
     setComponentsList(newList);
-    console.log(newList);
   };
 
-  if (!page) return <>Página inexistente</>;
+  //if (!page) return <>Página inexistente</>;
 
   return (
     <SiteContent>
-      <Grid
-        container
-        direction="column"
-        style={{
-          width: "80%",
-          overflow: "auto",
-          border: "1px solid grey",
-        }}
-        ref={listContainer}
-      >
-        <DraggableList<IUserComponent, void, DraggableUserComponentClass>
-          itemKey="label"
-          template={DraggableUserComponentClass}
-          list={componentsList}
-          onMoveEnd={(newList) => onListChange(newList)}
-          container={() => listContainer.current}
-        />
-      </Grid>
+      {page && componentsList && componentsList.length > 0 ? (
+        <Grid container direction="column" ref={listContainer}>
+          <DraggableList<IUserComponent, void, DraggableUserComponentClass>
+            itemKey="_id"
+            template={DraggableUserComponentClass}
+            list={componentsList}
+            onMoveEnd={(newList) => onListChange(newList)}
+            container={() => listContainer.current}
+          />
+        </Grid>
+      ) : (
+        <LoadingSpinner />
+      )}
     </SiteContent>
   );
 };

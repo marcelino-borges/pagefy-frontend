@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { IApplicationState } from "../store";
 
-const AppRoutes = (props: any) => {
+const AppRoutes = () => {
   const appState = useSelector((state: IApplicationState) => state);
 
   useEffect(() => {
@@ -27,9 +27,8 @@ const AppRoutes = (props: any) => {
       <Header />
       <Routes>
         <Route path={routes.root} element={<Dashboard />} />
-        <Route path={routes.pages} element={<UserPages />}>
-          <Route path=":pageUrl" element={<UserPage />} />
-        </Route>
+        <Route path={routes.pages} element={<UserPages />} />
+        <Route path={`${routes.page}/:id`} element={<UserPage />} />
         <Route path={routes.support} element={<Support />} />
         <Route
           path="*"
