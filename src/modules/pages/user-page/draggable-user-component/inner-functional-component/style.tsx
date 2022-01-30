@@ -53,7 +53,7 @@ export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
 export const LabelText = styled(Grid)`
   padding-right: 16px;
   font-size: 24px;
-  font-style: bold;
+  font-weight: bold;
   transform: translateY(-5px);
   cursor: pointer;
 `;
@@ -71,7 +71,6 @@ export const UrlTextItem = styled(Grid)`
   padding: 0px 16px;
   font-size: 22px;
   color: #b9b9b9;
-  font-weight: 300;
   font-style: italic;
   transform: translateY(-5px);
   cursor: pointer;

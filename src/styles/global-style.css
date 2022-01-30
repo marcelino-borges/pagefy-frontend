@@ -137,6 +137,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: .02em;
+  font-weight: 300;
   background-color: var(--global-light-bg);
   font-size: 1.2em;
 }
