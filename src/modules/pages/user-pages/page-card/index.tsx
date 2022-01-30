@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Grid } from "@mui/material";
 import { IUserPage } from "../../../../store/user/types";
-import TransparentTextField from "./transparent-textfield";
+import TransparentTextField from "../../../components/transparent-textfield";
 import { updateUserPageName } from "../../../../store/user/actions";
 import strings from "../../../../localization";
 import {

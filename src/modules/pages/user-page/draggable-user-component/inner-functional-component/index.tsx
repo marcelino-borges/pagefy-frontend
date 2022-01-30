@@ -35,14 +35,30 @@ import { PRIMARY_COLOR } from "../../../../../styles/colors";
 import { getLocalizedStringByComponentType } from "../../../../../utils";
 import CustomTooltip from "../../../../components/tooltip";
 import strings from "../../../../../localization";
+import TransparentTextField from "../../../../components/transparent-textfield";
+import { useForm } from "react-hook-form";
+import { LETTER_WIDTH } from "../../../../constants";
 
 const DraggableUserComponent = ({
   item: component,
   itemSelected,
   dragHandleProps,
 }: DraggableUserComponentProps) => {
+  const {
+    register: registerLabel,
+    handleSubmit: handleSubmitLabel,
+    setValue: setValueLabel,
+  } = useForm();
+  const {
+    register: registerUrl,
+    handleSubmit: handleSubmitUrl,
+    setValue: setValueUrl,
+  } = useForm();
+
   const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false);
   const [isHovering, setIsHovering] = useState<boolean>(false);
+  const [isEdittingLabel, setIsEdittingLabel] = useState<boolean>(false);
+  const [isEdittingUrl, setIsEdittingUrl] = useState<boolean>(false);
 
   useEffect(() => {
     setIsBeingDragged(itemSelected !== 0);
@@ -60,6 +76,18 @@ const DraggableUserComponent = ({
         </CustomTooltip>
       </AnalyticsGridItem>
     );
+  };
+
+  const onSubmitLabelForm = ({ name }: any) => {
+    if (!component._id) return;
+    setIsEdittingLabel(false);
+    //dispatch(updateUserPageName(page._id, name));
+  };
+
+  const onSubmitUrlForm = ({ name }: any) => {
+    if (!component._id) return;
+    setIsEdittingLabel(false);
+    //dispatch(updateUserPageName(page._id, name));
   };
 
   return (
@@ -101,13 +129,30 @@ const DraggableUserComponent = ({
         >
           {/* Label */}
           <ContentGridItem container item alignItems="center">
-            {/* <Grid item>
-              <LabelIcon />
-            </Grid> */}
-            <LabelText item>
-              <strong>{component.label}</strong>
-            </LabelText>
-            <EditIconItem item>
+            {isEdittingLabel ? (
+              <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
+                <LabelText item>
+                  <TransparentTextField
+                    autoFocus
+                    register={registerLabel("label")}
+                    InputProps={{
+                      style: {
+                        width: `100%`,
+                      },
+                    }}
+                    onBlur={() => {
+                      setValueLabel("label", component.label);
+                      setIsEdittingLabel(false);
+                    }}
+                  />
+                </LabelText>
+              </form>
+            ) : (
+              <LabelText item onClick={() => setIsEdittingLabel(true)}>
+                {component.label}
+              </LabelText>
+            )}
+            <EditIconItem item onClick={() => setIsEdittingLabel(true)}>
               <EditIcon />
             </EditIconItem>
           </ContentGridItem>
@@ -117,9 +162,24 @@ const DraggableUserComponent = ({
             <UrlIconItem item>
               <LinkIcon />
             </UrlIconItem>
-            <UrlTextItem item>
-              <i>{component.url}</i>
-            </UrlTextItem>
+            {isEdittingUrl ? (
+              <form onSubmit={handleSubmitUrl(onSubmitUrlForm)}>
+                <LabelText item>
+                  <TransparentTextField
+                    autoFocus
+                    register={registerUrl("url")}
+                    onBlur={() => {
+                      setValueUrl("url", component.url);
+                      setIsEdittingUrl(false);
+                    }}
+                  />
+                </LabelText>
+              </form>
+            ) : (
+              <UrlTextItem item onClick={() => setIsEdittingUrl(true)}>
+                {component.url}
+              </UrlTextItem>
+            )}
             <EditIconItem item>
               <EditIcon />
             </EditIconItem>

@@ -15,6 +15,7 @@ export const HeaderLink = styled(Link)`
   position: relative;
   height: 100%;
   margin-right: 24px;
+  font-weight: 300;
 
   &:hover {
     color: var(--primary);
