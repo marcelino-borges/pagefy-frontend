@@ -1,5 +1,5 @@
 import { IAction } from "../shared";
-import { IUserPage, IUserState, UserActionTypes } from "./types";
+import { ComponentType, IUserPage, IUserState, UserActionTypes } from "./types";
 
 const mockUser = {
   firstName: "Marcelino",
@@ -21,6 +21,11 @@ const mockUser = {
           _id: "1",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Portfolio",
@@ -29,6 +34,11 @@ const mockUser = {
           _id: "2",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.Image,
         },
         {
           label: "Curriculum Vitae",
@@ -37,6 +47,11 @@ const mockUser = {
           _id: "3",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.Text,
         },
         {
           label: "HTBAD",
@@ -45,6 +60,11 @@ const mockUser = {
           _id: "4",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Devbox",
@@ -53,6 +73,11 @@ const mockUser = {
           _id: "5",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Portfolio",
@@ -61,6 +86,11 @@ const mockUser = {
           _id: "6",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.Video,
         },
         {
           label: "Curriculum Vitae",
@@ -69,6 +99,11 @@ const mockUser = {
           _id: "7",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.Icon,
         },
         {
           label: "HTBAD",
@@ -77,6 +112,11 @@ const mockUser = {
           _id: "8",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Devbox",
@@ -85,6 +125,11 @@ const mockUser = {
           _id: "9",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Portfolio",
@@ -93,6 +138,11 @@ const mockUser = {
           _id: "10",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Curriculum Vitae",
@@ -101,6 +151,11 @@ const mockUser = {
           _id: "11",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "HTBAD",
@@ -109,6 +164,11 @@ const mockUser = {
           _id: "12",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
       ],
     },
@@ -128,6 +188,11 @@ const mockUser = {
           _id: "1",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Portfolio",
@@ -136,6 +201,11 @@ const mockUser = {
           _id: "2",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Curriculum Vitae",
@@ -144,6 +214,11 @@ const mockUser = {
           _id: "3",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "HTBAD",
@@ -152,6 +227,11 @@ const mockUser = {
           _id: "4",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Devbox",
@@ -160,6 +240,11 @@ const mockUser = {
           _id: "5",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Portfolio",
@@ -168,6 +253,11 @@ const mockUser = {
           _id: "6",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Curriculum Vitae",
@@ -176,6 +266,11 @@ const mockUser = {
           _id: "7",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "HTBAD",
@@ -184,6 +279,11 @@ const mockUser = {
           _id: "8",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Devbox",
@@ -192,6 +292,11 @@ const mockUser = {
           _id: "9",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Portfolio",
@@ -200,6 +305,11 @@ const mockUser = {
           _id: "10",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "Curriculum Vitae",
@@ -208,6 +318,11 @@ const mockUser = {
           _id: "11",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
         {
           label: "HTBAD",
@@ -216,6 +331,11 @@ const mockUser = {
           _id: "12",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
       ],
     },
@@ -235,6 +355,11 @@ const mockUser = {
           _id: "1",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
       ],
     },
@@ -254,6 +379,11 @@ const mockUser = {
           _id: "1",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
       ],
     },
@@ -273,6 +403,11 @@ const mockUser = {
           _id: "1",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
       ],
     },
@@ -292,6 +427,11 @@ const mockUser = {
           _id: "1",
           visible: true,
           clicks: 0,
+          layout: {
+            rows: 1,
+            columns: 2,
+          },
+          type: ComponentType.TextImage,
         },
       ],
     },

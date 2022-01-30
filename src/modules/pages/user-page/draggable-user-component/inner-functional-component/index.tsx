@@ -12,10 +12,12 @@ import {
   ToolsColumn,
   ToolIconButton,
   ToolGridItem,
+  AnalyticsGridItem,
+  AnalyticsGridContainer,
+  ContentGridItem,
 } from "./style";
 import { useEffect, useState } from "react";
 import {
-  Label as LabelIcon,
   Edit as EditIcon,
   Link as LinkIcon,
   FormatColorFill as FormatColorFillIcon,
@@ -24,8 +26,15 @@ import {
   Visibility as VisibilityIcon,
   Delete as DeleteIcon,
   AutoFixHigh as AutoFixHighIcon,
+  TableRows as TableRowsIcon,
+  ViewColumn as ViewColumnIcon,
+  TouchApp as TouchAppIcon,
+  Category as CategoryIcon,
 } from "@mui/icons-material";
 import { PRIMARY_COLOR } from "../../../../../styles/colors";
+import { getLocalizedStringByComponentType } from "../../../../../utils";
+import CustomTooltip from "../../../../components/tooltip";
+import strings from "../../../../../localization";
 
 const DraggableUserComponent = ({
   item: component,
@@ -42,6 +51,16 @@ const DraggableUserComponent = ({
   useEffect(() => {
     if (isBeingDragged) console.log(`${component.label} moving`);
   }, [isBeingDragged]);
+
+  const AnalyticsItem = ({ tooltipKey, tooltipValue, icon }: any) => {
+    return (
+      <AnalyticsGridItem item alignItems="center">
+        <CustomTooltip leaveDelay={1} title={`${tooltipKey}: ${tooltipValue}`}>
+          {icon}
+        </CustomTooltip>
+      </AnalyticsGridItem>
+    );
+  };
 
   return (
     <Parent
@@ -81,7 +100,7 @@ const DraggableUserComponent = ({
           spacing={2}
         >
           {/* Label */}
-          <Grid container item direction="row">
+          <ContentGridItem container item alignItems="center">
             {/* <Grid item>
               <LabelIcon />
             </Grid> */}
@@ -91,24 +110,53 @@ const DraggableUserComponent = ({
             <EditIconItem item>
               <EditIcon />
             </EditIconItem>
-          </Grid>
+          </ContentGridItem>
 
           {/* URL */}
-          <Grid container item alignItems="center" direction="row">
+          <ContentGridItem container item alignItems="center">
             <UrlIconItem item>
               <LinkIcon />
             </UrlIconItem>
-            <UrlTextItem item>{component.url}</UrlTextItem>
+            <UrlTextItem item>
+              <i>{component.url}</i>
+            </UrlTextItem>
             <EditIconItem item>
               <EditIcon />
             </EditIconItem>
-          </Grid>
+          </ContentGridItem>
         </Grid>
 
         {/* Analytics */}
-        <Grid container item xs={3} alignItems="center">
-          <Grid item>Analytics</Grid>
-        </Grid>
+        <AnalyticsGridContainer
+          container
+          item
+          xs={3}
+          alignItems="flex-end"
+          direction="column"
+          justifyContent="center"
+          spacing={1}
+        >
+          <AnalyticsItem
+            tooltipKey={strings.columns}
+            tooltipValue={component.layout.columns.toString()}
+            icon={<ViewColumnIcon />}
+          />
+          <AnalyticsItem
+            tooltipKey={strings.rows}
+            tooltipValue={component.layout.rows.toString()}
+            icon={<TableRowsIcon />}
+          />
+          <AnalyticsItem
+            tooltipKey={strings.clicks}
+            tooltipValue={component.type.toString()}
+            icon={<TouchAppIcon />}
+          />
+          <AnalyticsItem
+            tooltipKey={strings.type}
+            tooltipValue={getLocalizedStringByComponentType(component.type)}
+            icon={<CategoryIcon />}
+          />
+        </AnalyticsGridContainer>
       </Container>
 
       {/* Tools column */}
@@ -120,11 +168,10 @@ const DraggableUserComponent = ({
         justifyContent="space-between"
         alignItems="stretch"
         direction="column"
-        style={{ textAlign: "center", margin: 0, padding: 0 }}
       >
         <ToolGridItem item>
           <ToolIconButton
-            transitionDuration="0.15s"
+            transitionDuration="0.25s"
             isHoveringComponent={isHovering}
           >
             <FormatColorFillIcon />
@@ -133,7 +180,7 @@ const DraggableUserComponent = ({
 
         <ToolGridItem item>
           <ToolIconButton
-            transitionDuration="0.2s"
+            transitionDuration="0.3s"
             isHoveringComponent={isHovering}
           >
             <FormatColorTextIcon />
@@ -142,7 +189,7 @@ const DraggableUserComponent = ({
 
         <ToolGridItem item>
           <ToolIconButton
-            transitionDuration="0.25s"
+            transitionDuration="0.35s"
             isHoveringComponent={isHovering}
           >
             <ImageSearchIcon />
@@ -151,7 +198,7 @@ const DraggableUserComponent = ({
 
         <ToolGridItem item>
           <ToolIconButton
-            transitionDuration="0.3s"
+            transitionDuration="0.4s"
             isHoveringComponent={isHovering}
           >
             <AutoFixHighIcon />
@@ -160,7 +207,7 @@ const DraggableUserComponent = ({
 
         <ToolGridItem item>
           <ToolIconButton
-            transitionDuration="0.35s"
+            transitionDuration="0.45s"
             isHoveringComponent={isHovering}
           >
             <VisibilityIcon />
@@ -169,7 +216,7 @@ const DraggableUserComponent = ({
 
         <ToolGridItem item>
           <ToolIconButton
-            transitionDuration="0.4s"
+            transitionDuration="0.5s"
             isHoveringComponent={isHovering}
           >
             <DeleteIcon />

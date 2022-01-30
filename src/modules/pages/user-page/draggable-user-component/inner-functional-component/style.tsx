@@ -6,6 +6,7 @@ import { PRIMARY_COLOR } from "./../../../../../styles/colors";
 export const Parent = styled(Grid)`
   position: relative;
   transform: translateX(30px);
+  margin-bottom: 24px;
 `;
 
 export const Container = styled(({ isHoveringComponent, ...rest }: any) => (
@@ -32,7 +33,7 @@ export const Overlay = styled(({ isHoveringComponent, ...rest }: any) => (
   border-radius: 15px;
   z-index: 1000;
   pointer-events: none;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
@@ -40,7 +41,7 @@ export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
 ))`
   font-size: 30px;
   color: ${(props) => (props.isHoveringComponent ? PRIMARY_COLOR : "#EBEBEB")};
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
     cursor: grab;
   }
@@ -52,7 +53,10 @@ export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
 export const LabelText = styled(Grid)`
   padding-right: 16px;
   font-size: 24px;
-  transform: translateY(-6px);
+`;
+
+export const ContentGridItem = styled(Grid)`
+  display: inline-flex;
 `;
 
 export const UrlIconItem = styled(Grid)`
@@ -62,7 +66,6 @@ export const UrlIconItem = styled(Grid)`
 export const UrlTextItem = styled(Grid)`
   padding: 0px 16px;
   font-size: 24px;
-  transform: translateY(-4px);
   color: #b9b9b9;
 `;
 
@@ -86,7 +89,8 @@ export const ToolsColumn = styled(({ isHoveringComponent, ...rest }: any) => (
   bottom: 0;
   left: 0;
   border-radius: 20px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 export const ToolGridItem = styled(Grid)`
@@ -99,10 +103,10 @@ export const ToolIconButton = styled(
     <IconButton {...rest} />
   )
 )`
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${(props) =>
       props.isHoveringComponent ? props.transitionDuration : "0s"},
-    0;
+    0s;
   transition-property: visibility, background-color;
   visibility: ${(props) =>
     props.isHoveringComponent ? "visible" : "collapse"};
@@ -118,4 +122,14 @@ export const ToolIconButton = styled(
   &.MuiButtonBase-root.MuiIconButton-root:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
+`;
+
+export const AnalyticsGridContainer = styled(Grid)`
+  padding-right: 32px;
+`;
+
+export const AnalyticsGridItem = styled(Grid)`
+  color: #e2e2e2;
+  font-size: 16px;
+  display: inline-flex;
 `;

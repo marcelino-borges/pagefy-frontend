@@ -28,6 +28,19 @@ export interface IUserComponent {
   style: string | undefined;
   visible: boolean;
   clicks: number;
+  layout: {
+    rows: number;
+    columns: number;
+  };
+  type: ComponentType;
+}
+
+export enum ComponentType {
+  Text,
+  Image,
+  TextImage,
+  Icon,
+  Video,
 }
 
 export interface IUserState {

@@ -47,8 +47,6 @@ const UserPage = () => {
     setComponentsList(newList);
   };
 
-  //if (!page) return <>Página inexistente</>;
-
   return (
     <SiteContent>
       {page && componentsList && componentsList.length > 0 ? (
