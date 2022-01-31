@@ -1,5 +1,4 @@
 import { IUser, UserActionTypes } from "./../user/types";
-import { IUserPage } from "./types";
 
 export const getUser = (email: string) => (dispatch: any) => {
   //Make request to backend
@@ -22,4 +21,38 @@ export const updateUserPageName =
 const updateUserPageNameInStore = (pageId: string, newName: string) => ({
   payload: { pageId, newName },
   type: UserActionTypes.UPDATE_USER_PAGE_NAME,
+});
+
+export const deleteComponentFromPage = (
+  pageId: string,
+  componentId: string
+) => ({
+  payload: { pageId, componentId },
+  type: UserActionTypes.DELETE_COMPONENT_FROM_PAGE,
+});
+
+export const toggleComponentVisibility = (
+  pageId: string,
+  componentId: string
+) => ({
+  payload: { pageId, componentId },
+  type: UserActionTypes.TOGGLE_COMPONENT_VISIBILITY,
+});
+
+export const setComponentLabel = (
+  pageId: string,
+  componentId: string,
+  newLabel: string
+) => ({
+  payload: { pageId, componentId, newLabel },
+  type: UserActionTypes.UPDATE_COMPONENT_LABEL,
+});
+
+export const setComponentUrl = (
+  pageId: string,
+  componentId: string,
+  newUrl: string
+) => ({
+  payload: { pageId, componentId, newUrl },
+  type: UserActionTypes.UPDATE_COMPONENT_URL,
 });

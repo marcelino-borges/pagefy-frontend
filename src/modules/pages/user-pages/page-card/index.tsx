@@ -22,6 +22,7 @@ import {
 import { stringShortener } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import routes from "../../../../routes/paths";
+import { setPageBeingManaged } from "../../../../store/page-management/actions";
 
 interface IPageCardProps {
   page: IUserPage;
@@ -29,44 +30,38 @@ interface IPageCardProps {
 
 const URL_MAX_LENGTH = 10;
 
-const LETTER_WIDTH = 5;
-const DEFAULT_INPUT_WIDTH = 100;
-
 const PageCard = ({ page }: IPageCardProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isEditting, setIsEditting] = useState(false);
   const [isUrlLong, setIsUrlLong] = useState(false);
-  const [textfieldWidth, setTextfieldWidth] = useState(DEFAULT_INPUT_WIDTH);
+  const [pageName, setPageName] = useState("");
 
-  const { register, handleSubmit, setValue } = useForm();
+  const { handleSubmit } = useForm();
 
   useEffect(() => {
     if (page.url.length > URL_MAX_LENGTH) setIsUrlLong(true);
-  }, [page.url]);
+  }, [dispatch, page.url]);
 
-  useEffect(() => {
-    if (page.name.length * LETTER_WIDTH > DEFAULT_INPUT_WIDTH) {
-      setTextfieldWidth((page.name.length + 1) * LETTER_WIDTH);
-    } else {
-      setTextfieldWidth(DEFAULT_INPUT_WIDTH);
-    }
-  }, [page.name]);
-
-  const onSubmitNameForm = ({ name }: any) => {
+  const onSubmitNameForm = () => {
     if (!page._id) return;
     setIsEditting(false);
-    dispatch(updateUserPageName(page._id, name));
+    dispatch(updateUserPageName(page._id, pageName));
+  };
+
+  const loadPage = () => {
+    if (!page._id) return;
+
+    navigate(routes.page + "/" + page._id);
+  };
+
+  const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPageName(event.target.value);
   };
 
   return (
-    <Card
-      container
-      wrap="nowrap"
-      justifyContent="stretch"
-      onClick={() => navigate(routes.page + "/" + page._id)}
-    >
-      <CardOverlay />
+    <Card container wrap="nowrap" justifyContent="stretch">
+      <CardOverlay onClick={loadPage} />
       <PageImage
         item
         xs={5}
@@ -84,17 +79,26 @@ const PageCard = ({ page }: IPageCardProps) => {
         justifyContent="space-between"
         wrap="nowrap"
       >
-        <PageTitle item>
+        <PageTitle
+          item
+          onClick={() => {
+            setPageName(page.name);
+            setIsEditting(true);
+          }}
+        >
           {isEditting ? (
             <form onSubmit={handleSubmit(onSubmitNameForm)}>
               <TransparentTextField
                 autoFocus
-                register={register("name")}
+                color="#bfbfbf"
+                fontSize="26px"
                 InputProps={{
-                  style: { width: `${textfieldWidth}px` },
+                  style: { width: "100%" },
                 }}
+                value={pageName}
+                onChange={handleChangePageName}
                 onBlur={() => {
-                  setValue("name", page.name);
+                  setPageName(page.name);
                   setIsEditting(false);
                 }}
               />
@@ -102,12 +106,7 @@ const PageCard = ({ page }: IPageCardProps) => {
           ) : (
             <>
               {page.name}
-              <EditPenIcon
-                onClick={() => {
-                  setValue("name", page.name);
-                  setIsEditting(true);
-                }}
-              />
+              <EditPenIcon />
             </>
           )}
         </PageTitle>

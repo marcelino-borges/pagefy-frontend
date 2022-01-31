@@ -1,5 +1,5 @@
 import { DraggableUserComponentProps } from "../interfaces";
-import { Grid, IconButton, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import {
   DragHandle,
   Parent,
@@ -20,16 +20,18 @@ import { useEffect, useState } from "react";
 import {
   Edit as EditIcon,
   Link as LinkIcon,
-  FormatColorFill as FormatColorFillIcon,
-  FormatColorText as FormatColorTextIcon,
+  FormatColorFill as BackgroundColorIcon,
+  FormatColorText as FontColorIcon,
   ImageSearch as ImageSearchIcon,
   Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
   Delete as DeleteIcon,
-  AutoFixHigh as AutoFixHighIcon,
-  TableRows as TableRowsIcon,
-  ViewColumn as ViewColumnIcon,
-  TouchApp as TouchAppIcon,
-  Category as CategoryIcon,
+  AutoFixHigh as ChooseEffectsIcon,
+  TableRows as RowsIcon,
+  ViewColumn as ColumnsIcon,
+  TouchApp as ClicksCountIcon,
+  Category as ComponentTypeIcon,
+  ContactPageOutlined,
 } from "@mui/icons-material";
 import { PRIMARY_COLOR } from "../../../../../styles/colors";
 import {
@@ -40,60 +42,91 @@ import CustomTooltip from "../../../../components/tooltip";
 import strings from "../../../../../localization";
 import TransparentTextField from "../../../../components/transparent-textfield";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { IApplicationState } from "../../../../../store";
+import {
+  deleteComponentFromPage,
+  setComponentLabel,
+  setComponentUrl,
+  toggleComponentVisibility,
+} from "../../../../../store/user/actions";
+import { clearPageBeingManaged } from "../../../../../store/page-management/actions";
 
 const DraggableUserComponent = ({
   item: component,
   itemSelected,
   dragHandleProps,
 }: DraggableUserComponentProps) => {
-  const {
-    register: registerLabel,
-    handleSubmit: handleSubmitLabel,
-    setValue: setValueLabel,
-  } = useForm();
-  const {
-    register: registerUrl,
-    handleSubmit: handleSubmitUrl,
-    setValue: setValueUrl,
-  } = useForm();
+  const dispatch = useDispatch();
+  const { handleSubmit: handleSubmitLabel } = useForm();
+  const { handleSubmit: handleSubmitUrl } = useForm();
 
   const theme = useTheme();
-
   const isLargerThanMD = useMediaQuery(theme.breakpoints.up("md"));
 
   const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false);
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [isEdittingLabel, setIsEdittingLabel] = useState<boolean>(false);
   const [isEdittingUrl, setIsEdittingUrl] = useState<boolean>(false);
+  const [values, setValues] = useState({
+    label: component.label || "",
+    url: component.url,
+  });
+
+  const pageBeingManaged = useSelector(
+    (state: IApplicationState) => state.pageManagement.pageId
+  );
 
   useEffect(() => {
     setIsBeingDragged(itemSelected !== 0);
-  }, [itemSelected]);
 
-  useEffect(() => {
-    if (isBeingDragged) console.log(`${component.label} moving`);
-  }, [isBeingDragged]);
+    return () => {
+      dispatch(clearPageBeingManaged());
+    };
+  }, [dispatch, itemSelected]);
 
   const AnalyticsItem = ({ tooltipKey, tooltipValue, icon }: any) => {
     return (
       <AnalyticsGridItem item alignItems="center">
-        <CustomTooltip leaveDelay={1} title={`${tooltipKey}: ${tooltipValue}`}>
+        <CustomTooltip
+          leaveDelay={1}
+          title={`${tooltipKey}: ${tooltipValue}`}
+          placement={isLargerThanMD ? "left" : "bottom"}
+        >
           {icon}
         </CustomTooltip>
       </AnalyticsGridItem>
     );
   };
 
-  const onSubmitLabelForm = ({ name }: any) => {
-    if (!component._id) return;
-    setIsEdittingLabel(false);
-    //dispatch(updateUserPageName(page._id, name));
+  const handleChangeLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, label: event.target.value });
   };
 
-  const onSubmitUrlForm = ({ name }: any) => {
-    if (!component._id) return;
+  const handleChangeUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, url: event.target.value });
+  };
+
+  const onSubmitLabelForm = () => {
+    if (!component._id || !pageBeingManaged) return;
     setIsEdittingLabel(false);
-    //dispatch(updateUserPageName(page._id, name));
+    dispatch(setComponentLabel(pageBeingManaged, component._id, values.label));
+  };
+
+  const onSubmitUrlForm = () => {
+    if (!component._id || !pageBeingManaged) return;
+    setIsEdittingUrl(false);
+    dispatch(setComponentUrl(pageBeingManaged, component._id, values.url));
+  };
+
+  const deleteComponent = () => {
+    if (!component._id || !pageBeingManaged) return;
+    dispatch(deleteComponentFromPage(pageBeingManaged, component._id));
+  };
+
+  const toggleVisibility = () => {
+    if (!component._id || !pageBeingManaged) return;
+    dispatch(toggleComponentVisibility(pageBeingManaged, component._id));
   };
 
   return (
@@ -138,34 +171,46 @@ const DraggableUserComponent = ({
             spacing={2}
           >
             {/* Label */}
-            <ContentRow container item alignItems="center">
-              {isEdittingLabel ? (
-                <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
-                  <LabelText item>
-                    <TransparentTextField
-                      autoFocus
-                      register={registerLabel("label")}
-                      InputProps={{
-                        style: {
-                          width: `100%`,
-                        },
-                      }}
-                      onBlur={() => {
-                        setValueLabel("label", component.label);
-                        setIsEdittingLabel(false);
-                      }}
-                    />
+            {component.label && component.label.length > 0 && (
+              <ContentRow container item alignItems="center">
+                {isEdittingLabel ? (
+                  <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
+                    <LabelText item>
+                      <TransparentTextField
+                        autoFocus
+                        InputProps={{
+                          style: {
+                            width: `100%`,
+                          },
+                        }}
+                        onChange={handleChangeLabel}
+                        value={values.label}
+                        onBlur={() => {
+                          setValues({
+                            ...values,
+                            label: component.label || "",
+                          });
+                          setIsEdittingLabel(false);
+                        }}
+                      />
+                    </LabelText>
+                  </form>
+                ) : (
+                  <LabelText
+                    item
+                    onClick={() => {
+                      setIsEdittingLabel(true);
+                      setValues({ ...values, label: component.label || "" });
+                    }}
+                  >
+                    {stringShortener(component.label, isLargerThanMD ? 50 : 20)}
                   </LabelText>
-                </form>
-              ) : (
-                <LabelText item onClick={() => setIsEdittingLabel(true)}>
-                  {stringShortener(component.label, isLargerThanMD ? 50 : 20)}
-                </LabelText>
-              )}
-              <EditIconItem item onClick={() => setIsEdittingLabel(true)}>
-                <EditIcon />
-              </EditIconItem>
-            </ContentRow>
+                )}
+                <EditIconItem item onClick={() => setIsEdittingLabel(true)}>
+                  <EditIcon />
+                </EditIconItem>
+              </ContentRow>
+            )}
 
             {/* URL */}
             <ContentRow container item alignItems="center">
@@ -177,16 +222,33 @@ const DraggableUserComponent = ({
                   <LabelText item>
                     <TransparentTextField
                       autoFocus
-                      register={registerUrl("url")}
+                      onChange={handleChangeUrl}
+                      value={values.url}
+                      fontWeight="300"
+                      color="#bfbfbf"
+                      fontSize="22px"
+                      fontStyle="italic"
+                      InputProps={{
+                        style: {
+                          width: "100%",
+                          margin: "0px 16px",
+                        },
+                      }}
                       onBlur={() => {
-                        setValueUrl("url", component.url);
+                        setValues({ ...values, url: component.url || "" });
                         setIsEdittingUrl(false);
                       }}
                     />
                   </LabelText>
                 </form>
               ) : (
-                <UrlTextItem item onClick={() => setIsEdittingUrl(true)}>
+                <UrlTextItem
+                  item
+                  onClick={() => {
+                    setIsEdittingUrl(true);
+                    setValues({ ...values, url: component.url || "" });
+                  }}
+                >
                   {stringShortener(component.url, isLargerThanMD ? 50 : 20)}
                 </UrlTextItem>
               )}
@@ -211,91 +273,137 @@ const DraggableUserComponent = ({
             <AnalyticsItem
               tooltipKey={strings.columns}
               tooltipValue={component.layout.columns.toString()}
-              icon={<ViewColumnIcon />}
+              icon={<ColumnsIcon />}
             />
             <AnalyticsItem
               tooltipKey={strings.rows}
               tooltipValue={component.layout.rows.toString()}
-              icon={<TableRowsIcon />}
+              icon={<RowsIcon />}
             />
             <AnalyticsItem
               tooltipKey={strings.clicks}
               tooltipValue={component.type.toString()}
-              icon={<TouchAppIcon />}
+              icon={<ClicksCountIcon />}
             />
             <AnalyticsItem
               tooltipKey={strings.type}
               tooltipValue={getLocalizedStringByComponentType(component.type)}
-              icon={<CategoryIcon />}
+              icon={<ComponentTypeIcon />}
             />
           </AnalyticsGridContainer>
         </Grid>
       </Container>
 
       {/* Tools column */}
-      <Grid
-        container
-        item
-        xs={2}
-        sm={1}
-        justifyContent="space-between"
-        alignItems="stretch"
-        direction="column"
-      >
-        <ToolGridItem item>
-          <ToolIconButton
-            transitionDuration="0.25s"
-            isHoveringComponent={isHovering}
+      {!isBeingDragged && (
+        <Grid
+          container
+          item
+          xs={2}
+          sm={1}
+          justifyContent="space-between"
+          alignItems="stretch"
+          direction="column"
+        >
+          <CustomTooltip
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.backgroundColor}
+            placement={isLargerThanMD ? "right" : "bottom"}
           >
-            <FormatColorFillIcon />
-          </ToolIconButton>
-        </ToolGridItem>
+            <ToolGridItem item>
+              <ToolIconButton
+                transitionDuration="0.25s"
+                isHoveringComponent={isHovering}
+              >
+                <BackgroundColorIcon />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
 
-        <ToolGridItem item>
-          <ToolIconButton
-            transitionDuration="0.3s"
-            isHoveringComponent={isHovering}
+          <CustomTooltip
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.fontColor}
+            placement={isLargerThanMD ? "right" : "bottom"}
           >
-            <FormatColorTextIcon />
-          </ToolIconButton>
-        </ToolGridItem>
+            <ToolGridItem item>
+              <ToolIconButton
+                transitionDuration="0.3s"
+                isHoveringComponent={isHovering}
+              >
+                <FontColorIcon />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
 
-        <ToolGridItem item>
-          <ToolIconButton
-            transitionDuration="0.35s"
-            isHoveringComponent={isHovering}
+          <CustomTooltip
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.uploadImage}
+            placement={isLargerThanMD ? "right" : "bottom"}
           >
-            <ImageSearchIcon />
-          </ToolIconButton>
-        </ToolGridItem>
+            <ToolGridItem item>
+              <ToolIconButton
+                transitionDuration="0.35s"
+                isHoveringComponent={isHovering}
+              >
+                <ImageSearchIcon />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
 
-        <ToolGridItem item>
-          <ToolIconButton
-            transitionDuration="0.4s"
-            isHoveringComponent={isHovering}
+          <CustomTooltip
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.chooseEffect}
+            placement={isLargerThanMD ? "right" : "bottom"}
           >
-            <AutoFixHighIcon />
-          </ToolIconButton>
-        </ToolGridItem>
+            <ToolGridItem item>
+              <ToolIconButton
+                transitionDuration="0.4s"
+                isHoveringComponent={isHovering}
+              >
+                <ChooseEffectsIcon />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
 
-        <ToolGridItem item>
-          <ToolIconButton
-            transitionDuration="0.45s"
-            isHoveringComponent={isHovering}
+          <CustomTooltip
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.toggleVisibility}
+            placement={isLargerThanMD ? "right" : "bottom"}
           >
-            <VisibilityIcon />
-          </ToolIconButton>
-        </ToolGridItem>
+            <ToolGridItem item>
+              <ToolIconButton
+                transitionDuration="0.45s"
+                isHoveringComponent={isHovering}
+                onClick={() => toggleVisibility()}
+              >
+                {component.visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
 
-        <ToolGridItem item>
-          <ToolIconButton
-            transitionDuration="0.5s"
-            isHoveringComponent={isHovering}
+          <CustomTooltip
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.remove}
+            placement={isLargerThanMD ? "right" : "bottom"}
           >
-            <DeleteIcon />
-          </ToolIconButton>
-        </ToolGridItem>
-      </Grid>
+            <ToolGridItem item>
+              <ToolIconButton
+                transitionDuration="0.5s"
+                isHoveringComponent={isHovering}
+                onClick={() => deleteComponent()}
+              >
+                <DeleteIcon />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
+        </Grid>
+      )}
       <ToolsColumn isHoveringComponent={isHovering}></ToolsColumn>
     </Parent>
   );

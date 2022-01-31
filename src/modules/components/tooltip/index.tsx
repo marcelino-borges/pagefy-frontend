@@ -4,11 +4,25 @@ interface ITooltipProps {
   title: string;
   children: any;
   leaveDelay?: number;
+  disableInteractive?: boolean;
+  placement?: any;
 }
 
-const CustomTooltip = ({ title, leaveDelay, children }: ITooltipProps) => {
+const CustomTooltip = ({
+  title,
+  leaveDelay,
+  disableInteractive,
+  placement,
+  children,
+}: ITooltipProps) => {
   return (
-    <Tooltip leaveDelay={leaveDelay || 500} title={title} arrow>
+    <Tooltip
+      leaveDelay={leaveDelay || 500}
+      title={title}
+      arrow
+      disableInteractive={disableInteractive !== undefined}
+      placement={placement || "bottom"}
+    >
       {children}
     </Tooltip>
   );

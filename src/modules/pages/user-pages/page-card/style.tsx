@@ -84,8 +84,9 @@ export const ArticleIcon = styled(Article)`
 
 export const PageTitle = styled(Grid)`
   font-weight: 700;
-  font-size: 1.3em;
+  font-size: 26px;
   margin-bottom: 32px;
+  z-index: 100;
 `;
 
 export const EditPenIcon = styled(EditIcon)`

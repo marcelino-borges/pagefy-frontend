@@ -4,13 +4,15 @@ import DraggableList from "react-draggable-list";
 import { Grid } from "@mui/material";
 import DraggableUserComponentClass from "./draggable-user-component/outer-class/index";
 import { IUserComponent, IUserPage } from "../../../store/user/types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
 import SiteContent from "../../components/site-content";
 import LoadingSpinner from "../../components/loading-spinner";
+import { setPageBeingManaged } from "../../../store/page-management/actions";
 
 const UserPage = () => {
+  const dispatch = useDispatch();
   const [componentsList, setComponentsList] = useState<IUserComponent[]>();
   const [page, setPage] = useState<IUserPage>();
 
@@ -41,7 +43,11 @@ const UserPage = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, userProfileState?.pages]);
+
+  useEffect(() => {
+    if (page && page._id) dispatch(setPageBeingManaged(page._id));
+  }, [dispatch, page, page?._id]);
 
   const onListChange = (newList: any) => {
     setComponentsList(newList);

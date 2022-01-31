@@ -5,6 +5,8 @@ import {
   HamburguerMenuIcon,
   DrawerMenu,
   MobileMenuGridItem,
+  DrawerCloseButton,
+  CloseIcon,
 } from "./style";
 import strings from "../../../localization";
 import routes from "./../../../routes/paths";
@@ -30,8 +32,10 @@ const Header = () => {
   }, [isSmallerThanMD]);
 
   const onClickLinkCallback = (navigateTo: string) => {
-    setIsShowingDrawer(false);
-    navigate(navigateTo);
+    setTimeout(() => {
+      setIsShowingDrawer(false);
+      navigate(navigateTo);
+    }, 250);
   };
 
   const DesktopHeader = () => {
@@ -62,7 +66,7 @@ const Header = () => {
     );
   };
 
-  const MobileDesktop = () => {
+  const MobileHeader = () => {
     return (
       <>
         <Grid container item xs={6} justifyContent="flex-end" padding={4}>
@@ -74,6 +78,15 @@ const Header = () => {
           open={isShowingDrawer}
           onClose={toggleDrawer}
         >
+          <DrawerCloseButton
+            container
+            justifyContent="center"
+            alignItems="center"
+            onClick={toggleDrawer}
+          >
+            <CloseIcon />
+          </DrawerCloseButton>
+
           <Grid container direction="column" alignItems="center">
             <Grid item>User Logged In</Grid>
 
@@ -124,7 +137,7 @@ const Header = () => {
           />
         </Link>
       </Grid>
-      {isSmallerThanMD ? <MobileDesktop /> : <DesktopHeader />}
+      {isSmallerThanMD ? <MobileHeader /> : <DesktopHeader />}
     </Parent>
   );
 };

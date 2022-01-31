@@ -18,6 +18,12 @@ interface IDictionary {
   rows: string;
   clicks: string;
   type: string;
+  backgroundColor: string;
+  fontColor: string;
+  uploadImage: string;
+  chooseEffect: string;
+  toggleVisibility: string;
+  remove: string;
 }
 
 // Dictionaries
@@ -40,6 +46,12 @@ const en: IDictionary = {
   rows: "Rows",
   clicks: "Clicks",
   type: "Type",
+  backgroundColor: "Background color",
+  fontColor: "Font color",
+  uploadImage: "Upload image",
+  chooseEffect: "Choose effect",
+  toggleVisibility: "Toggle visibility",
+  remove: "Remove",
 };
 
 const pt: IDictionary = {
@@ -60,6 +72,12 @@ const pt: IDictionary = {
   rows: "Linhas",
   clicks: "Cliques",
   type: "Tipo",
+  backgroundColor: "Cor do fundo",
+  fontColor: "Cor da fonte",
+  uploadImage: "Enviar imagem",
+  chooseEffect: "Escolher efeito",
+  toggleVisibility: "Mudar visibilidade",
+  remove: "Remover",
 };
 
 // Composed dictionaries
