@@ -1,7 +1,11 @@
 import { styled } from "@mui/system";
 import { Grid, IconButton } from "@mui/material";
 import { DragIndicator } from "@mui/icons-material";
-import { PRIMARY_COLOR } from "./../../../../../styles/colors";
+import {
+  LIGHT_GREY,
+  PRIMARY_COLOR,
+  MEDIUM_GREY,
+} from "./../../../../../styles/colors";
 
 export const Parent = styled(Grid)`
   position: relative;
@@ -31,7 +35,7 @@ export const Overlay = styled(({ isHoveringComponent, ...rest }: any) => (
   height: 100%;
   position: absolute;
   border-radius: 15px;
-  z-index: 1000;
+  z-index: 10;
   pointer-events: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 `;
@@ -75,14 +79,14 @@ export const LabelText = styled(Grid)`
 `;
 
 export const UrlIconItem = styled(Grid)`
-  color: #b9b9b9;
+  color: ${LIGHT_GREY};
   cursor: pointer;
 `;
 
 export const UrlTextItem = styled(Grid)`
   padding: 0px 16px;
   font-size: 22px;
-  color: #b9b9b9;
+  color: ${MEDIUM_GREY};
   font-style: italic;
   transform: translateY(-5px);
   cursor: pointer;
@@ -93,7 +97,7 @@ export const UrlTextItem = styled(Grid)`
 `;
 
 export const EditIconItem = styled(Grid)`
-  color: #b9b9b9;
+  color: ${LIGHT_GREY};
   cursor: pointer;
 `;
 
@@ -115,6 +119,20 @@ export const ToolsColumn = styled(({ isHoveringComponent, ...rest }: any) => (
   border-radius: 20px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+`;
+
+export const DarkBG = styled(({ isHoveringComponent, ...rest }: any) => (
+  <div {...rest} />
+))`
+  color: white;
+  background-color: ${LIGHT_GREY};
+  position: absolute;
+  z-index: -11;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 20px;
 `;
 
 export const ToolGridItem = styled(Grid)`
@@ -153,7 +171,7 @@ export const AnalyticsGridContainer = styled(Grid)`
 `;
 
 export const AnalyticsGridItem = styled(Grid)`
-  color: #e2e2e2;
+  color: ${LIGHT_GREY};
   font-size: 16px;
   display: inline-flex;
 `;

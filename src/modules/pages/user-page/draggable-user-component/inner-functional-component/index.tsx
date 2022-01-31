@@ -15,6 +15,7 @@ import {
   AnalyticsGridItem,
   AnalyticsGridContainer,
   ContentRow,
+  DarkBG,
 } from "./style";
 import { useEffect, useState } from "react";
 import {
@@ -31,7 +32,6 @@ import {
   ViewColumn as ColumnsIcon,
   TouchApp as ClicksCountIcon,
   Category as ComponentTypeIcon,
-  ContactPageOutlined,
 } from "@mui/icons-material";
 import { PRIMARY_COLOR } from "../../../../../styles/colors";
 import {
@@ -405,6 +405,7 @@ const DraggableUserComponent = ({
         </Grid>
       )}
       <ToolsColumn isHoveringComponent={isHovering}></ToolsColumn>
+      <DarkBG />
     </Parent>
   );
 };

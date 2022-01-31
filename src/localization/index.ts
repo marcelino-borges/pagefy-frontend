@@ -24,6 +24,9 @@ interface IDictionary {
   chooseEffect: string;
   toggleVisibility: string;
   remove: string;
+  addComponent: string;
+  addIcon: string;
+  addVideo: string;
 }
 
 // Dictionaries
@@ -52,6 +55,9 @@ const en: IDictionary = {
   chooseEffect: "Choose effect",
   toggleVisibility: "Toggle visibility",
   remove: "Remove",
+  addComponent: "Add Component",
+  addIcon: "Add Icon",
+  addVideo: "Add Video",
 };
 
 const pt: IDictionary = {
@@ -78,6 +84,9 @@ const pt: IDictionary = {
   chooseEffect: "Escolher efeito",
   toggleVisibility: "Mudar visibilidade",
   remove: "Remover",
+  addComponent: "Inserir Componente",
+  addIcon: "Inserir Ícone",
+  addVideo: "Inserir Vídeo",
 };
 
 // Composed dictionaries
