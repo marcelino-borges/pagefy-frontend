@@ -99,6 +99,10 @@ export const UrlTextItem = styled(Grid)`
 export const EditIconItem = styled(Grid)`
   color: ${LIGHT_GREY};
   cursor: pointer;
+
+  &:hover {
+    color: ${PRIMARY_COLOR};
+  }
 `;
 
 export const ToolsColumn = styled(({ isHoveringComponent, ...rest }: any) => (

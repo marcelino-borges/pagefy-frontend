@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DraggableList from "react-draggable-list";
-import { Grid, IconButton } from "@mui/material";
+import { Grid } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -19,18 +19,27 @@ import {
   PageToolbar,
   PageName,
   PageImage,
-  ToolbarGridItem,
+  ToolbarButton,
   ToolbarIconText,
+  VisibilityIcon,
 } from "./style";
 import strings from "../../../localization";
+import { EditPenIcon } from "./style";
+import TransparentTextField from "./../../components/transparent-textfield/index";
+import { useForm } from "react-hook-form";
+import { updateUserPageName } from "../../../store/user/actions";
 
 const BREAK_TOOLBAR_TEXT = true;
-const BREAK_POINT_TOOLBAR_TEXT = 14;
+const BREAK_POINT_TOOLBAR_TEXT = 12;
 
 const UserPage = () => {
   const dispatch = useDispatch();
   const [componentsList, setComponentsList] = useState<IUserComponent[]>();
   const [page, setPage] = useState<IUserPage>();
+  const [isEdittingPageName, setIsEdittingPageName] = useState(false);
+  const [pageName, setPageName] = useState("");
+
+  const { handleSubmit } = useForm();
 
   let navigate = useNavigate();
   let { id } = useParams();
@@ -69,6 +78,16 @@ const UserPage = () => {
     setComponentsList(newList);
   };
 
+  const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPageName(event.target.value);
+  };
+
+  const onSubmitPageNameForm = () => {
+    if (!page || !page._id) return;
+    setIsEdittingPageName(false);
+    dispatch(updateUserPageName(page._id, pageName));
+  };
+
   const TopTools = () => {
     return (
       <PageToolbar
@@ -91,74 +110,112 @@ const UserPage = () => {
 
           <Grid item xs={12} md={9}>
             <Grid container item direction="row" justifyContent="center">
-              <ToolbarGridItem item xs={12} sm={3}>
+              <Grid item xs={12} sm={3}>
                 <Grid container item direction="column" alignItems="center">
-                  <CreateComponentIcon />
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.addComponent.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addComponent.split(" ").length > 1 ? (
-                      strings.addComponent.split(" ").map((word: string) => {
-                        return (
-                          <>
-                            {word} <br />
-                          </>
-                        );
-                      })
-                    ) : (
-                      <>{strings.addComponent}</>
-                    )}
-                  </ToolbarIconText>
+                  <ToolbarButton>
+                    <CreateComponentIcon />
+                    <ToolbarIconText>
+                      {BREAK_TOOLBAR_TEXT &&
+                      strings.addComponent.length > BREAK_POINT_TOOLBAR_TEXT &&
+                      strings.addComponent.split(" ").length > 1 ? (
+                        strings.addComponent.split(" ").map((word: string) => {
+                          return (
+                            <>
+                              {word} <br />
+                            </>
+                          );
+                        })
+                      ) : (
+                        <>{strings.addComponent}</>
+                      )}
+                    </ToolbarIconText>
+                  </ToolbarButton>
                 </Grid>
-              </ToolbarGridItem>
+              </Grid>
 
-              <ToolbarGridItem item xs={12} sm={3}>
+              <Grid item xs={12} sm={3}>
                 <Grid container item direction="column" alignItems="center">
-                  <InsertIconIcon />
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.addIcon.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addIcon.split(" ").length > 1 ? (
-                      strings.addIcon.split(" ").map((word: string) => {
-                        return (
-                          <>
-                            {word} <br />
-                          </>
-                        );
-                      })
-                    ) : (
-                      <>{strings.addIcon}</>
-                    )}
-                  </ToolbarIconText>
+                  <ToolbarButton>
+                    <InsertIconIcon />
+                    <ToolbarIconText>
+                      {BREAK_TOOLBAR_TEXT &&
+                      strings.addIcon.length > BREAK_POINT_TOOLBAR_TEXT &&
+                      strings.addIcon.split(" ").length > 1 ? (
+                        strings.addIcon.split(" ").map((word: string) => {
+                          return (
+                            <>
+                              {word} <br />
+                            </>
+                          );
+                        })
+                      ) : (
+                        <>{strings.addIcon}</>
+                      )}
+                    </ToolbarIconText>
+                  </ToolbarButton>
                 </Grid>
-              </ToolbarGridItem>
+              </Grid>
 
-              <ToolbarGridItem item xs={12} sm={3}>
+              <Grid item xs={12} sm={3}>
                 <Grid container item direction="column" alignItems="center">
-                  <YouTubeIcon />
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addVideo.split(" ").length > 1 ? (
-                      strings.addVideo.split(" ").map((word: string) => {
-                        return (
-                          <>
-                            {word} <br />
-                          </>
-                        );
-                      })
-                    ) : (
-                      <>{strings.addVideo}</>
-                    )}
-                  </ToolbarIconText>
+                  <ToolbarButton>
+                    <YouTubeIcon />
+                    <ToolbarIconText>
+                      {BREAK_TOOLBAR_TEXT &&
+                      strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
+                      strings.addVideo.split(" ").length > 1 ? (
+                        strings.addVideo.split(" ").map((word: string) => {
+                          return (
+                            <>
+                              {word} <br />
+                            </>
+                          );
+                        })
+                      ) : (
+                        <>{strings.addVideo}</>
+                      )}
+                    </ToolbarIconText>
+                  </ToolbarButton>
                 </Grid>
-              </ToolbarGridItem>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
 
         <PageName container justifyContent="center" alignItems="center">
-          {page?.name}
+          {isEdittingPageName ? (
+            <form onSubmit={handleSubmit(onSubmitPageNameForm)}>
+              <TransparentTextField
+                autoFocus
+                color="#bfbfbf"
+                fontSize="26px"
+                InputProps={{
+                  style: { width: "100%" },
+                }}
+                value={pageName}
+                onChange={handleChangePageName}
+                onBlur={() => {
+                  if (page) setPageName(page.name);
+                  setIsEdittingPageName(false);
+                }}
+              />
+            </form>
+          ) : (
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              onClick={() => {
+                if (page) setPageName(page.name);
+                setIsEdittingPageName(true);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              {page?.name}
+              <EditPenIcon />
+            </Grid>
+          )}
+          {/* <VisibilityIcon /> */}
         </PageName>
       </PageToolbar>
     );

@@ -2,6 +2,7 @@ import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Article, Label, Link, Visibility } from "@mui/icons-material";
+import { PRIMARY_COLOR } from "../../../../styles/colors";
 
 const smallBreakpoint = "550px";
 
@@ -95,6 +96,10 @@ export const EditPenIcon = styled(EditIcon)`
   margin-left: 6px;
   cursor: pointer;
   transform: translateY(3px);
+
+  &:hover {
+    color: ${PRIMARY_COLOR};
+  }
 `;
 
 export const PageDataKey = styled("span")`

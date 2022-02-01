@@ -1,6 +1,8 @@
 import { styled } from "@mui/system";
-import { Button, Grid } from "@mui/material";
-import { LIGHTER_GREY, LIGHT_GREY, MEDIUM_GREY } from "../../../styles/colors";
+import { Grid } from "@mui/material";
+import { LIGHTER_GREY, MEDIUM_GREY } from "../../../styles/colors";
+import { Visibility, Edit } from "@mui/icons-material";
+import { PRIMARY_COLOR } from "./../../../styles/colors";
 
 export const PageToolbar = styled(
   ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
@@ -12,6 +14,7 @@ export const PageToolbar = styled(
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
   margin-bottom: 24px;
+  min-width: 320px;
 `;
 
 export const PageName = styled(
@@ -45,17 +48,30 @@ const toolbarIcon = `
   }
 `;
 
-export const ToolbarGridItem = styled(({ ...rest }: any) => <Grid {...rest} />)`
+export const ToolbarButton = styled(({ ...rest }: any) => <span {...rest} />)`
   ${toolbarIcon}
   height: 130px;
   width: 130px;
-  display: flex;
   align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: center;
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 6px;
+  border-radius: 50%;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 
   &:hover {
-    border: 1px solid ${LIGHTER_GREY};
-    border-radius: 50%;
     background-color: ${LIGHTER_GREY};
+    color: ${PRIMARY_COLOR};
+  }
+
+  &:hover span {
+    background-color: ${LIGHTER_GREY};
+    color: ${PRIMARY_COLOR};
   }
 `;
 
@@ -63,4 +79,28 @@ export const ToolbarIconText = styled(({ ...rest }: any) => <span {...rest} />)`
   font-size: 14px;
   margin-top: 8px;
   color: grey;
+`;
+
+export const VisibilityIcon = styled(({ ...rest }: any) => (
+  <Visibility {...rest} />
+))`
+  font-size: 24px;
+  color: ${MEDIUM_GREY};
+  cursor: pointer;
+  margin-left: 16px;
+
+  &:hover {
+    color: ${PRIMARY_COLOR};
+  }
+`;
+
+export const EditPenIcon = styled(Edit)`
+  color: ${MEDIUM_GREY};
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 16px;
+
+  &:hover {
+    color: ${PRIMARY_COLOR};
+  }
 `;
