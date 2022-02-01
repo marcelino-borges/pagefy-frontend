@@ -77,6 +77,8 @@ const Header = () => {
           anchor="right"
           open={isShowingDrawer}
           onClose={toggleDrawer}
+          onOpen={toggleDrawer}
+          transitionDuration={500}
         >
           <DrawerCloseButton
             container
@@ -88,8 +90,10 @@ const Header = () => {
           </DrawerCloseButton>
 
           <Grid container direction="column" alignItems="center">
-            <Grid item>User Logged In</Grid>
-
+            <Grid item style={{ marginTop: "50px" }}>
+              User Logged In
+            </Grid>
+            <span style={{ height: "70px" }} />
             <MobileMenuGridItem
               item
               alignItems="center"

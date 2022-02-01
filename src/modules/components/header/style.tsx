@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { Grid, Drawer } from "@mui/material";
+import { Grid, SwipeableDrawer } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Close, Menu } from "@mui/icons-material";
 
@@ -49,14 +49,14 @@ export const HamburguerMenuIcon = styled(Menu)`
   cursor: pointer;
 `;
 
-export const DrawerMenu = styled(Drawer)`
+export const DrawerMenu = styled(SwipeableDrawer)`
   color: var(--primary);
   padding: 32px 16px 32px 16px;
-  overflow: unset;
   position: relative;
 
   .MuiPaper-root.MuiDrawer-paper {
     width: 50%;
+    overflow: visible;
   }
 
   @media (max-width: 500px) {
