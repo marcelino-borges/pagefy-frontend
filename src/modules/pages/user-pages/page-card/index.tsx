@@ -64,8 +64,8 @@ const PageCard = ({ page }: IPageCardProps) => {
       <CardOverlay onClick={loadPage} />
       <PageImage
         item
-        xs={5}
-        sm={0}
+        xs={0}
+        sm={5}
         style={{
           backgroundImage: `url(${page.pageImageUrl})`,
         }}
@@ -74,17 +74,19 @@ const PageCard = ({ page }: IPageCardProps) => {
         container
         item
         direction="column"
-        xs={7}
-        sm={12}
+        xs={12}
+        sm={7}
         justifyContent="space-between"
         wrap="nowrap"
       >
         <PageTitle
+          container
           item
           onClick={() => {
             setPageName(page.name);
             setIsEditting(true);
           }}
+          wrap="nowrap"
         >
           {isEditting ? (
             <form onSubmit={handleSubmit(onSubmitNameForm)}>
@@ -105,7 +107,7 @@ const PageCard = ({ page }: IPageCardProps) => {
             </form>
           ) : (
             <>
-              {page.name}
+              {stringShortener(page.name, 15)}
               <EditPenIcon />
             </>
           )}

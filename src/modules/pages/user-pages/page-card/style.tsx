@@ -9,13 +9,13 @@ const smallBreakpoint = "550px";
 export const Card = styled(Grid)`
   margin: 12px 0px;
   /* border: 1px solid #e9e9e9; */
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 20px;
   height: 250px;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   position: relative;
-  min-width: 270px;
+  min-width: 320px;
 
   &:hover {
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.06);
@@ -26,7 +26,7 @@ export const CardOverlay = styled("div")`
   position: absolute;
   width: calc(100% - 2px);
   height: 100%;
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 20px;
   border: 0;
   transform: translateY(-2px);
 
@@ -88,6 +88,10 @@ export const PageTitle = styled(Grid)`
   font-size: 26px;
   margin-bottom: 32px;
   z-index: 100;
+
+  @media (max-width: ${smallBreakpoint}) {
+    margin-bottom: 0;
+  }
 `;
 
 export const EditPenIcon = styled(EditIcon)`
