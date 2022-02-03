@@ -1,23 +1,7 @@
-import { DraggableUserComponentProps } from "../interfaces";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
-import {
-  DragHandle,
-  Parent,
-  Container,
-  Overlay,
-  LabelText,
-  UrlIconItem,
-  UrlTextItem,
-  EditIconItem,
-  ToolsColumn,
-  ToolIconButton,
-  ToolGridItem,
-  AnalyticsGridItem,
-  AnalyticsGridContainer,
-  ContentRow,
-  DarkBG,
-} from "./style";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import {
   Edit as EditIcon,
   Link as LinkIcon,
@@ -32,30 +16,58 @@ import {
   ViewColumn as ColumnsIcon,
   TouchApp as ClicksCountIcon,
   Category as ComponentTypeIcon,
+  KeyboardArrowUp as KeyboardArrowUpIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon,
 } from "@mui/icons-material";
-import { PRIMARY_COLOR } from "../../../../../styles/colors";
+import {
+  Parent,
+  Container,
+  Overlay,
+  LabelText,
+  UrlIconItem,
+  UrlTextItem,
+  EditIconItem,
+  ToolsColumn,
+  ToolIconButton,
+  ToolGridItem,
+  AnalyticsGridItem,
+  AnalyticsGridContainer,
+  ContentRow,
+  DarkBG,
+  ComponentArrowGridItem,
+} from "./style";
+import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
   getLocalizedStringByComponentType,
   stringShortener,
-} from "../../../../../utils";
-import CustomTooltip from "../../../../components/tooltip";
-import strings from "../../../../../localization";
-import TransparentTextField from "../../../../components/transparent-textfield";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { IApplicationState } from "../../../../../store";
+} from "../../../../utils";
+import CustomTooltip from "../../../components/tooltip";
+import strings from "../../../../localization";
+import TransparentTextField from "../../../components/transparent-textfield";
+import { IApplicationState } from "../../../../store";
 import {
+  decreaseComponentIndexInPage,
   deleteComponentFromPage,
+  increaseComponentIndexInPage,
   setComponentLabel,
   setComponentUrl,
   toggleComponentVisibility,
-} from "../../../../../store/user/actions";
-import { clearPageBeingManaged } from "../../../../../store/page-management/actions";
+} from "../../../../store/user/actions";
+import { clearPageBeingManaged } from "../../../../store/page-management/actions";
+import { IUserComponent } from "../../../../store/user/types";
+
+export interface DraggableUserComponentProps {
+  component: IUserComponent;
+  index: number;
+  pageId: string;
+  onClick?: () => any;
+}
 
 const DraggableUserComponent = ({
-  item: component,
-  itemSelected,
-  dragHandleProps,
+  component,
+  index,
+  pageId,
+  onClick,
 }: DraggableUserComponentProps) => {
   const dispatch = useDispatch();
   const { handleSubmit: handleSubmitLabel } = useForm();
@@ -64,7 +76,6 @@ const DraggableUserComponent = ({
   const theme = useTheme();
   const isLargerThanMD = useMediaQuery(theme.breakpoints.up("md"));
 
-  const [isBeingDragged, setIsBeingDragged] = useState<boolean>(false);
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [isEdittingLabel, setIsEdittingLabel] = useState<boolean>(false);
   const [isEdittingUrl, setIsEdittingUrl] = useState<boolean>(false);
@@ -76,14 +87,6 @@ const DraggableUserComponent = ({
   const pageBeingManaged = useSelector(
     (state: IApplicationState) => state.pageManagement.pageId
   );
-
-  useEffect(() => {
-    setIsBeingDragged(itemSelected !== 0);
-
-    return () => {
-      dispatch(clearPageBeingManaged());
-    };
-  }, [dispatch, itemSelected]);
 
   const AnalyticsItem = ({ tooltipKey, tooltipValue, icon }: any) => {
     return (
@@ -135,6 +138,9 @@ const DraggableUserComponent = ({
       item
       direction="row"
       onMouseLeave={() => setIsHovering(false)}
+      onClick={() => {
+        if (onClick) onClick();
+      }}
     >
       <Container
         container
@@ -154,8 +160,32 @@ const DraggableUserComponent = ({
           }}
         />
         {/* Handler */}
-        <Grid container item xs={1} alignItems="center">
-          <DragHandle isHoveringComponent={isHovering} {...dragHandleProps} />
+        <Grid
+          container
+          item
+          xs={1}
+          alignItems="center"
+          direction="column"
+          justifyContent="space-between"
+        >
+          <ComponentArrowGridItem
+            item
+            up
+            onClick={() =>
+              dispatch(decreaseComponentIndexInPage(index, pageId))
+            }
+          >
+            <KeyboardArrowUpIcon />
+          </ComponentArrowGridItem>
+          <ComponentArrowGridItem
+            item
+            down
+            onClick={() =>
+              dispatch(increaseComponentIndexInPage(index, pageId))
+            }
+          >
+            <KeyboardArrowDownIcon />
+          </ComponentArrowGridItem>
         </Grid>
 
         {/* Content */}
@@ -295,115 +325,113 @@ const DraggableUserComponent = ({
       </Container>
 
       {/* Tools column */}
-      {!isBeingDragged && (
-        <Grid
-          container
-          item
-          xs={2}
-          sm={1}
-          justifyContent="space-between"
-          alignItems="stretch"
-          direction="column"
+      <Grid
+        container
+        item
+        xs={2}
+        sm={1}
+        justifyContent="space-between"
+        alignItems="stretch"
+        direction="column"
+      >
+        <CustomTooltip
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.backgroundColor}
+          placement={isLargerThanMD ? "right" : "bottom"}
         >
-          <CustomTooltip
-            disableInteractive
-            leaveDelay={0.1}
-            title={strings.backgroundColor}
-            placement={isLargerThanMD ? "right" : "bottom"}
-          >
-            <ToolGridItem item>
-              <ToolIconButton
-                transitionDuration="0.25s"
-                isHoveringComponent={isHovering}
-              >
-                <BackgroundColorIcon />
-              </ToolIconButton>
-            </ToolGridItem>
-          </CustomTooltip>
+          <ToolGridItem item>
+            <ToolIconButton
+              transitionDuration="0.25s"
+              isHoveringComponent={isHovering}
+            >
+              <BackgroundColorIcon />
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
 
-          <CustomTooltip
-            disableInteractive
-            leaveDelay={0.1}
-            title={strings.fontColor}
-            placement={isLargerThanMD ? "right" : "bottom"}
-          >
-            <ToolGridItem item>
-              <ToolIconButton
-                transitionDuration="0.3s"
-                isHoveringComponent={isHovering}
-              >
-                <FontColorIcon />
-              </ToolIconButton>
-            </ToolGridItem>
-          </CustomTooltip>
+        <CustomTooltip
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.fontColor}
+          placement={isLargerThanMD ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              transitionDuration="0.3s"
+              isHoveringComponent={isHovering}
+            >
+              <FontColorIcon />
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
 
-          <CustomTooltip
-            disableInteractive
-            leaveDelay={0.1}
-            title={strings.uploadImage}
-            placement={isLargerThanMD ? "right" : "bottom"}
-          >
-            <ToolGridItem item>
-              <ToolIconButton
-                transitionDuration="0.35s"
-                isHoveringComponent={isHovering}
-              >
-                <ImageSearchIcon />
-              </ToolIconButton>
-            </ToolGridItem>
-          </CustomTooltip>
+        <CustomTooltip
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.uploadImage}
+          placement={isLargerThanMD ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              transitionDuration="0.35s"
+              isHoveringComponent={isHovering}
+            >
+              <ImageSearchIcon />
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
 
-          <CustomTooltip
-            disableInteractive
-            leaveDelay={0.1}
-            title={strings.chooseEffect}
-            placement={isLargerThanMD ? "right" : "bottom"}
-          >
-            <ToolGridItem item>
-              <ToolIconButton
-                transitionDuration="0.4s"
-                isHoveringComponent={isHovering}
-              >
-                <ChooseEffectsIcon />
-              </ToolIconButton>
-            </ToolGridItem>
-          </CustomTooltip>
+        <CustomTooltip
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.chooseEffect}
+          placement={isLargerThanMD ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              transitionDuration="0.4s"
+              isHoveringComponent={isHovering}
+            >
+              <ChooseEffectsIcon />
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
 
-          <CustomTooltip
-            disableInteractive
-            leaveDelay={0.1}
-            title={strings.toggleVisibility}
-            placement={isLargerThanMD ? "right" : "bottom"}
-          >
-            <ToolGridItem item>
-              <ToolIconButton
-                transitionDuration="0.45s"
-                isHoveringComponent={isHovering}
-                onClick={() => toggleVisibility()}
-              >
-                {component.visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-              </ToolIconButton>
-            </ToolGridItem>
-          </CustomTooltip>
+        <CustomTooltip
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.toggleVisibility}
+          placement={isLargerThanMD ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              transitionDuration="0.45s"
+              isHoveringComponent={isHovering}
+              onClick={() => toggleVisibility()}
+            >
+              {component.visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
 
-          <CustomTooltip
-            disableInteractive
-            leaveDelay={0.1}
-            title={strings.remove}
-            placement={isLargerThanMD ? "right" : "bottom"}
-          >
-            <ToolGridItem item>
-              <ToolIconButton
-                transitionDuration="0.5s"
-                isHoveringComponent={isHovering}
-                onClick={() => deleteComponent()}
-              >
-                <DeleteIcon />
-              </ToolIconButton>
-            </ToolGridItem>
-          </CustomTooltip>
-        </Grid>
-      )}
+        <CustomTooltip
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.remove}
+          placement={isLargerThanMD ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              transitionDuration="0.5s"
+              isHoveringComponent={isHovering}
+              onClick={() => deleteComponent()}
+            >
+              <DeleteIcon />
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
+      </Grid>
       <ToolsColumn isHoveringComponent={isHovering}></ToolsColumn>
       <DarkBG />
     </Parent>

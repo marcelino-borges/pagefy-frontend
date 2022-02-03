@@ -22,7 +22,6 @@ import {
 import { stringShortener } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import routes from "../../../../routes/paths";
-import { setPageBeingManaged } from "../../../../store/page-management/actions";
 
 interface IPageCardProps {
   page: IUserPage;

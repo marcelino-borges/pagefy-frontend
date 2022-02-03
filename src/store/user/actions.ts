@@ -56,3 +56,19 @@ export const setComponentUrl = (
   payload: { pageId, componentId, newUrl },
   type: UserActionTypes.UPDATE_COMPONENT_URL,
 });
+
+export const increaseComponentIndexInPage = (
+  currentIndex: number,
+  pageId: string
+) => ({
+  payload: { currentIndex, pageId },
+  type: UserActionTypes.INCREASE_COMPONENT_INDEX_IN_PAGE,
+});
+
+export const decreaseComponentIndexInPage = (
+  currentIndex: number,
+  pageId: string
+) => ({
+  payload: { currentIndex, pageId },
+  type: UserActionTypes.DECREASE_COMPONENT_INDEX_IN_PAGE,
+});

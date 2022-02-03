@@ -1,8 +1,11 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
-import { LIGHTER_GREY, MEDIUM_GREY } from "../../../styles/colors";
 import { Visibility, Edit } from "@mui/icons-material";
-import { PRIMARY_COLOR } from "./../../../styles/colors";
+import {
+  LIGHTER_GREY,
+  MEDIUM_GREY,
+  PRIMARY_COLOR,
+} from "./../../../styles/colors";
 
 export const PageToolbar = styled(
   ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (

@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import DraggableList from "react-draggable-list";
 import { Grid } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
   YouTube as YouTubeIcon,
 } from "@mui/icons-material";
-import DraggableUserComponentClass from "./draggable-user-component/outer-class/index";
-import { IUserComponent, IUserPage } from "../../../store/user/types";
+import {
+  ComponentType,
+  IUserComponent,
+  IUserPage,
+} from "../../../store/user/types";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
@@ -21,20 +23,23 @@ import {
   PageImage,
   ToolbarButton,
   ToolbarIconText,
-  VisibilityIcon,
 } from "./style";
 import strings from "../../../localization";
 import { EditPenIcon } from "./style";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
 import { updateUserPageName } from "../../../store/user/actions";
+import DraggableUserComponent from "./draggable-component/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
 
 const UserPage = () => {
   const dispatch = useDispatch();
-  const [componentsList, setComponentsList] = useState<IUserComponent[]>();
+  const [nonIconComponentsList, setNonIconComponentsList] =
+    useState<IUserComponent[]>();
+  const [iconComponentsList, setIconComponentsList] =
+    useState<IUserComponent[]>();
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
   const [pageName, setPageName] = useState("");
@@ -62,7 +67,14 @@ const UserPage = () => {
       );
       if (pageFound) {
         setPage(pageFound);
-        setComponentsList(pageFound.components);
+        const nonIconsComponents = pageFound.components.filter(
+          (comp: IUserComponent) => comp.type !== ComponentType.Icon
+        );
+        const iconComponents = pageFound.components.filter(
+          (comp: IUserComponent) => comp.type === ComponentType.Icon
+        );
+        setNonIconComponentsList(nonIconsComponents);
+        setIconComponentsList(iconComponents);
       } else {
         navigate(routes.notFound);
       }
@@ -75,7 +87,7 @@ const UserPage = () => {
   }, [dispatch, page, page?._id]);
 
   const onListChange = (newList: any) => {
-    setComponentsList(newList);
+    setNonIconComponentsList(newList);
   };
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +100,7 @@ const UserPage = () => {
     dispatch(updateUserPageName(page._id, pageName));
   };
 
-  const TopTools = () => {
+  const ToolBar = () => {
     return (
       <PageToolbar
         container
@@ -223,16 +235,18 @@ const UserPage = () => {
 
   return (
     <SiteContent>
-      <TopTools />
-      {page && componentsList && componentsList.length > 0 ? (
+      <ToolBar />
+      {page && nonIconComponentsList && nonIconComponentsList.length > 0 ? (
         <Grid container direction="column" ref={listContainer}>
-          <DraggableList<IUserComponent, void, DraggableUserComponentClass>
-            itemKey="_id"
-            template={DraggableUserComponentClass}
-            list={componentsList}
-            onMoveEnd={(newList) => onListChange(newList)}
-            container={() => listContainer.current}
-          />
+          {nonIconComponentsList.map(
+            (component: IUserComponent, index: number) => (
+              <DraggableUserComponent
+                component={component}
+                index={index}
+                pageId={page._id}
+              />
+            )
+          )}
         </Grid>
       ) : (
         <LoadingSpinner />

@@ -1,3 +1,4 @@
+import { moveElementInArrayFromToIndex } from "../../utils";
 import { IAction } from "../shared";
 import {
   ComponentType,
@@ -103,7 +104,7 @@ const initialState: IUserState = {
             type: ComponentType.Video,
           },
           {
-            label: "Curriculum Vitae",
+            label: "Curriculum Vitae Icon",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "7",
@@ -168,7 +169,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "HTBAD",
+            label: "HTBAD Icon",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "12",
@@ -618,6 +619,75 @@ const userReducer = (
         }
         return page;
       });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.INCREASE_COMPONENT_INDEX_IN_PAGE: {
+      const currentIndex = action.payload.currentIndex as number;
+      const nextIndex = currentIndex + 1;
+      const pageId = action.payload.pageId;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          if (nextIndex >= page.components.length) {
+            return page;
+          }
+          let pageComponents = moveElementInArrayFromToIndex(
+            page.components,
+            currentIndex,
+            nextIndex
+          );
+
+          const updatedPage: IUserPage = {
+            ...page,
+            components: pageComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.DECREASE_COMPONENT_INDEX_IN_PAGE: {
+      const currentIndex = action.payload.currentIndex as number;
+      const previousIndex = currentIndex - 1;
+      const pageId = action.payload.pageId;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          if (previousIndex <= 0) {
+            return page;
+          }
+
+          let pageComponents = moveElementInArrayFromToIndex(
+            page.components,
+            currentIndex,
+            previousIndex
+          );
+
+          const updatedPage: IUserPage = {
+            ...page,
+            components: pageComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+
       return {
         ...state,
         profile: {

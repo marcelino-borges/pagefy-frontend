@@ -5,7 +5,8 @@ import {
   LIGHT_GREY,
   PRIMARY_COLOR,
   MEDIUM_GREY,
-} from "./../../../../../styles/colors";
+  LIGHTER_GREY,
+} from "../../../../styles/colors";
 
 export const Parent = styled(Grid)`
   position: relative;
@@ -178,4 +179,29 @@ export const AnalyticsGridItem = styled(Grid)`
   color: ${LIGHT_GREY};
   font-size: 16px;
   display: inline-flex;
+`;
+
+export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
+  <Grid {...rest} />
+))`
+  padding: 16px 16px;
+  cursor: pointer;
+  border-radius: ${(props) => {
+    if (props.up !== undefined) {
+      return "15px 0px 15px 0px";
+    } else if (props.down !== undefined) {
+      return "0px 15px 0px 15px";
+    } else {
+      return "unset";
+    }
+  }};
+  transform: translateX(-2px);
+
+  &:hover {
+    background-color: ${LIGHTER_GREY};
+  }
+
+  &:active {
+    background-color: ${LIGHT_GREY};
+  }
 `;

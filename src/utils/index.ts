@@ -24,3 +24,15 @@ export const getLocalizedStringByComponentType = (type: ComponentType) => {
       return strings.unknown;
   }
 };
+
+export const moveElementInArrayFromToIndex = (
+  array: any[],
+  fromIndex: number,
+  toIndex: number
+) => {
+  let element = array[fromIndex];
+  let updatedArray = [...array];
+  updatedArray.splice(fromIndex, 1);
+  updatedArray.splice(toIndex, 0, element);
+  return updatedArray;
+};
