@@ -30,6 +30,7 @@ import TransparentTextField from "./../../components/transparent-textfield/index
 import { useForm } from "react-hook-form";
 import { updateUserPageName } from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component/index";
+import IconsDialog from "./icons-dialog";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -43,6 +44,7 @@ const UserPage = () => {
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
   const [pageName, setPageName] = useState("");
+  const [openIconsDialog, setOpenIconsDialog] = useState(true);
 
   const { handleSubmit } = useForm();
 
@@ -100,6 +102,16 @@ const UserPage = () => {
     dispatch(updateUserPageName(page._id, pageName));
   };
 
+  const handleOpenIconsDialog = () => {
+    if (!page?._id) return;
+
+    setOpenIconsDialog(true);
+  };
+
+  const handleCloseIconsDialog = () => {
+    setOpenIconsDialog(false);
+  };
+
   const ToolBar = () => {
     return (
       <PageToolbar
@@ -147,7 +159,7 @@ const UserPage = () => {
 
               <Grid item xs={12} sm={3}>
                 <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton>
+                  <ToolbarButton onClick={handleOpenIconsDialog}>
                     <InsertIconIcon />
                     <ToolbarIconText>
                       {BREAK_TOOLBAR_TEXT &&
@@ -235,6 +247,11 @@ const UserPage = () => {
 
   return (
     <SiteContent>
+      <IconsDialog
+        open={openIconsDialog}
+        handleClose={handleCloseIconsDialog}
+        pageId={page?._id}
+      />
       <ToolBar />
       {page && nonIconComponentsList && nonIconComponentsList.length > 0 ? (
         <Grid container direction="column" ref={listContainer}>

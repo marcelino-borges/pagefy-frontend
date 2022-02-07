@@ -27,6 +27,10 @@ interface IDictionary {
   addComponent: string;
   addIcon: string;
   addVideo: string;
+  iconName: string;
+  back: string;
+  cancel: string;
+  add: string;
 }
 
 // Dictionaries
@@ -58,6 +62,10 @@ const en: IDictionary = {
   addComponent: "Add Component",
   addIcon: "Add Icon",
   addVideo: "Add Video",
+  iconName: "Icon name",
+  back: "Back",
+  cancel: "Cancel",
+  add: "Add",
 };
 
 const pt: IDictionary = {
@@ -87,6 +95,10 @@ const pt: IDictionary = {
   addComponent: "Inserir Componente",
   addIcon: "Inserir Ícone",
   addVideo: "Inserir Vídeo",
+  iconName: "Nome do ícone",
+  back: "Voltar",
+  cancel: "Cancelar",
+  add: "Inserir",
 };
 
 // Composed dictionaries
