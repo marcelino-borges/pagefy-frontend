@@ -26,11 +26,19 @@ interface IDictionary {
   remove: string;
   addComponent: string;
   addIcon: string;
+  deleteIcon: string;
   addVideo: string;
   iconName: string;
   back: string;
   cancel: string;
   add: string;
+  searchIconMinCaracters: string;
+  url: string;
+  invalidUrl: string;
+  colorPicker: string;
+  deleteComponentConfirmation: string;
+  yes: string;
+  no: string;
 }
 
 // Dictionaries
@@ -61,11 +69,19 @@ const en: IDictionary = {
   remove: "Remove",
   addComponent: "Add Component",
   addIcon: "Add Icon",
+  deleteIcon: "Delete Icon",
   addVideo: "Add Video",
   iconName: "Icon name",
   back: "Back",
   cancel: "Cancel",
   add: "Add",
+  searchIconMinCaracters: "Search must have at least 3 caracters.",
+  url: "URL",
+  invalidUrl: "Invalid URL",
+  colorPicker: "Pick a color",
+  deleteComponentConfirmation: "Do you really wish to delete this component?",
+  yes: "Yes",
+  no: "No",
 };
 
 const pt: IDictionary = {
@@ -94,11 +110,19 @@ const pt: IDictionary = {
   remove: "Remover",
   addComponent: "Inserir Componente",
   addIcon: "Inserir Ícone",
+  deleteIcon: "Remover Ícone",
   addVideo: "Inserir Vídeo",
   iconName: "Nome do ícone",
   back: "Voltar",
   cancel: "Cancelar",
   add: "Inserir",
+  searchIconMinCaracters: "Busca precisa ter mais de 3 caracteres.",
+  url: "URL",
+  invalidUrl: "URL inválida",
+  colorPicker: "Escolha outra cor",
+  deleteComponentConfirmation: "Deseja realmente apagar este componente?",
+  yes: "Sim",
+  no: "Não",
 };
 
 // Composed dictionaries

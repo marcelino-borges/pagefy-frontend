@@ -2,12 +2,13 @@ export enum UserActionTypes {
   GET_USER_SUCCESS = "@user/GET_USER_SUCCESS",
   GET_USER_ERROR = "@user/GET_USER_ERROR",
   UPDATE_USER_PAGE_NAME = "@user/UPDATE_USER_PAGE_NAME",
-  DELETE_COMPONENT_FROM_PAGE = "@user/DELETE_COMPONENT_FROM_PAGE",
   TOGGLE_COMPONENT_VISIBILITY = "@user/TOGGLE_COMPONENT_VISIBILITY",
   UPDATE_COMPONENT_LABEL = "@user/UPDATE_COMPONENT_LABEL",
   UPDATE_COMPONENT_URL = "@user/UPDATE_COMPONENT_URL",
   INCREASE_COMPONENT_INDEX_IN_PAGE = "@user/INCREASE_COMPONENT_INDEX_IN_PAGE",
   DECREASE_COMPONENT_INDEX_IN_PAGE = "@user/DECREASE_COMPONENT_INDEX_IN_PAGE",
+  ADD_COMPONENT_IN_PAGE = "@user/ADD_COMPONENT_IN_PAGE",
+  DELETE_COMPONENT_FROM_PAGE = "@user/DELETE_COMPONENT_FROM_PAGE",
 }
 
 export interface IUser {
@@ -40,12 +41,18 @@ export interface IUserComponent {
   };
   type: ComponentType;
   mediaUrl?: string;
-  icon?: IconType;
+  iconDetails?: IIconDetails;
+}
+
+export interface IIconDetails {
+  packName: string;
+  nameInPack: string;
+  indexInPack: number;
 }
 
 export interface IComponentStyle {
-  backgroundColor: string;
-  fontColor: string;
+  backgroundColor?: string;
+  color?: string;
 }
 
 export enum ComponentType {
@@ -54,101 +61,6 @@ export enum ComponentType {
   TextImage,
   Icon,
   Video,
-}
-
-export enum IconType {
-  WhatsApp = "WhatsApp",
-  TikTok = "TikTok",
-  Instagram = "Instagram",
-  Facebook = "Facebook",
-  Email = "Email",
-  Twitter = "Twitter",
-  Youtube = "Youtube",
-  Phone = "Phone",
-  Spotify = "Spotify",
-  Website = "Website",
-  LinkedIn = "Website",
-  Twitch = "Twitch",
-  Discord = "Discord",
-  Telegram = "Telegram",
-  Snapchat = "Snapchat",
-  Shopee = "Shopee", //falta icone
-  Pinterest = "Pinterest",
-  YoutubeMusic = "Youtube Music",
-  GenericShop = "Shop",
-  SoundCloud = "SoundCloud",
-  FacebookMessenger = "Facebook Messenger",
-  AppleMusic = "Apple Music",
-  PayPal = "PayPal",
-  Line = "Line",
-  Amazon = "Amazon",
-  Deezer = "Deezer",
-  Behance = "Behance",
-  Tumblr = "Tumblr",
-  Steam = "Steam",
-  Onlyfans = "Onlyfans", // nao achei
-  GoogleDrive = "Google Drive",
-  Wattpad = "Wattpad",
-  Etsy = "Etsy", //nao achei
-  Shopify = "Shopify",
-  Reddit = "Reddit",
-  Viber = "Viber",
-  Goodreads = "Goodreads",
-  Skype = "Skype",
-  Medium = "Medium",
-  GooglePlay = "Google Play",
-  Vimeo = "Vimeo",
-  Patreon = "Patreon",
-  Bandcamp = "Bandcamp",
-  VSCO = "VSCO", // nao achei
-  VK = "VK",
-  ApplePodcast = "ApplePodcast",
-  WeChat = "WeChat",
-  Mixcloud = "Mixcloud",
-  AppStore = "AppStore",
-  Napster = "Napster",
-  Flickr = "Flickr",
-  Ebay = "Ebay",
-  Clubhouse = "Clubhouse",
-  Flipboard = "Flipboard", // nao achei
-  LastFM = "Last.FM", // nao achei
-  Weibo = "Weibo",
-  Fansly = "Fansly", // nao achei
-  Digg = "Digg",
-  BuyMeACoffee = "Buy me a coffee",
-  VibePay = "VibePay", // nao achei
-  Venmo = "Venmo", // nao achei
-  Zelle = "Zelle", // nao achei
-  Letterboxd = "Letterboxd", // nao achei
-  GoogleBlog = "Google Blog",
-  Vinted = "Vinted", // nao achei
-  Square = "Square", // nao achei
-  Artstation = "Artstation", // nao achei
-  AmazonMusic = "Amazon Music", // nao achei
-  GoogleMaps = "Google Maps",
-  Waze = "Waze",
-  Uber = "Uber",
-  Tokopedia = "Tokopedia", // nao achei
-  Roblox = "Roblox", // nao achei
-  GooglePodcast = "Google Podcast",
-  Lazada = "Lazada", // nao achei
-  GitHub = "GitHub",
-  Redbubble = "Redbubble", // nao achei
-  AliExpress = "Ali Express", // nao achei
-  Fiverr = "Fiverr",
-  Bigo = "Bigo", // nao achei
-  MercadoLibre = "Mercado Livre", // nao achei
-  Tellonym = "Tellonym", // nao achei
-  Ivoox = "Ivoox", // nao achei
-  Coinbase = "Coinbase", // nao achei
-  Freelancer = "Freelancer", // nao achei
-  Beatstars = "Beatstars", // nao achei
-  Brubank = "Brubank", // nao achei
-  Amino = "Amino", // nao achei
-  Nubank = "Nubank", // nao achei
-  Kwai = "Kwai", // nao achei
-  Wordpress = "Wordpress",
-  GenericBank = "Bank",
 }
 
 export interface IUserState {

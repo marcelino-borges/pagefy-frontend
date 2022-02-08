@@ -2,7 +2,6 @@ import { moveElementInArrayFromToIndex } from "../../utils";
 import { IAction } from "../shared";
 import {
   ComponentType,
-  IconType,
   IUserComponent,
   IUserPage,
   IUserState,
@@ -180,7 +179,68 @@ const initialState: IUserState = {
               columns: 2,
             },
             type: ComponentType.Icon,
-            icon: IconType.AliExpress,
+            iconDetails: {
+              packName: "",
+              nameInPack: "",
+              indexInPack: 0,
+            },
+          },
+          {
+            _id: "79e0249e-239d-4a1a-8eb4-c395d4b64315",
+            url: "https://www.slproweb.com/",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              packName: "ai",
+              nameInPack: "AiOutlineFacebook",
+              indexInPack: 362,
+            },
+          },
+          {
+            _id: "50626a6c-9c44-40b2-b3db-a0af64d5da8e",
+            url: "https://www.linkedin.com/in/marcelino-borges/",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              packName: "ai",
+              nameInPack: "AiFillTwitterCircle",
+              indexInPack: 200,
+            },
+          },
+          {
+            _id: "226fbb96-58cb-4f2b-81fb-e95213dc1c97",
+            url: "https://www.slproweb.com/",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              packName: "gi",
+              nameInPack: "GiOverlordHelm",
+              indexInPack: 2555,
+            },
           },
         ],
       },
@@ -495,32 +555,6 @@ const userReducer = (
       };
     }
 
-    case UserActionTypes.DELETE_COMPONENT_FROM_PAGE: {
-      const pageId = action.payload.pageId;
-      const componentId = action.payload.componentId;
-
-      const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.filter(
-            (component: IUserComponent) => component._id !== componentId
-          );
-          const updatedPage: IUserPage = {
-            ...page,
-            components: updatedComponents,
-          };
-          return updatedPage;
-        }
-        return page;
-      });
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          pages: updatedPages,
-        },
-      };
-    }
-
     case UserActionTypes.TOGGLE_COMPONENT_VISIBILITY: {
       const pageId = action.payload.pageId as string;
       const componentId = action.payload.componentId as string;
@@ -682,6 +716,57 @@ const userReducer = (
           const updatedPage: IUserPage = {
             ...page,
             components: pageComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.DELETE_COMPONENT_FROM_PAGE: {
+      const pageId = action.payload.pageId;
+      const componentId = action.payload.componentId;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          const updatedComponents = page.components.filter(
+            (component: IUserComponent) => component._id !== componentId
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            components: updatedComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.ADD_COMPONENT_IN_PAGE: {
+      const pageId = action.payload.pageId;
+      const component: IUserComponent = action.payload.component;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          const updatedComponents = [...page.components, component];
+          const updatedPage: IUserPage = {
+            ...page,
+            components: updatedComponents,
           };
           return updatedPage;
         }

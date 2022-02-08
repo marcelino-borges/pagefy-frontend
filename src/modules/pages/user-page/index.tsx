@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Grid } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+} from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -23,14 +30,24 @@ import {
   PageImage,
   ToolbarButton,
   ToolbarIconText,
+  DeleteIconOverlay,
+  DeleteIcon,
+  DeleteIconOverlaySpan,
 } from "./style";
 import strings from "../../../localization";
 import { EditPenIcon } from "./style";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
-import { updateUserPageName } from "../../../store/user/actions";
+import {
+  deleteComponentFromPage,
+  updateUserPageName,
+} from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component/index";
 import IconsDialog from "./icons-dialog";
+import iconPacks from "../../../assets/icons/react-icons";
+import { IIconPack } from "./../../../assets/icons/react-icons/index";
+import CustomTooltip from "./../../components/tooltip/index";
+import { v4 as uuidv4 } from "uuid";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -44,7 +61,10 @@ const UserPage = () => {
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
   const [pageName, setPageName] = useState("");
-  const [openIconsDialog, setOpenIconsDialog] = useState(true);
+  const [openIconsDialog, setOpenIconsDialog] = useState(false);
+  const [openDeleteComponentConfirmation, setOpenDeleteComponentConfirmation] =
+    useState(false);
+  const [idComponenteEditted, setIdComponenteEditted] = useState<string>("");
 
   const { handleSubmit } = useForm();
 
@@ -87,10 +107,6 @@ const UserPage = () => {
   useEffect(() => {
     if (page && page._id) dispatch(setPageBeingManaged(page._id));
   }, [dispatch, page, page?._id]);
-
-  const onListChange = (newList: any) => {
-    setNonIconComponentsList(newList);
-  };
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageName(event.target.value);
@@ -144,9 +160,9 @@ const UserPage = () => {
                       strings.addComponent.split(" ").length > 1 ? (
                         strings.addComponent.split(" ").map((word: string) => {
                           return (
-                            <>
+                            <span key={uuidv4()}>
                               {word} <br />
-                            </>
+                            </span>
                           );
                         })
                       ) : (
@@ -167,9 +183,9 @@ const UserPage = () => {
                       strings.addIcon.split(" ").length > 1 ? (
                         strings.addIcon.split(" ").map((word: string) => {
                           return (
-                            <>
+                            <span key={uuidv4()}>
                               {word} <br />
-                            </>
+                            </span>
                           );
                         })
                       ) : (
@@ -190,9 +206,9 @@ const UserPage = () => {
                       strings.addVideo.split(" ").length > 1 ? (
                         strings.addVideo.split(" ").map((word: string) => {
                           return (
-                            <>
+                            <span key={uuidv4()}>
                               {word} <br />
-                            </>
+                            </span>
                           );
                         })
                       ) : (
@@ -245,14 +261,116 @@ const UserPage = () => {
     );
   };
 
+  const DeleteComponentConfirmationDialog = () => {
+    return (
+      <Dialog
+        open={openDeleteComponentConfirmation}
+        onClose={() => {
+          setOpenDeleteComponentConfirmation(false);
+        }}
+        fullWidth
+        maxWidth="sm"
+        style={{ minWidth: "300px" }}
+      >
+        <DialogTitle>{strings.deleteIcon}</DialogTitle>
+        <DialogContent>{strings.deleteComponentConfirmation}</DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenDeleteComponentConfirmation(false);
+            }}
+          >
+            {strings.no}
+          </Button>
+          <Button
+            onClick={() => {
+              if (!page || !page._id) return;
+              setOpenDeleteComponentConfirmation(false);
+              dispatch(deleteComponentFromPage(idComponenteEditted, page._id));
+            }}
+          >
+            {strings.yes}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
+  const handleDeleteComponent = (iconComponent: IUserComponent) => {
+    if (!page || !page._id || !iconComponent._id) return;
+    setIdComponenteEditted(iconComponent._id);
+    setOpenDeleteComponentConfirmation(true);
+  };
+
+  const getIconFromPack = (iconComponent: IUserComponent) => {
+    if (!iconComponent.iconDetails) return;
+    const pack = iconPacks.find(
+      (iconPack: IIconPack) =>
+        iconPack.name.toLowerCase() ===
+        iconComponent.iconDetails?.packName.toLowerCase()
+    )?.pack;
+
+    if (!pack) return;
+
+    const icons = Object.values(pack);
+
+    const FoundIcon: any = icons.find(
+      (icon: any) =>
+        icon.name.toLowerCase() ===
+        iconComponent.iconDetails?.nameInPack.toLowerCase()
+    );
+
+    if (FoundIcon) {
+      return (
+        <CustomTooltip
+          leaveDelay={0.1}
+          title={iconComponent.url}
+          key={iconComponent._id}
+        >
+          <Grid item style={{ padding: "8px", position: "relative" }}>
+            <DeleteIconOverlaySpan
+              onClick={() => handleDeleteComponent(iconComponent)}
+            >
+              <FoundIcon
+                style={{
+                  ...iconComponent.style,
+                  fontSize: "56px",
+                  cursor: "pointer",
+                }}
+              />
+              <DeleteIconOverlay>
+                <DeleteIcon />
+              </DeleteIconOverlay>
+            </DeleteIconOverlaySpan>
+          </Grid>
+        </CustomTooltip>
+      );
+    }
+  };
+
   return (
     <SiteContent>
+      <DeleteComponentConfirmationDialog />
       <IconsDialog
         open={openIconsDialog}
         handleClose={handleCloseIconsDialog}
         pageId={page?._id}
       />
       <ToolBar />
+      {iconComponentsList && iconComponentsList.length > 0 && (
+        <Grid
+          container
+          direction="row"
+          style={{
+            marginBottom: "24px",
+          }}
+          justifyContent="center"
+        >
+          {iconComponentsList.map((iconComponent: IUserComponent) =>
+            getIconFromPack(iconComponent)
+          )}
+        </Grid>
+      )}
       {page && nonIconComponentsList && nonIconComponentsList.length > 0 ? (
         <Grid container direction="column" ref={listContainer}>
           {nonIconComponentsList.map(
@@ -261,6 +379,7 @@ const UserPage = () => {
                 component={component}
                 index={index}
                 pageId={page._id}
+                key={component._id}
               />
             )
           )}

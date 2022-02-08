@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
-import { Visibility, Edit } from "@mui/icons-material";
+import { Visibility, Edit, Delete } from "@mui/icons-material";
 import {
   LIGHTER_GREY,
   MEDIUM_GREY,
@@ -106,4 +106,33 @@ export const EditPenIcon = styled(Edit)`
   &:hover {
     color: ${PRIMARY_COLOR};
   }
+`;
+
+export const DeleteIconOverlaySpan = styled("span")`
+  color: ${MEDIUM_GREY};
+  font-size: 20px;
+  margin: 8px;
+
+  &:hover svg {
+    color: grey;
+    opacity: 0.5;
+  }
+`;
+
+export const DeleteIconOverlay = styled("div")`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 56px;
+  cursor: pointer;
+  transform: translateX(48%) translateY(35%);
+`;
+
+export const DeleteIcon = styled(Delete)`
+  font-size: 20px;
+  margin: 8px;
+  left: 0;
+  cursor: pointer;
+  opacity: 0;
 `;

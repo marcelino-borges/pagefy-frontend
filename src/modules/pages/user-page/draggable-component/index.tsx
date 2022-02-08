@@ -93,8 +93,8 @@ const DraggableUserComponent = ({
       <AnalyticsGridItem item alignItems="center">
         <CustomTooltip
           leaveDelay={1}
-          title={`${tooltipKey}: ${tooltipValue}`}
           placement={isLargerThanMD ? "left" : "bottom"}
+          title={`${tooltipKey}: ${tooltipValue}`}
         >
           {icon}
         </CustomTooltip>
@@ -124,7 +124,7 @@ const DraggableUserComponent = ({
 
   const deleteComponent = () => {
     if (!component._id || !pageBeingManaged) return;
-    dispatch(deleteComponentFromPage(pageBeingManaged, component._id));
+    dispatch(deleteComponentFromPage(component._id, pageBeingManaged));
   };
 
   const toggleVisibility = () => {
