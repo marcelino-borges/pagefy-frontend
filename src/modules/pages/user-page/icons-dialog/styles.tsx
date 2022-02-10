@@ -29,9 +29,15 @@ export const ColorizeIcon = styled(({ ...rest }: any) => (
 ))`
   position: absolute;
   z-index: 12;
-  color: rgba(1, 1, 1, 0);
+  color: rgba(1, 1, 1, 1);
   left: 0;
-  transform: translateX(80%) translateY(60%);
+  transform: translateX(150%) translateY(-20%);
+  padding: 4px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
+  width: 16px;
+  height: 16px;
 `;
 
 export const ColorizeBG = styled(({ ...rest }: any) => <span {...rest} />)`
@@ -46,8 +52,9 @@ export const ColorizeBG = styled(({ ...rest }: any) => <span {...rest} />)`
   }
 
   &:hover svg {
-    color: var(--primary);
-    opacity: 0.8;
+    background-color: var(--primary);
+    color: white;
+    border: 1px solid white;
   }
 `;
 

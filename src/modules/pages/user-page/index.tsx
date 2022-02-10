@@ -324,7 +324,10 @@ const UserPage = () => {
           {iconComponentsList.map((iconComponent: IUserComponent) => {
             if (iconComponent.iconDetails) {
               return (
-                <CustomTooltip title={iconComponent.url}>
+                <CustomTooltip
+                  title={iconComponent.url}
+                  key={iconComponent._id}
+                >
                   <DeleteIconOverlaySpan>
                     <Icon
                       icon={iconComponent.iconDetails.icon}
@@ -340,7 +343,7 @@ const UserPage = () => {
                 </CustomTooltip>
               );
             }
-            return <></>;
+            return null;
           })}
         </Grid>
       )}

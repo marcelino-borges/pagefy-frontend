@@ -76,7 +76,13 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           keyword.includes(search.toLowerCase()) ||
           search.toLowerCase().includes(keyword)
         ) {
-          results.push(icon);
+          if (
+            !results.find(
+              (result: IIconifyIcon) =>
+                result.userFriendlyName === icon.userFriendlyName
+            )
+          )
+            results.push(icon);
         }
       });
     });
@@ -104,6 +110,8 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setShowLoading(true);
     setResultsList([]);
     searchIcon(search);
+    setIconSelected(undefined);
+    setColorSelected(undefined);
   };
 
   const onSubmitUrl = () => {
@@ -243,11 +251,11 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
             </Grid>
           )}
           {!iconSelected &&
-            resultsList.map((icon: IIconifyIcon, index: number) => (
+            resultsList.map((icon: IIconifyIcon) => (
               <>
                 {icon.variations.map((variation: string) => (
                   <IconsResult
-                    key={index}
+                    key={variation}
                     onClick={(e: any) => {
                       setIconSelected({
                         userFriendlyName: icon.userFriendlyName,
@@ -284,7 +292,8 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                       <Icon
                         icon={iconSelected.icon}
                         style={{
-                          fontSize: "56px",
+                          width: "56px",
+                          height: "56px",
                           marginRight: "16px",
                           color: colorSelected,
                           zIndex: "10",

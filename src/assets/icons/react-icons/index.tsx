@@ -45,7 +45,6 @@ const icons: IIconifyIcon[] = [
       "entypo-social:facebook",
       "bx:bxl-facebook",
       "iconoir:facebook",
-      "iconoir:facebook",
     ],
     keywords: ["facebook", "face", "fb", "book"],
   },
