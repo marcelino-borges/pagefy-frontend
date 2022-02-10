@@ -44,10 +44,11 @@ import {
 } from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component/index";
 import IconsDialog from "./icons-dialog";
-import iconPacks from "../../../assets/icons/react-icons";
-import { IIconPack } from "./../../../assets/icons/react-icons/index";
+// import iconPacks from "../../../assets/icons/react-icons";
+// import { IIconPack } from "./../../../assets/icons/react-icons/index";
 import CustomTooltip from "./../../components/tooltip/index";
 import { v4 as uuidv4 } from "uuid";
+import { Icon, listIcons } from "@iconify/react";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -302,52 +303,6 @@ const UserPage = () => {
     setOpenDeleteComponentConfirmation(true);
   };
 
-  const getIconFromPack = (iconComponent: IUserComponent) => {
-    if (!iconComponent.iconDetails) return;
-    const pack = iconPacks.find(
-      (iconPack: IIconPack) =>
-        iconPack.name.toLowerCase() ===
-        iconComponent.iconDetails?.packName.toLowerCase()
-    )?.pack;
-
-    if (!pack) return;
-
-    const icons = Object.values(pack);
-
-    const FoundIcon: any = icons.find(
-      (icon: any) =>
-        icon.name.toLowerCase() ===
-        iconComponent.iconDetails?.nameInPack.toLowerCase()
-    );
-
-    if (FoundIcon) {
-      return (
-        <CustomTooltip
-          leaveDelay={0.1}
-          title={iconComponent.url}
-          key={iconComponent._id}
-        >
-          <Grid item style={{ padding: "8px", position: "relative" }}>
-            <DeleteIconOverlaySpan
-              onClick={() => handleDeleteComponent(iconComponent)}
-            >
-              <FoundIcon
-                style={{
-                  ...iconComponent.style,
-                  fontSize: "56px",
-                  cursor: "pointer",
-                }}
-              />
-              <DeleteIconOverlay>
-                <DeleteIcon />
-              </DeleteIconOverlay>
-            </DeleteIconOverlaySpan>
-          </Grid>
-        </CustomTooltip>
-      );
-    }
-  };
-
   return (
     <SiteContent>
       <DeleteComponentConfirmationDialog />
@@ -366,9 +321,27 @@ const UserPage = () => {
           }}
           justifyContent="center"
         >
-          {iconComponentsList.map((iconComponent: IUserComponent) =>
-            getIconFromPack(iconComponent)
-          )}
+          {iconComponentsList.map((iconComponent: IUserComponent) => {
+            if (iconComponent.iconDetails) {
+              return (
+                <CustomTooltip title={iconComponent.url}>
+                  <DeleteIconOverlaySpan>
+                    <Icon
+                      icon={iconComponent.iconDetails.icon}
+                      style={{
+                        fontSize: "46px",
+                        cursor: "pointer",
+                        color: iconComponent.iconDetails.icon.includes("logos")
+                          ? "unset"
+                          : "black",
+                      }}
+                    />
+                  </DeleteIconOverlaySpan>
+                </CustomTooltip>
+              );
+            }
+            return <></>;
+          })}
         </Grid>
       )}
       {page && nonIconComponentsList && nonIconComponentsList.length > 0 ? (

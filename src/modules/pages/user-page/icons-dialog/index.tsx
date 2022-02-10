@@ -35,7 +35,9 @@ import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
 import { addComponentInPage } from "../../../../store/user/actions";
 import { v4 as uuidv4 } from "uuid";
-import iconPacks, { IIconPack } from "../../../../assets/icons/react-icons";
+import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
+import { Icon } from "@iconify/react";
+// import iconPacks, { IIconPack } from "../../../../assets/icons/react-icons";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -44,7 +46,6 @@ interface IIconsDialogProps {
 }
 
 interface IIconDetailsForResults {
-  Html: any;
   color: string;
 }
 
@@ -56,40 +57,31 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     useForm();
   const { handleSubmit: handleSubmitUrl, register: registerUrl } = useForm();
 
-  const [resultsList, setResultsList] = useState<
-    (IIconDetailsForResults & IIconDetails)[]
-  >([]);
+  const [resultsList, setResultsList] = useState<IIconifyIcon[]>([]);
   const [showLoading, setShowLoading] = useState<boolean>(false);
   const [isSearchInvalid, setIsSearchInvalid] = useState<boolean>(false);
   const [isUrlInvalid, setIsUrlInvalid] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
   const [lastSearch, setLastSearch] = useState<string | undefined>();
-  const [IconSelected, setIconSelected] = useState<
-    IIconDetailsForResults & IIconDetails
-  >();
+  const [iconSelected, setIconSelected] = useState<IIconDetails>();
+  const [colorSelected, setColorSelected] = useState<string>();
   const [url, setUrl] = useState<string>("");
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
 
   const searchIcon = (search: string) => {
-    const results: (IIconDetailsForResults & IIconDetails)[] = [];
-
-    iconPacks.forEach((iconPack: IIconPack) => {
-      const packIcons = Object.values(iconPack.pack);
-
-      packIcons.forEach((Icon: any, index: number) => {
-        if (Icon.name.toLowerCase().includes(search.toLowerCase())) {
-          const iconDetail: IIconDetailsForResults & IIconDetails = {
-            packName: iconPack.name,
-            nameInPack: Icon.name,
-            indexInPack: index,
-            Html: Icon,
-            color: "black",
-          };
-          results.push(iconDetail);
+    const results: IIconifyIcon[] = [];
+    icons.forEach((icon: IIconifyIcon) => {
+      icon.keywords.forEach((keyword: string) => {
+        if (
+          keyword.includes(search.toLowerCase()) ||
+          search.toLowerCase().includes(keyword)
+        ) {
+          results.push(icon);
         }
       });
     });
-    setLastSearch(search);
+
+    if (results.length > 0) setLastSearch(search);
     setResultsList([...results]);
     setShowLoading(false);
   };
@@ -128,6 +120,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
   const clearSearch = () => {
     setSearch("");
+    setUrl("");
     clearStates();
   };
 
@@ -140,8 +133,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   };
 
   const handleChangeColorComplete = (color: any) => {
-    const updateIcon: any = { ...IconSelected, color: color.hex };
-    setIconSelected(updateIcon);
+    setColorSelected(String(color.hex));
   };
 
   const toggleColorPicker = () => {
@@ -155,14 +147,14 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       setIsUrlInvalid(true);
     }
 
-    if (!pageId || !IconSelected) return;
+    if (!pageId || !iconSelected) return;
 
     const newComponent: IUserComponent = {
       _id: uuidv4(),
       label: undefined,
       url,
       style: {
-        color: IconSelected?.color,
+        color: colorSelected,
       },
       visible: true,
       clicks: 0,
@@ -173,12 +165,12 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       type: ComponentType.Icon,
       mediaUrl: undefined,
       iconDetails: {
-        packName: IconSelected.packName,
-        nameInPack: IconSelected.nameInPack,
-        indexInPack: IconSelected.indexInPack,
+        userFriendlyName: iconSelected.userFriendlyName,
+        icon: iconSelected.icon,
       },
     };
     clearSearch();
+    console.log("newComponent: ", newComponent);
     dispatch(addComponentInPage(newComponent, pageId));
   };
 
@@ -250,21 +242,25 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
               <CircularProgress color="primary" />
             </Grid>
           )}
-          {!IconSelected &&
-            resultsList.map(
-              (Icon: IIconDetailsForResults & IIconDetails, index: number) => (
-                <IconsResult
-                  key={index}
-                  onClick={(e: any) => {
-                    setIconSelected(Icon);
-                  }}
-                  style={{ color: Icon.color }}
-                >
-                  <Icon.Html />
-                </IconsResult>
-              )
-            )}
-          {IconSelected && (
+          {!iconSelected &&
+            resultsList.map((icon: IIconifyIcon, index: number) => (
+              <>
+                {icon.variations.map((variation: string) => (
+                  <IconsResult
+                    key={index}
+                    onClick={(e: any) => {
+                      setIconSelected({
+                        userFriendlyName: icon.userFriendlyName,
+                        icon: variation,
+                      });
+                    }}
+                  >
+                    <Icon icon={variation} />
+                  </IconsResult>
+                ))}
+              </>
+            ))}
+          {iconSelected && (
             <form
               onSubmit={handleSubmitUrl(onSubmitUrl)}
               style={{ width: "100%", marginTop: "16px" }}
@@ -285,11 +281,12 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     }}
                   >
                     <SelectedIconButton onClick={toggleColorPicker}>
-                      <IconSelected.Html
+                      <Icon
+                        icon={iconSelected.icon}
                         style={{
                           fontSize: "56px",
                           marginRight: "16px",
-                          color: IconSelected.color,
+                          color: colorSelected,
                           zIndex: "10",
                         }}
                       />
@@ -300,7 +297,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     {showColorPicker && (
                       <ColorPickerSpan>
                         <SketchPicker
-                          color={IconSelected.color}
+                          color={colorSelected}
                           onChangeComplete={handleChangeColorComplete}
                         />
                       </ColorPickerSpan>
@@ -314,7 +311,6 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     helperText={isUrlInvalid ? strings.invalidUrl : ""}
                     autoFocus
                     required
-                    // label={strings.url}
                     placeholder="https://www.mywebsite.com"
                     type="text"
                     fullWidth

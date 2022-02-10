@@ -21,6 +21,7 @@ export const IconsResult = styled(
   padding: 8px;
   cursor: pointer;
   border-radius: 8px;
+  color: grey;
 `;
 
 export const ColorizeIcon = styled(({ ...rest }: any) => (
