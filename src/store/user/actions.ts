@@ -80,3 +80,21 @@ export const deleteComponentFromPage = (
   payload: { componentId, pageId },
   type: UserActionTypes.DELETE_COMPONENT_FROM_PAGE,
 });
+
+export const setComponentBackgroundColor = (
+  pageId: string,
+  componentId: string,
+  newColor: string
+) => ({
+  payload: { pageId, componentId, newColor },
+  type: UserActionTypes.UPDATE_COMPONENT_BACKGROUND_COLOR,
+});
+
+export const setComponentFontColor = (
+  pageId: string,
+  componentId: string,
+  newColor: string
+) => ({
+  payload: { pageId, componentId, newColor },
+  type: UserActionTypes.UPDATE_COMPONENT_FONT_COLOR,
+});

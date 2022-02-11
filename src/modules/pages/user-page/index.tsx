@@ -30,8 +30,6 @@ import {
   PageImage,
   ToolbarButton,
   ToolbarIconText,
-  DeleteIconOverlay,
-  DeleteIcon,
   DeleteIconOverlaySpan,
 } from "./style";
 import strings from "../../../localization";
@@ -42,19 +40,18 @@ import {
   deleteComponentFromPage,
   updateUserPageName,
 } from "../../../store/user/actions";
-import DraggableUserComponent from "./draggable-component/index";
+import DraggableUserComponent from "./draggable-component";
 import IconsDialog from "./icons-dialog";
-// import iconPacks from "../../../assets/icons/react-icons";
-// import { IIconPack } from "./../../../assets/icons/react-icons/index";
 import CustomTooltip from "./../../components/tooltip/index";
 import { v4 as uuidv4 } from "uuid";
-import { Icon, listIcons } from "@iconify/react";
+import { Icon } from "@iconify/react";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
 
 const UserPage = () => {
   const dispatch = useDispatch();
+
   const [nonIconComponentsList, setNonIconComponentsList] =
     useState<IUserComponent[]>();
   const [iconComponentsList, setIconComponentsList] =
@@ -65,7 +62,7 @@ const UserPage = () => {
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
   const [openDeleteComponentConfirmation, setOpenDeleteComponentConfirmation] =
     useState(false);
-  const [idComponenteEditted, setIdComponenteEditted] = useState<string>("");
+  const [idComponentEditted, setIdComponentEditted] = useState<string>("");
 
   const { handleSubmit } = useForm();
 
@@ -287,7 +284,7 @@ const UserPage = () => {
             onClick={() => {
               if (!page || !page._id) return;
               setOpenDeleteComponentConfirmation(false);
-              dispatch(deleteComponentFromPage(idComponenteEditted, page._id));
+              dispatch(deleteComponentFromPage(idComponentEditted, page._id));
             }}
           >
             {strings.yes}
@@ -295,12 +292,6 @@ const UserPage = () => {
         </DialogActions>
       </Dialog>
     );
-  };
-
-  const handleDeleteComponent = (iconComponent: IUserComponent) => {
-    if (!page || !page._id || !iconComponent._id) return;
-    setIdComponenteEditted(iconComponent._id);
-    setOpenDeleteComponentConfirmation(true);
   };
 
   return (
@@ -336,7 +327,7 @@ const UserPage = () => {
                         cursor: "pointer",
                         color: iconComponent.iconDetails.icon.includes("logos")
                           ? "unset"
-                          : "black",
+                          : iconComponent.style?.color || "black",
                       }}
                     />
                   </DeleteIconOverlaySpan>

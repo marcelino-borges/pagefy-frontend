@@ -146,9 +146,12 @@ export const ToolGridItem = styled(Grid)`
 `;
 
 export const ToolIconButton = styled(
-  ({ transitionDuration, isHoveringComponent, ...rest }: any) => (
-    <IconButton {...rest} />
-  )
+  ({
+    transitionDuration,
+    isHoveringComponent,
+    hoveringWhite,
+    ...rest
+  }: any) => <IconButton {...rest} />
 )`
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${(props) =>
@@ -159,7 +162,11 @@ export const ToolIconButton = styled(
     props.isHoveringComponent ? "visible" : "collapse"};
   text-align: center;
   color: ${(props) =>
-    props.isHoveringComponent ? "white" : "rgba(0, 0, 0, 0)"};
+    props.isHoveringComponent
+      ? props.hoveringWhite !== undefined
+        ? "white"
+        : null
+      : "rgba(0, 0, 0, 0)"};
 
   &.MuiButtonBase-root.MuiIconButton-root {
     border-radius: 20px;
@@ -204,4 +211,38 @@ export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
   &:active {
     background-color: ${LIGHT_GREY};
   }
+`;
+
+export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
+  position: fixed;
+  z-index: 100;
+`;
+
+export const Dropzone = styled(({ ...rest }: any) => <Grid {...rest} />)`
+  flex: 1;
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: #ececec;
+  border-style: dashed;
+  color: #bbbbbb;
+  outline: none;
+  transition: border 0.24s ease-in-out, color 0.24s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--theme-primary);
+    border-color: var(--theme-primary);
+  }
+`;
+
+export const DropzoneFileReady = styled(({ ...rest }: any) => (
+  <Grid {...rest} />
+))`
+  color: #3dd381;
 `;

@@ -6,6 +6,7 @@ interface ITooltipProps {
   leaveDelay?: number;
   disableInteractive?: boolean;
   placement?: any;
+  disabled?: boolean;
 }
 
 const CustomTooltip = ({
@@ -14,9 +15,13 @@ const CustomTooltip = ({
   disableInteractive,
   placement,
   children,
+  disabled = false,
 }: ITooltipProps) => {
   return (
     <Tooltip
+      disableFocusListener={disabled}
+      disableTouchListener={disabled}
+      disableHoverListener={disabled}
       leaveDelay={leaveDelay || 500}
       title={title}
       arrow

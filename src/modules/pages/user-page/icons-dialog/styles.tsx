@@ -24,28 +24,30 @@ export const IconsResult = styled(
   color: grey;
 `;
 
-export const ColorizeIcon = styled(({ ...rest }: any) => (
+export const ColorPickerIcon = styled(({ ...rest }: any) => (
   <Colorize {...rest} />
 ))`
   position: absolute;
   z-index: 12;
-  color: rgba(1, 1, 1, 1);
+  color: white;
   left: 0;
   transform: translateX(150%) translateY(-20%);
   padding: 4px;
-  background-color: white;
+  background-color: black;
   border-radius: 50%;
-  border: 1px solid var(--primary);
+  border: 1px solid white;
   width: 16px;
   height: 16px;
 `;
 
-export const ColorizeBG = styled(({ ...rest }: any) => <span {...rest} />)`
+export const ColorPickerOverlay = styled(({ ...rest }: any) => (
+  <span {...rest} />
+))`
   position: absolute;
   left: 0;
   top: 0;
-  width: 56px;
-  height: 56px;
+  width: 100%;
+  height: 100%;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.6);

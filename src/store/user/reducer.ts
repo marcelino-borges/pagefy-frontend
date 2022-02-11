@@ -587,6 +587,84 @@ const userReducer = (
       };
     }
 
+    case UserActionTypes.UPDATE_COMPONENT_BACKGROUND_COLOR: {
+      const pageId = action.payload.pageId as string;
+      const componentId = action.payload.componentId as string;
+      const newColor = action.payload.newColor as string;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          const updatedComponents = page.components.map(
+            (component: IUserComponent) => {
+              if (component._id === componentId) {
+                const updatedComponent: IUserComponent = {
+                  ...component,
+                  style: {
+                    ...component.style,
+                    backgroundColor: newColor,
+                  },
+                };
+                return updatedComponent;
+              }
+              return component;
+            }
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            components: updatedComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.UPDATE_COMPONENT_FONT_COLOR: {
+      const pageId = action.payload.pageId as string;
+      const componentId = action.payload.componentId as string;
+      const newColor = action.payload.newColor as string;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          const updatedComponents = page.components.map(
+            (component: IUserComponent) => {
+              if (component._id === componentId) {
+                const updatedComponent: IUserComponent = {
+                  ...component,
+                  style: {
+                    ...component.style,
+                    color: newColor,
+                  },
+                };
+                return updatedComponent;
+              }
+              return component;
+            }
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            components: updatedComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
     case UserActionTypes.INCREASE_COMPONENT_INDEX_IN_PAGE: {
       const currentIndex = action.payload.currentIndex as number;
       const nextIndex = currentIndex + 1;

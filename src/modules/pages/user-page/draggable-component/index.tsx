@@ -1,12 +1,19 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import {
   Edit as EditIcon,
   Link as LinkIcon,
-  FormatColorFill as BackgroundColorIcon,
-  FormatColorText as FontColorIcon,
   ImageSearch as ImageSearchIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
@@ -18,6 +25,7 @@ import {
   Category as ComponentTypeIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
+  Check as CheckIcon,
 } from "@mui/icons-material";
 import {
   Parent,
@@ -35,6 +43,9 @@ import {
   ContentRow,
   DarkBG,
   ComponentArrowGridItem,
+  ColorPickerSpan,
+  Dropzone,
+  DropzoneFileReady,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
@@ -49,12 +60,17 @@ import {
   decreaseComponentIndexInPage,
   deleteComponentFromPage,
   increaseComponentIndexInPage,
+  setComponentBackgroundColor,
+  setComponentFontColor,
   setComponentLabel,
   setComponentUrl,
   toggleComponentVisibility,
 } from "../../../../store/user/actions";
-import { clearPageBeingManaged } from "../../../../store/page-management/actions";
 import { IUserComponent } from "../../../../store/user/types";
+import { SketchPicker } from "react-color";
+import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
+import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
+import { useDropzone } from "react-dropzone";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -70,19 +86,28 @@ const DraggableUserComponent = ({
   onClick,
 }: DraggableUserComponentProps) => {
   const dispatch = useDispatch();
+
   const { handleSubmit: handleSubmitLabel } = useForm();
   const { handleSubmit: handleSubmitUrl } = useForm();
 
   const theme = useTheme();
+  const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isLargerThanMD = useMediaQuery(theme.breakpoints.up("md"));
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
+  const [isKeepToolsOpen, setIsKeepToolsOpen] = useState<boolean>(false);
   const [isEdittingLabel, setIsEdittingLabel] = useState<boolean>(false);
   const [isEdittingUrl, setIsEdittingUrl] = useState<boolean>(false);
+  const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
+    useState<boolean>(false);
+  const [showFontColorPicker, setShowFontColorPicker] =
+    useState<boolean>(false);
   const [values, setValues] = useState({
     label: component.label || "",
     url: component.url,
   });
+  const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
+  const [chosenImage, setChosenImage] = useState();
 
   const pageBeingManaged = useSelector(
     (state: IApplicationState) => state.pageManagement.pageId
@@ -100,6 +125,29 @@ const DraggableUserComponent = ({
         </CustomTooltip>
       </AnalyticsGridItem>
     );
+  };
+
+  const onDrop = useCallback((acceptedFiles) => {
+    setChosenImage(acceptedFiles[0]);
+  }, []);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  const showDropzoneText = () => {
+    if (isDragActive) return <p>{strings.dropYourImageHere}</p>;
+    else
+      return (
+        <p>
+          {strings.dragAndDropYourImage}
+          <br />
+          {strings.or}
+          <br />
+          {strings.clickToSearchIt}
+        </p>
+      );
   };
 
   const handleChangeLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,16 +180,93 @@ const DraggableUserComponent = ({
     dispatch(toggleComponentVisibility(pageBeingManaged, component._id));
   };
 
+  const handleChangeBackgroundColorComplete = (color: any) => {
+    if (component._id) {
+      dispatch(
+        setComponentBackgroundColor(pageId, component._id, String(color.hex))
+      );
+      setIsKeepToolsOpen(false);
+    }
+  };
+
+  const handleChangeFontColorComplete = (color: any) => {
+    if (component._id) {
+      dispatch(setComponentFontColor(pageId, component._id, String(color.hex)));
+      setIsKeepToolsOpen(false);
+    }
+  };
+
+  const ChooseFileDialog = () => {
+    return (
+      <Dialog
+        open={openChooseFileDialog}
+        onClose={() => {
+          setOpenChooseFileDialog(false);
+        }}
+        fullWidth
+        fullScreen={isSmallerThanSM}
+        maxWidth="sm"
+        style={{ minWidth: "300px" }}
+      >
+        <DialogTitle>{strings.chooseFile}</DialogTitle>
+        <DialogContent>
+          {!chosenImage ? (
+            <Dropzone container {...getRootProps()}>
+              <input {...getInputProps()} />
+              {showDropzoneText()}
+            </Dropzone>
+          ) : (
+            <>
+              <DropzoneFileReady
+                container
+                alignItems="center"
+                justifyContent="center"
+              >
+                <CheckIcon fontSize="medium" />
+                <span style={{ color: "black" }}>
+                  {strings.imageReadyToUpload}
+                </span>
+              </DropzoneFileReady>
+            </>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenChooseFileDialog(false);
+              setChosenImage(undefined);
+            }}
+          >
+            {strings.back}
+          </Button>
+          <Button
+            onClick={() => {
+              if (!chosenImage) return;
+              // TODO: Send file
+              setOpenChooseFileDialog(false);
+              setChosenImage(undefined);
+            }}
+          >
+            {strings.add}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
   return (
     <Parent
       container
       item
       direction="row"
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseLeave={() => {
+        if (!isKeepToolsOpen) setIsHovering(false);
+      }}
       onClick={() => {
         if (onClick) onClick();
       }}
     >
+      <ChooseFileDialog />
       <Container
         container
         item
@@ -335,6 +460,7 @@ const DraggableUserComponent = ({
         direction="column"
       >
         <CustomTooltip
+          disabled={!isHovering || showBackgroundColorPicker}
           disableInteractive
           leaveDelay={0.1}
           title={strings.backgroundColor}
@@ -344,13 +470,29 @@ const DraggableUserComponent = ({
             <ToolIconButton
               transitionDuration="0.25s"
               isHoveringComponent={isHovering}
+              onClick={() => {
+                setShowBackgroundColorPicker(!showBackgroundColorPicker);
+                setIsKeepToolsOpen(true);
+              }}
             >
-              <BackgroundColorIcon />
+              <BackgroundColorIcon
+                bucketColor="white"
+                selectedColor={component.style?.backgroundColor}
+              />
+              {showBackgroundColorPicker && (
+                <ColorPickerSpan>
+                  <SketchPicker
+                    color={component.style?.backgroundColor}
+                    onChangeComplete={handleChangeBackgroundColorComplete}
+                  />
+                </ColorPickerSpan>
+              )}
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
 
         <CustomTooltip
+          disabled={!isHovering || showFontColorPicker}
           disableInteractive
           leaveDelay={0.1}
           title={strings.fontColor}
@@ -360,13 +502,29 @@ const DraggableUserComponent = ({
             <ToolIconButton
               transitionDuration="0.3s"
               isHoveringComponent={isHovering}
+              onClick={() => {
+                setShowFontColorPicker(!showFontColorPicker);
+                setIsKeepToolsOpen(true);
+              }}
             >
-              <FontColorIcon />
+              <FontColorIcon
+                bucketColor="white"
+                selectedColor={component.style?.color}
+              />
+              {showFontColorPicker && (
+                <ColorPickerSpan>
+                  <SketchPicker
+                    color={component.style?.color}
+                    onChangeComplete={handleChangeFontColorComplete}
+                  />
+                </ColorPickerSpan>
+              )}
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
 
         <CustomTooltip
+          disabled={!isHovering}
           disableInteractive
           leaveDelay={0.1}
           title={strings.uploadImage}
@@ -374,8 +532,12 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              hoveringWhite
               transitionDuration="0.35s"
               isHoveringComponent={isHovering}
+              onClick={() => {
+                setOpenChooseFileDialog(true);
+              }}
             >
               <ImageSearchIcon />
             </ToolIconButton>
@@ -383,6 +545,7 @@ const DraggableUserComponent = ({
         </CustomTooltip>
 
         <CustomTooltip
+          disabled={!isHovering}
           disableInteractive
           leaveDelay={0.1}
           title={strings.chooseEffect}
@@ -390,6 +553,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              hoveringWhite
               transitionDuration="0.4s"
               isHoveringComponent={isHovering}
             >
@@ -399,6 +563,7 @@ const DraggableUserComponent = ({
         </CustomTooltip>
 
         <CustomTooltip
+          disabled={!isHovering}
           disableInteractive
           leaveDelay={0.1}
           title={strings.toggleVisibility}
@@ -406,6 +571,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              hoveringWhite
               transitionDuration="0.45s"
               isHoveringComponent={isHovering}
               onClick={() => toggleVisibility()}
@@ -416,6 +582,7 @@ const DraggableUserComponent = ({
         </CustomTooltip>
 
         <CustomTooltip
+          disabled={!isHovering}
           disableInteractive
           leaveDelay={0.1}
           title={strings.remove}
@@ -423,6 +590,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              hoveringWhite
               transitionDuration="0.5s"
               isHoveringComponent={isHovering}
               onClick={() => deleteComponent()}

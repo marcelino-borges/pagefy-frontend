@@ -17,10 +17,10 @@ import strings from "./../../../../localization/index";
 import {
   IconsResult,
   IconsSearchResultsArea,
-  ColorizeIcon,
+  ColorPickerIcon,
   SelectedIconButton,
   ColorPickerSpan,
-  ColorizeBG,
+  ColorPickerOverlay,
 } from "./styles";
 import { useForm } from "react-hook-form";
 import { isUrlValid } from "../../../../utils/validators/url";
@@ -64,7 +64,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const [search, setSearch] = useState<string>("");
   const [lastSearch, setLastSearch] = useState<string | undefined>();
   const [iconSelected, setIconSelected] = useState<IIconDetails>();
-  const [colorSelected, setColorSelected] = useState<string>();
+  const [colorSelected, setColorSelected] = useState<string>("black");
   const [url, setUrl] = useState<string>("");
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
 
@@ -111,7 +111,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setResultsList([]);
     searchIcon(search);
     setIconSelected(undefined);
-    setColorSelected(undefined);
+    setColorSelected("black");
   };
 
   const onSubmitUrl = () => {
@@ -126,7 +126,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     event.preventDefault();
   };
 
-  const clearSearch = () => {
+  const clearSearchAndStates = () => {
     setSearch("");
     setUrl("");
     clearStates();
@@ -151,8 +151,9 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const onAddIcon = () => {
     setIsUrlInvalid(false);
 
-    if (!isUrlValid(url)) {
+    if (!isUrlValid(url) || url.length < 1) {
       setIsUrlInvalid(true);
+      return;
     }
 
     if (!pageId || !iconSelected) return;
@@ -177,9 +178,9 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         icon: iconSelected.icon,
       },
     };
-    clearSearch();
-    console.log("newComponent: ", newComponent);
+    clearSearchAndStates();
     dispatch(addComponentInPage(newComponent, pageId));
+    handleClose();
   };
 
   return (
@@ -222,7 +223,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   {search.length > 0 && (
                     <InputAdornment position="end">
                       <IconButton
-                        onClick={clearSearch}
+                        onClick={clearSearchAndStates}
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
@@ -299,9 +300,9 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                           zIndex: "10",
                         }}
                       />
-                      <ColorizeBG>
-                        <ColorizeIcon />
-                      </ColorizeBG>
+                      <ColorPickerOverlay>
+                        <ColorPickerIcon />
+                      </ColorPickerOverlay>
                     </SelectedIconButton>
                     {showColorPicker && (
                       <ColorPickerSpan>
@@ -333,7 +334,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                           {url.length > 0 && (
                             <InputAdornment position="end">
                               <IconButton
-                                onClick={clearSearch}
+                                onClick={clearSearchAndStates}
                                 onMouseDown={handleMouseDownPassword}
                                 edge="end"
                               >
@@ -359,7 +360,6 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         <Button onClick={handleClose}>{strings.back}</Button>
         <Button
           onClick={() => {
-            handleClose();
             onAddIcon();
           }}
         >

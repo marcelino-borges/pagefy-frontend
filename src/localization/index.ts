@@ -39,6 +39,12 @@ interface IDictionary {
   deleteComponentConfirmation: string;
   yes: string;
   no: string;
+  or: string;
+  chooseFile: string;
+  dragAndDropYourImage: string;
+  dropYourImageHere: string;
+  clickToSearchIt: string;
+  imageReadyToUpload: string;
 }
 
 // Dictionaries
@@ -82,6 +88,12 @@ const en: IDictionary = {
   deleteComponentConfirmation: "Do you really wish to delete this component?",
   yes: "Yes",
   no: "No",
+  or: "or",
+  chooseFile: "Choose a file",
+  dragAndDropYourImage: "Drag and drop your image here",
+  dropYourImageHere: "Drop your image here",
+  clickToSearchIt: "Click to search",
+  imageReadyToUpload: "Image ready to upload",
 };
 
 const pt: IDictionary = {
@@ -123,6 +135,12 @@ const pt: IDictionary = {
   deleteComponentConfirmation: "Deseja realmente apagar este componente?",
   yes: "Sim",
   no: "Não",
+  or: "ou",
+  chooseFile: "Escolha um arquivo",
+  dragAndDropYourImage: "Arraste e solte sua imagem aqui",
+  dropYourImageHere: "Solte sua imagem aqui...",
+  clickToSearchIt: "Clique para procurar",
+  imageReadyToUpload: "Imagem pronta para enviar",
 };
 
 // Composed dictionaries
