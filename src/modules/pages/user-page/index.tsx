@@ -325,9 +325,11 @@ const UserPage = () => {
                       style={{
                         fontSize: "46px",
                         cursor: "pointer",
-                        color: iconComponent.iconDetails.icon.includes("logos")
-                          ? "unset"
-                          : iconComponent.style?.color || "black",
+                        color:
+                          iconComponent.iconDetails.icon.includes("logos") ||
+                          iconComponent.iconDetails.icon.includes("grommet")
+                            ? "unset"
+                            : iconComponent.style?.color || "black",
                       }}
                     />
                   </DeleteIconOverlaySpan>
