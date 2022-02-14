@@ -1,22 +1,9 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
-import { Colorize } from "@mui/icons-material";
+import { LIGHTER_GREY, LIGHT_GREY } from "../../../../styles/colors";
+import { PRIMARY_COLOR } from "./../../../../styles/colors";
 
-export const IconsSearchResultsArea = styled(
-  ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
-    <Grid {...rest} />
-  )
-)`
-  min-height: 200px;
-  overflow-y: auto;
-  padding: 12px 0px;
-`;
-
-export const IconsResult = styled(
-  ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
-    <Grid {...rest} />
-  )
-)`
+export const IconsResult = styled((props: any) => <Grid {...props} />)`
   font-size: 64px;
   padding: 8px;
   cursor: pointer;
@@ -24,49 +11,73 @@ export const IconsResult = styled(
   color: grey;
 `;
 
-export const ColorPickerIcon = styled(({ ...rest }: any) => (
-  <Colorize {...rest} />
-))`
-  position: absolute;
-  z-index: 12;
-  color: white;
-  left: 0;
-  transform: translateX(150%) translateY(-20%);
-  padding: 4px;
-  background-color: black;
-  border-radius: 50%;
-  border: 1px solid white;
-  width: 16px;
-  height: 16px;
+export const SectionHeader = styled((props: any) => <Grid {...props} />)`
+  position: relative;
+  margin-bottom: 16px;
+  border-bottom: 1px solid ${LIGHTER_GREY};
+  color: ${LIGHT_GREY};
+  font-weight: 500;
 `;
 
-export const ColorPickerOverlay = styled(({ ...rest }: any) => (
-  <span {...rest} />
-))`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+export const ComponentDetailsButton = styled(
+  ({ isSelected, size, fontSize, ...rest }: any) => <div {...rest} />
+)`
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  color: grey;
+  width: ${(props) => props.size || "100px"};
+  height: ${(props) => props.size || "100px"};
+  background-color: ${LIGHTER_GREY};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media (max-width: 400px) {
+    margin: 12px 0px;
+  }
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: #f0f0f0;
   }
 
-  &:hover svg {
-    background-color: var(--primary);
+  &:active {
+    background-color: ${LIGHT_GREY};
+  }
+
+  ${(props) =>
+    !props.isSelected
+      ? ""
+      : `
     color: white;
-    border: 1px solid white;
+    background-color: ${PRIMARY_COLOR};
+    border-radius: 50%;
+  `}
+
+  svg {
+    font-size: ${(props) => props.fontSize || "64px"};
   }
 `;
 
-export const SelectedIconButton = styled(({ ...rest }: any) => (
+export const LayoutPickerContainer = styled(
+  ({ mt, mb, ml, mr, ...rest }: any) => <Grid {...rest} />
+)`
+  padding: 8px;
+  border-radius: 8px;
+  // border: 1px solid ${LIGHTER_GREY};
+  width: 50%;
+
+  margin-top: ${(props) => props.mt || ""};
+  margin-bottom: ${(props) => props.mb || ""};
+  margin-left: ${(props) => props.ml || ""};
+  margin-right: ${(props) => props.mr || ""};
+`;
+
+export const LayoutPickerHeaderText = styled(({ ...rest }: any) => (
   <span {...rest} />
 ))`
-  position: static;
-`;
-
-export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
-  position: fixed;
-  z-index: 100;
+  position: absolute;
+  top: -2px;
+  margin-left: 8px;
 `;

@@ -45,6 +45,7 @@ import IconsDialog from "./icons-dialog";
 import CustomTooltip from "./../../components/tooltip/index";
 import { v4 as uuidv4 } from "uuid";
 import { Icon } from "@iconify/react";
+import ComponentDialog from "./component-dialog";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -60,8 +61,7 @@ const UserPage = () => {
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
   const [pageName, setPageName] = useState("");
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
-  const [openDeleteComponentConfirmation, setOpenDeleteComponentConfirmation] =
-    useState(false);
+  const [openComponentDialog, setOpenComponentDialog] = useState(false);
   const [idComponentEditted, setIdComponentEditted] = useState<string>("");
 
   const { handleSubmit } = useForm();
@@ -126,6 +126,16 @@ const UserPage = () => {
     setOpenIconsDialog(false);
   };
 
+  const handleOpenComponentDialog = () => {
+    if (!page?._id) return;
+
+    setOpenComponentDialog(true);
+  };
+
+  const handleCloseComponentDialog = () => {
+    setOpenComponentDialog(false);
+  };
+
   const ToolBar = () => {
     return (
       <PageToolbar
@@ -150,7 +160,7 @@ const UserPage = () => {
             <Grid container item direction="row" justifyContent="center">
               <Grid item xs={12} sm={3}>
                 <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton>
+                  <ToolbarButton onClick={handleOpenComponentDialog}>
                     <CreateComponentIcon />
                     <ToolbarIconText>
                       {BREAK_TOOLBAR_TEXT &&
@@ -259,47 +269,16 @@ const UserPage = () => {
     );
   };
 
-  const DeleteComponentConfirmationDialog = () => {
-    return (
-      <Dialog
-        open={openDeleteComponentConfirmation}
-        onClose={() => {
-          setOpenDeleteComponentConfirmation(false);
-        }}
-        fullWidth
-        maxWidth="sm"
-        style={{ minWidth: "300px" }}
-      >
-        <DialogTitle>{strings.deleteIcon}</DialogTitle>
-        <DialogContent>{strings.deleteComponentConfirmation}</DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setOpenDeleteComponentConfirmation(false);
-            }}
-          >
-            {strings.no}
-          </Button>
-          <Button
-            onClick={() => {
-              if (!page || !page._id) return;
-              setOpenDeleteComponentConfirmation(false);
-              dispatch(deleteComponentFromPage(idComponentEditted, page._id));
-            }}
-          >
-            {strings.yes}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  };
-
   return (
     <SiteContent>
-      <DeleteComponentConfirmationDialog />
       <IconsDialog
         open={openIconsDialog}
         handleClose={handleCloseIconsDialog}
+        pageId={page?._id}
+      />
+      <ComponentDialog
+        open={openComponentDialog}
+        handleClose={handleCloseComponentDialog}
         pageId={page?._id}
       />
       <ToolBar />

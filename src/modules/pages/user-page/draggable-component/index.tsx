@@ -46,6 +46,7 @@ import {
   ColorPickerSpan,
   Dropzone,
   DropzoneFileReady,
+  DeleteContainer,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
@@ -108,6 +109,9 @@ const DraggableUserComponent = ({
   });
   const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState();
+  const [openDeleteComponentConfirmation, setOpenDeleteComponentConfirmation] =
+    useState(false);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
   const pageBeingManaged = useSelector(
     (state: IApplicationState) => state.pageManagement.pageId
@@ -172,7 +176,11 @@ const DraggableUserComponent = ({
 
   const deleteComponent = () => {
     if (!component._id || !pageBeingManaged) return;
-    dispatch(deleteComponentFromPage(component._id, pageBeingManaged));
+    setIsDeleted(true);
+    setTimeout(() => {
+      if (!component._id || !pageBeingManaged) return;
+      dispatch(deleteComponentFromPage(component._id, pageBeingManaged));
+    }, 250);
   };
 
   const toggleVisibility = () => {
@@ -194,6 +202,40 @@ const DraggableUserComponent = ({
       dispatch(setComponentFontColor(pageId, component._id, String(color.hex)));
       setIsKeepToolsOpen(false);
     }
+  };
+
+  const DeleteComponentConfirmationDialog = () => {
+    return (
+      <Dialog
+        open={openDeleteComponentConfirmation}
+        onClose={() => {
+          setOpenDeleteComponentConfirmation(false);
+        }}
+        fullWidth
+        maxWidth="sm"
+        style={{ minWidth: "300px" }}
+      >
+        <DialogTitle>{strings.deleteIcon}</DialogTitle>
+        <DialogContent>{strings.deleteComponentConfirmation}</DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenDeleteComponentConfirmation(false);
+            }}
+          >
+            {strings.no}
+          </Button>
+          <Button
+            onClick={() => {
+              setOpenDeleteComponentConfirmation(false);
+              deleteComponent();
+            }}
+          >
+            {strings.yes}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   };
 
   const ChooseFileDialog = () => {
@@ -266,6 +308,9 @@ const DraggableUserComponent = ({
         if (onClick) onClick();
       }}
     >
+      {isDeleted && <DeleteContainer />}
+
+      <DeleteComponentConfirmationDialog />
       <ChooseFileDialog />
       <Container
         container
@@ -593,7 +638,7 @@ const DraggableUserComponent = ({
               hoveringWhite
               transitionDuration="0.5s"
               isHoveringComponent={isHovering}
-              onClick={() => deleteComponent()}
+              onClick={() => setOpenDeleteComponentConfirmation(true)}
             >
               <DeleteIcon />
             </ToolIconButton>

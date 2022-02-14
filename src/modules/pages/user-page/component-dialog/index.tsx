@@ -1,43 +1,33 @@
 import { useState } from "react";
 import {
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
   useMediaQuery,
 } from "@mui/material";
-import { Search as SearchIcon, Clear as ClearIcon } from "@mui/icons-material";
+import {
+  TextFields as TextFieldsIcon,
+  Image as ImageIcon,
+  ViewColumn as ColumnsIcon,
+  TableRows as RowsIcon,
+  Category as CategoryIcon,
+  Feedback as FeedbackIcon,
+} from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
-  IconsResult,
-  IconsSearchResultsArea,
-  ColorPickerIcon,
-  SelectedIconButton,
-  ColorPickerSpan,
-  ColorPickerOverlay,
+  ComponentDetailsButton,
+  LayoutPickerContainer,
+  LayoutPickerHeaderText,
+  SectionHeader,
 } from "./styles";
-import { useForm } from "react-hook-form";
-import { isUrlValid } from "../../../../utils/validators/url";
-import {
-  ComponentType,
-  IIconDetails,
-  IUserComponent,
-} from "../../../../store/user/types";
-import { SketchPicker } from "react-color";
-import CustomTooltip from "../../../components/tooltip";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { addComponentInPage } from "../../../../store/user/actions";
-import { v4 as uuidv4 } from "uuid";
-import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
-import { Icon } from "@iconify/react";
-// import iconPacks, { IIconPack } from "../../../../assets/icons/react-icons";
+import { LIGHTER_GREY } from "./../../../../styles/colors";
+import { showErrorToast } from "./../../../../utils/toast/index";
+import CustomTooltip from "../../../components/tooltip";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -45,321 +35,246 @@ interface IIconsDialogProps {
   handleClose: any;
 }
 
+enum LayoutDirection {
+  Row,
+  Column,
+}
+
+interface ILayoutSelectorProps {
+  direction: LayoutDirection;
+}
+
 const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallerThanXM = useMediaQuery(theme.breakpoints.down("xm"));
 
-  const { handleSubmit: handleSubmitSearch, register: registerSearch } =
-    useForm();
-  const { handleSubmit: handleSubmitUrl, register: registerUrl } = useForm();
+  const [selectedType, setSelectedType] = useState<number>(4);
+  const [selectedColumnsCount, setSelectedColumnsCount] = useState<number>(4);
+  const [selectedRowsCount, setSelectedRowsCount] = useState<number>(4);
 
-  const [resultsList, setResultsList] = useState<IIconifyIcon[]>([]);
-  const [showLoading, setShowLoading] = useState<boolean>(false);
-  const [isSearchInvalid, setIsSearchInvalid] = useState<boolean>(false);
-  const [isUrlInvalid, setIsUrlInvalid] = useState<boolean>(false);
-  const [search, setSearch] = useState<string>("");
-  const [lastSearch, setLastSearch] = useState<string | undefined>();
-  const [iconSelected, setIconSelected] = useState<IIconDetails>();
-  const [colorSelected, setColorSelected] = useState<string>("black");
-  const [url, setUrl] = useState<string>("");
-  const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const [typeError, setTypeError] = useState<string>();
+  const [columnsError, setColumnsError] = useState<string>();
+  const [rowsError, setRowsError] = useState<string>();
 
-  const searchIcon = (search: string) => {
-    const results: IIconifyIcon[] = [];
-    icons.forEach((icon: IIconifyIcon) => {
-      icon.keywords.forEach((keyword: string) => {
-        if (
-          keyword.includes(search.toLowerCase()) ||
-          search.toLowerCase().includes(keyword)
-        ) {
-          if (
-            !results.find(
-              (result: IIconifyIcon) =>
-                result.userFriendlyName === icon.userFriendlyName
-            )
-          )
-            results.push(icon);
-        }
-      });
-    });
-
-    if (results.length > 0) setLastSearch(search);
-    setResultsList([...results]);
-    setShowLoading(false);
-  };
-
-  const onSubmitSearch = () => {
-    if (search === lastSearch) {
-      return;
-    }
-
-    if (search.length < 1) {
-      setResultsList([]);
-      return;
-    }
-
-    if (search.length < 3) {
-      setIsSearchInvalid(true);
-      return;
-    }
-
-    setShowLoading(true);
-    setResultsList([]);
-    searchIcon(search);
-    setIconSelected(undefined);
-    setColorSelected("black");
-  };
-
-  const onSubmitUrl = () => {
-    if (!isUrlValid(url)) {
-      setIsUrlInvalid(true);
-    }
-  };
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
-  const clearSearchAndStates = () => {
-    setSearch("");
-    setUrl("");
-    clearStates();
-  };
+  const [step, setStep] = useState<number>(0);
 
   const clearStates = () => {
-    setResultsList([]);
-    setLastSearch(undefined);
-    setIsSearchInvalid(false);
-    setIconSelected(undefined);
-    setShowLoading(false);
+    // Step 1 buttons
+    setSelectedType(4);
+    setSelectedColumnsCount(4);
+    setSelectedRowsCount(4);
+    clearErrors();
   };
 
-  const handleChangeColorComplete = (color: any) => {
-    setColorSelected(String(color.hex));
+  const clearErrors = () => {
+    setTypeError(undefined);
+    setColumnsError(undefined);
+    setRowsError(undefined);
   };
 
-  const toggleColorPicker = () => {
-    setShowColorPicker(!showColorPicker);
-  };
+  const onSubmit = () => {
+    clearErrors();
 
-  const onAddIcon = () => {
-    setIsUrlInvalid(false);
+    if (step === 0) {
+      let hasErros = false;
 
-    if (!isUrlValid(url) || url.length < 1) {
-      setIsUrlInvalid(true);
-      return;
+      if (selectedType === 4) {
+        setTypeError("Selecione um tipo de componente");
+        hasErros = true;
+      }
+      if (selectedColumnsCount === 4) {
+        setColumnsError("Selecione a quantidade de colunas");
+        hasErros = true;
+      }
+      if (selectedRowsCount === 4) {
+        setRowsError("Selecione a quantidade de linhas");
+        hasErros = true;
+      }
+
+      if (hasErros) {
+        return;
+      }
+
+      setStep(1);
+    } else if (step === 1) {
+      //dispatch(addComponentInPage(newComponent, pageId));
+      console.log("selectedType === 0: ", selectedType === 0);
+      console.log("selectedType === 1: ", selectedType === 1);
+      console.log("selectedType === 2: ", selectedType === 2);
+      //handleClose();
     }
-
-    if (!pageId || !iconSelected) return;
-
-    const newComponent: IUserComponent = {
-      _id: uuidv4(),
-      label: undefined,
-      url,
-      style: {
-        color: colorSelected,
-      },
-      visible: true,
-      clicks: 0,
-      layout: {
-        rows: 1,
-        columns: 1,
-      },
-      type: ComponentType.Icon,
-      mediaUrl: undefined,
-      iconDetails: {
-        userFriendlyName: iconSelected.userFriendlyName,
-        icon: iconSelected.icon,
-      },
-    };
-    clearSearchAndStates();
-    dispatch(addComponentInPage(newComponent, pageId));
-    handleClose();
   };
+
+  const handleBackButton = () => {
+    if (step === 1) {
+      setStep(0);
+    } else if (step === 0) {
+      handleClose();
+      clearStates();
+    }
+  };
+
+  const TypeSelector = () => (
+    <>
+      <Section title={strings.type} icon={<CategoryIcon />} error={typeError} />
+      <Grid container wrap={isSmallerThanXM ? "wrap" : "nowrap"}>
+        <Grid container item xs={12} sm={4} justifyContent="center">
+          <ComponentDetailsButton
+            isSelected={selectedType === 0}
+            onClick={() => setSelectedType(0)}
+          >
+            <TextFieldsIcon />
+          </ComponentDetailsButton>
+        </Grid>
+
+        <Grid container item xs={12} sm={4} justifyContent="center">
+          <ComponentDetailsButton
+            isSelected={selectedType === 2}
+            onClick={() => setSelectedType(2)}
+          >
+            <TextFieldsIcon
+              style={{ fontSize: "40px", marginBottom: "45px" }}
+            />
+            +
+            <ImageIcon style={{ fontSize: "40px", marginTop: "50px" }} />
+          </ComponentDetailsButton>
+        </Grid>
+
+        <Grid container item xs={12} sm={4} justifyContent="center">
+          <ComponentDetailsButton
+            isSelected={selectedType === 1}
+            onClick={() => setSelectedType(1)}
+          >
+            <TextFieldsIcon />
+          </ComponentDetailsButton>
+        </Grid>
+      </Grid>
+    </>
+  );
+
+  const LayoutSelector = ({ direction }: ILayoutSelectorProps) => (
+    <Grid container item wrap="nowrap">
+      <Grid container item xs={12} sm={6} justifyContent="center">
+        <ComponentDetailsButton
+          size="60px"
+          fontSize="27px"
+          isSelected={
+            direction === LayoutDirection.Column
+              ? selectedColumnsCount === 1
+              : selectedRowsCount === 1
+          }
+          onClick={() => {
+            if (direction === LayoutDirection.Column) {
+              setSelectedColumnsCount(1);
+            } else {
+              setSelectedRowsCount(1);
+            }
+          }}
+        >
+          1
+        </ComponentDetailsButton>
+      </Grid>
+
+      <Grid container item xs={12} sm={6} justifyContent="center">
+        <ComponentDetailsButton
+          size="60px"
+          fontSize="27px"
+          isSelected={
+            direction === LayoutDirection.Column
+              ? selectedColumnsCount === 2
+              : selectedRowsCount === 2
+          }
+          onClick={() => {
+            if (direction === LayoutDirection.Column) {
+              setSelectedColumnsCount(2);
+            } else {
+              setSelectedRowsCount(2);
+            }
+          }}
+        >
+          2
+        </ComponentDetailsButton>
+      </Grid>
+    </Grid>
+  );
+
+  const Section = ({ title, icon, error }: any) => (
+    <SectionHeader item>
+      {icon}
+      <LayoutPickerHeaderText>
+        {title}
+        {error !== undefined && (
+          <CustomTooltip title={error}>
+            <FeedbackIcon
+              fontSize="small"
+              color="primary"
+              style={{ marginLeft: "4px" }}
+            />
+          </CustomTooltip>
+        )}
+      </LayoutPickerHeaderText>
+    </SectionHeader>
+  );
+
+  const Step1 = () => (
+    <DialogContent>
+      <TypeSelector />
+
+      <Grid container>
+        <LayoutPickerContainer
+          container
+          item
+          mt="16px"
+          direction="column"
+          xs={12}
+          sm={6}
+        >
+          <Section
+            title={strings.columns}
+            icon={<ColumnsIcon />}
+            error={columnsError}
+          />
+
+          <LayoutSelector direction={LayoutDirection.Column} />
+        </LayoutPickerContainer>
+
+        <LayoutPickerContainer
+          container
+          item
+          mt="16px"
+          direction="column"
+          xs={12}
+          sm={6}
+        >
+          <Section title={strings.rows} icon={<RowsIcon />} error={rowsError} />
+          <LayoutSelector direction={LayoutDirection.Row} />
+        </LayoutPickerContainer>
+      </Grid>
+    </DialogContent>
+  );
+
+  const Step2 = () => <DialogContent>Passo 2</DialogContent>;
 
   return (
     <Dialog
       open={open}
-      onClose={() => {
-        clearStates();
-        handleClose();
-      }}
+      onClose={() => {}}
       fullWidth
       fullScreen={isSmallerThanSM}
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
       <DialogTitle>{strings.addIcon}</DialogTitle>
-      <DialogContent>
-        <form onSubmit={handleSubmitSearch(onSubmitSearch)}>
-          <TextField
-            {...registerSearch("search")}
-            error={isSearchInvalid}
-            helperText={isSearchInvalid ? strings.searchIconMinCaracters : ""}
-            autoFocus
-            label={strings.iconName}
-            type="text"
-            fullWidth
-            required
-            variant="outlined"
-            style={{ marginTop: "16px", minWidth: "191px" }}
-            onChange={(e: any) => {
-              const value = e.target.value;
-              if (value.length < 1) {
-                clearStates();
-              }
-              setSearch(value);
-            }}
-            value={search}
-            InputProps={{
-              endAdornment: (
-                <>
-                  {search.length > 0 && (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={clearSearchAndStates}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        <ClearIcon fontSize="medium" color="disabled" />
-                      </IconButton>
-                    </InputAdornment>
-                  )}
-                  <InputAdornment position="end">
-                    <IconButton
-                      type="submit"
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      <SearchIcon fontSize="large" color="primary" />
-                    </IconButton>
-                  </InputAdornment>
-                </>
-              ),
-            }}
-          />
-        </form>
-        <IconsSearchResultsArea container>
-          {showLoading && (
-            <Grid container justifyContent="center" alignItems="center">
-              <CircularProgress color="primary" />
-            </Grid>
-          )}
-          {!iconSelected &&
-            resultsList.map((icon: IIconifyIcon) => (
-              <>
-                {icon.variations.map((variation: string) => (
-                  <IconsResult
-                    key={variation}
-                    onClick={(e: any) => {
-                      setIconSelected({
-                        userFriendlyName: icon.userFriendlyName,
-                        icon: variation,
-                      });
-                    }}
-                  >
-                    <Icon icon={variation} />
-                  </IconsResult>
-                ))}
-              </>
-            ))}
-          {iconSelected && (
-            <form
-              onSubmit={handleSubmitUrl(onSubmitUrl)}
-              style={{ width: "100%", marginTop: "16px" }}
-            >
-              <Grid container alignItems="center" wrap="nowrap">
-                <CustomTooltip
-                  title={strings.colorPicker}
-                  leaveDelay={1}
-                  placement={"bottom"}
-                >
-                  <Grid
-                    item
-                    style={{
-                      cursor: "pointer",
-                      position: "relative",
-                      flexGrow: 0,
-                      textAlign: "center",
-                    }}
-                  >
-                    <SelectedIconButton onClick={toggleColorPicker}>
-                      <Icon
-                        icon={iconSelected.icon}
-                        style={{
-                          width: "56px",
-                          height: "56px",
-                          marginRight: "16px",
-                          color: colorSelected,
-                          zIndex: "10",
-                        }}
-                      />
-                      <ColorPickerOverlay>
-                        <ColorPickerIcon />
-                      </ColorPickerOverlay>
-                    </SelectedIconButton>
-                    {showColorPicker && (
-                      <ColorPickerSpan>
-                        <SketchPicker
-                          color={colorSelected}
-                          onChangeComplete={handleChangeColorComplete}
-                        />
-                      </ColorPickerSpan>
-                    )}
-                  </Grid>
-                </CustomTooltip>
-                <Grid item style={{ flexGrow: 1 }}>
-                  <TextField
-                    {...registerUrl("url")}
-                    error={isUrlInvalid}
-                    helperText={isUrlInvalid ? strings.invalidUrl : ""}
-                    autoFocus
-                    required
-                    placeholder="https://www.mywebsite.com"
-                    type="text"
-                    fullWidth
-                    variant="outlined"
-                    onChange={(e: any) => setUrl(e.target.value)}
-                    value={url}
-                    sx={{ minWidth: "100px", transform: "translateY(-3px)" }}
-                    InputProps={{
-                      endAdornment: (
-                        <>
-                          {url.length > 0 && (
-                            <InputAdornment position="end">
-                              <IconButton
-                                onClick={clearSearchAndStates}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                              >
-                                <ClearIcon fontSize="medium" color="disabled" />
-                              </IconButton>
-                            </InputAdornment>
-                          )}
-                        </>
-                      ),
-                    }}
-                  />
-                </Grid>
-              </Grid>
-              <Grid container style={{ marginTop: "16px" }}>
-                <Grid container item xs={1}></Grid>
-                <Grid container item xs={11}></Grid>
-              </Grid>
-            </form>
-          )}
-        </IconsSearchResultsArea>
-      </DialogContent>
+      {step === 0 ? <Step1 /> : <Step2 />}
       <DialogActions>
-        <Button onClick={handleClose}>{strings.back}</Button>
+        <Button onClick={handleBackButton}>{strings.back}</Button>
         <Button
           onClick={() => {
-            onAddIcon();
+            onSubmit();
           }}
         >
-          {strings.add}
+          {step === 0 ? strings.next : strings.add}
         </Button>
       </DialogActions>
     </Dialog>

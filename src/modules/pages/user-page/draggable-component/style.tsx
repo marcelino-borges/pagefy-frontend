@@ -2,10 +2,10 @@ import { styled } from "@mui/system";
 import { Grid, IconButton } from "@mui/material";
 import { DragIndicator } from "@mui/icons-material";
 import {
-  LIGHT_GREY,
+  LIGHTER_GREY,
   PRIMARY_COLOR,
   MEDIUM_GREY,
-  LIGHTER_GREY,
+  LIGHTEST_GREY,
 } from "../../../../styles/colors";
 
 export const Parent = styled(Grid)`
@@ -23,6 +23,16 @@ export const Container = styled(({ isHoveringComponent, ...rest }: any) => (
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
   z-index: 0;
+`;
+
+export const DeleteContainer = styled(({ ...rest }: any) => <Grid {...rest} />)`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: ${PRIMARY_COLOR};
+  opacity: 0.7;
+  border-radius: 15px;
+  z-index: 20;
 `;
 
 export const Overlay = styled(({ isHoveringComponent, ...rest }: any) => (
@@ -80,7 +90,7 @@ export const LabelText = styled(Grid)`
 `;
 
 export const UrlIconItem = styled(Grid)`
-  color: ${LIGHT_GREY};
+  color: ${LIGHTER_GREY};
   cursor: pointer;
 `;
 
@@ -98,7 +108,7 @@ export const UrlTextItem = styled(Grid)`
 `;
 
 export const EditIconItem = styled(Grid)`
-  color: ${LIGHT_GREY};
+  color: ${LIGHTER_GREY};
   cursor: pointer;
 
   &:hover {
@@ -130,7 +140,7 @@ export const DarkBG = styled(({ isHoveringComponent, ...rest }: any) => (
   <div {...rest} />
 ))`
   color: white;
-  background-color: ${LIGHT_GREY};
+  background-color: ${LIGHTER_GREY};
   position: absolute;
   z-index: -11;
   top: 0;
@@ -183,7 +193,7 @@ export const AnalyticsGridContainer = styled(Grid)`
 `;
 
 export const AnalyticsGridItem = styled(Grid)`
-  color: ${LIGHT_GREY};
+  color: ${LIGHTER_GREY};
   font-size: 16px;
   display: inline-flex;
 `;
@@ -205,11 +215,11 @@ export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
   transform: translateX(-2px);
 
   &:hover {
-    background-color: ${LIGHTER_GREY};
+    background-color: ${LIGHTEST_GREY};
   }
 
   &:active {
-    background-color: ${LIGHT_GREY};
+    background-color: ${LIGHTER_GREY};
   }
 `;
 

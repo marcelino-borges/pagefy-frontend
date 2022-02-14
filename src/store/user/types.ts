@@ -56,7 +56,7 @@ export interface IComponentStyle {
   color?: string;
 }
 
-export enum ComponentType {
+export const enum ComponentType {
   Text,
   Image,
   TextImage,

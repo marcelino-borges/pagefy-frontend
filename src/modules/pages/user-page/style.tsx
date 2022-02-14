@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
 import {
-  LIGHTER_GREY,
+  LIGHTEST_GREY,
   MEDIUM_GREY,
   PRIMARY_COLOR,
 } from "./../../../styles/colors";
@@ -68,12 +68,11 @@ export const ToolbarButton = styled(({ ...rest }: any) => <span {...rest} />)`
   cursor: pointer;
 
   &:hover {
-    background-color: ${LIGHTER_GREY};
+    background-color: ${LIGHTEST_GREY};
     color: ${PRIMARY_COLOR};
   }
 
   &:hover span {
-    background-color: ${LIGHTER_GREY};
     color: ${PRIMARY_COLOR};
   }
 `;
