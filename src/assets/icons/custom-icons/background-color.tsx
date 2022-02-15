@@ -2,11 +2,12 @@ const BackgroundColorIcon = ({
   size = 25,
   bucketColor = "white",
   selectedColor = "white",
+  ...rest
 }: any) => (
   <svg
     width={size}
     height={size}
-    //viewBox="0 0 25 25"
+    viewBox={`0 0 ${size} ${size}`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >

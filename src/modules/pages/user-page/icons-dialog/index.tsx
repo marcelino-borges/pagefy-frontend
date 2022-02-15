@@ -321,7 +321,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     helperText={isUrlInvalid ? strings.invalidUrl : ""}
                     autoFocus
                     required
-                    placeholder="https://www.mywebsite.com"
+                    placeholder={strings.webSiteExample}
                     type="text"
                     fullWidth
                     variant="outlined"

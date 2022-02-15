@@ -46,6 +46,7 @@ interface IDictionary {
   clickToSearchIt: string;
   imageReadyToUpload: string;
   next: string;
+  webSiteExample: string;
 }
 
 // Dictionaries
@@ -96,6 +97,7 @@ const en: IDictionary = {
   clickToSearchIt: "Click to search",
   imageReadyToUpload: "Image ready to upload",
   next: "Next",
+  webSiteExample: "https://www.mywebsite.com",
 };
 
 const pt: IDictionary = {
@@ -144,6 +146,7 @@ const pt: IDictionary = {
   clickToSearchIt: "Clique para procurar",
   imageReadyToUpload: "Imagem pronta para enviar",
   next: "Avançar",
+  webSiteExample: "https://www.meusite.com",
 };
 
 // Composed dictionaries
