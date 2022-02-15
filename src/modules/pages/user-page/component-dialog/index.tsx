@@ -163,8 +163,6 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     </SectionHeader>
   );
 
-  const Step2 = () => <DialogContent>Passo 2</DialogContent>;
-
   return (
     <Dialog
       open={open}
@@ -174,7 +172,7 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.addIcon}</DialogTitle>
+      <DialogTitle>{strings.addComponent}</DialogTitle>
       {!showStep2 ? (
         // STEP 1
         <DialogContent
