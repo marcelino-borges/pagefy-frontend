@@ -455,15 +455,15 @@ const DraggableUserComponent = ({
                 bucketColor="white"
                 selectedColor={component.style?.backgroundColor}
               />
-              {showBackgroundColorPicker && (
-                <ColorPickerSpan>
-                  <SketchPicker
-                    color={component.style?.backgroundColor}
-                    onChangeComplete={handleChangeBackgroundColorComplete}
-                  />
-                </ColorPickerSpan>
-              )}
             </ToolIconButton>
+            {showBackgroundColorPicker && (
+              <ColorPickerSpan>
+                <SketchPicker
+                  color={component.style?.backgroundColor}
+                  onChangeComplete={handleChangeBackgroundColorComplete}
+                />
+              </ColorPickerSpan>
+            )}
           </ToolGridItem>
         </CustomTooltip>
 
@@ -487,15 +487,15 @@ const DraggableUserComponent = ({
                 bucketColor="white"
                 selectedColor={component.style?.color}
               />
-              {showFontColorPicker && (
-                <ColorPickerSpan>
-                  <SketchPicker
-                    color={component.style?.color}
-                    onChangeComplete={handleChangeFontColorComplete}
-                  />
-                </ColorPickerSpan>
-              )}
             </ToolIconButton>
+            {showFontColorPicker && (
+              <ColorPickerSpan>
+                <SketchPicker
+                  color={component.style?.color}
+                  onChangeComplete={handleChangeFontColorComplete}
+                />
+              </ColorPickerSpan>
+            )}
           </ToolGridItem>
         </CustomTooltip>
 

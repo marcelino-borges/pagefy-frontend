@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   Dialog,
@@ -24,7 +24,6 @@ import {
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
   Timer as TimerIcon,
-  AutoFixHigh as ChooseEffectsIcon,
 } from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
@@ -42,10 +41,8 @@ import {
   LIGHT_GREY,
   TRANSPARENT,
 } from "./../../../../styles/colors";
-import { showErrorToast } from "./../../../../utils/toast/index";
 import CustomTooltip from "../../../components/tooltip";
 
-import { v4 as getId } from "uuid";
 import { useForm } from "react-hook-form";
 import FontColorIcon from "./../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "./../../../../assets/icons/custom-icons/background-color";
@@ -58,15 +55,6 @@ interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: any;
-}
-
-enum LayoutDirection {
-  Row,
-  Column,
-}
-
-interface ILayoutSelectorProps {
-  direction: LayoutDirection;
 }
 
 const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
@@ -549,15 +537,15 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                         bucketColor={LIGHT_GREY}
                         selectedColor={fontColor}
                       />
-                      {showFontColorPicker && (
-                        <ColorPickerSpan>
-                          <SketchPicker
-                            color={fontColor}
-                            onChangeComplete={handleChangeFontColorComplete}
-                          />
-                        </ColorPickerSpan>
-                      )}
                     </IconButton>
+                    {showFontColorPicker && (
+                      <ColorPickerSpan>
+                        <SketchPicker
+                          color={fontColor}
+                          onChangeComplete={handleChangeFontColorComplete}
+                        />
+                      </ColorPickerSpan>
+                    )}
                   </Grid>
                 </CustomTooltip>
               </Grid>
@@ -582,17 +570,15 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                         bucketColor={LIGHT_GREY}
                         selectedColor={backgroundColor}
                       />
-                      {showBackgroundColorPicker && (
-                        <ColorPickerSpan>
-                          <SketchPicker
-                            color={backgroundColor}
-                            onChangeComplete={
-                              handleChangeBackgroundColorComplete
-                            }
-                          />
-                        </ColorPickerSpan>
-                      )}
                     </IconButton>
+                    {showBackgroundColorPicker && (
+                      <ColorPickerSpan>
+                        <SketchPicker
+                          color={backgroundColor}
+                          onChangeComplete={handleChangeBackgroundColorComplete}
+                        />
+                      </ColorPickerSpan>
+                    )}
                   </Grid>
                 </CustomTooltip>
               </Grid>
