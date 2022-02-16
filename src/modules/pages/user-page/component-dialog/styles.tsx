@@ -81,3 +81,8 @@ export const LayoutPickerHeaderText = styled(({ ...rest }: any) => (
   top: -2px;
   margin-left: 8px;
 `;
+
+export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
+  position: fixed;
+  z-index: 100;
+`;

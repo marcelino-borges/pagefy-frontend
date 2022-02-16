@@ -10,6 +10,8 @@ import {
   TextField,
   useMediaQuery,
 } from "@mui/material";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import {
   TextFields as TextFieldsIcon,
   Image as ImageIcon,
@@ -26,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
+  ColorPickerSpan,
   ComponentDetailsButton,
   LayoutPickerContainer,
   LayoutPickerHeaderText,
@@ -33,7 +36,12 @@ import {
 } from "./styles";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { LIGHTER_GREY, LIGHT_GREY } from "./../../../../styles/colors";
+import {
+  ACESSIBILITY_GREEN,
+  LIGHTER_GREY,
+  LIGHT_GREY,
+  TRANSPARENT,
+} from "./../../../../styles/colors";
 import { showErrorToast } from "./../../../../utils/toast/index";
 import CustomTooltip from "../../../components/tooltip";
 
@@ -41,6 +49,10 @@ import { v4 as getId } from "uuid";
 import { useForm } from "react-hook-form";
 import FontColorIcon from "./../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "./../../../../assets/icons/custom-icons/background-color";
+import { SketchPicker } from "react-color";
+import ChooseFileDialog from "../../../components/dialog-file-upload";
+import { IMAGE_EXTENSIONS } from "../../../constants";
+import moment from "moment";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -58,6 +70,8 @@ interface ILayoutSelectorProps {
 }
 
 const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
+  const defaultLaunchDate = moment().utc().toString();
+
   const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallerThanXM = useMediaQuery(theme.breakpoints.down("xm"));
@@ -78,9 +92,18 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const [errorUrlField, setErrorUrlField] = useState<string>();
   const [label, setLabel] = useState<string>();
   const [url, setUrl] = useState<string>();
-  const [fontColor, setFontColor] = useState<string>(LIGHT_GREY);
-  const [backgroundColor, setBackgroundColor] = useState<string>(LIGHT_GREY);
+  const [fontColor, setFontColor] = useState<string>(TRANSPARENT);
+  const [backgroundColor, setBackgroundColor] = useState<string>(TRANSPARENT);
   const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
+    useState<boolean>(false);
+  const [showFontColorPicker, setShowFontColorPicker] =
+    useState<boolean>(false);
+  const [showUploadDialog, setShowUploadDialog] = useState<boolean>(false);
+  const [chosenImage, setChosenImage] = useState();
+  const [showLaunchDateDialog, setShowLaunchDateDialog] =
+    useState<boolean>(false);
+  const [launchDate, setLaunchDate] = useState<string>(defaultLaunchDate);
 
   const clearStates = () => {
     // Step 1 buttons
@@ -89,6 +112,14 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setSelectedRowsCount(4);
     setShowStep2(false);
     setStep(0);
+    setFontColor(TRANSPARENT);
+    setBackgroundColor(TRANSPARENT);
+    setIsVisible(true);
+    setShowBackgroundColorPicker(false);
+    setShowFontColorPicker(false);
+    setShowUploadDialog(false);
+    setChosenImage(undefined);
+    setLaunchDate(defaultLaunchDate);
     clearErrors();
   };
 
@@ -145,6 +176,14 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     }
   };
 
+  const handleChangeBackgroundColorComplete = (color: any) => {
+    setBackgroundColor(color.hex);
+  };
+
+  const handleChangeFontColorComplete = (color: any) => {
+    setFontColor(color.hex);
+  };
+
   const Section = ({ title, icon, error }: any) => (
     <SectionHeader item>
       {icon}
@@ -163,6 +202,69 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     </SectionHeader>
   );
 
+  const DialogLaunchDate = () => (
+    <Dialog
+      open={showLaunchDateDialog}
+      onClose={() => {}}
+      fullWidth
+      fullScreen={isSmallerThanSM}
+      maxWidth="sm"
+      style={{ minWidth: "300px" }}
+    >
+      <DialogTitle>{strings.scheduleLaunchComponentDate}</DialogTitle>
+      <DialogContent>
+        <div
+          style={{
+            paddingTop: "16px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {!isSmallerThanSM ? (
+            <DesktopDatePicker
+              label={strings.date}
+              inputFormat="DD/MM/yyyy"
+              value={moment(launchDate)}
+              onChange={(e: any) => {
+                console.log("date: ", e.target);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          ) : (
+            <MobileDatePicker
+              label={strings.date}
+              inputFormat="DD/MM/yyyy"
+              value={moment(launchDate)}
+              onChange={(e: any) => {
+                console.log("date: ", e.target);
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          )}
+        </div>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
+            setLaunchDate(defaultLaunchDate);
+            setShowLaunchDateDialog(false);
+          }}
+        >
+          {strings.back}
+        </Button>
+        <Button
+          onClick={() => {
+            setShowLaunchDateDialog(false);
+          }}
+        >
+          {strings.save}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   return (
     <Dialog
       open={open}
@@ -174,10 +276,13 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     >
       <DialogTitle>{strings.addComponent}</DialogTitle>
       {!showStep2 ? (
-        // STEP 1
+        /*
+         * STEP 1
+         */
+
         <DialogContent
           style={{
-            transform: step === 0 ? "unser" : "translateX(-1000px)",
+            transform: step === 0 ? "unset" : "translateX(-1000px)",
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
@@ -215,7 +320,7 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   isSelected={selectedType === 1}
                   onClick={() => setSelectedType(1)}
                 >
-                  <TextFieldsIcon />
+                  <ImageIcon />
                 </ComponentDetailsButton>
               </Grid>
             </Grid>
@@ -310,161 +415,238 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           </Grid>
         </DialogContent>
       ) : (
-        <Grid container direction="column">
-          <form onSubmit={handleSubmit(onSubmit)}>
+        /*
+         * STEP 2
+         */
+
+        <DialogContent
+          style={{
+            transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+        >
+          <ChooseFileDialog
+            openChooseFileDialog={showUploadDialog}
+            setOpenChooseFileDialog={setShowUploadDialog}
+            chosenImage={chosenImage}
+            setChosenImage={setChosenImage}
+            acceptedFiles={IMAGE_EXTENSIONS}
+            submitDialog={() => {
+              if (!chosenImage) {
+                return;
+              }
+              // TODO: Send file
+              setShowUploadDialog(false);
+            }}
+            cancelDialog={() => {
+              setChosenImage(undefined);
+              setShowUploadDialog(false);
+            }}
+          />
+          <DialogLaunchDate />
+          <Grid container direction="column">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {selectedType !== 1 && (
+                <Grid
+                  container
+                  wrap="nowrap"
+                  alignItems="center"
+                  sx={{ padding: "12px 24px 24px 0px" }}
+                >
+                  <TextFieldsIcon
+                    sx={{ color: LIGHTER_GREY, fontSize: "37px" }}
+                  />
+                  <TextField
+                    {...register("label")}
+                    error={!!errorLabelField}
+                    helperText={errorLabelField}
+                    autoFocus
+                    required
+                    placeholder={strings.text}
+                    type="text"
+                    fullWidth
+                    variant="outlined"
+                    onChange={(e: any) => setLabel(e.target.value)}
+                    value={label}
+                    sx={{ minWidth: "100px", marginLeft: "16px" }}
+                  />
+                </Grid>
+              )}
+              <Grid
+                container
+                wrap="nowrap"
+                alignItems="center"
+                sx={{ padding: "12px 24px 24px 0px" }}
+              >
+                <InsertLinkIcon
+                  sx={{ color: LIGHTER_GREY, fontSize: "37px" }}
+                />
+                <TextField
+                  {...register("url")}
+                  error={!!errorUrlField}
+                  helperText={errorUrlField}
+                  autoFocus
+                  required
+                  placeholder={strings.webSiteExample}
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  onChange={(e: any) => setUrl(e.target.value)}
+                  value={url}
+                  sx={{ minWidth: "100px", marginLeft: "16px" }}
+                />
+              </Grid>
+            </form>
             <Grid
               container
               wrap="nowrap"
+              justifyContent="center"
               alignItems="center"
-              sx={{ padding: "12px 24px" }}
             >
-              <TextFieldsIcon sx={{ color: LIGHTER_GREY, fontSize: "37px" }} />
-              <TextField
-                {...register("label")}
-                error={!!errorLabelField}
-                helperText={errorLabelField}
-                autoFocus
-                required
-                placeholder={strings.text}
-                type="text"
-                fullWidth
-                variant="outlined"
-                onChange={(e: any) => setLabel(e.target.value)}
-                value={label}
-                sx={{ minWidth: "100px", marginLeft: "16px" }}
-              />
-            </Grid>
-            <Grid
-              container
-              wrap="nowrap"
-              alignItems="center"
-              sx={{ padding: "12px 24px" }}
-            >
-              <InsertLinkIcon sx={{ color: LIGHTER_GREY, fontSize: "37px" }} />
-              <TextField
-                {...register("url")}
-                error={!!errorUrlField}
-                helperText={errorUrlField}
-                autoFocus
-                required
-                placeholder={strings.webSiteExample}
-                type="text"
-                fullWidth
-                variant="outlined"
-                onChange={(e: any) => setUrl(e.target.value)}
-                value={url}
-                sx={{ minWidth: "100px", marginLeft: "16px" }}
-              />
-            </Grid>
-          </form>
-          <Grid
-            container
-            wrap="nowrap"
-            justifyContent="center"
-            alignItems="center"
-          >
-            {/* Pick Image */}
-            {selectedType !== 0 && (
+              {/* Pick Image */}
+              {selectedType !== 0 && (
+                <Grid item>
+                  <CustomTooltip
+                    disableInteractive
+                    leaveDelay={0.1}
+                    title={strings.uploadImage}
+                    placement="bottom"
+                  >
+                    <Grid item>
+                      <IconButton
+                        onClick={() => {
+                          setShowUploadDialog(true);
+                        }}
+                      >
+                        <ImageSearchIcon
+                          sx={{
+                            fontSize: "28px",
+                            color: chosenImage
+                              ? ACESSIBILITY_GREEN
+                              : LIGHT_GREY,
+                          }}
+                        />
+                      </IconButton>
+                    </Grid>
+                  </CustomTooltip>
+                </Grid>
+              )}
+
+              {/* Font Color */}
               <Grid item>
                 <CustomTooltip
                   disableInteractive
                   leaveDelay={0.1}
-                  title={strings.uploadImage}
+                  title={strings.fontColor}
                   placement="bottom"
                 >
                   <Grid item>
-                    <IconButton onClick={() => {}}>
-                      <ImageSearchIcon
-                        sx={{ fontSize: "28px", color: LIGHT_GREY }}
+                    <IconButton
+                      onClick={() => {
+                        setShowFontColorPicker(!showFontColorPicker);
+                      }}
+                    >
+                      <FontColorIcon
+                        bucketColor={LIGHT_GREY}
+                        selectedColor={fontColor}
                       />
+                      {showFontColorPicker && (
+                        <ColorPickerSpan>
+                          <SketchPicker
+                            color={fontColor}
+                            onChangeComplete={handleChangeFontColorComplete}
+                          />
+                        </ColorPickerSpan>
+                      )}
                     </IconButton>
                   </Grid>
                 </CustomTooltip>
               </Grid>
-            )}
 
-            {/* Font Color */}
-            <Grid item>
-              <CustomTooltip
-                disableInteractive
-                leaveDelay={0.1}
-                title={strings.fontColor}
-                placement="bottom"
-              >
-                <Grid item>
-                  <IconButton onClick={() => {}}>
-                    <FontColorIcon
-                      bucketColor={LIGHT_GREY}
-                      selectedColor={fontColor}
-                    />
-                  </IconButton>
-                </Grid>
-              </CustomTooltip>
-            </Grid>
-
-            {/* Background Color */}
-            <Grid item>
-              <CustomTooltip
-                disableInteractive
-                leaveDelay={0.1}
-                title={strings.backgroundColor}
-                placement="bottom"
-              >
-                <Grid item>
-                  <IconButton onClick={() => {}}>
-                    <BackgroundColorIcon
-                      bucketColor={LIGHT_GREY}
-                      selectedColor={backgroundColor}
-                    />
-                  </IconButton>
-                </Grid>
-              </CustomTooltip>
-            </Grid>
-
-            {/* Visibility */}
-            <Grid item>
-              <CustomTooltip
-                disableInteractive
-                leaveDelay={0.1}
-                title={strings.toggleVisibility}
-                placement="bottom"
-              >
-                <Grid item>
-                  <IconButton
-                    onClick={() => {
-                      setIsVisible(!isVisible);
-                    }}
-                  >
-                    {isVisible ? (
-                      <VisibilityIcon
-                        sx={{ fontSize: "28px", color: LIGHT_GREY }}
+              {/* Background Color */}
+              <Grid item>
+                <CustomTooltip
+                  disableInteractive
+                  leaveDelay={0.1}
+                  title={strings.backgroundColor}
+                  placement="bottom"
+                >
+                  <Grid item>
+                    <IconButton
+                      onClick={() => {
+                        setShowBackgroundColorPicker(
+                          !showBackgroundColorPicker
+                        );
+                      }}
+                    >
+                      <BackgroundColorIcon
+                        bucketColor={LIGHT_GREY}
+                        selectedColor={backgroundColor}
                       />
-                    ) : (
-                      <VisibilityOffIcon
-                        sx={{ fontSize: "28px", color: LIGHT_GREY }}
-                      />
-                    )}
-                  </IconButton>
-                </Grid>
-              </CustomTooltip>
-            </Grid>
+                      {showBackgroundColorPicker && (
+                        <ColorPickerSpan>
+                          <SketchPicker
+                            color={backgroundColor}
+                            onChangeComplete={
+                              handleChangeBackgroundColorComplete
+                            }
+                          />
+                        </ColorPickerSpan>
+                      )}
+                    </IconButton>
+                  </Grid>
+                </CustomTooltip>
+              </Grid>
 
-            <Grid item>
-              <CustomTooltip
-                disableInteractive
-                leaveDelay={0.1}
-                title={strings.chooseEffect}
-                placement="bottom"
-              >
-                <Grid item>
-                  <IconButton onClick={() => {}}>
-                    <TimerIcon sx={{ fontSize: "28px", color: LIGHT_GREY }} />
-                  </IconButton>
-                </Grid>
-              </CustomTooltip>
+              {/* Visibility */}
+              <Grid item>
+                <CustomTooltip
+                  disableInteractive
+                  leaveDelay={0.1}
+                  title={strings.toggleVisibility}
+                  placement="bottom"
+                >
+                  <Grid item>
+                    <IconButton
+                      onClick={() => {
+                        setIsVisible(!isVisible);
+                      }}
+                    >
+                      {isVisible ? (
+                        <VisibilityIcon
+                          sx={{ fontSize: "28px", color: LIGHT_GREY }}
+                        />
+                      ) : (
+                        <VisibilityOffIcon
+                          sx={{ fontSize: "28px", color: LIGHT_GREY }}
+                        />
+                      )}
+                    </IconButton>
+                  </Grid>
+                </CustomTooltip>
+              </Grid>
+
+              {/* LaunchDate */}
+              <Grid item>
+                <CustomTooltip
+                  disableInteractive
+                  leaveDelay={0.1}
+                  title={strings.chooseEffect}
+                  placement="bottom"
+                >
+                  <Grid item>
+                    <IconButton
+                      onClick={() => {
+                        setShowLaunchDateDialog(true);
+                      }}
+                    >
+                      <TimerIcon sx={{ fontSize: "28px", color: LIGHT_GREY }} />
+                    </IconButton>
+                  </Grid>
+                </CustomTooltip>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </DialogContent>
       )}
       <DialogActions>
         <Button onClick={handleBackButton}>{strings.back}</Button>

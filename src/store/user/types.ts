@@ -44,6 +44,7 @@ export interface IUserComponent {
   type: ComponentType;
   mediaUrl?: string;
   iconDetails?: IIconDetails;
+  launchDate?: string;
 }
 
 export interface IIconDetails {

@@ -47,6 +47,10 @@ interface IDictionary {
   imageReadyToUpload: string;
   next: string;
   webSiteExample: string;
+  send: string;
+  scheduleLaunchComponentDate: string;
+  save: string;
+  date: string;
 }
 
 // Dictionaries
@@ -98,6 +102,10 @@ const en: IDictionary = {
   imageReadyToUpload: "Image ready to upload",
   next: "Next",
   webSiteExample: "https://www.mywebsite.com",
+  send: "Send",
+  scheduleLaunchComponentDate: "Launch date",
+  save: "Save",
+  date: "Date",
 };
 
 const pt: IDictionary = {
@@ -147,6 +155,10 @@ const pt: IDictionary = {
   imageReadyToUpload: "Imagem pronta para enviar",
   next: "Avançar",
   webSiteExample: "https://www.meusite.com",
+  send: "Enviar",
+  scheduleLaunchComponentDate: "Data de lançamento",
+  save: "Salvar",
+  date: "Data",
 };
 
 // Composed dictionaries

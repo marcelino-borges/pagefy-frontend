@@ -5,3 +5,5 @@ export const MEDIUM_GREY = "#b9b9b9";
 export const LIGHT_GREY = "#C6C6C6";
 export const LIGHTER_GREY = "#e2e2e2";
 export const LIGHTEST_GREY = "#fafafa";
+export const TRANSPARENT = "#00000000";
+export const ACESSIBILITY_GREEN = "#2e8540";

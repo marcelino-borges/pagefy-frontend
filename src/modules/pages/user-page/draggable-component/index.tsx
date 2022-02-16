@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,7 +25,6 @@ import {
   Category as ComponentTypeIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
-  Check as CheckIcon,
 } from "@mui/icons-material";
 import {
   Parent,
@@ -44,8 +43,6 @@ import {
   DarkBG,
   ComponentArrowGridItem,
   ColorPickerSpan,
-  Dropzone,
-  DropzoneFileReady,
   DeleteContainer,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
@@ -71,7 +68,8 @@ import { IUserComponent } from "../../../../store/user/types";
 import { SketchPicker } from "react-color";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
-import { useDropzone } from "react-dropzone";
+import ChooseFileDialog from "../../../components/dialog-file-upload";
+import { IMAGE_EXTENSIONS } from "../../../constants";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -92,7 +90,6 @@ const DraggableUserComponent = ({
   const { handleSubmit: handleSubmitUrl } = useForm();
 
   const theme = useTheme();
-  const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isLargerThanMD = useMediaQuery(theme.breakpoints.up("md"));
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
@@ -129,29 +126,6 @@ const DraggableUserComponent = ({
         </CustomTooltip>
       </AnalyticsGridItem>
     );
-  };
-
-  const onDrop = useCallback((acceptedFiles) => {
-    setChosenImage(acceptedFiles[0]);
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  });
-
-  const showDropzoneText = () => {
-    if (isDragActive) return <p>{strings.dropYourImageHere}</p>;
-    else
-      return (
-        <p>
-          {strings.dragAndDropYourImage}
-          <br />
-          {strings.or}
-          <br />
-          {strings.clickToSearchIt}
-        </p>
-      );
   };
 
   const handleChangeLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -238,64 +212,6 @@ const DraggableUserComponent = ({
     );
   };
 
-  const ChooseFileDialog = () => {
-    return (
-      <Dialog
-        open={openChooseFileDialog}
-        onClose={() => {
-          setOpenChooseFileDialog(false);
-        }}
-        fullWidth
-        fullScreen={isSmallerThanSM}
-        maxWidth="sm"
-        style={{ minWidth: "300px" }}
-      >
-        <DialogTitle>{strings.chooseFile}</DialogTitle>
-        <DialogContent>
-          {!chosenImage ? (
-            <Dropzone container {...getRootProps()}>
-              <input {...getInputProps()} />
-              {showDropzoneText()}
-            </Dropzone>
-          ) : (
-            <>
-              <DropzoneFileReady
-                container
-                alignItems="center"
-                justifyContent="center"
-              >
-                <CheckIcon fontSize="medium" />
-                <span style={{ color: "black" }}>
-                  {strings.imageReadyToUpload}
-                </span>
-              </DropzoneFileReady>
-            </>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setOpenChooseFileDialog(false);
-              setChosenImage(undefined);
-            }}
-          >
-            {strings.back}
-          </Button>
-          <Button
-            onClick={() => {
-              if (!chosenImage) return;
-              // TODO: Send file
-              setOpenChooseFileDialog(false);
-              setChosenImage(undefined);
-            }}
-          >
-            {strings.add}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  };
-
   return (
     <Parent
       container
@@ -311,7 +227,22 @@ const DraggableUserComponent = ({
       {isDeleted && <DeleteContainer />}
 
       <DeleteComponentConfirmationDialog />
-      <ChooseFileDialog />
+      <ChooseFileDialog
+        openChooseFileDialog={openChooseFileDialog}
+        setOpenChooseFileDialog={setOpenChooseFileDialog}
+        chosenImage={chosenImage}
+        setChosenImage={setChosenImage}
+        acceptedFiles={IMAGE_EXTENSIONS}
+        submitDialog={() => {
+          if (!chosenImage) return;
+          // TODO: Send file
+          setOpenChooseFileDialog(false);
+        }}
+        cancelDialog={() => {
+          setChosenImage(undefined);
+          setOpenChooseFileDialog(false);
+        }}
+      />
       <Container
         container
         item
