@@ -126,10 +126,6 @@ const UserPage = () => {
     setOpenComponentDialog(false);
   };
 
-  useEffect(() => {
-    console.log("isSmallerThan600: ", isSmallerThan600);
-  }, [isSmallerThan600]);
-
   const ToolBar = () => {
     return (
       <PageToolbar

@@ -55,15 +55,20 @@ import { IMAGE_EXTENSIONS } from "../../../constants";
 import moment from "moment";
 import { ComponentType, IUserComponent } from "../../../../store/user/types";
 import { showErrorToast } from "./../../../../utils/toast/index";
+import { addComponentInPage } from "../../../../store/user/actions";
 
-interface IIconsDialogProps {
+interface IComponentDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: any;
 }
 
-const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
-  const defaultLaunchDate = moment().utc().toString();
+const ComponentDialog = ({
+  pageId,
+  open,
+  handleClose,
+}: IComponentDialogProps) => {
+  const defaultLaunchDate = moment().toISOString();
 
   const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -138,31 +143,38 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
       handleGoToStep(1, 350);
     } else if (step === 1) {
-      //dispatch(addComponentInPage(newComponent, pageId));
       if (!isStep2Valid()) {
         return;
       }
 
-      // const newComponent: IUserComponent = {
-      //   text: selectedType !== ComponentType.Image ? text : undefined,
-      //   url,
-      //   style: {
-      //     backgroundColor,
-      //     color: fontColor,
-      //   },
-      //   visible: isVisible,
-      //   clicks: 0,
-      //   layout: {
-      //     rows: selectedRowsCount,
-      //     columns: selectedColumnsCount,
-      //   },
-      //   type: selectedType,
-      //   mediaUrl: undefined,
-      //   iconDetails: undefined,
+      const time = new Date(launchTime);
+      const hour = time.getHours();
+      const minute = time.getMinutes();
+      const second = time.getSeconds();
+      let launch = moment(launchDate).hour(hour).minute(minute).second(second);
 
-      // };
-      //handleClose();
-      console.log("add component");
+      const newComponent: IUserComponent = {
+        text: selectedType !== ComponentType.Image ? text : undefined,
+        url,
+        style: {
+          backgroundColor,
+          color: fontColor,
+        },
+        visible: isVisible,
+        clicks: 0,
+        layout: {
+          rows: selectedRowsCount,
+          columns: selectedColumnsCount,
+        },
+        type: selectedType,
+        mediaUrl: undefined,
+        iconDetails: undefined,
+        launchDate: launch.toISOString(),
+      };
+      if (pageId) {
+        dispatch(addComponentInPage(newComponent, pageId));
+      }
+      handleClose();
     }
   };
 
@@ -231,11 +243,11 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   };
 
   const handleLaunchDate = (newDate: any) => {
-    setLaunchDate(moment(newDate).utc().toString());
+    setLaunchDate(moment(newDate).toISOString());
   };
 
   const handleLaunchTime = (newDate: any) => {
-    setLaunchTime(moment(newDate).utc().toString());
+    setLaunchTime(moment(newDate).toISOString());
   };
 
   const Section = ({ title, icon, error }: any) => (
@@ -323,6 +335,7 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           <Grid item xs={12} md={5}>
             <TimePicker
               label="Time"
+              ampm={false}
               value={moment(launchTime).toDate()}
               onChange={handleLaunchTime}
               renderInput={(params) => (
