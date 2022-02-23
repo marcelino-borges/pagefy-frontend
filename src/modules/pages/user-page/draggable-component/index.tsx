@@ -9,7 +9,6 @@ import {
   DialogTitle,
   Grid,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import {
   Edit as EditIcon,
@@ -91,6 +90,7 @@ const DraggableUserComponent = ({
 
   const isLargerThan400 = useMediaQuery("(min-width: 400px)");
   const isSmallerThan400 = useMediaQuery("(max-width: 399px)");
+  const isSmallerThan600 = useMediaQuery("(max-width: 600px)");
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [isKeepToolsOpen, setIsKeepToolsOpen] = useState<boolean>(false);
@@ -119,7 +119,7 @@ const DraggableUserComponent = ({
       <AnalyticsGridItem item alignItems="center">
         <CustomTooltip
           leaveDelay={1}
-          placement={isLargerThan400 ? "left" : "bottom"}
+          placement={isSmallerThan400 ? "bottom" : "left"}
           title={`${tooltipKey}: ${tooltipValue}`}
         >
           {icon}
@@ -217,6 +217,7 @@ const DraggableUserComponent = ({
       container
       item
       direction="row"
+      wrap="nowrap"
       onMouseLeave={() => {
         if (!isKeepToolsOpen) setIsHovering(false);
       }}
@@ -250,7 +251,7 @@ const DraggableUserComponent = ({
         direction="row"
         onMouseOver={() => setIsHovering(true)}
         xs={10}
-        sm={11}
+        md={11}
         wrap="nowrap"
       >
         <Overlay
@@ -290,20 +291,26 @@ const DraggableUserComponent = ({
         </Grid>
 
         {/* Content */}
-        <Grid container item xs={11}>
+        <Grid
+          container
+          item
+          xs={11}
+          direction={isSmallerThan600 ? "column" : "row"}
+          wrap="nowrap"
+        >
           {/* 1st content column */}
           <Grid
             container
             item
             xs={12}
-            md={9}
+            sm={9}
             justifyContent="center"
             direction="column"
             spacing={2}
           >
             {/* Label */}
             {component.text && component.text.length > 0 && (
-              <ContentRow container item alignItems="center">
+              <ContentRow container item alignItems="center" wrap="nowrap">
                 {isEdittingLabel ? (
                   <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
                     <LabelText item>
@@ -316,11 +323,9 @@ const DraggableUserComponent = ({
                         }}
                         onChange={handleChangeLabel}
                         value={values.label}
+                        fontSize={isSmallerThan600 ? "16px" : "24px"}
                         onBlur={() => {
-                          setValues({
-                            ...values,
-                            label: component.text || "",
-                          });
+                          onSubmitLabelForm();
                           setIsEdittingLabel(false);
                         }}
                       />
@@ -344,7 +349,7 @@ const DraggableUserComponent = ({
             )}
 
             {/* URL */}
-            <ContentRow container item alignItems="center">
+            <ContentRow container item alignItems="center" wrap="nowrap">
               <UrlIconItem item>
                 <LinkIcon />
               </UrlIconItem>
@@ -357,7 +362,6 @@ const DraggableUserComponent = ({
                       value={values.url}
                       fontWeight="300"
                       color="#bfbfbf"
-                      fontSize="22px"
                       fontStyle="italic"
                       InputProps={{
                         style: {
@@ -365,8 +369,9 @@ const DraggableUserComponent = ({
                           margin: "0px 16px",
                         },
                       }}
+                      fontSize={isSmallerThan600 ? "16px" : "22px"}
                       onBlur={() => {
-                        setValues({ ...values, url: component.url || "" });
+                        onSubmitUrlForm();
                         setIsEdittingUrl(false);
                       }}
                     />
@@ -398,9 +403,12 @@ const DraggableUserComponent = ({
             container
             item
             xs={12}
-            md={3}
-            alignItems={isLargerThan400 ? "flex-end" : "center"}
-            direction={isSmallerThan400 ? "row" : "column"}
+            sm={3}
+            style={{
+              width: isSmallerThan600 ? "100%" : "unset",
+            }}
+            alignItems={isSmallerThan600 ? "center" : "flex-end"}
+            direction={isSmallerThan600 ? "row" : "column"}
             justifyContent="center"
             spacing={1}
           >
@@ -433,10 +441,13 @@ const DraggableUserComponent = ({
         container
         item
         xs={2}
-        sm={1}
+        md={1}
         justifyContent="space-between"
         alignItems="stretch"
         direction="column"
+        style={{
+          minWidth: "50px",
+        }}
       >
         <CustomTooltip
           disabled={!isHovering || showBackgroundColorPicker}

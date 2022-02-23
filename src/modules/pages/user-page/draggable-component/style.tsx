@@ -190,6 +190,10 @@ export const ToolIconButton = styled(
 
 export const AnalyticsGridContainer = styled(Grid)`
   padding-right: 32px;
+
+  @media (max-width: 550px) {
+    padding-right: 16px;
+  }
 `;
 
 export const AnalyticsGridItem = styled(Grid)`
