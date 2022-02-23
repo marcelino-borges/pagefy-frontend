@@ -160,7 +160,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
     const newComponent: IUserComponent = {
       _id: uuidv4(),
-      label: undefined,
+      text: undefined,
       url,
       style: {
         color: colorSelected,

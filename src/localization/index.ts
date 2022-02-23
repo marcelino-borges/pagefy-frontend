@@ -51,6 +51,10 @@ interface IDictionary {
   scheduleLaunchComponentDate: string;
   save: string;
   date: string;
+  urlRequired: string;
+  textInComponentRequired: string;
+  imageInComponentRequired: string;
+  selectAllOptions: string;
 }
 
 // Dictionaries
@@ -106,6 +110,10 @@ const en: IDictionary = {
   scheduleLaunchComponentDate: "Launch date",
   save: "Save",
   date: "Date",
+  urlRequired: "URL required",
+  textInComponentRequired: "Required for a text component",
+  imageInComponentRequired: "Choose an image to your component",
+  selectAllOptions: "Select all the options!",
 };
 
 const pt: IDictionary = {
@@ -159,6 +167,10 @@ const pt: IDictionary = {
   scheduleLaunchComponentDate: "Data de lançamento",
   save: "Salvar",
   date: "Data",
+  urlRequired: "URL obrigatória",
+  textInComponentRequired: "Obrigatório para um componente de texto",
+  imageInComponentRequired: "Escolha uma imagem para seu componente",
+  selectAllOptions: "Selecione todas as opcões!",
 };
 
 // Composed dictionaries

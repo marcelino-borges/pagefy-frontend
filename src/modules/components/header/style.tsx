@@ -5,7 +5,6 @@ import { Close, Menu } from "@mui/icons-material";
 
 export const Parent = styled(Grid)`
   border: 1px solid #e9e9e9;
-  height: 125px;
   background-color: white;
   min-width: 320px;
   z-index: 1000;
@@ -17,7 +16,7 @@ export const HeaderLinkDesktop = styled(Link)`
   transition: all 0.2s ease-in-out;
   position: relative;
   height: 100%;
-  margin-right: 24px;
+  text-align: center;
 
   &:hover {
     color: var(--primary);
@@ -45,7 +44,7 @@ export const HeaderLinkDesktop = styled(Link)`
 
 export const HamburguerMenuIcon = styled(Menu)`
   color: var(--primary);
-  font-size: 40px;
+  font-size: 30px;
   cursor: pointer;
 `;
 

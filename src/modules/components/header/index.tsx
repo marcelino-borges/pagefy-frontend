@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Header = () => {
   const theme = useTheme();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
+  const isSmallerThan400 = useMediaQuery("(max-width:400px)");
   const navigate = useNavigate();
 
   const [isShowingDrawer, setIsShowingDrawer] = useState(false);
@@ -41,25 +42,25 @@ const Header = () => {
   const DesktopHeader = () => {
     return (
       <>
-        <Grid container item xs={6} justifyContent="center">
-          <Grid item>
+        <Grid container item md={4} justifyContent="center">
+          <Grid item padding={2}>
             <HeaderLinkDesktop to={routes.root}>
               {strings.home}
             </HeaderLinkDesktop>
           </Grid>
-          <Grid item>
+          <Grid item padding={2}>
             <HeaderLinkDesktop to={routes.pages}>
               {strings.pages}
             </HeaderLinkDesktop>
           </Grid>
-          <Grid item>
+          <Grid item padding={2}>
             <HeaderLinkDesktop to={routes.support}>
               {strings.support}
             </HeaderLinkDesktop>
           </Grid>
         </Grid>
 
-        <Grid container item xs={3} justifyContent="center" padding={3}>
+        <Grid container item md={4} justifyContent="center" padding={3}>
           User Logged In
         </Grid>
       </>
@@ -68,8 +69,13 @@ const Header = () => {
 
   const MobileHeader = () => {
     return (
-      <>
-        <Grid container item xs={6} justifyContent="flex-end" padding={4}>
+      <Grid item xs={2}>
+        <Grid
+          container
+          item
+          justifyContent="flex-end"
+          style={{ paddingRight: "36px" }}
+        >
           <HamburguerMenuIcon onClick={toggleDrawer} />
         </Grid>
 
@@ -119,24 +125,33 @@ const Header = () => {
             </MobileMenuGridItem>
           </Grid>
         </DrawerMenu>
-      </>
+      </Grid>
     );
   };
 
   return (
-    <Parent container alignItems="center">
+    <Parent container alignItems="center" justifyContent="space-between">
       <Grid
         container
         item
-        xs={6}
-        md={3}
-        justifyContent="flex-start"
-        padding={4}
+        xs={10}
+        md={4}
+        justifyContent="space-between"
+        alignItems="center"
+        style={{
+          paddingLeft: "32px",
+          height: isSmallerThanMD ? "unset" : "125px",
+        }}
       >
         <Link to={routes.root}>
           <img
             src={images.logoHeader}
-            style={{ height: "61px", width: "auto" }}
+            style={{
+              height: "auto",
+              width: isSmallerThan400 ? "125px" : "100%",
+              margin: "8px",
+              maxHeight: "250px",
+            }}
             alt="Logo"
           />
         </Link>

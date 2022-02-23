@@ -2,6 +2,9 @@ import { toast } from "react-toastify";
 
 toast.configure({
   limit: 3,
+  style: {
+    fontSize: "15px",
+  },
 });
 
 export const showInfoToast = (msg: string) => {

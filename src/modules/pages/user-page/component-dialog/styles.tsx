@@ -17,6 +17,7 @@ export const SectionHeader = styled((props: any) => <Grid {...props} />)`
   border-bottom: 1px solid ${LIGHTER_GREY};
   color: ${LIGHT_GREY};
   font-weight: 500;
+  width: 100%;
 `;
 
 export const ComponentDetailsButton = styled(

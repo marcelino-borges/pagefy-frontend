@@ -12,7 +12,7 @@ export const PageToolbar = styled(
     <Grid {...rest} />
   )
 )`
-  padding: 32px;
+  padding: 24px;
   border-radius: 0px 0px 15px 15px;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
@@ -41,6 +41,16 @@ export const PageImage = styled(({ imgUrl, ...rest }: any) => (
   background-size: cover;
   background-position: center;
   background-image: url(${(props) => props.imgUrl});
+
+  @media (max-width: 600px) {
+    height: 70px;
+    width: 70px;
+  }
+
+  @media (max-width: 500px) {
+    height: 50px;
+    width: 50px;
+  }
 `;
 
 const toolbarIcon = `
@@ -53,8 +63,6 @@ const toolbarIcon = `
 
 export const ToolbarButton = styled(({ ...rest }: any) => <span {...rest} />)`
   ${toolbarIcon}
-  height: 130px;
-  width: 130px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -62,13 +70,12 @@ export const ToolbarButton = styled(({ ...rest }: any) => <span {...rest} />)`
   -webkit-box-pack: center;
   box-sizing: border-box;
   flex-direction: column;
-  margin: 6px;
   border-radius: 50%;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  min-width: 90px;
 
   &:hover {
-    background-color: ${LIGHTEST_GREY};
     color: ${PRIMARY_COLOR};
   }
 

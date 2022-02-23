@@ -1,13 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-} from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -36,10 +29,7 @@ import strings from "../../../localization";
 import { EditPenIcon } from "./style";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
-import {
-  deleteComponentFromPage,
-  updateUserPageName,
-} from "../../../store/user/actions";
+import { updateUserPageName } from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component";
 import IconsDialog from "./icons-dialog";
 import CustomTooltip from "./../../components/tooltip/index";
@@ -52,6 +42,7 @@ const BREAK_POINT_TOOLBAR_TEXT = 12;
 
 const UserPage = () => {
   const dispatch = useDispatch();
+  const isSmallerThan600 = useMediaQuery("(max-width:600px)");
 
   const [nonIconComponentsList, setNonIconComponentsList] =
     useState<IUserComponent[]>();
@@ -62,7 +53,6 @@ const UserPage = () => {
   const [pageName, setPageName] = useState("");
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
   const [openComponentDialog, setOpenComponentDialog] = useState(false);
-  const [idComponentEditted, setIdComponentEditted] = useState<string>("");
 
   const { handleSubmit } = useForm();
 
@@ -136,6 +126,10 @@ const UserPage = () => {
     setOpenComponentDialog(false);
   };
 
+  useEffect(() => {
+    console.log("isSmallerThan600: ", isSmallerThan600);
+  }, [isSmallerThan600]);
+
   const ToolBar = () => {
     return (
       <PageToolbar
@@ -145,9 +139,14 @@ const UserPage = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid container justifyContent="space-evenly" alignItems="center">
-          <Grid item xs={12} md={3}>
-            <Grid container justifyContent="center">
+        <Grid
+          container
+          justifyContent={!isSmallerThan600 ? "space-evenly" : "center"}
+          alignItems="center"
+          direction={isSmallerThan600 ? "column" : "row"}
+        >
+          <Grid item>
+            <Grid container justifyContent="center" alignItems="center">
               {page && page.pageImageUrl ? (
                 <PageImage imgUrl={page.pageImageUrl} />
               ) : (
@@ -156,12 +155,19 @@ const UserPage = () => {
             </Grid>
           </Grid>
 
-          <Grid item xs={12} md={9}>
-            <Grid container item direction="row" justifyContent="center">
-              <Grid item xs={12} sm={3}>
+          <Grid item>
+            <Grid
+              container
+              item
+              direction="row"
+              justifyContent={isSmallerThan600 ? "space-evenly" : "center"}
+              style={{ paddingTop: isSmallerThan600 ? "24px" : "0" }}
+            >
+              <Grid item xs={4}>
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenComponentDialog}>
                     <CreateComponentIcon />
+
                     <ToolbarIconText>
                       {BREAK_TOOLBAR_TEXT &&
                       strings.addComponent.length > BREAK_POINT_TOOLBAR_TEXT &&
@@ -181,7 +187,7 @@ const UserPage = () => {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={4}>
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenIconsDialog}>
                     <InsertIconIcon />
@@ -204,7 +210,7 @@ const UserPage = () => {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={4}>
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton>
                     <YouTubeIcon />
@@ -249,10 +255,7 @@ const UserPage = () => {
               />
             </form>
           ) : (
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
+            <span
               onClick={() => {
                 if (page) setPageName(page.name);
                 setIsEdittingPageName(true);
@@ -261,7 +264,7 @@ const UserPage = () => {
             >
               {page?.name}
               <EditPenIcon />
-            </Grid>
+            </span>
           )}
           {/* <VisibilityIcon /> */}
         </PageName>

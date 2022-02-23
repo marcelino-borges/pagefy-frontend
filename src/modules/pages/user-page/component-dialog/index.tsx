@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { SketchPicker } from "react-color";
 import {
   Button,
   Dialog,
@@ -12,6 +14,7 @@ import {
 } from "@mui/material";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
+import TimePicker from "@mui/lab/TimePicker";
 import {
   TextFields as TextFieldsIcon,
   Image as ImageIcon,
@@ -37,19 +40,21 @@ import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
 import {
   ACESSIBILITY_GREEN,
+  ACESSIBILITY_RED,
   LIGHTER_GREY,
   LIGHT_GREY,
+  PRIMARY_COLOR,
   TRANSPARENT,
 } from "./../../../../styles/colors";
 import CustomTooltip from "../../../components/tooltip";
 
-import { useForm } from "react-hook-form";
 import FontColorIcon from "./../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "./../../../../assets/icons/custom-icons/background-color";
-import { SketchPicker } from "react-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
 import { IMAGE_EXTENSIONS } from "../../../constants";
 import moment from "moment";
+import { ComponentType, IUserComponent } from "../../../../store/user/types";
+import { showErrorToast } from "./../../../../utils/toast/index";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -66,7 +71,9 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
   const { handleSubmit, register } = useForm();
 
-  const [selectedType, setSelectedType] = useState<number>(4);
+  const [selectedType, setSelectedType] = useState<ComponentType>(
+    ComponentType.Video
+  );
   const [selectedColumnsCount, setSelectedColumnsCount] = useState<number>(4);
   const [selectedRowsCount, setSelectedRowsCount] = useState<number>(4);
 
@@ -76,26 +83,27 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
   const [step, setStep] = useState<number>(0);
   const [showStep2, setShowStep2] = useState<boolean>(false);
-  const [errorLabelField, setErrorLabelField] = useState<string>();
+  const [errorTextField, setErrorTextField] = useState<string>();
   const [errorUrlField, setErrorUrlField] = useState<string>();
-  const [label, setLabel] = useState<string>();
-  const [url, setUrl] = useState<string>();
-  const [fontColor, setFontColor] = useState<string>(TRANSPARENT);
-  const [backgroundColor, setBackgroundColor] = useState<string>(TRANSPARENT);
+  const [text, setText] = useState<string>("");
+  const [url, setUrl] = useState<string>("");
+  const [fontColor, setFontColor] = useState<string>("black");
+  const [backgroundColor, setBackgroundColor] = useState<string>(PRIMARY_COLOR);
   const [isVisible, setIsVisible] = useState<boolean>(true);
   const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
     useState<boolean>(false);
   const [showFontColorPicker, setShowFontColorPicker] =
     useState<boolean>(false);
   const [showUploadDialog, setShowUploadDialog] = useState<boolean>(false);
-  const [chosenImage, setChosenImage] = useState();
+  const [chosenImage, setChosenImage] = useState<File>();
   const [showLaunchDateDialog, setShowLaunchDateDialog] =
     useState<boolean>(false);
   const [launchDate, setLaunchDate] = useState<string>(defaultLaunchDate);
+  const [launchTime, setLaunchTime] = useState<string>(defaultLaunchDate);
 
   const clearStates = () => {
     // Step 1 buttons
-    setSelectedType(4);
+    setSelectedType(ComponentType.Video);
     setSelectedColumnsCount(4);
     setSelectedRowsCount(4);
     setShowStep2(false);
@@ -115,39 +123,89 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setTypeError(undefined);
     setColumnsError(undefined);
     setRowsError(undefined);
+    setErrorUrlField(undefined);
+    setErrorTextField(undefined);
   };
 
   const onSubmit = () => {
     clearErrors();
 
     if (step === 0) {
-      let hasErros = false;
-
-      if (selectedType === 4) {
-        setTypeError("Selecione um tipo de componente");
-        hasErros = true;
-      }
-      if (selectedColumnsCount === 4) {
-        setColumnsError("Selecione a quantidade de colunas");
-        hasErros = true;
-      }
-      if (selectedRowsCount === 4) {
-        setRowsError("Selecione a quantidade de linhas");
-        hasErros = true;
-      }
-
-      if (hasErros) {
+      if (!isStep1Valid()) {
+        showErrorToast(strings.selectAllOptions);
         return;
       }
 
       handleGoToStep(1, 350);
     } else if (step === 1) {
       //dispatch(addComponentInPage(newComponent, pageId));
-      console.log("selectedType === 0: ", selectedType === 0);
-      console.log("selectedType === 1: ", selectedType === 1);
-      console.log("selectedType === 2: ", selectedType === 2);
+      if (!isStep2Valid()) {
+        return;
+      }
+
+      // const newComponent: IUserComponent = {
+      //   text: selectedType !== ComponentType.Image ? text : undefined,
+      //   url,
+      //   style: {
+      //     backgroundColor,
+      //     color: fontColor,
+      //   },
+      //   visible: isVisible,
+      //   clicks: 0,
+      //   layout: {
+      //     rows: selectedRowsCount,
+      //     columns: selectedColumnsCount,
+      //   },
+      //   type: selectedType,
+      //   mediaUrl: undefined,
+      //   iconDetails: undefined,
+
+      // };
       //handleClose();
+      console.log("add component");
     }
+  };
+
+  const isStep1Valid = (): boolean => {
+    let isValid = true;
+
+    if (selectedType === 4) {
+      setTypeError("Selecione um tipo de componente");
+      isValid = false;
+    }
+
+    if (selectedColumnsCount === 4) {
+      setColumnsError("Selecione a quantidade de colunas");
+      isValid = false;
+    }
+
+    if (selectedRowsCount === 4) {
+      setRowsError("Selecione a quantidade de linhas");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const isStep2Valid = (): boolean => {
+    let isValid = true;
+
+    if (url.length < 1) {
+      setErrorUrlField(strings.urlRequired);
+      isValid = false;
+    }
+
+    if (selectedType !== ComponentType.Image && (!text || text.length < 1)) {
+      setErrorTextField(strings.textInComponentRequired);
+      isValid = false;
+    }
+
+    if (selectedType !== ComponentType.Text && !chosenImage) {
+      showErrorToast(strings.imageInComponentRequired);
+      isValid = false;
+    }
+
+    return isValid;
   };
 
   const handleGoToStep = (targetStep: number, delay: number) => {
@@ -172,6 +230,14 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setFontColor(color.hex);
   };
 
+  const handleLaunchDate = (newDate: any) => {
+    setLaunchDate(moment(newDate).utc().toString());
+  };
+
+  const handleLaunchTime = (newDate: any) => {
+    setLaunchTime(moment(newDate).utc().toString());
+  };
+
   const Section = ({ title, icon, error }: any) => (
     <SectionHeader item>
       {icon}
@@ -181,8 +247,7 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           <CustomTooltip title={error}>
             <FeedbackIcon
               fontSize="small"
-              color="primary"
-              style={{ marginLeft: "4px" }}
+              style={{ marginLeft: "4px", color: ACESSIBILITY_RED }}
             />
           </CustomTooltip>
         )}
@@ -200,38 +265,77 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       style={{ minWidth: "300px" }}
     >
       <DialogTitle>{strings.scheduleLaunchComponentDate}</DialogTitle>
-      <DialogContent>
-        <div
+      <DialogContent
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
           style={{
             paddingTop: "16px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
           }}
         >
-          {!isSmallerThanSM ? (
-            <DesktopDatePicker
-              label={strings.date}
-              inputFormat="DD/MM/yyyy"
-              value={moment(launchDate)}
-              onChange={(e: any) => {
-                console.log("date: ", e.target);
-              }}
-              renderInput={(params) => <TextField {...params} />}
+          <Grid
+            item
+            xs={12}
+            md={7}
+            style={{
+              paddingRight: !!isSmallerThanXM ? "unset" : "24px",
+              paddingBottom: !!isSmallerThanXM ? "24px" : "unset",
+            }}
+          >
+            {!isSmallerThanSM ? (
+              <DesktopDatePicker
+                label={strings.date}
+                inputFormat="DD/MM/yyyy"
+                value={moment(launchDate)}
+                onChange={handleLaunchDate}
+                renderInput={(params) => (
+                  <TextField
+                    style={{
+                      width: "100%",
+                    }}
+                    {...params}
+                  />
+                )}
+              />
+            ) : (
+              <MobileDatePicker
+                label={strings.date}
+                inputFormat="DD/MM/yyyy"
+                value={moment(launchDate)}
+                onChange={handleLaunchDate}
+                renderInput={(params) => (
+                  <TextField
+                    style={{
+                      width: "100%",
+                    }}
+                    {...params}
+                  />
+                )}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} md={5}>
+            <TimePicker
+              label="Time"
+              value={moment(launchTime).toDate()}
+              onChange={handleLaunchTime}
+              renderInput={(params) => (
+                <TextField
+                  style={{
+                    width: "100%",
+                  }}
+                  {...params}
+                />
+              )}
             />
-          ) : (
-            <MobileDatePicker
-              label={strings.date}
-              inputFormat="DD/MM/yyyy"
-              value={moment(launchDate)}
-              onChange={(e: any) => {
-                console.log("date: ", e.target);
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          )}
-        </div>
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions>
         <Button
@@ -272,9 +376,11 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           style={{
             transform: step === 0 ? "unset" : "translateX(-1000px)",
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          <>
+          <Grid container direction="column">
             <Section
               title={strings.type}
               icon={<CategoryIcon />}
@@ -283,8 +389,8 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
             <Grid container wrap={isSmallerThanXM ? "wrap" : "nowrap"}>
               <Grid container item xs={12} sm={4} justifyContent="center">
                 <ComponentDetailsButton
-                  isSelected={selectedType === 0}
-                  onClick={() => setSelectedType(0)}
+                  isSelected={selectedType === ComponentType.Text}
+                  onClick={() => setSelectedType(ComponentType.Text)}
                 >
                   <TextFieldsIcon />
                 </ComponentDetailsButton>
@@ -292,8 +398,8 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
               <Grid container item xs={12} sm={4} justifyContent="center">
                 <ComponentDetailsButton
-                  isSelected={selectedType === 2}
-                  onClick={() => setSelectedType(2)}
+                  isSelected={selectedType === ComponentType.TextImage}
+                  onClick={() => setSelectedType(ComponentType.TextImage)}
                 >
                   <TextFieldsIcon
                     style={{ fontSize: "40px", marginBottom: "45px" }}
@@ -305,101 +411,102 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
               <Grid container item xs={12} sm={4} justifyContent="center">
                 <ComponentDetailsButton
-                  isSelected={selectedType === 1}
-                  onClick={() => setSelectedType(1)}
+                  isSelected={selectedType === ComponentType.Image}
+                  onClick={() => setSelectedType(ComponentType.Image)}
                 >
                   <ImageIcon />
                 </ComponentDetailsButton>
               </Grid>
             </Grid>
-          </>
 
-          <Grid container>
-            {/* Columns selector */}
-            <LayoutPickerContainer
-              container
-              item
-              mt="16px"
-              direction="column"
-              xs={12}
-              sm={6}
-            >
-              <Section
-                title={strings.columns}
-                icon={<ColumnsIcon />}
-                error={columnsError}
-              />
-              <Grid container item wrap="nowrap">
-                <Grid container item xs={12} sm={6} justifyContent="center">
-                  <ComponentDetailsButton
-                    size="60px"
-                    fontSize="27px"
-                    isSelected={selectedColumnsCount === 1}
-                    onClick={() => {
-                      setSelectedColumnsCount(1);
-                    }}
-                  >
-                    1
-                  </ComponentDetailsButton>
-                </Grid>
+            {/* Layout selector */}
+            <Grid container>
+              {/* Columns selector */}
+              <LayoutPickerContainer
+                container
+                item
+                mt="16px"
+                direction="column"
+                xs={12}
+                sm={6}
+              >
+                <Section
+                  title={strings.columns}
+                  icon={<ColumnsIcon />}
+                  error={columnsError}
+                />
+                <Grid container item wrap="nowrap">
+                  <Grid container item xs={12} sm={6} justifyContent="center">
+                    <ComponentDetailsButton
+                      size="60px"
+                      fontSize="27px"
+                      isSelected={selectedColumnsCount === 1}
+                      onClick={() => {
+                        setSelectedColumnsCount(1);
+                      }}
+                    >
+                      1
+                    </ComponentDetailsButton>
+                  </Grid>
 
-                <Grid container item xs={12} sm={6} justifyContent="center">
-                  <ComponentDetailsButton
-                    size="60px"
-                    fontSize="27px"
-                    isSelected={selectedColumnsCount === 2}
-                    onClick={() => {
-                      setSelectedColumnsCount(2);
-                    }}
-                  >
-                    2
-                  </ComponentDetailsButton>
+                  <Grid container item xs={12} sm={6} justifyContent="center">
+                    <ComponentDetailsButton
+                      size="60px"
+                      fontSize="27px"
+                      isSelected={selectedColumnsCount === 2}
+                      onClick={() => {
+                        setSelectedColumnsCount(2);
+                      }}
+                    >
+                      2
+                    </ComponentDetailsButton>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </LayoutPickerContainer>
+              </LayoutPickerContainer>
 
-            {/* Rows selector */}
-            <LayoutPickerContainer
-              container
-              item
-              mt="16px"
-              direction="column"
-              xs={12}
-              sm={6}
-            >
-              <Section
-                title={strings.rows}
-                icon={<RowsIcon />}
-                error={rowsError}
-              />
-              <Grid container item wrap="nowrap">
-                <Grid container item xs={12} sm={6} justifyContent="center">
-                  <ComponentDetailsButton
-                    size="60px"
-                    fontSize="27px"
-                    isSelected={selectedRowsCount === 1}
-                    onClick={() => {
-                      setSelectedRowsCount(1);
-                    }}
-                  >
-                    1
-                  </ComponentDetailsButton>
-                </Grid>
+              {/* Rows selector */}
+              <LayoutPickerContainer
+                container
+                item
+                mt="16px"
+                direction="column"
+                xs={12}
+                sm={6}
+              >
+                <Section
+                  title={strings.rows}
+                  icon={<RowsIcon />}
+                  error={rowsError}
+                />
+                <Grid container item wrap="nowrap">
+                  <Grid container item xs={12} sm={6} justifyContent="center">
+                    <ComponentDetailsButton
+                      size="60px"
+                      fontSize="27px"
+                      isSelected={selectedRowsCount === 1}
+                      onClick={() => {
+                        setSelectedRowsCount(1);
+                      }}
+                    >
+                      1
+                    </ComponentDetailsButton>
+                  </Grid>
 
-                <Grid container item xs={12} sm={6} justifyContent="center">
-                  <ComponentDetailsButton
-                    size="60px"
-                    fontSize="27px"
-                    isSelected={selectedRowsCount === 2}
-                    onClick={() => {
-                      setSelectedRowsCount(2);
-                    }}
-                  >
-                    2
-                  </ComponentDetailsButton>
+                  <Grid container item xs={12} sm={6} justifyContent="center">
+                    <ComponentDetailsButton
+                      size="60px"
+                      fontSize="27px"
+                      isSelected={selectedRowsCount === 2}
+                      onClick={() => {
+                        setSelectedRowsCount(2);
+                      }}
+                    >
+                      2
+                    </ComponentDetailsButton>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </LayoutPickerContainer>
+              </LayoutPickerContainer>
+            </Grid>
           </Grid>
         </DialogContent>
       ) : (
@@ -409,6 +516,8 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
         <DialogContent
           style={{
+            display: "flex",
+            alignItems: "center",
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
@@ -445,16 +554,16 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   />
                   <TextField
                     {...register("label")}
-                    error={!!errorLabelField}
-                    helperText={errorLabelField}
+                    error={!!errorTextField}
+                    helperText={errorTextField}
                     autoFocus
                     required
                     placeholder={strings.text}
                     type="text"
                     fullWidth
                     variant="outlined"
-                    onChange={(e: any) => setLabel(e.target.value)}
-                    value={label}
+                    onChange={(e: any) => setText(e.target.value)}
+                    value={text}
                     sx={{ minWidth: "100px", marginLeft: "16px" }}
                   />
                 </Grid>
@@ -502,6 +611,7 @@ const ComponentDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     <Grid item>
                       <IconButton
                         onClick={() => {
+                          setChosenImage(undefined);
                           setShowUploadDialog(true);
                         }}
                       >

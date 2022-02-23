@@ -89,8 +89,8 @@ const DraggableUserComponent = ({
   const { handleSubmit: handleSubmitLabel } = useForm();
   const { handleSubmit: handleSubmitUrl } = useForm();
 
-  const theme = useTheme();
-  const isLargerThanMD = useMediaQuery(theme.breakpoints.up("md"));
+  const isLargerThan400 = useMediaQuery("(min-width: 400px)");
+  const isSmallerThan400 = useMediaQuery("(max-width: 399px)");
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [isKeepToolsOpen, setIsKeepToolsOpen] = useState<boolean>(false);
@@ -101,7 +101,7 @@ const DraggableUserComponent = ({
   const [showFontColorPicker, setShowFontColorPicker] =
     useState<boolean>(false);
   const [values, setValues] = useState({
-    label: component.label || "",
+    label: component.text || "",
     url: component.url,
   });
   const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
@@ -119,7 +119,7 @@ const DraggableUserComponent = ({
       <AnalyticsGridItem item alignItems="center">
         <CustomTooltip
           leaveDelay={1}
-          placement={isLargerThanMD ? "left" : "bottom"}
+          placement={isLargerThan400 ? "left" : "bottom"}
           title={`${tooltipKey}: ${tooltipValue}`}
         >
           {icon}
@@ -302,7 +302,7 @@ const DraggableUserComponent = ({
             spacing={2}
           >
             {/* Label */}
-            {component.label && component.label.length > 0 && (
+            {component.text && component.text.length > 0 && (
               <ContentRow container item alignItems="center">
                 {isEdittingLabel ? (
                   <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
@@ -319,7 +319,7 @@ const DraggableUserComponent = ({
                         onBlur={() => {
                           setValues({
                             ...values,
-                            label: component.label || "",
+                            label: component.text || "",
                           });
                           setIsEdittingLabel(false);
                         }}
@@ -331,10 +331,10 @@ const DraggableUserComponent = ({
                     item
                     onClick={() => {
                       setIsEdittingLabel(true);
-                      setValues({ ...values, label: component.label || "" });
+                      setValues({ ...values, label: component.text || "" });
                     }}
                   >
-                    {stringShortener(component.label, isLargerThanMD ? 50 : 20)}
+                    {stringShortener(component.text, isLargerThan400 ? 50 : 20)}
                   </LabelText>
                 )}
                 <EditIconItem item onClick={() => setIsEdittingLabel(true)}>
@@ -380,7 +380,7 @@ const DraggableUserComponent = ({
                     setValues({ ...values, url: component.url || "" });
                   }}
                 >
-                  {stringShortener(component.url, isLargerThanMD ? 50 : 20)}
+                  {stringShortener(component.url, isLargerThan400 ? 50 : 20)}
                 </UrlTextItem>
               )}
               <EditIconItem item>
@@ -390,14 +390,17 @@ const DraggableUserComponent = ({
           </Grid>
 
           {/* 2nd content column */}
-          {/* Analytics */}
+
+          {/*
+           * Analytics
+           */}
           <AnalyticsGridContainer
             container
             item
             xs={12}
             md={3}
-            alignItems={isLargerThanMD ? "flex-end" : "center"}
-            direction={isLargerThanMD ? "column" : "row"}
+            alignItems={isLargerThan400 ? "flex-end" : "center"}
+            direction={isSmallerThan400 ? "row" : "column"}
             justifyContent="center"
             spacing={1}
           >
@@ -440,7 +443,7 @@ const DraggableUserComponent = ({
           disableInteractive
           leaveDelay={0.1}
           title={strings.backgroundColor}
-          placement={isLargerThanMD ? "right" : "bottom"}
+          placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton
@@ -472,7 +475,7 @@ const DraggableUserComponent = ({
           disableInteractive
           leaveDelay={0.1}
           title={strings.fontColor}
-          placement={isLargerThanMD ? "right" : "bottom"}
+          placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton
@@ -504,7 +507,7 @@ const DraggableUserComponent = ({
           disableInteractive
           leaveDelay={0.1}
           title={strings.uploadImage}
-          placement={isLargerThanMD ? "right" : "bottom"}
+          placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton
@@ -525,7 +528,7 @@ const DraggableUserComponent = ({
           disableInteractive
           leaveDelay={0.1}
           title={strings.chooseEffect}
-          placement={isLargerThanMD ? "right" : "bottom"}
+          placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton
@@ -543,7 +546,7 @@ const DraggableUserComponent = ({
           disableInteractive
           leaveDelay={0.1}
           title={strings.toggleVisibility}
-          placement={isLargerThanMD ? "right" : "bottom"}
+          placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton
@@ -562,7 +565,7 @@ const DraggableUserComponent = ({
           disableInteractive
           leaveDelay={0.1}
           title={strings.remove}
-          placement={isLargerThanMD ? "right" : "bottom"}
+          placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton

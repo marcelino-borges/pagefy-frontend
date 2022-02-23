@@ -25,7 +25,7 @@ const initialState: IUserState = {
           "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
         components: [
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "1",
@@ -38,7 +38,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Portfolio",
+            text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "2",
@@ -51,7 +51,7 @@ const initialState: IUserState = {
             type: ComponentType.Image,
           },
           {
-            label: "Curriculum Vitae",
+            text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "3",
@@ -64,7 +64,7 @@ const initialState: IUserState = {
             type: ComponentType.Text,
           },
           {
-            label: "HTBAD",
+            text: "HTBAD",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "4",
@@ -77,7 +77,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "5",
@@ -90,7 +90,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Portfolio",
+            text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "6",
@@ -103,7 +103,7 @@ const initialState: IUserState = {
             type: ComponentType.Video,
           },
           {
-            label: "Curriculum Vitae Icon",
+            text: "Curriculum Vitae Icon",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "7",
@@ -116,7 +116,7 @@ const initialState: IUserState = {
             type: ComponentType.Icon,
           },
           {
-            label: "HTBAD",
+            text: "HTBAD",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "8",
@@ -129,7 +129,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "9",
@@ -142,7 +142,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Portfolio",
+            text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "10",
@@ -155,7 +155,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Curriculum Vitae",
+            text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "11",
@@ -179,7 +179,7 @@ const initialState: IUserState = {
 
         components: [
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "1",
@@ -192,7 +192,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Portfolio",
+            text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "2",
@@ -205,7 +205,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Curriculum Vitae",
+            text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "3",
@@ -218,7 +218,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "HTBAD",
+            text: "HTBAD",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "4",
@@ -231,7 +231,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "5",
@@ -244,7 +244,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Portfolio",
+            text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "6",
@@ -257,7 +257,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Curriculum Vitae",
+            text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "7",
@@ -270,7 +270,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "HTBAD",
+            text: "HTBAD",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "8",
@@ -283,7 +283,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "9",
@@ -296,7 +296,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Portfolio",
+            text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "10",
@@ -309,7 +309,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "Curriculum Vitae",
+            text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
 
             style: undefined,
@@ -323,7 +323,7 @@ const initialState: IUserState = {
             type: ComponentType.TextImage,
           },
           {
-            label: "HTBAD",
+            text: "HTBAD",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "12",
@@ -347,7 +347,7 @@ const initialState: IUserState = {
 
         components: [
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "1",
@@ -371,7 +371,7 @@ const initialState: IUserState = {
 
         components: [
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "1",
@@ -395,7 +395,7 @@ const initialState: IUserState = {
 
         components: [
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "1",
@@ -419,7 +419,7 @@ const initialState: IUserState = {
 
         components: [
           {
-            label: "Devbox",
+            text: "Devbox",
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "1",
@@ -527,7 +527,7 @@ const userReducer = (
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
                   ...component,
-                  label: newLabel,
+                  text: newLabel,
                 };
                 return updatedComponent;
               }

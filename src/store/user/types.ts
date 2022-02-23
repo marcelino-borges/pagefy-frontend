@@ -32,7 +32,7 @@ export interface IUserPage {
 
 export interface IUserComponent {
   _id?: string;
-  label?: string;
+  text?: string;
   url: string;
   style?: IComponentStyle;
   visible: boolean;
@@ -58,11 +58,11 @@ export interface IComponentStyle {
 }
 
 export const enum ComponentType {
-  Text,
-  Image,
-  TextImage,
-  Icon,
-  Video,
+  Text = 0,
+  Image = 1,
+  TextImage = 2,
+  Icon = 3,
+  Video = 4,
 }
 
 export enum IconType {

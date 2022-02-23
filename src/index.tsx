@@ -8,6 +8,7 @@ import App from "./App";
 import store from "./store";
 import theme from "./theme";
 import "./styles/global-style.css";
+import "react-toastify/dist/ReactToastify.css";
 import strings from "./localization/index";
 
 ReactDOM.render(
