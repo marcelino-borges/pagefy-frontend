@@ -150,7 +150,7 @@ const Header = () => {
               height: "auto",
               width: isSmallerThan400 ? "125px" : "100%",
               margin: "8px",
-              maxHeight: "250px",
+              maxHeight: "80px",
             }}
             alt="Logo"
           />
