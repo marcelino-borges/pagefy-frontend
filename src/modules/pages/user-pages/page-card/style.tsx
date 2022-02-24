@@ -1,21 +1,20 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { Article, Label, Link, Visibility } from "@mui/icons-material";
+import { Article, Label, Link, Visibility, Delete } from "@mui/icons-material";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
 
 const smallBreakpoint = "550px";
 
 export const Card = styled(Grid)`
   margin: 12px 0px;
-  /* border: 1px solid #e9e9e9; */
   border-radius: 20px;
   height: 250px;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   position: relative;
-  min-width: 320px;
+  min-width: 230px;
 
   &:hover {
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.06);
@@ -107,5 +106,20 @@ export const EditPenIcon = styled(EditIcon)`
 `;
 
 export const PageDataKey = styled("span")`
+  margin-right: 4px;
   color: #bbbbbb;
+`;
+
+export const DeleteIcon = styled(Delete)`
+  color: #bfbfbf;
+  font-size: 20px;
+  cursor: pointer;
+  position: absolute;
+  z-index: 100;
+  right: 24px;
+  top: 24px;
+
+  &:hover {
+    color: ${PRIMARY_COLOR};
+  }
 `;

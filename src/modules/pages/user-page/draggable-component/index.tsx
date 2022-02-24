@@ -69,6 +69,7 @@ import BackgroundColorIcon from "../../../../assets/icons/custom-icons/backgroun
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
 import { IMAGE_EXTENSIONS } from "../../../constants";
+import DialogConfirmation from "../../../components/dialog-confirmation";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -180,35 +181,17 @@ const DraggableUserComponent = ({
 
   const DeleteComponentConfirmationDialog = () => {
     return (
-      <Dialog
+      <DialogConfirmation
         open={openDeleteComponentConfirmation}
         onClose={() => {
           setOpenDeleteComponentConfirmation(false);
         }}
-        fullWidth
-        maxWidth="sm"
-        style={{ minWidth: "300px" }}
-      >
-        <DialogTitle>{strings.deleteIcon}</DialogTitle>
-        <DialogContent>{strings.deleteComponentConfirmation}</DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setOpenDeleteComponentConfirmation(false);
-            }}
-          >
-            {strings.no}
-          </Button>
-          <Button
-            onClick={() => {
-              setOpenDeleteComponentConfirmation(false);
-              deleteComponent();
-            }}
-          >
-            {strings.yes}
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onConfirmCallback={() => {
+          deleteComponent();
+        }}
+        title={strings.deleteIcon}
+        message={strings.deleteComponentConfirmation}
+      />
     );
   };
 

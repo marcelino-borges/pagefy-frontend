@@ -23,6 +23,16 @@ const updateUserPageNameInStore = (pageId: string, newName: string) => ({
   type: UserActionTypes.UPDATE_USER_PAGE_NAME,
 });
 
+export const updateUserPageUrl =
+  (pageId: string, newUrl: string) => (dispatch: any) => {
+    dispatch(updateUserPageUrlInStore(pageId, newUrl));
+  };
+
+const updateUserPageUrlInStore = (pageId: string, newUrl: string) => ({
+  payload: { pageId, newUrl },
+  type: UserActionTypes.UPDATE_USER_PAGE_URL,
+});
+
 export const toggleComponentVisibility = (
   pageId: string,
   componentId: string
@@ -97,4 +107,9 @@ export const setComponentFontColor = (
 ) => ({
   payload: { pageId, componentId, newColor },
   type: UserActionTypes.UPDATE_COMPONENT_FONT_COLOR,
+});
+
+export const deletePage = (pageId: string) => ({
+  payload: pageId,
+  type: UserActionTypes.DELETE_PAGE,
 });

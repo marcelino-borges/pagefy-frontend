@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 import { TextField } from "@mui/material";
 
 export const TransparentTextFieldStyled = styled(
-  ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
+  ({ fontWeight, color, fontSize, fontStyle, textAlign, ...rest }: any) => (
     <TextField {...rest} />
   )
 )`
@@ -16,6 +16,7 @@ export const TransparentTextFieldStyled = styled(
     width: 100%;
     font-family: 'Source Sans Pro';
     font-style: ${(props) => props.fontStyle || "normal"};
+    text-align: ${(props) => props.textAlign || "unset"};
   }
 
   & .MuiInputBase-root {

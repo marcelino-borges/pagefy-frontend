@@ -480,6 +480,32 @@ const userReducer = (
       };
     }
 
+    case UserActionTypes.UPDATE_USER_PAGE_URL: {
+      let updatedPagesList: IUserPage[] = state.profile
+        ? [...state.profile.pages]
+        : [];
+
+      if (updatedPagesList && updatedPagesList.length > 0) {
+        updatedPagesList = updatedPagesList.map((page: IUserPage) => {
+          if (page._id === action.payload.pageId) {
+            return {
+              ...page,
+              url: action.payload.newUrl,
+            };
+          }
+          return page;
+        });
+      }
+
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: [...updatedPagesList],
+        },
+      };
+    }
+
     case UserActionTypes.TOGGLE_COMPONENT_VISIBILITY: {
       const pageId = action.payload.pageId as string;
       const componentId = action.payload.componentId as string;
@@ -756,6 +782,22 @@ const userReducer = (
         profile: {
           ...state.profile,
           pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.DELETE_PAGE: {
+      const pageIdToDelete = action.payload;
+
+      const updatedPages = state.profile.pages.filter(
+        (page: IUserPage) => page._id !== pageIdToDelete
+      );
+
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: [...updatedPages],
         },
       };
     }

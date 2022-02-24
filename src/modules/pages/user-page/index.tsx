@@ -24,12 +24,16 @@ import {
   ToolbarButton,
   ToolbarIconText,
   DeleteIconOverlaySpan,
+  PageUrl,
 } from "./style";
 import strings from "../../../localization";
 import { EditPenIcon } from "./style";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
-import { updateUserPageName } from "../../../store/user/actions";
+import {
+  updateUserPageName,
+  updateUserPageUrl,
+} from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component";
 import IconsDialog from "./icons-dialog";
 import CustomTooltip from "./../../components/tooltip/index";
@@ -50,7 +54,9 @@ const UserPage = () => {
     useState<IUserComponent[]>();
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
+  const [isEdittingPageUrl, setIsEdittingPageUrl] = useState(false);
   const [pageName, setPageName] = useState("");
+  const [pageUrl, setPageUrl] = useState("");
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
   const [openComponentDialog, setOpenComponentDialog] = useState(false);
 
@@ -93,17 +99,31 @@ const UserPage = () => {
   }, [id, userProfileState?.pages]);
 
   useEffect(() => {
-    if (page && page._id) dispatch(setPageBeingManaged(page._id));
+    if (page && page._id) {
+      dispatch(setPageBeingManaged(page._id));
+      setPageName(page.name);
+      setPageUrl(page.url);
+    }
   }, [dispatch, page, page?._id]);
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageName(event.target.value);
   };
 
+  const handleChangePageUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPageUrl(event.target.value);
+  };
+
   const onSubmitPageNameForm = () => {
     if (!page || !page._id) return;
     setIsEdittingPageName(false);
     dispatch(updateUserPageName(page._id, pageName));
+  };
+
+  const onSubmitPageUrlForm = () => {
+    if (!page || !page._id) return;
+    setIsEdittingPageUrl(false);
+    dispatch(updateUserPageUrl(page._id, pageUrl));
   };
 
   const handleOpenIconsDialog = () => {
@@ -242,6 +262,7 @@ const UserPage = () => {
                 InputProps={{
                   style: { width: "100%" },
                 }}
+                textAlign="center"
                 value={pageName}
                 onChange={handleChangePageName}
                 onBlur={() => {
@@ -253,17 +274,51 @@ const UserPage = () => {
           ) : (
             <span
               onClick={() => {
-                if (page) setPageName(page.name);
+                onSubmitPageNameForm();
                 setIsEdittingPageName(true);
               }}
               style={{ cursor: "pointer" }}
             >
-              {page?.name}
+              {pageName}
               <EditPenIcon />
             </span>
           )}
           {/* <VisibilityIcon /> */}
         </PageName>
+
+        <PageUrl container justifyContent="center" alignItems="center">
+          {isEdittingPageUrl ? (
+            <form onSubmit={handleSubmit(onSubmitPageUrlForm)}>
+              <TransparentTextField
+                autoFocus
+                color="#bfbfbf"
+                fontSize="1.2em"
+                InputProps={{
+                  style: { width: "100%" },
+                }}
+                fontWeight="300"
+                textAlign="center"
+                value={pageUrl}
+                onChange={handleChangePageUrl}
+                onBlur={() => {
+                  onSubmitPageUrlForm();
+                  setIsEdittingPageUrl(false);
+                }}
+              />
+            </form>
+          ) : (
+            <span
+              onClick={() => {
+                if (page) setPageUrl(page.url);
+                setIsEdittingPageUrl(true);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              {pageUrl}
+              <EditPenIcon />
+            </span>
+          )}
+        </PageUrl>
       </PageToolbar>
     );
   };

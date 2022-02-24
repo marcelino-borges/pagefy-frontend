@@ -10,6 +10,7 @@ interface IProps {
   fontStyle?: string;
   name?: string;
   autoFocus?: any;
+  textAlign?: string;
   // All other props
   [x: string]: any;
 }
@@ -24,6 +25,7 @@ const TransparentTextField = ({
   fontStyle,
   name,
   autoFocus,
+  textAlign,
   ...rest
 }: IProps) => {
   return (
@@ -36,6 +38,7 @@ const TransparentTextField = ({
       color={color}
       fontSize={fontSize}
       fontStyle={fontStyle}
+      textAlign={textAlign}
       {...register}
       {...rest}
     />

@@ -1,11 +1,7 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
-import {
-  LIGHTEST_GREY,
-  MEDIUM_GREY,
-  PRIMARY_COLOR,
-} from "./../../../styles/colors";
+import { MEDIUM_GREY, PRIMARY_COLOR } from "./../../../styles/colors";
 
 export const PageToolbar = styled(
   ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
@@ -17,7 +13,12 @@ export const PageToolbar = styled(
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
   margin-bottom: 24px;
-  min-width: 320px;
+  margin-top: -24px;
+  min-width: 250px;
+
+  @media (max-width: 315px) {
+    margin-top: 0px;
+  }
 `;
 
 export const PageName = styled(
@@ -28,6 +29,15 @@ export const PageName = styled(
   font-weight: 700;
   font-size: 1.4em;
   margin-top: 24px;
+  text-align: center;
+`;
+
+export const PageUrl = styled(
+  ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
+    <Grid {...rest} />
+  )
+)`
+  font-weight: 300;
   text-align: center;
 `;
 

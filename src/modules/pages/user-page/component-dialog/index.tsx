@@ -390,7 +390,7 @@ const ComponentDialog = ({
             transform: step === 0 ? "unset" : "translateX(-1000px)",
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
             display: "flex",
-            alignItems: "center",
+            alignItems: isSmallerThanXM ? "flex-start" : "center",
           }}
         >
           <Grid container direction="column">

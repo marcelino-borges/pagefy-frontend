@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { IUserPage } from "../../../../store/user/types";
 import TransparentTextField from "../../../components/transparent-textfield";
-import { updateUserPageName } from "../../../../store/user/actions";
+import { deletePage, updateUserPageName } from "../../../../store/user/actions";
 import strings from "../../../../localization";
 import {
   Card,
@@ -18,10 +18,12 @@ import {
   ElementIcon,
   LinkIcon,
   ViewsIcon,
+  DeleteIcon,
 } from "./style";
 import { stringShortener } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import routes from "../../../../routes/paths";
+import DialogConfirmation from "./../../../components/dialog-confirmation/index";
 
 interface IPageCardProps {
   page: IUserPage;
@@ -31,10 +33,12 @@ const URL_MAX_LENGTH = 10;
 
 const PageCard = ({ page }: IPageCardProps) => {
   const dispatch = useDispatch();
+  const isSmallerThan600 = useMediaQuery("(max-width: 600px)");
   const navigate = useNavigate();
   const [isEditting, setIsEditting] = useState(false);
   const [isUrlLong, setIsUrlLong] = useState(false);
   const [pageName, setPageName] = useState("");
+  const [showDeletePageDialog, setShowDeletePageDialog] = useState(false);
 
   const { handleSubmit } = useForm();
 
@@ -60,6 +64,22 @@ const PageCard = ({ page }: IPageCardProps) => {
 
   return (
     <Card container wrap="nowrap" justifyContent="stretch">
+      <DeleteIcon
+        onClick={() => {
+          setShowDeletePageDialog(true);
+        }}
+      />
+      <DialogConfirmation
+        open={showDeletePageDialog}
+        onClose={() => {
+          setShowDeletePageDialog(false);
+        }}
+        onConfirmCallback={() => {
+          dispatch(deletePage(page._id));
+        }}
+        title={strings.deletePage}
+        message={strings.deletePageConfirmation}
+      />
       <CardOverlay onClick={loadPage} />
       <PageImage
         item
@@ -77,6 +97,9 @@ const PageCard = ({ page }: IPageCardProps) => {
         sm={7}
         justifyContent="space-between"
         wrap="nowrap"
+        style={{
+          maxWidth: isSmallerThan600 ? "100%" : "unset",
+        }}
       >
         <PageTitle
           container
@@ -105,10 +128,7 @@ const PageCard = ({ page }: IPageCardProps) => {
               />
             </form>
           ) : (
-            <>
-              {stringShortener(page.name, 15)}
-              <EditPenIcon />
-            </>
+            <>{stringShortener(page.name, 15)}</>
           )}
         </PageTitle>
         <Grid item>
@@ -118,12 +138,12 @@ const PageCard = ({ page }: IPageCardProps) => {
             direction="column"
             style={{ paddingRight: "32px" }}
           >
-            <Grid item>
+            <Grid container item wrap="nowrap">
               <ElementIcon />
               <PageDataKey>Elementos: </PageDataKey>
               {page.components.length}
             </Grid>
-            <Grid item>
+            <Grid container item wrap="nowrap">
               {isUrlLong ? (
                 <CustomTooltip title={page.url}>
                   <LinkIcon />
@@ -134,7 +154,7 @@ const PageCard = ({ page }: IPageCardProps) => {
               <PageDataKey>URL: </PageDataKey>/
               {stringShortener(page.url, URL_MAX_LENGTH)}
             </Grid>
-            <Grid item>
+            <Grid container item wrap="nowrap">
               <ViewsIcon />
               <PageDataKey>{strings.views}: </PageDataKey>
               {page.views}

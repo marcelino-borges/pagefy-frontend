@@ -27,6 +27,7 @@ interface IDictionary {
   addComponent: string;
   addIcon: string;
   deleteIcon: string;
+  deletePage: string;
   addVideo: string;
   iconName: string;
   back: string;
@@ -37,6 +38,7 @@ interface IDictionary {
   invalidUrl: string;
   colorPicker: string;
   deleteComponentConfirmation: string;
+  deletePageConfirmation: string;
   yes: string;
   no: string;
   or: string;
@@ -86,6 +88,7 @@ const en: IDictionary = {
   addComponent: "Add Component",
   addIcon: "Add Icon",
   deleteIcon: "Delete Icon",
+  deletePage: "Delete Page",
   addVideo: "Add Video",
   iconName: "Icon name",
   back: "Back",
@@ -96,6 +99,7 @@ const en: IDictionary = {
   invalidUrl: "Invalid URL",
   colorPicker: "Pick a color",
   deleteComponentConfirmation: "Do you really wish to delete this component?",
+  deletePageConfirmation: "Do you really want to delete this page?",
   yes: "Yes",
   no: "No",
   or: "or",
@@ -143,6 +147,7 @@ const pt: IDictionary = {
   addComponent: "Inserir Componente",
   addIcon: "Inserir Ícone",
   deleteIcon: "Remover Ícone",
+  deletePage: "Remover Página",
   addVideo: "Inserir Vídeo",
   iconName: "Nome do ícone",
   back: "Voltar",
@@ -153,6 +158,7 @@ const pt: IDictionary = {
   invalidUrl: "URL inválida",
   colorPicker: "Escolha outra cor",
   deleteComponentConfirmation: "Deseja realmente apagar este componente?",
+  deletePageConfirmation: "Deseja realmente apagar esta página?",
   yes: "Sim",
   no: "Não",
   or: "ou",

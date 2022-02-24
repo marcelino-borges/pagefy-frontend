@@ -8,6 +8,8 @@ export const Parent = styled(Grid)`
   background-color: white;
   min-width: 320px;
   z-index: 1000;
+  position: fixed;
+  width: 101%;
 `;
 
 export const HeaderLinkDesktop = styled(Link)`

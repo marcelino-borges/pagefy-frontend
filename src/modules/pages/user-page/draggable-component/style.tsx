@@ -11,7 +11,7 @@ import {
 export const Parent = styled(Grid)`
   position: relative;
   margin-bottom: 24px;
-  min-width: 320px;
+  min-width: 250px;
 `;
 
 export const Container = styled(({ isHoveringComponent, ...rest }: any) => (
