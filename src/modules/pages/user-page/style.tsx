@@ -117,7 +117,7 @@ export const EditPenIcon = styled(Edit)`
   color: ${MEDIUM_GREY};
   font-size: 20px;
   cursor: pointer;
-  margin-left: 16px;
+  margin-left: 4px;
 
   &:hover {
     color: ${PRIMARY_COLOR};

@@ -32,7 +32,6 @@ import {
   LabelText,
   UrlIconItem,
   UrlTextItem,
-  EditIconItem,
   ToolsColumn,
   ToolIconButton,
   ToolGridItem,
@@ -279,6 +278,7 @@ const DraggableUserComponent = ({
           item
           xs={11}
           direction={isSmallerThan600 ? "column" : "row"}
+          justifyContent="center"
           wrap="nowrap"
         >
           {/* 1st content column */}
@@ -290,6 +290,9 @@ const DraggableUserComponent = ({
             justifyContent="center"
             direction="column"
             spacing={2}
+            style={{
+              maxHeight: isSmallerThan400 ? "100px" : "unset",
+            }}
           >
             {/* Label */}
             {component.text && component.text.length > 0 && (
@@ -325,17 +328,16 @@ const DraggableUserComponent = ({
                     {stringShortener(component.text, isLargerThan400 ? 50 : 20)}
                   </LabelText>
                 )}
-                <EditIconItem item onClick={() => setIsEdittingLabel(true)}>
-                  <EditIcon />
-                </EditIconItem>
               </ContentRow>
             )}
 
             {/* URL */}
             <ContentRow container item alignItems="center" wrap="nowrap">
-              <UrlIconItem item>
-                <LinkIcon />
-              </UrlIconItem>
+              {!isSmallerThan400 && (
+                <UrlIconItem item>
+                  <LinkIcon />
+                </UrlIconItem>
+              )}
               {isEdittingUrl ? (
                 <form onSubmit={handleSubmitUrl(onSubmitUrlForm)}>
                   <LabelText item>
@@ -349,7 +351,7 @@ const DraggableUserComponent = ({
                       InputProps={{
                         style: {
                           width: "100%",
-                          margin: "0px 16px",
+                          margin: !isSmallerThan400 ? "0px 16px" : "0",
                         },
                       }}
                       fontSize={isSmallerThan600 ? "16px" : "22px"}
@@ -371,9 +373,6 @@ const DraggableUserComponent = ({
                   {stringShortener(component.url, isLargerThan400 ? 50 : 20)}
                 </UrlTextItem>
               )}
-              <EditIconItem item>
-                <EditIcon />
-              </EditIconItem>
             </ContentRow>
           </Grid>
 
@@ -389,6 +388,7 @@ const DraggableUserComponent = ({
             sm={3}
             style={{
               width: isSmallerThan600 ? "100%" : "unset",
+              maxHeight: isSmallerThan400 ? "80px" : "unset",
             }}
             alignItems={isSmallerThan600 ? "center" : "flex-end"}
             direction={isSmallerThan600 ? "row" : "column"}
