@@ -160,8 +160,9 @@ export const ToolIconButton = styled(
     transitionDuration,
     isHoveringComponent,
     hoveringWhite,
+    disabled,
     ...rest
-  }: any) => <IconButton {...rest} />
+  }: any) => <IconButton disabled={disabled} {...rest} />
 )`
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${(props) =>

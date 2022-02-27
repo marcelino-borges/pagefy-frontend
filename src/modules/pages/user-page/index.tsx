@@ -36,6 +36,7 @@ import CustomTooltip from "./../../components/tooltip/index";
 import { v4 as uuidv4 } from "uuid";
 import { Icon } from "@iconify/react";
 import ComponentDialog from "./component-dialog";
+import VideoDialog from "./video-dialog/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -51,6 +52,7 @@ const UserPage = () => {
   const [pageUrl, setPageUrl] = useState("");
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
   const [openComponentDialog, setOpenComponentDialog] = useState(false);
+  const [openVideoDialog, setOpenVideoDialog] = useState(false);
 
   const { handleSubmit } = useForm();
 
@@ -128,6 +130,16 @@ const UserPage = () => {
 
   const handleCloseComponentDialog = () => {
     setOpenComponentDialog(false);
+  };
+
+  const handleOpenVideoDialog = () => {
+    if (!page?._id) return;
+
+    setOpenVideoDialog(true);
+  };
+
+  const handleCloseVideoDialog = () => {
+    setOpenVideoDialog(false);
   };
 
   const ToolBar = () => {
@@ -212,7 +224,7 @@ const UserPage = () => {
 
               <Grid item xs={4}>
                 <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton>
+                  <ToolbarButton onClick={handleOpenVideoDialog}>
                     <YouTubeIcon />
                     <ToolbarIconText>
                       {BREAK_TOOLBAR_TEXT &&
@@ -317,6 +329,11 @@ const UserPage = () => {
       <ComponentDialog
         open={openComponentDialog}
         handleClose={handleCloseComponentDialog}
+        pageId={page?._id}
+      />
+      <VideoDialog
+        open={openVideoDialog}
+        handleClose={handleCloseVideoDialog}
         pageId={page?._id}
       />
       <ToolBar />

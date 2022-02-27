@@ -53,7 +53,7 @@ import {
   setComponentUrl,
   toggleComponentVisibility,
 } from "../../../../store/user/actions";
-import { IUserComponent } from "../../../../store/user/types";
+import { ComponentType, IUserComponent } from "../../../../store/user/types";
 import { SketchPicker } from "react-color";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
@@ -330,29 +330,34 @@ const DraggableUserComponent = ({
                 </UrlIconItem>
               )}
               {isEdittingUrl ? (
-                <form onSubmit={handleSubmitUrl(onSubmitUrlForm)}>
-                  <LabelText item>
-                    <TransparentTextField
-                      autoFocus
-                      onChange={handleChangeUrl}
-                      value={values.url}
-                      fontWeight="300"
-                      color="#bfbfbf"
-                      fontStyle="italic"
-                      InputProps={{
-                        style: {
-                          width: "100%",
-                          margin: !isSmallerThan400 ? "0px 16px" : "0",
-                        },
-                      }}
-                      fontSize={isSmallerThan600 ? "16px" : "22px"}
-                      onBlur={() => {
-                        onSubmitUrlForm();
-                        setIsEdittingUrl(false);
-                      }}
-                    />
-                  </LabelText>
-                </form>
+                <Grid container item>
+                  <form
+                    onSubmit={handleSubmitUrl(onSubmitUrlForm)}
+                    style={{ width: "100%" }}
+                  >
+                    <LabelText item>
+                      <TransparentTextField
+                        autoFocus
+                        onChange={handleChangeUrl}
+                        value={values.url}
+                        fontWeight="300"
+                        color="#bfbfbf"
+                        fontStyle="italic"
+                        InputProps={{
+                          style: {
+                            width: "100%",
+                            margin: !isSmallerThan400 ? "0px 16px" : "0",
+                          },
+                        }}
+                        fontSize={isSmallerThan600 ? "16px" : "22px"}
+                        onBlur={() => {
+                          onSubmitUrlForm();
+                          setIsEdittingUrl(false);
+                        }}
+                      />
+                    </LabelText>
+                  </form>
+                </Grid>
               ) : (
                 <UrlTextItem
                   item
@@ -432,6 +437,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              disabled={component.type === ComponentType.Video}
               transitionDuration="0.25s"
               isHoveringComponent={isHovering}
               onClick={() => {
@@ -440,8 +446,16 @@ const DraggableUserComponent = ({
               }}
             >
               <BackgroundColorIcon
-                bucketColor="white"
-                selectedColor={component.style?.backgroundColor}
+                bucketColor={
+                  component.type === ComponentType.Video
+                    ? "rgba(0, 0, 0, 0.26)"
+                    : "white"
+                }
+                selectedColor={
+                  component.type === ComponentType.Video
+                    ? "rgba(0, 0, 0, 0.26)"
+                    : component.style?.backgroundColor
+                }
               />
             </ToolIconButton>
             {showBackgroundColorPicker && (
@@ -464,6 +478,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              disabled={component.type === ComponentType.Video}
               transitionDuration="0.3s"
               isHoveringComponent={isHovering}
               onClick={() => {
@@ -472,8 +487,16 @@ const DraggableUserComponent = ({
               }}
             >
               <FontColorIcon
-                bucketColor="white"
-                selectedColor={component.style?.color}
+                bucketColor={
+                  component.type === ComponentType.Video
+                    ? "rgba(0, 0, 0, 0.26)"
+                    : "white"
+                }
+                selectedColor={
+                  component.type === ComponentType.Video
+                    ? "rgba(0, 0, 0, 0.26)"
+                    : component.style?.color
+                }
               />
             </ToolIconButton>
             {showFontColorPicker && (
@@ -496,6 +519,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              disabled={component.type === ComponentType.Video}
               hoveringWhite
               transitionDuration="0.35s"
               isHoveringComponent={isHovering}
@@ -517,6 +541,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              disabled={component.type === ComponentType.Video}
               hoveringWhite
               transitionDuration="0.4s"
               isHoveringComponent={isHovering}
