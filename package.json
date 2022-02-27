@@ -44,7 +44,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "integrate": "git push origin main && git push heroku main",
     "heroku_logs": "heroku logs --tail --app social-bio"
   },

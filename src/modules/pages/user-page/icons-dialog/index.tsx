@@ -33,20 +33,15 @@ import { SketchPicker } from "react-color";
 import CustomTooltip from "../../../components/tooltip";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { addComponentInPage } from "../../../../store/user/actions";
+import { addTopComponentInPage } from "../../../../store/user/actions";
 import { v4 as uuidv4 } from "uuid";
 import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
 import { Icon } from "@iconify/react";
-// import iconPacks, { IIconPack } from "../../../../assets/icons/react-icons";
 
 interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: any;
-}
-
-interface IIconDetailsForResults {
-  color: string;
 }
 
 const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
@@ -179,7 +174,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       },
     };
     clearSearchAndStates();
-    dispatch(addComponentInPage(newComponent, pageId));
+    dispatch(addTopComponentInPage(newComponent, pageId));
     handleClose();
   };
 

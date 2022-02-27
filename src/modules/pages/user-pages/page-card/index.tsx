@@ -11,7 +11,6 @@ import {
   Card,
   PageImage,
   PageTitle,
-  EditPenIcon,
   PageDataKey,
   CardContent,
   CardOverlay,
@@ -141,7 +140,7 @@ const PageCard = ({ page }: IPageCardProps) => {
             <Grid container item wrap="nowrap">
               <ElementIcon />
               <PageDataKey>Elementos: </PageDataKey>
-              {page.components.length}
+              {page.middleComponents?.length || 0}
             </Grid>
             <Grid container item wrap="nowrap">
               {isUrlLong ? (

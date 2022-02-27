@@ -1,17 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { Grid, useMediaQuery } from "@mui/material";
 import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-  useMediaQuery,
-} from "@mui/material";
-import {
-  Edit as EditIcon,
   Link as LinkIcon,
   ImageSearch as ImageSearchIcon,
   Visibility as VisibilityIcon,
@@ -54,7 +45,7 @@ import TransparentTextField from "../../../components/transparent-textfield";
 import { IApplicationState } from "../../../../store";
 import {
   decreaseComponentIndexInPage,
-  deleteComponentFromPage,
+  deleteMiddleComponentFromPage,
   increaseComponentIndexInPage,
   setComponentBackgroundColor,
   setComponentFontColor,
@@ -153,7 +144,7 @@ const DraggableUserComponent = ({
     setIsDeleted(true);
     setTimeout(() => {
       if (!component._id || !pageBeingManaged) return;
-      dispatch(deleteComponentFromPage(component._id, pageBeingManaged));
+      dispatch(deleteMiddleComponentFromPage(component._id, pageBeingManaged));
     }, 250);
   };
 

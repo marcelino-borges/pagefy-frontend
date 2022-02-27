@@ -6,11 +6,7 @@ import {
   InsertEmoticon as InsertIconIcon,
   YouTube as YouTubeIcon,
 } from "@mui/icons-material";
-import {
-  ComponentType,
-  IUserComponent,
-  IUserPage,
-} from "../../../store/user/types";
+import { IUserComponent, IUserPage } from "../../../store/user/types";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
@@ -48,10 +44,6 @@ const UserPage = () => {
   const dispatch = useDispatch();
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
 
-  const [nonIconComponentsList, setNonIconComponentsList] =
-    useState<IUserComponent[]>();
-  const [iconComponentsList, setIconComponentsList] =
-    useState<IUserComponent[]>();
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
   const [isEdittingPageUrl, setIsEdittingPageUrl] = useState(false);
@@ -83,14 +75,6 @@ const UserPage = () => {
       );
       if (pageFound) {
         setPage(pageFound);
-        const nonIconsComponents = pageFound.components.filter(
-          (comp: IUserComponent) => comp.type !== ComponentType.Icon
-        );
-        const iconComponents = pageFound.components.filter(
-          (comp: IUserComponent) => comp.type === ComponentType.Icon
-        );
-        setNonIconComponentsList(nonIconsComponents);
-        setIconComponentsList(iconComponents);
       } else {
         navigate(routes.notFound);
       }
@@ -336,7 +320,7 @@ const UserPage = () => {
         pageId={page?._id}
       />
       <ToolBar />
-      {iconComponentsList && iconComponentsList.length > 0 && (
+      {page && page.topComponents && page.topComponents.length > 0 && (
         <Grid
           container
           direction="row"
@@ -345,7 +329,7 @@ const UserPage = () => {
           }}
           justifyContent="center"
         >
-          {iconComponentsList.map((iconComponent: IUserComponent) => {
+          {page.topComponents.map((iconComponent: IUserComponent) => {
             if (iconComponent.iconDetails) {
               return (
                 <CustomTooltip
@@ -373,9 +357,9 @@ const UserPage = () => {
           })}
         </Grid>
       )}
-      {page && nonIconComponentsList && nonIconComponentsList.length > 0 ? (
+      {page && page.middleComponents && page.middleComponents.length > 0 ? (
         <Grid container direction="column" ref={listContainer}>
-          {nonIconComponentsList.map(
+          {page.middleComponents.map(
             (component: IUserComponent, index: number) => (
               <DraggableUserComponent
                 component={component}

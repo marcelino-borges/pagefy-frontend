@@ -1,17 +1,17 @@
-import { IUser, IUserComponent, UserActionTypes } from "./../user/types";
+import { IUserComponent, UserActionTypes } from "./../user/types";
 
 export const getUser = (email: string) => (dispatch: any) => {
   //Make request to backend
 };
 
-const getUserSuccess = (data: IUser) => ({
-  payload: data,
-  type: UserActionTypes.GET_USER_SUCCESS,
-});
+// const getUserSuccess = (data: IUser) => ({
+//   payload: data,
+//   type: UserActionTypes.GET_USER_SUCCESS,
+// });
 
-const getUserError = () => ({
-  type: UserActionTypes.GET_USER_ERROR,
-});
+// const getUserError = () => ({
+//   type: UserActionTypes.GET_USER_ERROR,
+// });
 
 export const updateUserPageName =
   (pageId: string, newName: string) => (dispatch: any) => {
@@ -64,7 +64,7 @@ export const increaseComponentIndexInPage = (
   pageId: string
 ) => ({
   payload: { currentIndex, pageId },
-  type: UserActionTypes.INCREASE_COMPONENT_INDEX_IN_PAGE,
+  type: UserActionTypes.INCREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE,
 });
 
 export const decreaseComponentIndexInPage = (
@@ -72,23 +72,39 @@ export const decreaseComponentIndexInPage = (
   pageId: string
 ) => ({
   payload: { currentIndex, pageId },
-  type: UserActionTypes.DECREASE_COMPONENT_INDEX_IN_PAGE,
+  type: UserActionTypes.DECREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE,
 });
 
-export const addComponentInPage = (
+export const addTopComponentInPage = (
   component: IUserComponent,
   pageId: string
 ) => ({
   payload: { component, pageId },
-  type: UserActionTypes.ADD_COMPONENT_IN_PAGE,
+  type: UserActionTypes.ADD_TOP_COMPONENT_IN_PAGE,
 });
 
-export const deleteComponentFromPage = (
+export const addMiddleComponentInPage = (
+  component: IUserComponent,
+  pageId: string
+) => ({
+  payload: { component, pageId },
+  type: UserActionTypes.ADD_MIDDLE_COMPONENT_IN_PAGE,
+});
+
+export const deleteMiddleComponentFromPage = (
   componentId: string,
   pageId: string
 ) => ({
   payload: { componentId, pageId },
-  type: UserActionTypes.DELETE_COMPONENT_FROM_PAGE,
+  type: UserActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE,
+});
+
+export const deleteTopComponentFromPage = (
+  componentId: string,
+  pageId: string
+) => ({
+  payload: { componentId, pageId },
+  type: UserActionTypes.DELETE_TOP_COMPONENT_FROM_PAGE,
 });
 
 export const setComponentBackgroundColor = (

@@ -55,7 +55,7 @@ import { IMAGE_EXTENSIONS } from "../../../constants";
 import moment from "moment";
 import { ComponentType, IUserComponent } from "../../../../store/user/types";
 import { showErrorToast } from "./../../../../utils/toast/index";
-import { addComponentInPage } from "../../../../store/user/actions";
+import { addMiddleComponentInPage } from "../../../../store/user/actions";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -172,7 +172,7 @@ const ComponentDialog = ({
         launchDate: launch.toISOString(),
       };
       if (pageId) {
-        dispatch(addComponentInPage(newComponent, pageId));
+        dispatch(addMiddleComponentInPage(newComponent, pageId));
       }
       handleClose();
     }

@@ -23,7 +23,9 @@ const initialState: IUserState = {
         views: 151,
         pageImageUrl:
           "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-        components: [
+
+        topComponents: [],
+        middleComponents: [
           {
             text: "Devbox",
             url: "http://www.devbox.eng.br",
@@ -103,19 +105,6 @@ const initialState: IUserState = {
             type: ComponentType.Video,
           },
           {
-            text: "Curriculum Vitae Icon",
-            url: "http://www.devbox.eng.br",
-            style: undefined,
-            _id: "7",
-            visible: true,
-            clicks: 0,
-            layout: {
-              rows: 1,
-              columns: 2,
-            },
-            type: ComponentType.Icon,
-          },
-          {
             text: "HTBAD",
             url: "http://www.devbox.eng.br",
             style: undefined,
@@ -177,7 +166,7 @@ const initialState: IUserState = {
         pageImageUrl:
           "https://static.remove.bg/remove-bg-web/a6eefcd21dff1bbc2448264c32f7b48d7380cb17/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg",
 
-        components: [
+        middleComponents: [
           {
             text: "Devbox",
             url: "http://www.devbox.eng.br",
@@ -345,7 +334,7 @@ const initialState: IUserState = {
         pageImageUrl:
           "https://i.pinimg.com/originals/bf/82/f6/bf82f6956a32819af48c2572243e8286.jpg",
 
-        components: [
+        middleComponents: [
           {
             text: "Devbox",
             url: "http://www.devbox.eng.br",
@@ -369,7 +358,7 @@ const initialState: IUserState = {
         pageImageUrl:
           "https://i0.wp.com/abglt.org.br/wp-content/uploads/2020/10/wallpaper-pc1-scaled-1.jpg?fit=2560%2C1440&ssl=1",
 
-        components: [
+        middleComponents: [
           {
             text: "Devbox",
             url: "http://www.devbox.eng.br",
@@ -393,7 +382,7 @@ const initialState: IUserState = {
         pageImageUrl:
           "https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=900",
 
-        components: [
+        middleComponents: [
           {
             text: "Devbox",
             url: "http://www.devbox.eng.br",
@@ -417,7 +406,7 @@ const initialState: IUserState = {
         pageImageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2UM7_vOR_ghAvYRIYhvpTMNsbOV6lFNxDjQ&usqp=CAU",
 
-        components: [
+        middleComponents: [
           {
             text: "Devbox",
             url: "http://www.devbox.eng.br",
@@ -511,8 +500,8 @@ const userReducer = (
       const componentId = action.payload.componentId as string;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.map(
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
@@ -526,7 +515,7 @@ const userReducer = (
           );
           const updatedPage: IUserPage = {
             ...page,
-            components: updatedComponents,
+            middleComponents: updatedComponents,
           };
           return updatedPage;
         }
@@ -547,8 +536,8 @@ const userReducer = (
       const newLabel = action.payload.newLabel as string;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.map(
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
@@ -562,7 +551,7 @@ const userReducer = (
           );
           const updatedPage: IUserPage = {
             ...page,
-            components: updatedComponents,
+            middleComponents: updatedComponents,
           };
           return updatedPage;
         }
@@ -583,8 +572,8 @@ const userReducer = (
       const newUrl = action.payload.newUrl as string;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.map(
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
@@ -598,7 +587,7 @@ const userReducer = (
           );
           const updatedPage: IUserPage = {
             ...page,
-            components: updatedComponents,
+            middleComponents: updatedComponents,
           };
           return updatedPage;
         }
@@ -619,8 +608,8 @@ const userReducer = (
       const newColor = action.payload.newColor as string;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.map(
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
@@ -637,7 +626,7 @@ const userReducer = (
           );
           const updatedPage: IUserPage = {
             ...page,
-            components: updatedComponents,
+            middleComponents: updatedComponents,
           };
           return updatedPage;
         }
@@ -658,8 +647,8 @@ const userReducer = (
       const newColor = action.payload.newColor as string;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.map(
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
@@ -676,7 +665,7 @@ const userReducer = (
           );
           const updatedPage: IUserPage = {
             ...page,
-            components: updatedComponents,
+            middleComponents: updatedComponents,
           };
           return updatedPage;
         }
@@ -691,25 +680,28 @@ const userReducer = (
       };
     }
 
-    case UserActionTypes.INCREASE_COMPONENT_INDEX_IN_PAGE: {
+    case UserActionTypes.INCREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE: {
       const currentIndex = action.payload.currentIndex as number;
       const nextIndex = currentIndex + 1;
       const pageId = action.payload.pageId;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          if (nextIndex >= page.components.length) {
+        if (page._id === pageId && page.middleComponents) {
+          if (
+            currentIndex === page.middleComponents.length - 1 ||
+            nextIndex >= page.middleComponents.length
+          ) {
             return page;
           }
           let pageComponents = moveElementInArrayFromToIndex(
-            page.components,
+            page.middleComponents,
             currentIndex,
             nextIndex
           );
 
           const updatedPage: IUserPage = {
             ...page,
-            components: pageComponents,
+            middleComponents: pageComponents,
           };
           return updatedPage;
         }
@@ -725,26 +717,26 @@ const userReducer = (
       };
     }
 
-    case UserActionTypes.DECREASE_COMPONENT_INDEX_IN_PAGE: {
+    case UserActionTypes.DECREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE: {
       const currentIndex = action.payload.currentIndex as number;
       const previousIndex = currentIndex - 1;
       const pageId = action.payload.pageId;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          if (previousIndex <= 0) {
+        if (page._id === pageId && page.middleComponents) {
+          if (currentIndex <= 0) {
             return page;
           }
 
           let pageComponents = moveElementInArrayFromToIndex(
-            page.components,
+            page.middleComponents,
             currentIndex,
             previousIndex
           );
 
           const updatedPage: IUserPage = {
             ...page,
-            components: pageComponents,
+            middleComponents: pageComponents,
           };
           return updatedPage;
         }
@@ -760,18 +752,44 @@ const userReducer = (
       };
     }
 
-    case UserActionTypes.DELETE_COMPONENT_FROM_PAGE: {
+    case UserActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE: {
       const pageId = action.payload.pageId;
       const componentId = action.payload.componentId;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
-        if (page._id === pageId) {
-          const updatedComponents = page.components.filter(
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.filter(
             (component: IUserComponent) => component._id !== componentId
           );
           const updatedPage: IUserPage = {
             ...page,
-            components: updatedComponents,
+            middleComponents: updatedComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.DELETE_TOP_COMPONENT_FROM_PAGE: {
+      const pageId = action.payload.pageId;
+      const componentId = action.payload.componentId;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.topComponents) {
+          const updatedComponents = page.topComponents.filter(
+            (component: IUserComponent) => component._id !== componentId
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            topComponents: updatedComponents,
           };
           return updatedPage;
         }
@@ -802,18 +820,56 @@ const userReducer = (
       };
     }
 
-    case UserActionTypes.ADD_COMPONENT_IN_PAGE: {
+    case UserActionTypes.ADD_MIDDLE_COMPONENT_IN_PAGE: {
       const pageId = action.payload.pageId;
       const component: IUserComponent = action.payload.component;
 
       const updatedPages = state.profile.pages.map((page: IUserPage) => {
         if (page._id === pageId) {
-          const updatedComponents = [...page.components, component];
-          const updatedPage: IUserPage = {
-            ...page,
-            components: updatedComponents,
-          };
-          return updatedPage;
+          if (page.middleComponents) {
+            const updatedComponents = [...page.middleComponents, component];
+            const updatedPage: IUserPage = {
+              ...page,
+              middleComponents: updatedComponents,
+            };
+            return updatedPage;
+          } else {
+            return {
+              ...page,
+              middleComponents: [component],
+            };
+          }
+        }
+        return page;
+      });
+
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+    case UserActionTypes.ADD_TOP_COMPONENT_IN_PAGE: {
+      const pageId = action.payload.pageId;
+      const component: IUserComponent = action.payload.component;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId) {
+          if (page.topComponents) {
+            const updatedComponents = [...page.topComponents, component];
+            const updatedPage: IUserPage = {
+              ...page,
+              topComponents: updatedComponents,
+            };
+            return updatedPage;
+          } else {
+            return {
+              ...page,
+              topComponents: [component],
+            };
+          }
         }
         return page;
       });
