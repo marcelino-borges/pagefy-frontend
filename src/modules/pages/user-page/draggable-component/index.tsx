@@ -60,6 +60,8 @@ import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
 import { IMAGE_EXTENSIONS } from "../../../constants";
 import DialogConfirmation from "../../../components/dialog-confirmation";
+import YoutubeEmbed from "../../../components/youtube-embed";
+import { getYoutubeIdFromUrl } from "./../../../../utils/index";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -281,6 +283,7 @@ const DraggableUserComponent = ({
             justifyContent="center"
             direction="column"
             spacing={2}
+            wrap="nowrap"
             style={{
               maxHeight: isSmallerThan400 ? "100px" : "unset",
             }}
@@ -319,6 +322,38 @@ const DraggableUserComponent = ({
                     {stringShortener(component.text, isLargerThan400 ? 50 : 20)}
                   </LabelText>
                 )}
+              </ContentRow>
+            )}
+
+            {component.type === ComponentType.Video && (
+              <ContentRow
+                container
+                item
+                alignItems="center"
+                wrap="nowrap"
+                style={{
+                  paddingLeft: !isSmallerThan400 ? "53px" : "36px",
+                  paddingTop: isSmallerThan400 ? "36px" : "24px",
+                }}
+              >
+                <YoutubeEmbed
+                  embedId={getYoutubeIdFromUrl(component.url) || ""}
+                  allowFullScreen
+                  width={
+                    !isSmallerThan600
+                      ? "250px"
+                      : !isSmallerThan400
+                      ? "180px"
+                      : "140px"
+                  }
+                  height={
+                    !isSmallerThan600
+                      ? "150px"
+                      : !isSmallerThan400
+                      ? "100px"
+                      : "80px"
+                  }
+                />
               </ContentRow>
             )}
 

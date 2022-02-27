@@ -206,7 +206,7 @@ export const AnalyticsGridItem = styled(Grid)`
 export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
   <Grid {...rest} />
 ))`
-  padding: 16px 16px;
+  padding: 8px 8px;
   cursor: pointer;
   border-radius: ${(props) => {
     if (props.up !== undefined) {

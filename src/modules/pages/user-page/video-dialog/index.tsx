@@ -18,14 +18,10 @@ import { isUrlValid } from "../../../../utils/validators/url";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
 import YoutubeEmbed from "./../../../components/youtube-embed/index";
-import {
-  YOUTUBE_EMBED_URL_IDENTIFIER,
-  YOUTUBE_FULL_URL_IDENTIFIER,
-  YOUTUBE_SHORT_URL_IDENTIFIER,
-} from "../../../constants";
 import { ComponentType, IUserComponent } from "../../../../store/user/types";
 import { addMiddleComponentInPage } from "../../../../store/user/actions";
 import { v4 as uuidv4 } from "uuid";
+import { getYoutubeIdFromUrl } from "../../../../utils";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -59,36 +55,10 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setVideoId("");
   };
 
-  const getYoutubeIdByUrlIdentifier = (url: string, urlIdentifier: string) => {
-    const identifierIndex = url.indexOf(urlIdentifier);
-    const id = url.substring(
-      identifierIndex + urlIdentifier.length,
-      url.length
-    );
-    return id;
-  };
-
-  const getYoutubeIdFromUrl = (url: string) => {
-    let id;
-    if (url.includes(YOUTUBE_SHORT_URL_IDENTIFIER)) {
-      id = getYoutubeIdByUrlIdentifier(url, YOUTUBE_SHORT_URL_IDENTIFIER);
-    } else if (url.includes(YOUTUBE_FULL_URL_IDENTIFIER)) {
-      id = getYoutubeIdByUrlIdentifier(url, YOUTUBE_FULL_URL_IDENTIFIER);
-    } else if (url.includes(YOUTUBE_EMBED_URL_IDENTIFIER)) {
-      id = getYoutubeIdByUrlIdentifier(url, YOUTUBE_EMBED_URL_IDENTIFIER);
-    } else {
-      setUrlError(strings.invalidUrl);
-      return null;
-    }
-    return id;
-  };
-
   const onAddVideo = () => {
     setUrlError("");
 
     if (!pageId) return;
-
-    console.log("Video ID: " + videoId);
 
     if (
       videoUrl.length < MIN_VIDEO_ID_LENGTH ||
@@ -112,7 +82,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         columns: 2,
       },
       type: ComponentType.Video,
-      mediaUrl: undefined,
+      mediaUrl: videoUrl,
       iconDetails: undefined,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));

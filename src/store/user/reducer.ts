@@ -102,7 +102,7 @@ const initialState: IUserState = {
               rows: 1,
               columns: 2,
             },
-            type: ComponentType.Video,
+            type: ComponentType.Text,
           },
           {
             text: "HTBAD",
