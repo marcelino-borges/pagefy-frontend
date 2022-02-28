@@ -240,7 +240,7 @@ const DraggableUserComponent = ({
         <Grid
           container
           item
-          xs={1}
+          xs={2}
           alignItems="center"
           direction="column"
           justifyContent="space-between"
@@ -325,6 +325,7 @@ const DraggableUserComponent = ({
               </ContentRow>
             )}
 
+            {/* Video (Only in Video type) */}
             {component.type === ComponentType.Video && (
               <ContentRow
                 container
@@ -332,7 +333,7 @@ const DraggableUserComponent = ({
                 alignItems="center"
                 wrap="nowrap"
                 style={{
-                  paddingLeft: !isSmallerThan400 ? "53px" : "36px",
+                  paddingLeft: "16px",
                   paddingTop: isSmallerThan400 ? "36px" : "24px",
                 }}
               >
@@ -416,7 +417,7 @@ const DraggableUserComponent = ({
             container
             item
             xs={12}
-            sm={3}
+            sm={2}
             style={{
               width: isSmallerThan600 ? "100%" : "unset",
               maxHeight: isSmallerThan400 ? "80px" : "unset",
