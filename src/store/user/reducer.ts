@@ -339,9 +339,13 @@ const initialState: IUserState = {
         name: "QTR Turismo",
         url: "pg2",
         views: 0,
+        style: {
+          backgroundColor: "grey",
+          backgroundImage:
+            "url(https://html.sammy-codes.com/images/background.jpg)",
+        },
         pageImageUrl:
           "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-
         topComponents: [],
         middleComponents: [
           // All TextImage layouts
@@ -387,7 +391,23 @@ const initialState: IUserState = {
             text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
             style: {
-              backgroundColor: "#d62",
+              backgroundColor: "#fff",
+              color: "#000",
+            },
+            _id: "3",
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 2,
+            },
+            type: ComponentType.Text,
+          },
+          {
+            text: "Portfolio",
+            url: "http://www.devbox.eng.br",
+            style: {
+              backgroundColor: "#fffdd1ab",
               color: "#000",
             },
             _id: "3",

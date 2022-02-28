@@ -3,6 +3,7 @@
   --secondary: #3F3D42;
   --global-light-bg: #F7F9FC;
   --max-site-width: 900px;
+  --max-site-width-page-renderer: 600px;
 }
 
 @font-face {
@@ -138,7 +139,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: .02em;
   font-weight: 300;
-  background-color: var(--global-light-bg);
   font-size: 1.2em;
 }
 

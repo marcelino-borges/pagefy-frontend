@@ -28,7 +28,6 @@ const PageRenderer = () => {
 
   useEffect(() => {
     if (url) {
-      console.log("url: " + url);
       dispatch(getPageByUrl(url));
     }
   }, [dispatch, url]);
@@ -40,9 +39,28 @@ const PageRenderer = () => {
   }, [renderedPageState]);
 
   useEffect(() => {
-    if (page && page.topComponents && page.topComponents.length > 0) {
-      setTopComponents([...page.topComponents]);
+    if (page) {
+      if (page.topComponents && page.topComponents.length > 0) {
+        setTopComponents([...page.topComponents]);
+      }
+
+      if (page.style && page.style.backgroundColor) {
+        document.documentElement.style.backgroundColor =
+          page.style.backgroundColor;
+      }
+
+      if (page.style && page.style.backgroundImage) {
+        document.documentElement.style.backgroundImage =
+          page.style.backgroundImage;
+        document.documentElement.style.backgroundSize = "cover";
+        document.documentElement.style.backgroundPosition = "center";
+      }
     }
+
+    return () => {
+      document.documentElement.style.backgroundColor = "unset";
+      document.documentElement.style.backgroundImage = "unset";
+    };
   }, [page, page?.topComponents]);
 
   useEffect(() => {
