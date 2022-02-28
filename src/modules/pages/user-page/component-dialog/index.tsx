@@ -399,35 +399,39 @@ const ComponentDialog = ({
               icon={<CategoryIcon />}
               error={typeError}
             />
+
             <Grid container wrap={isSmallerThanXM ? "wrap" : "nowrap"}>
-              <Grid container item xs={12} sm={4} justifyContent="center">
+              <Grid container item xs={4} justifyContent="center">
                 <ComponentDetailsButton
+                  size="60px"
                   isSelected={selectedType === ComponentType.Text}
                   onClick={() => setSelectedType(ComponentType.Text)}
                 >
-                  <TextFieldsIcon />
+                  <TextFieldsIcon style={{ fontSize: "40px" }} />
                 </ComponentDetailsButton>
               </Grid>
 
-              <Grid container item xs={12} sm={4} justifyContent="center">
+              <Grid container item xs={4} justifyContent="center">
                 <ComponentDetailsButton
+                  size="60px"
                   isSelected={selectedType === ComponentType.TextImage}
                   onClick={() => setSelectedType(ComponentType.TextImage)}
                 >
                   <TextFieldsIcon
-                    style={{ fontSize: "40px", marginBottom: "45px" }}
+                    style={{ fontSize: "30px", marginBottom: "25px" }}
                   />
                   +
-                  <ImageIcon style={{ fontSize: "40px", marginTop: "50px" }} />
+                  <ImageIcon style={{ fontSize: "30px", marginTop: "30px" }} />
                 </ComponentDetailsButton>
               </Grid>
 
-              <Grid container item xs={12} sm={4} justifyContent="center">
+              <Grid container item xs={4} justifyContent="center">
                 <ComponentDetailsButton
+                  size="60px"
                   isSelected={selectedType === ComponentType.Image}
                   onClick={() => setSelectedType(ComponentType.Image)}
                 >
-                  <ImageIcon />
+                  <ImageIcon style={{ fontSize: "40px" }} />
                 </ComponentDetailsButton>
               </Grid>
             </Grid>

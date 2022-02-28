@@ -25,6 +25,7 @@ const updateUserPageNameInStore = (pageId: string, newName: string) => ({
 
 export const updateUserPageUrl =
   (pageId: string, newUrl: string) => (dispatch: any) => {
+    //TODO: Check if page url doesn't exist first
     dispatch(updateUserPageUrlInStore(pageId, newUrl));
   };
 

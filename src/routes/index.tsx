@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { IApplicationState } from "../store";
 import Dashboard from "./../modules/pages/dashboard/index";
 import routes from "./paths";
 import Support from "./../modules/pages/support/index";
@@ -6,10 +9,7 @@ import UserPages from "./../modules/pages/user-pages/index";
 import strings from "./../localization/index";
 import UserPage from "./../modules/pages/user-page/index";
 import LoadingSpinner from "../modules/components/loading-spinner";
-import Header from "../modules/components/header";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { IApplicationState } from "../store";
+import PageRenderer from "./../modules/components/page-renderer/index";
 
 const AppRoutes = () => {
   const appState = useSelector((state: IApplicationState) => state);
@@ -24,11 +24,11 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       {isLoading && <LoadingSpinner />}
-      <Header />
       <Routes>
         <Route path={routes.root} element={<Dashboard />} />
         <Route path={routes.pages} element={<UserPages />} />
         <Route path={`${routes.page}/:id`} element={<UserPage />} />
+        <Route path="/:url" element={<PageRenderer />} />
         <Route path={routes.support} element={<Support />} />
         <Route
           path="*"

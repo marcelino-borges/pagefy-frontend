@@ -241,9 +241,12 @@ const DraggableUserComponent = ({
           container
           item
           xs={2}
-          alignItems="center"
+          alignItems="flex-start"
           direction="column"
           justifyContent="space-between"
+          style={{
+            paddingLeft: "2px",
+          }}
         >
           <ComponentArrowGridItem
             item

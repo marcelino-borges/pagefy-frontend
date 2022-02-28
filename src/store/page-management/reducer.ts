@@ -5,7 +5,7 @@ const initialState: IPageManagementState = {
   pageId: undefined,
 };
 
-const userReducer = (
+const pageManagementReducer = (
   state: any = initialState,
   action: IAction
 ): IPageManagementState => {
@@ -25,4 +25,4 @@ const userReducer = (
   }
 };
 
-export default userReducer;
+export default pageManagementReducer;

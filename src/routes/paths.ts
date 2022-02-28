@@ -1,9 +1,9 @@
 const routes = {
   root: "/",
-  pages: "/pages",
-  page: "/page",
-  support: "/support",
-  notFound: "/404",
+  pages: "/dashboard/pages",
+  page: "/dashboard/page",
+  support: "/public/support",
+  notFound: "/public/404",
 };
 
 export default routes;

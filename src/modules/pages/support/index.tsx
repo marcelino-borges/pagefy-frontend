@@ -1,7 +1,13 @@
+import Header from "../../components/header";
 import SiteContent from "../../components/site-content";
 
 const Support = () => {
-  return <SiteContent>Suporte</SiteContent>;
+  return (
+    <>
+      <Header />
+      <SiteContent>Suporte</SiteContent>
+    </>
+  );
 };
 
 export default Support;

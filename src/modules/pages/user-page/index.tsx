@@ -37,6 +37,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Icon } from "@iconify/react";
 import ComponentDialog from "./component-dialog";
 import VideoDialog from "./video-dialog/index";
+import Header from "./../../components/header/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -320,77 +321,80 @@ const UserPage = () => {
   };
 
   return (
-    <SiteContent>
-      <IconsDialog
-        open={openIconsDialog}
-        handleClose={handleCloseIconsDialog}
-        pageId={page?._id}
-      />
-      <ComponentDialog
-        open={openComponentDialog}
-        handleClose={handleCloseComponentDialog}
-        pageId={page?._id}
-      />
-      <VideoDialog
-        open={openVideoDialog}
-        handleClose={handleCloseVideoDialog}
-        pageId={page?._id}
-      />
-      <ToolBar />
-      {page && page.topComponents && page.topComponents.length > 0 && (
-        <Grid
-          container
-          direction="row"
-          style={{
-            marginBottom: "24px",
-          }}
-          justifyContent="center"
-        >
-          {page.topComponents.map((iconComponent: IUserComponent) => {
-            if (iconComponent.iconDetails) {
-              return (
-                <CustomTooltip
-                  title={iconComponent.url}
-                  key={iconComponent._id}
-                >
-                  <DeleteIconOverlaySpan>
-                    <Icon
-                      icon={iconComponent.iconDetails.icon}
-                      style={{
-                        fontSize: "46px",
-                        cursor: "pointer",
-                        color:
-                          iconComponent.iconDetails.icon.includes("logos") ||
-                          iconComponent.iconDetails.icon.includes("grommet")
-                            ? "unset"
-                            : iconComponent.style?.color || "black",
-                      }}
-                    />
-                  </DeleteIconOverlaySpan>
-                </CustomTooltip>
-              );
-            }
-            return null;
-          })}
-        </Grid>
-      )}
-      {page && page.middleComponents && page.middleComponents.length > 0 ? (
-        <Grid container direction="column" ref={listContainer}>
-          {page.middleComponents.map(
-            (component: IUserComponent, index: number) => (
-              <DraggableUserComponent
-                component={component}
-                index={index}
-                pageId={page._id}
-                key={component._id}
-              />
-            )
-          )}
-        </Grid>
-      ) : (
-        <LoadingSpinner />
-      )}
-    </SiteContent>
+    <>
+      <Header />
+      <SiteContent>
+        <IconsDialog
+          open={openIconsDialog}
+          handleClose={handleCloseIconsDialog}
+          pageId={page?._id}
+        />
+        <ComponentDialog
+          open={openComponentDialog}
+          handleClose={handleCloseComponentDialog}
+          pageId={page?._id}
+        />
+        <VideoDialog
+          open={openVideoDialog}
+          handleClose={handleCloseVideoDialog}
+          pageId={page?._id}
+        />
+        <ToolBar />
+        {page && page.topComponents && page.topComponents.length > 0 && (
+          <Grid
+            container
+            direction="row"
+            style={{
+              marginBottom: "24px",
+            }}
+            justifyContent="center"
+          >
+            {page.topComponents.map((iconComponent: IUserComponent) => {
+              if (iconComponent.iconDetails) {
+                return (
+                  <CustomTooltip
+                    title={iconComponent.url}
+                    key={iconComponent._id}
+                  >
+                    <DeleteIconOverlaySpan>
+                      <Icon
+                        icon={iconComponent.iconDetails.icon}
+                        style={{
+                          fontSize: "46px",
+                          cursor: "pointer",
+                          color:
+                            iconComponent.iconDetails.icon.includes("logos") ||
+                            iconComponent.iconDetails.icon.includes("grommet")
+                              ? "unset"
+                              : iconComponent.style?.color || "black",
+                        }}
+                      />
+                    </DeleteIconOverlaySpan>
+                  </CustomTooltip>
+                );
+              }
+              return null;
+            })}
+          </Grid>
+        )}
+        {page && page.middleComponents && page.middleComponents.length > 0 ? (
+          <Grid container direction="column" ref={listContainer}>
+            {page.middleComponents.map(
+              (component: IUserComponent, index: number) => (
+                <DraggableUserComponent
+                  component={component}
+                  index={index}
+                  pageId={page._id}
+                  key={component._id}
+                />
+              )
+            )}
+          </Grid>
+        ) : (
+          <LoadingSpinner />
+        )}
+      </SiteContent>
+    </>
   );
 };
 
