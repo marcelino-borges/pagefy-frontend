@@ -36,6 +36,7 @@ const VideoComponent = ({ component }: IProps) => {
 
   return (
     <BaseComponentType
+      url={component.url}
       layout={component.layout}
       style={{
         ...component.style,

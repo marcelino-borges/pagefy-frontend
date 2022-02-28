@@ -12,7 +12,11 @@ interface IProps {
 
 const ImageComponent = ({ component }: IProps) => {
   return (
-    <BaseComponentType layout={component.layout} style={component.style}>
+    <BaseComponentType
+      layout={component.layout}
+      style={component.style}
+      url={component.url}
+    >
       <Grid
         container
         style={{

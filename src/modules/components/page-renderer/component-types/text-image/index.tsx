@@ -118,7 +118,11 @@ const TextImageComponent = ({ component }: IProps) => {
     }
   };
   return (
-    <BaseComponentType layout={component.layout} style={component.style}>
+    <BaseComponentType
+      url={component.url}
+      layout={component.layout}
+      style={component.style}
+    >
       <Content component={component} />
     </BaseComponentType>
   );

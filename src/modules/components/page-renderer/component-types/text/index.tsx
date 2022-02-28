@@ -8,7 +8,11 @@ interface IProps {
 
 const TextComponent = ({ component }: IProps) => {
   return (
-    <BaseComponentType layout={component.layout} style={component.style}>
+    <BaseComponentType
+      url={component.url}
+      layout={component.layout}
+      style={component.style}
+    >
       <Grid container justifyContent="center" alignItems="center">
         {component.text}
       </Grid>

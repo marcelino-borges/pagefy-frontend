@@ -40,17 +40,29 @@ const PageRenderer = () => {
   }, [renderedPageState]);
 
   useEffect(() => {
+    if (page && page.topComponents && page.topComponents.length > 0) {
+      setTopComponents([...page.topComponents]);
+    }
+  }, [page, page?.topComponents]);
+
+  useEffect(() => {
     if (page && page.middleComponents && page.middleComponents.length > 0) {
       setMiddleComponents([...page.middleComponents]);
     }
   }, [page, page?.middleComponents]);
+
+  useEffect(() => {
+    if (page && page.bottomComponents && page.bottomComponents.length > 0) {
+      setBottomComponents([...page.bottomComponents]);
+    }
+  }, [page, page?.bottomComponents]);
 
   const renderComponentByType = (component: any) => {
     const type: ComponentType = component.type;
 
     switch (type) {
       case ComponentType.Image:
-        return <ImageComponent component={component} />;
+        return <ImageComponent component={component} key={component._id} />;
       case ComponentType.Text:
         return <TextComponent component={component} />;
       case ComponentType.TextImage:
@@ -72,13 +84,13 @@ const PageRenderer = () => {
           </Grid>
 
           {/* TOP COMPONENTS */}
-          {page && page.topComponents && page.topComponents.length > 0 && (
-            <IconsComponent iconsList={page.topComponents} />
+          {topComponents && topComponents.length > 0 && (
+            <IconsComponent iconsList={topComponents} />
           )}
 
           {/* MIDDLE COMPONENTS */}
           <Grid container item>
-            {page.middleComponents && page.middleComponents.length > 0 && (
+            {middleComponents && middleComponents.length > 0 && (
               <>
                 {middleComponents &&
                   middleComponents.length > 0 &&
@@ -91,8 +103,8 @@ const PageRenderer = () => {
 
           {/* BOTTOM COMPONENTS */}
           <Grid container item>
-            {page.bottomComponents && page.bottomComponents.length > 0 && (
-              <IconsComponent iconsList={page.bottomComponents} />
+            {bottomComponents && bottomComponents.length > 0 && (
+              <IconsComponent iconsList={bottomComponents} />
             )}
           </Grid>
         </Grid>
