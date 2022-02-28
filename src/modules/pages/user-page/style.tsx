@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { Grid } from "@mui/material";
+import { Avatar, Grid } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
 import { MEDIUM_GREY, PRIMARY_COLOR } from "./../../../styles/colors";
 
@@ -41,26 +41,45 @@ export const PageUrl = styled(
   text-align: center;
 `;
 
-export const PageImage = styled(({ imgUrl, ...rest }: any) => (
-  <div {...rest} />
-))`
+export const PageAvatar = styled(({ ...rest }: any) => <Avatar {...rest} />)`
   height: 100px;
   width: 100px;
-  padding: 16px;
+  font-size: 2em;
+  position: relative;
+  cursor: pointer;
+
+  &:hover .MuiAvatar-root {
+    display: flex;
+  }
+`;
+
+export const AvatarOverlay = styled(({ ...rest }: any) => <Avatar {...rest} />)`
+  font-size: 2em;
   border-radius: 50%;
-  background-size: cover;
-  background-position: center;
-  background-image: url(${(props) => props.imgUrl});
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${PRIMARY_COLOR};
+  opacity: 0.5;
+  cursor: pointer;
+  display: none;
 
-  @media (max-width: 600px) {
-    height: 70px;
-    width: 70px;
+  & svg {
+    display: none;
   }
+`;
 
-  @media (max-width: 500px) {
-    height: 50px;
-    width: 50px;
-  }
+export const AvatarEditBadge = styled(({ ...rest }: any) => (
+  <Avatar {...rest} />
+))`
+  height: 32px;
+  width: 32px;
+  font-size: 2em;
+  border-radius: 50%;
+  background-color: ${PRIMARY_COLOR};
+  cursor: pointer;
 `;
 
 const toolbarIcon = `
@@ -124,7 +143,7 @@ export const EditPenIcon = styled(Edit)`
   }
 `;
 
-export const DeleteIconOverlaySpan = styled("span")`
+export const IconOverlaySpan = styled("span")`
   color: ${MEDIUM_GREY};
   font-size: 20px;
   margin: 8px;

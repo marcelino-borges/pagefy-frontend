@@ -12,7 +12,8 @@ export const PagePicture = styled(({ backgroundImage, ...rest }: any) => (
 `;
 
 export const PageName = styled(({ ...rest }: any) => <div {...rest} />)`
-  font-size: 1.5em;
+  font-size: 1.2em;
   margin-top: 24px;
   font-weight: 600;
+  text-align: center;
 `;

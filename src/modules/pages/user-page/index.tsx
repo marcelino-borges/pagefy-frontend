@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Badge, Grid, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -16,11 +16,12 @@ import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
   PageToolbar,
   PageName,
-  PageImage,
+  PageAvatar,
   ToolbarButton,
   ToolbarIconText,
-  DeleteIconOverlaySpan,
   PageUrl,
+  AvatarEditBadge,
+  AvatarOverlay,
 } from "./style";
 import strings from "../../../localization";
 import { EditPenIcon } from "./style";
@@ -32,12 +33,13 @@ import {
 } from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component";
 import IconsDialog from "./icons-dialog";
-import CustomTooltip from "./../../components/tooltip/index";
 import { v4 as uuidv4 } from "uuid";
-import { Icon } from "@iconify/react";
 import ComponentDialog from "./component-dialog";
 import VideoDialog from "./video-dialog/index";
 import Header from "./../../components/header/index";
+import ChooseFileDialog from "./../../components/dialog-file-upload/index";
+import { IMAGE_EXTENSIONS } from "../../constants";
+import IconsComponent from "../../components/page-renderer/component-types/icon";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -54,6 +56,8 @@ const UserPage = () => {
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
   const [openComponentDialog, setOpenComponentDialog] = useState(false);
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
+  const [openUploadDialog, setOpenUploadDialog] = useState(false);
+  const [chosenImage, setChosenImage] = useState<File>();
 
   const { handleSubmit } = useForm();
 
@@ -160,10 +164,26 @@ const UserPage = () => {
         >
           <Grid item>
             <Grid container justifyContent="center" alignItems="center">
-              {page && page.pageImageUrl ? (
-                <PageImage imgUrl={page.pageImageUrl} />
-              ) : (
-                <></>
+              {page && (
+                <Badge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                  onClick={() => {
+                    setOpenUploadDialog(true);
+                  }}
+                  badgeContent={
+                    <AvatarEditBadge>
+                      <EditPenIcon
+                        style={{ fontSize: "20px", color: "white" }}
+                      />
+                    </AvatarEditBadge>
+                  }
+                >
+                  <PageAvatar src={page.pageImageUrl}>
+                    {page.name.split(" ")[0][0]}
+                    <AvatarOverlay />
+                  </PageAvatar>
+                </Badge>
               )}
             </Grid>
           </Grid>
@@ -324,6 +344,24 @@ const UserPage = () => {
     <>
       <Header />
       <SiteContent>
+        <ChooseFileDialog
+          openChooseFileDialog={openUploadDialog}
+          setOpenChooseFileDialog={setOpenUploadDialog}
+          chosenImage={chosenImage}
+          setChosenImage={setChosenImage}
+          acceptedFiles={IMAGE_EXTENSIONS}
+          submitDialog={() => {
+            if (!chosenImage) {
+              return;
+            }
+            // TODO: Send file
+            setOpenUploadDialog(false);
+          }}
+          cancelDialog={() => {
+            setChosenImage(undefined);
+            setOpenUploadDialog(false);
+          }}
+        />
         <IconsDialog
           open={openIconsDialog}
           handleClose={handleCloseIconsDialog}
@@ -341,41 +379,7 @@ const UserPage = () => {
         />
         <ToolBar />
         {page && page.topComponents && page.topComponents.length > 0 && (
-          <Grid
-            container
-            direction="row"
-            style={{
-              marginBottom: "24px",
-            }}
-            justifyContent="center"
-          >
-            {page.topComponents.map((iconComponent: IUserComponent) => {
-              if (iconComponent.iconDetails) {
-                return (
-                  <CustomTooltip
-                    title={iconComponent.url}
-                    key={iconComponent._id}
-                  >
-                    <DeleteIconOverlaySpan>
-                      <Icon
-                        icon={iconComponent.iconDetails.icon}
-                        style={{
-                          fontSize: "46px",
-                          cursor: "pointer",
-                          color:
-                            iconComponent.iconDetails.icon.includes("logos") ||
-                            iconComponent.iconDetails.icon.includes("grommet")
-                              ? "unset"
-                              : iconComponent.style?.color || "black",
-                        }}
-                      />
-                    </DeleteIconOverlaySpan>
-                  </CustomTooltip>
-                );
-              }
-              return null;
-            })}
-          </Grid>
+          <IconsComponent iconsList={page.topComponents} />
         )}
         {page && page.middleComponents && page.middleComponents.length > 0 ? (
           <Grid container direction="column" ref={listContainer}>

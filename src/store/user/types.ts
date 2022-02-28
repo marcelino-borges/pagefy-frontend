@@ -31,6 +31,7 @@ export interface IUserPage {
   url: string;
   pageImageUrl?: string;
   views: number;
+  style?: IComponentStyle;
   topComponents?: IUserComponent[];
   middleComponents?: IUserComponent[];
   bottomComponents?: IUserComponent[];
@@ -43,14 +44,16 @@ export interface IUserComponent {
   style?: IComponentStyle;
   visible: boolean;
   clicks: number;
-  layout: {
-    rows: number;
-    columns: number;
-  };
+  layout: IComponentLayout;
   type: ComponentType;
   mediaUrl?: string;
   iconDetails?: IIconDetails;
   launchDate?: string;
+}
+
+export interface IComponentLayout {
+  rows: number;
+  columns: number;
 }
 
 export interface IIconDetails {
@@ -60,6 +63,7 @@ export interface IIconDetails {
 
 export interface IComponentStyle {
   backgroundColor?: string;
+  backgroundImage?: string;
   color?: string;
 }
 
