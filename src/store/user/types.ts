@@ -64,6 +64,8 @@ export interface IIconDetails {
 export interface IComponentStyle {
   backgroundColor?: string;
   backgroundImage?: string;
+  backgroundSize?: string;
+  backgroundPosition?: string;
   color?: string;
 }
 
