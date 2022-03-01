@@ -1,7 +1,13 @@
 import { Grid } from "@mui/material";
+import { useEffect } from "react";
+import { GLOBAL_LIGHT_BG } from "../../../styles/colors";
 import { Root } from "./style";
 
-const SiteContent = ({ children, ...rest }: any) => {
+const DashboardContent = ({ children, ...rest }: any) => {
+  useEffect(() => {
+    document.body.style.backgroundColor = GLOBAL_LIGHT_BG;
+  }, []);
+
   return (
     <Root container justifyContent="center" {...rest}>
       <Grid container item direction="column">
@@ -11,4 +17,4 @@ const SiteContent = ({ children, ...rest }: any) => {
   );
 };
 
-export default SiteContent;
+export default DashboardContent;

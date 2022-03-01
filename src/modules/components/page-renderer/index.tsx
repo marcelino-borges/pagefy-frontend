@@ -54,12 +54,14 @@ const PageRenderer = () => {
           page.style.backgroundImage;
         document.documentElement.style.backgroundSize = "cover";
         document.documentElement.style.backgroundPosition = "center";
+        document.documentElement.style.backgroundAttachment = "fixed";
       }
     }
 
     return () => {
       document.documentElement.style.backgroundColor = "unset";
       document.documentElement.style.backgroundImage = "unset";
+      document.documentElement.style.backgroundAttachment = "unset";
     };
   }, [page, page?.topComponents]);
 

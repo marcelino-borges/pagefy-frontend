@@ -342,7 +342,7 @@ const initialState: IUserState = {
         style: {
           backgroundColor: "grey",
           backgroundImage:
-            "url(https://html.sammy-codes.com/images/background.jpg)",
+            "url(https://imagensemoldes.com.br/wp-content/uploads/2021/02/Foto-Background-Dourado-JPG-1024x768.jpg)",
         },
         pageImageUrl:
           "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",

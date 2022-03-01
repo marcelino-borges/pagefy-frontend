@@ -10,7 +10,7 @@ import { IUserComponent, IUserPage } from "../../../store/user/types";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
-import SiteContent from "../../components/site-content";
+import DashboardContent from "../../components/site-content";
 import LoadingSpinner from "../../components/loading-spinner";
 import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
@@ -343,7 +343,7 @@ const UserPage = () => {
   return (
     <>
       <Header />
-      <SiteContent>
+      <DashboardContent>
         <ChooseFileDialog
           openChooseFileDialog={openUploadDialog}
           setOpenChooseFileDialog={setOpenUploadDialog}
@@ -397,7 +397,7 @@ const UserPage = () => {
         ) : (
           <LoadingSpinner />
         )}
-      </SiteContent>
+      </DashboardContent>
     </>
   );
 };

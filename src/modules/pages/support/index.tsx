@@ -1,11 +1,11 @@
 import Header from "../../components/header";
-import SiteContent from "../../components/site-content";
+import DashboardContent from "../../components/site-content";
 
 const Support = () => {
   return (
     <>
       <Header />
-      <SiteContent>Suporte</SiteContent>
+      <DashboardContent>Suporte</DashboardContent>
     </>
   );
 };
