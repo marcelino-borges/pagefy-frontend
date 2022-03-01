@@ -1,4 +1,5 @@
 import { IUserComponent, UserActionTypes } from "./../user/types";
+import { IUserPage } from "./types";
 
 export const getUser = (email: string) => (dispatch: any) => {
   //Make request to backend
@@ -12,6 +13,15 @@ export const getUser = (email: string) => (dispatch: any) => {
 // const getUserError = () => ({
 //   type: UserActionTypes.GET_USER_ERROR,
 // });
+
+export const createUserPage = (page: IUserPage) => (dispatch: any) => {
+  dispatch(createUserPageSuccess(page));
+};
+
+const createUserPageSuccess = (page: IUserPage) => ({
+  payload: page,
+  type: UserActionTypes.CREATE_PAGE,
+});
 
 export const updateUserPageName =
   (pageId: string, newName: string) => (dispatch: any) => {
@@ -32,6 +42,11 @@ export const updateUserPageUrl =
 const updateUserPageUrlInStore = (pageId: string, newUrl: string) => ({
   payload: { pageId, newUrl },
   type: UserActionTypes.UPDATE_USER_PAGE_URL,
+});
+
+export const togglePageIsPublic = (pageId: string) => ({
+  payload: { pageId },
+  type: UserActionTypes.TOGGLE_PAGE_IS_PUBLIC,
 });
 
 export const toggleComponentVisibility = (
@@ -106,6 +121,16 @@ export const deleteTopComponentFromPage = (
 ) => ({
   payload: { componentId, pageId },
   type: UserActionTypes.DELETE_TOP_COMPONENT_FROM_PAGE,
+});
+
+export const setPageBackgroundColor = (pageId: string, newColor: string) => ({
+  payload: { pageId, newColor },
+  type: UserActionTypes.UPDATE_PAGE_BACKGROUND_COLOR,
+});
+
+export const setPageFontColor = (pageId: string, newColor: string) => ({
+  payload: { pageId, newColor },
+  type: UserActionTypes.UPDATE_PAGE_FONT_COLOR,
 });
 
 export const setComponentBackgroundColor = (

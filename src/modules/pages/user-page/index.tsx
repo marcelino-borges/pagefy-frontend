@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Badge, Grid, useMediaQuery } from "@mui/material";
+import { SketchPicker } from "react-color";
+import { Badge, Grid, IconButton, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
   YouTube as YouTubeIcon,
+  Visibility as VisibilityIcon,
+  VisibilityOff as VisibilityOffIcon,
+  ImageSearch as ImageSearchIcon,
+  Delete as DeleteIcon,
 } from "@mui/icons-material";
+import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
+import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
 import { IUserComponent, IUserPage } from "../../../store/user/types";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
@@ -22,12 +29,18 @@ import {
   PageUrl,
   AvatarEditBadge,
   AvatarOverlay,
+  ToolbarBottomToolsStyled,
+  ColorPickerSpan,
 } from "./style";
 import strings from "../../../localization";
 import { EditPenIcon } from "./style";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
 import {
+  deletePage,
+  setPageBackgroundColor,
+  setPageFontColor,
+  togglePageIsPublic,
   updateUserPageName,
   updateUserPageUrl,
 } from "../../../store/user/actions";
@@ -40,6 +53,7 @@ import Header from "./../../components/header/index";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
 import { IMAGE_EXTENSIONS } from "../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
+import DialogConfirmation from "./../../components/dialog-confirmation/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -58,6 +72,13 @@ const UserPage = () => {
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
+  const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
+    useState<boolean>(false);
+  const [showFontColorPicker, setShowFontColorPicker] =
+    useState<boolean>(false);
+  const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
+  const [showDeletePageConfirmation, setShowDeletePageConfirmation] =
+    useState(false);
 
   const { handleSubmit } = useForm();
 
@@ -147,6 +168,124 @@ const UserPage = () => {
     setOpenVideoDialog(false);
   };
 
+  const handleChangeBackgroundColorComplete = (color: any) => {
+    if (page && page._id) {
+      dispatch(setPageBackgroundColor(page._id, String(color.hex)));
+    }
+  };
+
+  const handleChangeFontColorComplete = (color: any) => {
+    if (page && page._id) {
+      dispatch(setPageFontColor(page._id, String(color.hex)));
+    }
+  };
+
+  const toggleIsPublic = () => {
+    if (!page || !page._id) return;
+    dispatch(togglePageIsPublic(page._id));
+  };
+
+  const ToolbarBottomTools = () => {
+    return (
+      <ToolbarBottomToolsStyled
+        container
+        justifyContent="space-around"
+        alignItems="center"
+        pt="16px"
+        wrap="nowrap"
+      >
+        <Grid item>
+          <IconButton size="large" onClick={() => toggleIsPublic()}>
+            {page?.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          </IconButton>
+        </Grid>
+
+        <Grid item>
+          <IconButton
+            size="large"
+            onClick={() => {
+              setShowBackgroundColorPicker(!showBackgroundColorPicker);
+            }}
+          >
+            <BackgroundColorIcon
+              bucketColor="rgba(0, 0, 0, 0.54)"
+              selectedColor={
+                page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
+              }
+            />
+          </IconButton>
+          {showBackgroundColorPicker && (
+            <ColorPickerSpan>
+              <SketchPicker
+                color={page?.style?.backgroundColor || "white"}
+                onChangeComplete={handleChangeBackgroundColorComplete}
+              />
+            </ColorPickerSpan>
+          )}
+        </Grid>
+
+        <Grid item>
+          <IconButton
+            size="large"
+            onClick={() => {
+              setShowFontColorPicker(!showFontColorPicker);
+            }}
+          >
+            <FontColorIcon
+              bucketColor="rgba(0, 0, 0, 0.54)"
+              selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
+            />
+          </IconButton>
+          {showFontColorPicker && (
+            <ColorPickerSpan>
+              <SketchPicker
+                color={page?.style?.color || "white"}
+                onChangeComplete={handleChangeFontColorComplete}
+              />
+            </ColorPickerSpan>
+          )}
+        </Grid>
+
+        <Grid item>
+          <IconButton
+            size="large"
+            onClick={() => {
+              setOpenChooseFileDialog(true);
+            }}
+          >
+            <ImageSearchIcon />
+          </IconButton>
+          <ChooseFileDialog
+            openChooseFileDialog={openChooseFileDialog}
+            setOpenChooseFileDialog={setOpenChooseFileDialog}
+            chosenImage={chosenImage}
+            setChosenImage={setChosenImage}
+            acceptedFiles={IMAGE_EXTENSIONS}
+            submitDialog={() => {
+              if (!chosenImage) return;
+              // TODO: Send file
+              setOpenChooseFileDialog(false);
+            }}
+            cancelDialog={() => {
+              setChosenImage(undefined);
+              setOpenChooseFileDialog(false);
+            }}
+          />
+        </Grid>
+        <Grid item>
+          <IconButton
+            size="large"
+            onClick={() => {
+              setShowDeletePageConfirmation(true);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </ToolbarBottomToolsStyled>
+    );
+  };
+
   const ToolBar = () => {
     return (
       <PageToolbar
@@ -203,9 +342,9 @@ const UserPage = () => {
 
                     <ToolbarIconText>
                       {BREAK_TOOLBAR_TEXT &&
-                      strings.addComponent.length > BREAK_POINT_TOOLBAR_TEXT &&
-                      strings.addComponent.split(" ").length > 1 ? (
-                        strings.addComponent.split(" ").map((word: string) => {
+                      strings.addLink.length > BREAK_POINT_TOOLBAR_TEXT &&
+                      strings.addLink.split(" ").length > 1 ? (
+                        strings.addLink.split(" ").map((word: string) => {
                           return (
                             <span key={uuidv4()}>
                               {word} <br />
@@ -213,7 +352,7 @@ const UserPage = () => {
                           );
                         })
                       ) : (
-                        <>{strings.addComponent}</>
+                        <>{strings.addLink}</>
                       )}
                     </ToolbarIconText>
                   </ToolbarButton>
@@ -344,6 +483,20 @@ const UserPage = () => {
     <>
       <Header />
       <DashboardContent>
+        <DialogConfirmation
+          open={showDeletePageConfirmation}
+          onClose={() => {
+            setShowDeletePageConfirmation(false);
+          }}
+          onConfirmCallback={() => {
+            if (page && page._id) {
+              dispatch(deletePage(page._id));
+              navigate(routes.pages);
+            }
+          }}
+          title={strings.deletePage}
+          message={strings.deletePageConfirmation}
+        />
         <ChooseFileDialog
           openChooseFileDialog={openUploadDialog}
           setOpenChooseFileDialog={setOpenUploadDialog}
@@ -378,6 +531,7 @@ const UserPage = () => {
           pageId={page?._id}
         />
         <ToolBar />
+        <ToolbarBottomTools />
         {page && page.topComponents && page.topComponents.length > 0 && (
           <IconsComponent iconsList={page.topComponents} />
         )}

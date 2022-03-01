@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPageByUrl } from "../../../store/page-renderer/actions";
+import {
+  getPageByUrl,
+  setPageBeingManaged,
+} from "../../../store/page-renderer/actions";
 import PageRendererContent from "./page-renderer-content";
 import { ComponentType, IUserPage } from "../../../store/user/types";
 import { IApplicationState } from "./../../../store/index";
@@ -12,8 +15,13 @@ import TextComponent from "./component-types/text";
 import TextImageComponent from "./component-types/text-image/index";
 import IconsComponent from "./component-types/icon/index";
 import VideoComponent from "./component-types/video/index";
+import strings from "../../../localization";
 
-const PageRenderer = () => {
+interface IProps {
+  pageToRender?: IUserPage;
+}
+
+const PageRenderer = ({ pageToRender }: IProps) => {
   const dispatch = useDispatch();
   let { url } = useParams();
 
@@ -27,10 +35,12 @@ const PageRenderer = () => {
   const [bottomComponents, setBottomComponents] = useState<any[]>();
 
   useEffect(() => {
-    if (url) {
+    if (pageToRender) {
+      dispatch(setPageBeingManaged(pageToRender));
+    } else if (url) {
       dispatch(getPageByUrl(url));
     }
-  }, [dispatch, url]);
+  }, [dispatch, pageToRender, url]);
 
   useEffect(() => {
     if (renderedPageState.page) {
@@ -94,7 +104,14 @@ const PageRenderer = () => {
 
   return (
     <PageRendererContent>
-      {page ? (
+      {page && !page.isPublic && (
+        <Grid container>
+          <Grid container item justifyContent="center">
+            {strings.warningPrivatePage}
+          </Grid>
+        </Grid>
+      )}
+      {page && page.isPublic ? (
         <Grid container>
           <Grid container item justifyContent="center">
             <PagePicture backgroundImage={page.pageImageUrl} />

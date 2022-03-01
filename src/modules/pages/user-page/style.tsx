@@ -1,7 +1,11 @@
 import { styled } from "@mui/system";
 import { Avatar, Grid } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
-import { MEDIUM_GREY, PRIMARY_COLOR } from "./../../../styles/colors";
+import {
+  LIGHTER_GREY,
+  MEDIUM_GREY,
+  PRIMARY_COLOR,
+} from "./../../../styles/colors";
 
 export const PageToolbar = styled(
   ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
@@ -9,12 +13,15 @@ export const PageToolbar = styled(
   )
 )`
   padding: 24px;
+  padding-top: 36px;
   border-radius: 0px 0px 15px 15px;
   background-color: white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
   margin-bottom: 24px;
   margin-top: -24px;
   min-width: 250px;
+  position: relative;
+  z-index: 100;
 
   @media (max-width: 315px) {
     margin-top: 0px;
@@ -170,4 +177,19 @@ export const DeleteIcon = styled(Delete)`
   left: 0;
   cursor: pointer;
   opacity: 0;
+`;
+
+export const ToolbarBottomToolsStyled = styled(Grid)`
+  width: 100%;
+  height: 80px;
+  background-color: ${LIGHTER_GREY};
+  border-radius: 0px 0px 15px 15px;
+  margin-top: -40px;
+  margin-bottom: 24px;
+  min-width: 250px;
+`;
+
+export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
+  position: fixed;
+  z-index: 100;
 `;

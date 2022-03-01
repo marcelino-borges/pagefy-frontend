@@ -20,6 +20,7 @@ const initialState: IUserState = {
         _id: "1",
         name: "Marcos Fotografia Estilizada",
         url: "pg1/pg1/pg1/pg1",
+        isPublic: true,
         views: 151,
         pageImageUrl:
           "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
@@ -338,6 +339,7 @@ const initialState: IUserState = {
         _id: "2",
         name: "QTR Turismo",
         url: "pg2",
+        isPublic: true,
         views: 0,
         style: {
           backgroundColor: "grey",
@@ -345,8 +347,100 @@ const initialState: IUserState = {
             "url(https://imagensemoldes.com.br/wp-content/uploads/2021/02/Foto-Background-Dourado-JPG-1024x768.jpg)",
         },
         pageImageUrl:
-          "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-        topComponents: [],
+          "https://upis.br/blog/wp-content/uploads/2019/11/o-que-e-turismo-quais-os-tipos.jpg",
+
+        topComponents: [
+          {
+            _id: "e5077154-ea13-424b-b141-6029740da3dd",
+            url: "https://www.slproweb.com",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              userFriendlyName: "Twitter",
+              icon: "akar-icons:twitter-fill",
+            },
+          },
+          {
+            _id: "85a947c3-127d-4314-861e-d6c8e58c7086",
+            url: "https://www.slproweb.com/",
+            style: {
+              color: "#0d54fc",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              userFriendlyName: "Facebook",
+              icon: "bi:facebook",
+            },
+          },
+          {
+            _id: "6cd53f3c-350f-4bec-aa07-debde31a3f9b",
+            url: "https://www.slproweb.com/",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              userFriendlyName: "LinkedIn",
+              icon: "entypo-social:linkedin-with-circle",
+            },
+          },
+          {
+            _id: "4e5d40e4-f464-4566-9dfa-bca6698eb60f",
+            url: "https://www.slproweb.com/",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              userFriendlyName: "Instagram",
+              icon: "fa-brands:instagram-square",
+            },
+          },
+          {
+            _id: "f623c5a8-6d43-498e-a874-cea63c9dfc25",
+            url: "https://www.slproweb.com/",
+            style: {
+              color: "black",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: 3,
+            iconDetails: {
+              userFriendlyName: "Discord",
+              icon: "bx:bxl-discord",
+            },
+          },
+        ],
         middleComponents: [
           // All TextImage layouts
           {
@@ -371,7 +465,7 @@ const initialState: IUserState = {
           // All Image layouts
 
           {
-            text: "Portfolio",
+            text: undefined,
             url: "http://www.devbox.eng.br",
             style: undefined,
             _id: "233",
@@ -385,8 +479,39 @@ const initialState: IUserState = {
             },
             type: ComponentType.Image,
           },
+          {
+            text: undefined,
+            url: "http://www.devbox.eng.br",
+            style: undefined,
+            _id: "233",
+            visible: true,
+            clicks: 0,
+            mediaUrl:
+              "https://www.oficinadanet.com.br/imagens/post/38468/capa-windows-11-como-baixar-a-imagem-iso-agora.jpg",
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: ComponentType.Image,
+          },
 
           // All Text layouts
+          {
+            text: "Meu Site",
+            url: "http://www.devbox.eng.br",
+            style: {
+              backgroundColor: "#924599",
+              color: "#fff",
+            },
+            _id: "3",
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 1,
+            },
+            type: ComponentType.Text,
+          },
           {
             text: "Curriculum Vitae",
             url: "http://www.devbox.eng.br",
@@ -419,15 +544,30 @@ const initialState: IUserState = {
             },
             type: ComponentType.Text,
           },
+          {
+            text: "",
+            url: "https://www.youtube.com/watch?v=Bu4-86nBuPc",
+            style: undefined,
+            mediaUrl: "https://www.youtube.com/watch?v=Bu4-86nBuPc",
+            _id: "3",
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 2,
+            },
+            type: ComponentType.Video,
+          },
         ],
       },
       {
         _id: "3",
         name: "Marvel Comics",
         url: "pg3",
+        isPublic: true,
         views: 0,
         pageImageUrl:
-          "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+          "https://yt3.ggpht.com/ytc/AKedOLRJFxojUGx7u06lBjilcCYrHQyLt9k678A5Uef2=s900-c-k-c0x00ffffff-no-rj",
 
         topComponents: [],
         middleComponents: [
@@ -492,6 +632,7 @@ const initialState: IUserState = {
         _id: "4",
         name: "Max Pinturas a Óleo",
         url: "pg4",
+        isPublic: true,
         views: 0,
         pageImageUrl:
           "https://i0.wp.com/abglt.org.br/wp-content/uploads/2020/10/wallpaper-pc1-scaled-1.jpg?fit=2560%2C1440&ssl=1",
@@ -516,6 +657,7 @@ const initialState: IUserState = {
         _id: "5",
         name: "3D Sense8",
         url: "pg5",
+        isPublic: true,
         views: 0,
         pageImageUrl:
           "https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=900",
@@ -540,6 +682,7 @@ const initialState: IUserState = {
         _id: "6",
         name: "Cosplay dos Amigos",
         url: "pg6",
+        isPublic: true,
         views: 0,
         pageImageUrl:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2UM7_vOR_ghAvYRIYhvpTMNsbOV6lFNxDjQ&usqp=CAU",
@@ -629,6 +772,28 @@ const userReducer = (
         profile: {
           ...state.profile,
           pages: [...updatedPagesList],
+        },
+      };
+    }
+
+    case UserActionTypes.TOGGLE_PAGE_IS_PUBLIC: {
+      const pageId = action.payload.pageId as string;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedPage: IUserPage = {
+            ...page,
+            isPublic: !page.isPublic,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
         },
       };
     }
@@ -731,6 +896,60 @@ const userReducer = (
         }
         return page;
       });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.UPDATE_PAGE_BACKGROUND_COLOR: {
+      const pageId = action.payload.pageId as string;
+      const newColor = action.payload.newColor as string;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedPage: IUserPage = {
+            ...page,
+            style: {
+              ...page.style,
+              backgroundColor: newColor,
+            },
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.UPDATE_PAGE_FONT_COLOR: {
+      const pageId = action.payload.pageId as string;
+      const newColor = action.payload.newColor as string;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedPage: IUserPage = {
+            ...page,
+            style: {
+              ...page.style,
+              color: newColor,
+            },
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+
       return {
         ...state,
         profile: {

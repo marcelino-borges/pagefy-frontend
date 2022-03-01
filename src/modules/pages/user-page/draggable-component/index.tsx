@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { SketchPicker } from "react-color";
 import { Grid, useMediaQuery } from "@mui/material";
 import {
   Link as LinkIcon,
@@ -54,7 +55,6 @@ import {
   toggleComponentVisibility,
 } from "../../../../store/user/actions";
 import { ComponentType, IUserComponent } from "../../../../store/user/types";
-import { SketchPicker } from "react-color";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";

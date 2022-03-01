@@ -24,7 +24,7 @@ interface IDictionary {
   chooseEffect: string;
   toggleVisibility: string;
   remove: string;
-  addComponent: string;
+  addLink: string;
   addIcon: string;
   addVideo: string;
   deleteIcon: string;
@@ -68,6 +68,7 @@ interface IDictionary {
   share: string;
   understood: string;
   invalidId: string;
+  warningPrivatePage: string;
 }
 
 // Dictionaries
@@ -96,7 +97,7 @@ const en: IDictionary = {
   chooseEffect: "Choose effect",
   toggleVisibility: "Toggle visibility",
   remove: "Remove",
-  addComponent: "Add Component",
+  addLink: "Add Link",
   addIcon: "Add Icon",
   addVideo: "Add Video",
   deleteIcon: "Delete Icon",
@@ -142,6 +143,7 @@ const en: IDictionary = {
   share: "Share",
   understood: "Got it",
   invalidId: " Invalid ID",
+  warningPrivatePage: "This page is not publicly available.",
 };
 
 const pt: IDictionary = {
@@ -168,9 +170,9 @@ const pt: IDictionary = {
   chooseEffect: "Escolher efeito",
   toggleVisibility: "Mudar visibilidade",
   remove: "Remover",
-  addComponent: "Inserir Componente",
-  addIcon: "Inserir Ícone",
-  addVideo: "Inserir Vídeo",
+  addLink: "Adicionar Link",
+  addIcon: "Adicionar Ícone",
+  addVideo: "Adicionar Vídeo",
   deleteIcon: "Remover Ícone",
   deletePage: "Remover Página",
   iconName: "Nome do ícone",
@@ -214,6 +216,7 @@ const pt: IDictionary = {
   share: "Compartilhar",
   understood: "Entendi",
   invalidId: " ID inválido",
+  warningPrivatePage: "Esta página não está disponível publicamente.",
 };
 
 // Composed dictionaries

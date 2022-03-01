@@ -4,5 +4,5 @@ export const YOUTUBE_EMBED_PREFIX = "https://www.youtube.com/embed/";
 export const YOUTUBE_SHORT_URL_IDENTIFIER = "youtu.be/";
 export const YOUTUBE_FULL_URL_IDENTIFIER = "watch?v=";
 export const YOUTUBE_EMBED_URL_IDENTIFIER = "/embed/";
-export const RENDERED_PAGE_COMPONENT_HEIGHT = 64;
+export const RENDERED_PAGE_COMPONENT_HEIGHT = 56;
 export const RENDERED_PAGE_COMPONENT_RADIUS = 6;

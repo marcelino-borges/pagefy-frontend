@@ -379,7 +379,7 @@ const ComponentDialog = ({
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.addComponent}</DialogTitle>
+      <DialogTitle>{strings.addLink}</DialogTitle>
       {!showStep2 ? (
         /*
          * STEP 1

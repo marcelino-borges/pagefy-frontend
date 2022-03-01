@@ -6,10 +6,10 @@ export const getPageByUrl =
   (url: string) => (dispatch: any, getState: () => IApplicationState) => {
     //TODO: Service call to API - Get page by url
     const page = getState().user.profile?.pages[1];
-    if (page) dispatch(setPageBeingManagedSuccess(page));
+    if (page) dispatch(setPageBeingManaged(page));
   };
 
-const setPageBeingManagedSuccess = (page: IUserPage) => ({
+export const setPageBeingManaged = (page: IUserPage) => ({
   payload: page,
   type: PageRenderedTypes.SET_PAGE_BEING_RENDERED,
 });
