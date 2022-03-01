@@ -75,7 +75,7 @@ interface IDictionary {
   pageUrl: string;
   pageUrlExample: string;
   requiredField: string;
-  urlNotMatch: string;
+  pageUrlBadFormat: string;
 }
 
 // Dictionaries
@@ -157,7 +157,8 @@ const en: IDictionary = {
   pageUrl: "Page URL",
   requiredField: "Required field",
   pageUrlExample: "/unique-name-of-your-page",
-  urlNotMatch: "URL can only contain letters and hyphens",
+  pageUrlBadFormat:
+    "Badly formatted URL. It must have more than 3 characters and it's allowed only letters and hyphens, like this: /my-page",
 };
 
 const pt: IDictionary = {
@@ -237,7 +238,8 @@ const pt: IDictionary = {
   pageUrl: "URL da página",
   requiredField: "Campo obrigatório",
   pageUrlExample: "/nome-unico-da-sua-pagina",
-  urlNotMatch: "URL pode conter apenas letras e hífens",
+  pageUrlBadFormat:
+    "URL mal formatada. Necessário conter mais de 3 caracteres e só é permitido letras (sem acento) e hífens, como no exemplo: /minha-pagina",
 };
 
 // Composed dictionaries

@@ -23,6 +23,7 @@ import { stringShortener } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import routes from "../../../../routes/paths";
 import DialogConfirmation from "./../../../components/dialog-confirmation/index";
+import images from "./../../../../assets/img/index";
 
 interface IPageCardProps {
   page: IUserPage;
@@ -85,7 +86,9 @@ const PageCard = ({ page }: IPageCardProps) => {
         xs={0}
         sm={5}
         style={{
-          backgroundImage: `url(${page.pageImageUrl})`,
+          backgroundImage: page.pageImageUrl
+            ? `url(${page.pageImageUrl})`
+            : `url(${images.placeholderImage})`,
         }}
       />
       <CardContent

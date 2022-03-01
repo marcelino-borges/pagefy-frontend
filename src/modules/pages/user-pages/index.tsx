@@ -27,13 +27,17 @@ const UserPages = () => {
         }}
       />
       <DashboardContent container direction="column">
-        <Grid container justifyContent="center" style={{ padding: "24px 0px" }}>
+        <Grid
+          container
+          justifyContent="center"
+          style={{ padding: "16px 0px 24px 0px" }}
+        >
           <Button
             onClick={() => {
               setShowCreatePageDialog(true);
             }}
           >
-            + Criar página
+            Criar página
           </Button>
         </Grid>
         <Grid container>

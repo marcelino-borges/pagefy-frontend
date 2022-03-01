@@ -30,7 +30,16 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
 
   const { handleSubmit, register } = useForm();
 
+  const clearStates = () => {
+    setPageName("");
+    setPageUrl("");
+    setErrorPageNameField(undefined);
+    setErrorPageUrlField(undefined);
+  };
+
   const onSubmit = () => {
+    setErrorPageNameField(undefined);
+    setErrorPageUrlField(undefined);
     let hasErrors = false;
 
     if (pageName.length < 1) {
@@ -40,18 +49,24 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
     if (pageUrl.length < 1) {
       hasErrors = true;
       setErrorPageUrlField(strings.requiredField);
-    } else if (!pageUrl.match(/^[a-z-]+$gi/)) {
+    } else if (!pageUrl.match("^[/]?[a-z-]{3,}[a-z]$")) {
       hasErrors = true;
-      setErrorPageUrlField(strings.urlNotMatch);
+      setErrorPageUrlField(strings.pageUrlBadFormat);
     }
 
     if (hasErrors) {
       return;
     }
 
+    let url = pageUrl;
+
+    if (url[0] === "/") {
+      url = pageUrl.slice(1, pageUrl.length);
+    }
+
     const newPage: IUserPage = {
       name: pageName,
-      url: pageUrl,
+      url,
       isPublic: false,
       views: 0,
       topComponents: [],
@@ -61,6 +76,7 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
 
     dispatch(createUserPage(newPage));
     onClose();
+    clearStates();
   };
 
   return (
@@ -113,12 +129,13 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
       <DialogActions>
         <Button
           onClick={() => {
+            clearStates();
             onClose();
           }}
         >
           {strings.cancel}
         </Button>
-        <Button type="submit">{strings.create}</Button>
+        <Button onClick={onSubmit}>{strings.create}</Button>
       </DialogActions>
     </Dialog>
   );
