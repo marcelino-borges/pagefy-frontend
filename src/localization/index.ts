@@ -69,6 +69,13 @@ interface IDictionary {
   understood: string;
   invalidId: string;
   warningPrivatePage: string;
+  create: string;
+  createPage: string;
+  pageName: string;
+  pageUrl: string;
+  pageUrlExample: string;
+  requiredField: string;
+  urlNotMatch: string;
 }
 
 // Dictionaries
@@ -144,6 +151,13 @@ const en: IDictionary = {
   understood: "Got it",
   invalidId: " Invalid ID",
   warningPrivatePage: "This page is not publicly available.",
+  create: "Create",
+  createPage: "Create Page",
+  pageName: "Page name",
+  pageUrl: "Page URL",
+  requiredField: "Required field",
+  pageUrlExample: "/unique-name-of-your-page",
+  urlNotMatch: "URL can only contain letters and hyphens",
 };
 
 const pt: IDictionary = {
@@ -217,6 +231,13 @@ const pt: IDictionary = {
   understood: "Entendi",
   invalidId: " ID inválido",
   warningPrivatePage: "Esta página não está disponível publicamente.",
+  create: "Criar",
+  createPage: "Criar Página",
+  pageName: "Nome da página",
+  pageUrl: "URL da página",
+  requiredField: "Campo obrigatório",
+  pageUrlExample: "/nome-unico-da-sua-pagina",
+  urlNotMatch: "URL pode conter apenas letras e hífens",
 };
 
 // Composed dictionaries

@@ -74,7 +74,7 @@ const PageCard = ({ page }: IPageCardProps) => {
           setShowDeletePageDialog(false);
         }}
         onConfirmCallback={() => {
-          dispatch(deletePage(page._id));
+          if (page._id) dispatch(deletePage(page._id));
         }}
         title={strings.deletePage}
         message={strings.deletePageConfirmation}

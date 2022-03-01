@@ -66,7 +66,7 @@ import { getYoutubeIdFromUrl } from "./../../../../utils/index";
 export interface DraggableUserComponentProps {
   component: IUserComponent;
   index: number;
-  pageId: string;
+  pageId: string | undefined;
   onClick?: () => any;
 }
 
@@ -156,7 +156,7 @@ const DraggableUserComponent = ({
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
-    if (component._id) {
+    if (component._id && pageId) {
       dispatch(
         setComponentBackgroundColor(pageId, component._id, String(color.hex))
       );
@@ -165,7 +165,7 @@ const DraggableUserComponent = ({
   };
 
   const handleChangeFontColorComplete = (color: any) => {
-    if (component._id) {
+    if (component._id && pageId) {
       dispatch(setComponentFontColor(pageId, component._id, String(color.hex)));
       setIsKeepToolsOpen(false);
     }
@@ -251,18 +251,18 @@ const DraggableUserComponent = ({
           <ComponentArrowGridItem
             item
             up
-            onClick={() =>
-              dispatch(decreaseComponentIndexInPage(index, pageId))
-            }
+            onClick={() => {
+              if (pageId) dispatch(decreaseComponentIndexInPage(index, pageId));
+            }}
           >
             <KeyboardArrowUpIcon />
           </ComponentArrowGridItem>
           <ComponentArrowGridItem
             item
             down
-            onClick={() =>
-              dispatch(increaseComponentIndexInPage(index, pageId))
-            }
+            onClick={() => {
+              if (pageId) dispatch(increaseComponentIndexInPage(index, pageId));
+            }}
           >
             <KeyboardArrowDownIcon />
           </ComponentArrowGridItem>

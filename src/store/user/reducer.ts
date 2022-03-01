@@ -724,6 +724,15 @@ const userReducer = (
         error: action.payload,
       };
 
+    case UserActionTypes.CREATE_PAGE:
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: [action.payload, ...state.profile.pages],
+        },
+      };
+
     case UserActionTypes.UPDATE_USER_PAGE_NAME: {
       let updatedPagesList: IUserPage[] = state.profile
         ? [...state.profile.pages]

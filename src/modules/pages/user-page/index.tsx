@@ -485,6 +485,7 @@ const UserPage = () => {
       <DashboardContent>
         <DialogConfirmation
           open={showDeletePageConfirmation}
+          title={strings.deletePage}
           onClose={() => {
             setShowDeletePageConfirmation(false);
           }}
@@ -494,7 +495,6 @@ const UserPage = () => {
               navigate(routes.pages);
             }
           }}
-          title={strings.deletePage}
           message={strings.deletePageConfirmation}
         />
         <ChooseFileDialog

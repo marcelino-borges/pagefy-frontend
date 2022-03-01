@@ -30,7 +30,7 @@ export interface IUser {
 }
 
 export interface IUserPage {
-  _id: string;
+  _id?: string;
   name: string;
   url: string;
   pageImageUrl?: string;
