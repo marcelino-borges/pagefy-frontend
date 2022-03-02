@@ -87,7 +87,9 @@ interface IDictionary {
   days: string;
   hours: string;
   minutes: string;
+  minutesAbbreviated: string;
   seconds: string;
+  secondsAbbreviated: string;
   launchPrefixText: string;
 }
 
@@ -184,6 +186,8 @@ const en: IDictionary = {
   days: "days",
   hours: "hours",
   minutes: "minutes",
+  minutesAbbreviated: "min",
+  secondsAbbreviated: "sec",
   seconds: "seconds",
   launchPrefixText: "It's left",
 };
@@ -279,7 +283,9 @@ const pt: IDictionary = {
   days: "dias",
   hours: "horas",
   minutes: "minutos",
+  minutesAbbreviated: "min",
   seconds: "segundos",
+  secondsAbbreviated: "seg",
   launchPrefixText: "Restam",
 };
 

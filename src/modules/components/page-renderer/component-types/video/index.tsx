@@ -17,7 +17,7 @@ const VideoComponent = ({ component }: IProps) => {
 
   useEffect(() => {
     if (isSmallerThan500) {
-      setWidthMultiplier(3);
+      setWidthMultiplier(2);
     } else {
       setWidthMultiplier(0);
     }

@@ -1,30 +1,28 @@
-import { useEffect, useState } from "react";
 import Countdown, { zeroPad } from "react-countdown";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user/types";
-import { getYoutubeIdFromUrl } from "../../../../../utils";
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_COMPONENT_RADIUS,
 } from "../../../../constants";
-import YoutubeEmbed from "../../../youtube-embed";
 import BaseComponentType from "../base";
 import strings from "../../../../../localization";
-import { CountdownNumber } from "./style";
+import {
+  CountdownNumber,
+  CountdownOuterTexts,
+  CountdownSeparator,
+} from "./style";
 
 interface IProps {
   component: IUserComponent;
 }
 
 const LaunchComponent = ({ component }: IProps) => {
-  const isSmallerThan400 = useMediaQuery("(max-width: 399px)");
-  const isSmallerThan500 = useMediaQuery("(max-width: 499px)");
-
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (!completed) {
       return (
         <Grid container direction="column" wrap="nowrap">
-          <Grid container item wrap="nowrap">
+          <Grid container item wrap="nowrap" alignItems="center">
             <CountdownNumber
               container
               justifyContent="center"
@@ -34,6 +32,7 @@ const LaunchComponent = ({ component }: IProps) => {
             >
               {zeroPad(days)}
             </CountdownNumber>
+            <CountdownSeparator item>:</CountdownSeparator>
             <CountdownNumber
               container
               justifyContent="center"
@@ -43,6 +42,8 @@ const LaunchComponent = ({ component }: IProps) => {
             >
               {zeroPad(hours)}
             </CountdownNumber>
+
+            <CountdownSeparator item>:</CountdownSeparator>
             <CountdownNumber
               container
               justifyContent="center"
@@ -52,6 +53,8 @@ const LaunchComponent = ({ component }: IProps) => {
             >
               {zeroPad(minutes)}
             </CountdownNumber>
+
+            <CountdownSeparator item>:</CountdownSeparator>
             <CountdownNumber
               container
               justifyContent="center"
@@ -64,7 +67,7 @@ const LaunchComponent = ({ component }: IProps) => {
           </Grid>
 
           <Grid container item wrap="nowrap">
-            <Grid
+            <CountdownOuterTexts
               container
               item
               justifyContent="center"
@@ -72,8 +75,8 @@ const LaunchComponent = ({ component }: IProps) => {
               xs={3}
             >
               {strings.days}
-            </Grid>
-            <Grid
+            </CountdownOuterTexts>
+            <CountdownOuterTexts
               container
               item
               justifyContent="center"
@@ -81,25 +84,25 @@ const LaunchComponent = ({ component }: IProps) => {
               xs={3}
             >
               {strings.hours}
-            </Grid>
-            <Grid
+            </CountdownOuterTexts>
+            <CountdownOuterTexts
               container
               item
               justifyContent="center"
               alignItems="center"
               xs={3}
             >
-              {strings.minutes}
-            </Grid>
-            <Grid
+              {strings.minutesAbbreviated}
+            </CountdownOuterTexts>
+            <CountdownOuterTexts
               container
               item
               justifyContent="center"
               alignItems="center"
               xs={3}
             >
-              {strings.seconds}
-            </Grid>
+              {strings.secondsAbbreviated}
+            </CountdownOuterTexts>
           </Grid>
         </Grid>
       );
@@ -121,7 +124,7 @@ const LaunchComponent = ({ component }: IProps) => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
-          height: component.layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
+          minHeight: component.layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
           padding: "16px",
         }}
         direction="column"
@@ -141,7 +144,7 @@ const LaunchComponent = ({ component }: IProps) => {
           container
           justifyContent="center"
           alignItems="center"
-          style={{ paddingTop: "16px" }}
+          style={{ paddingTop: "16px", textAlign: "center" }}
         >
           {component.text || ""}
         </Grid>

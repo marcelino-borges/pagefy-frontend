@@ -560,7 +560,7 @@ const initialState: IUserState = {
           },
           {
             _id: "1243sdfa",
-            text: "para a inauguração da nossa loja online",
+            text: "para a inauguração da nossa loja online no Shopping Recife!",
             url: "http://www.devbox.eng.br",
             style: {
               backgroundColor: "#f24",

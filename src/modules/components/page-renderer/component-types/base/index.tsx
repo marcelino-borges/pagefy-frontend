@@ -37,7 +37,7 @@ const BaseComponentType = ({
         item
         onClick={openUrl}
         style={{
-          height: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
+          minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
           borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
           ...style,
         }}
