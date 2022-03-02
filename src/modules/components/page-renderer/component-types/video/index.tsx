@@ -11,22 +11,17 @@ interface IProps {
 }
 
 const VideoComponent = ({ component }: IProps) => {
-  const isSmallerThan400 = useMediaQuery("(max-width: 399px)");
   const isSmallerThan500 = useMediaQuery("(max-width: 499px)");
 
   const [widthMultiplier, setWidthMultiplier] = useState<number>(0);
 
   useEffect(() => {
-    console.log("isSmallerThan400 = " + isSmallerThan400);
-    console.log("isSmallerThan500 = " + isSmallerThan500);
-    if (isSmallerThan400) {
-      setWidthMultiplier(4);
-    } else if (isSmallerThan500) {
+    if (isSmallerThan500) {
       setWidthMultiplier(3);
     } else {
       setWidthMultiplier(0);
     }
-  }, [isSmallerThan400, isSmallerThan500]);
+  }, [isSmallerThan500]);
 
   if (!component.mediaUrl) return null;
 

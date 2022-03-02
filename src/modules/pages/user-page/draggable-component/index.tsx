@@ -136,7 +136,7 @@ const DraggableUserComponent = ({
   };
 
   const onSubmitUrlForm = () => {
-    if (!component._id || !pageBeingManaged) return;
+    if (!component._id || !pageBeingManaged || !values.url) return;
     setIsEdittingUrl(false);
     dispatch(setComponentUrl(pageBeingManaged, component._id, values.url));
   };
@@ -329,7 +329,7 @@ const DraggableUserComponent = ({
             )}
 
             {/* Video (Only in Video type) */}
-            {component.type === ComponentType.Video && (
+            {component.url && component.type === ComponentType.Video && (
               <ContentRow
                 container
                 item
@@ -362,53 +362,60 @@ const DraggableUserComponent = ({
             )}
 
             {/* URL */}
-            <ContentRow container item alignItems="center" wrap="nowrap">
-              {!isSmallerThan400 && (
-                <UrlIconItem item>
-                  <LinkIcon />
-                </UrlIconItem>
-              )}
-              {isEdittingUrl ? (
-                <Grid container item>
-                  <form
-                    onSubmit={handleSubmitUrl(onSubmitUrlForm)}
-                    style={{ width: "100%" }}
+            {component.type !== ComponentType.Video && (
+              <ContentRow container item alignItems="center" wrap="nowrap">
+                {!isSmallerThan400 && (
+                  <UrlIconItem item>
+                    <LinkIcon />
+                  </UrlIconItem>
+                )}
+                {isEdittingUrl ? (
+                  <Grid container item>
+                    <form
+                      onSubmit={handleSubmitUrl(onSubmitUrlForm)}
+                      style={{ width: "100%" }}
+                    >
+                      <LabelText item>
+                        <TransparentTextField
+                          autoFocus
+                          onChange={handleChangeUrl}
+                          value={values.url}
+                          fontWeight="300"
+                          color="#bfbfbf"
+                          fontStyle="italic"
+                          InputProps={{
+                            style: {
+                              width: "100%",
+                              margin: !isSmallerThan400 ? "0px 16px" : "0",
+                            },
+                          }}
+                          fontSize={isSmallerThan600 ? "16px" : "22px"}
+                          onBlur={() => {
+                            onSubmitUrlForm();
+                            setIsEdittingUrl(false);
+                          }}
+                        />
+                      </LabelText>
+                    </form>
+                  </Grid>
+                ) : (
+                  <UrlTextItem
+                    item
+                    onClick={() => {
+                      setIsEdittingUrl(true);
+                      setValues({ ...values, url: component.url || "" });
+                    }}
                   >
-                    <LabelText item>
-                      <TransparentTextField
-                        autoFocus
-                        onChange={handleChangeUrl}
-                        value={values.url}
-                        fontWeight="300"
-                        color="#bfbfbf"
-                        fontStyle="italic"
-                        InputProps={{
-                          style: {
-                            width: "100%",
-                            margin: !isSmallerThan400 ? "0px 16px" : "0",
-                          },
-                        }}
-                        fontSize={isSmallerThan600 ? "16px" : "22px"}
-                        onBlur={() => {
-                          onSubmitUrlForm();
-                          setIsEdittingUrl(false);
-                        }}
-                      />
-                    </LabelText>
-                  </form>
-                </Grid>
-              ) : (
-                <UrlTextItem
-                  item
-                  onClick={() => {
-                    setIsEdittingUrl(true);
-                    setValues({ ...values, url: component.url || "" });
-                  }}
-                >
-                  {stringShortener(component.url, isLargerThan400 ? 50 : 20)}
-                </UrlTextItem>
-              )}
-            </ContentRow>
+                    {component.url
+                      ? stringShortener(
+                          component.url,
+                          isLargerThan400 ? 50 : 20
+                        )
+                      : ""}
+                  </UrlTextItem>
+                )}
+              </ContentRow>
+            )}
           </Grid>
 
           {/* 2nd content column */}
@@ -427,7 +434,7 @@ const DraggableUserComponent = ({
             }}
             alignItems={isSmallerThan600 ? "center" : "flex-end"}
             direction={isSmallerThan600 ? "row" : "column"}
-            justifyContent="center"
+            justifyContent={isSmallerThan600 ? "flex-start" : "center"}
             spacing={1}
           >
             <AnalyticsItem

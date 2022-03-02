@@ -45,7 +45,7 @@ export interface IUserPage {
 export interface IUserComponent {
   _id?: string;
   text?: string;
-  url: string;
+  url?: string;
   style?: IComponentStyle;
   visible: boolean;
   clicks: number;
@@ -53,6 +53,7 @@ export interface IUserComponent {
   type: ComponentType;
   mediaUrl?: string;
   iconDetails?: IIconDetails;
+  visibleDate?: string;
   launchDate?: string;
 }
 
@@ -80,6 +81,7 @@ export const enum ComponentType {
   TextImage = 2,
   Icon = 3,
   Video = 4,
+  Launch = 5,
 }
 
 export enum IconType {

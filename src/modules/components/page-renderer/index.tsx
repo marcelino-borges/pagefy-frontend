@@ -16,6 +16,7 @@ import TextImageComponent from "./component-types/text-image/index";
 import IconsComponent from "./component-types/icon/index";
 import VideoComponent from "./component-types/video/index";
 import strings from "../../../localization";
+import LaunchComponent from "./component-types/launch/index";
 
 interface IProps {
   pageToRender?: IUserPage;
@@ -99,6 +100,8 @@ const PageRenderer = ({ pageToRender }: IProps) => {
         return <TextImageComponent component={component} />;
       case ComponentType.Video:
         return <VideoComponent component={component} />;
+      case ComponentType.Launch:
+        return <LaunchComponent component={component} />;
     }
   };
 

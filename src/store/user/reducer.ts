@@ -308,7 +308,7 @@ const initialState: IUserState = {
               backgroundColor: "#ffa",
               color: "#000",
             },
-            _id: "333",
+            _id: "522",
             visible: true,
             clicks: 0,
             layout: {
@@ -324,7 +324,7 @@ const initialState: IUserState = {
               backgroundColor: "#ffa",
               color: "#000",
             },
-            _id: "344",
+            _id: "533",
             visible: true,
             clicks: 0,
             layout: {
@@ -557,6 +557,24 @@ const initialState: IUserState = {
               columns: 2,
             },
             type: ComponentType.Video,
+          },
+          {
+            _id: "1243sdfa",
+            text: "para a inauguração da nossa loja online",
+            url: "http://www.devbox.eng.br",
+            style: {
+              backgroundColor: "#f24",
+              color: "#fff",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 4,
+              columns: 2,
+            },
+            launchDate: "2022-05-03T13:50:08.000Z",
+            type: ComponentType.Launch,
+            mediaUrl: undefined,
           },
         ],
       },

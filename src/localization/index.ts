@@ -13,6 +13,7 @@ interface IDictionary {
   textImage: string;
   icon: string;
   video: string;
+  launch: string;
   unknown: string;
   columns: string;
   rows: string;
@@ -27,6 +28,7 @@ interface IDictionary {
   addLink: string;
   addIcon: string;
   addVideo: string;
+  addLaunch: string;
   deleteIcon: string;
   deletePage: string;
   iconName: string;
@@ -50,9 +52,11 @@ interface IDictionary {
   next: string;
   webSiteExample: string;
   send: string;
-  scheduleLaunchComponentDate: string;
+  scheduleComponentVisibleDate: string;
   save: string;
   date: string;
+  hour: string;
+  time: string;
   urlRequired: string;
   textInComponentRequired: string;
   imageInComponentRequired: string;
@@ -76,6 +80,15 @@ interface IDictionary {
   pageUrlExample: string;
   requiredField: string;
   pageUrlBadFormat: string;
+  launchMessageLabel: string;
+  launchMessageExample: string;
+  launchComponentInstructions: string;
+  launchDateTimeBeforeToday: string;
+  days: string;
+  hours: string;
+  minutes: string;
+  seconds: string;
+  launchPrefixText: string;
 }
 
 // Dictionaries
@@ -93,6 +106,7 @@ const en: IDictionary = {
   textImage: "Image & Text",
   icon: "Icon",
   video: "Video",
+  launch: "Launch",
   unknown: "Unknown",
   columns: "Columns",
   rows: "Rows",
@@ -107,6 +121,7 @@ const en: IDictionary = {
   addLink: "Add Link",
   addIcon: "Add Icon",
   addVideo: "Add Video",
+  addLaunch: "Add Launch",
   deleteIcon: "Delete Icon",
   deletePage: "Delete Page",
   iconName: "Icon name",
@@ -130,9 +145,11 @@ const en: IDictionary = {
   next: "Next",
   webSiteExample: "https://www.mywebsite.com",
   send: "Send",
-  scheduleLaunchComponentDate: "Launch date",
+  scheduleComponentVisibleDate: "Launch date",
   save: "Save",
   date: "Date",
+  hour: "Hour",
+  time: "Time",
   urlRequired: "URL required",
   textInComponentRequired: "Required for a text component",
   imageInComponentRequired: "Choose an image to your component",
@@ -159,6 +176,16 @@ const en: IDictionary = {
   pageUrlExample: "/unique-name-of-your-page",
   pageUrlBadFormat:
     "Badly formatted URL. It must have more than 3 characters and it's allowed only letters and hyphens, like this: /my-page",
+  launchMessageLabel: "Message",
+  launchMessageExample: "for the innauguration of our shop!",
+  launchComponentInstructions:
+    "There will be a clock with a countdown in your page, showing how long it is to reach the date/time informed here, followed by a message above it.",
+  launchDateTimeBeforeToday: "Must be future",
+  days: "days",
+  hours: "hours",
+  minutes: "minutes",
+  seconds: "seconds",
+  launchPrefixText: "It's left",
 };
 
 const pt: IDictionary = {
@@ -174,6 +201,7 @@ const pt: IDictionary = {
   textImage: "Imagem & Texto",
   icon: "Ícone",
   video: "Vídeo",
+  launch: "Lançamento",
   unknown: "Desconhecido",
   columns: "Colunas",
   rows: "Linhas",
@@ -188,6 +216,7 @@ const pt: IDictionary = {
   addLink: "Adicionar Link",
   addIcon: "Adicionar Ícone",
   addVideo: "Adicionar Vídeo",
+  addLaunch: "Adicionar Lançamento",
   deleteIcon: "Remover Ícone",
   deletePage: "Remover Página",
   iconName: "Nome do ícone",
@@ -211,9 +240,11 @@ const pt: IDictionary = {
   next: "Avançar",
   webSiteExample: "https://www.meusite.com",
   send: "Enviar",
-  scheduleLaunchComponentDate: "Data de lançamento",
+  scheduleComponentVisibleDate: "Data de lançamento",
   save: "Salvar",
   date: "Data",
+  hour: "Hora",
+  time: "Horário",
   urlRequired: "URL obrigatória",
   textInComponentRequired: "Obrigatório para um componente de texto",
   imageInComponentRequired: "Escolha uma imagem para seu componente",
@@ -240,6 +271,16 @@ const pt: IDictionary = {
   pageUrlExample: "/nome-unico-da-sua-pagina",
   pageUrlBadFormat:
     "URL mal formatada. Necessário conter mais de 3 caracteres e só é permitido letras (sem acento) e hífens, como no exemplo: /minha-pagina",
+  launchMessageLabel: "Mensagem",
+  launchMessageExample: "para a inauguração da nossa loja",
+  launchComponentInstructions:
+    "Haverá um cronômetro na sua página, acima de uma mensagem, marcando quanto tempo falta para a data e a hora informada aqui",
+  launchDateTimeBeforeToday: "Precisa ser futuro",
+  days: "dias",
+  hours: "horas",
+  minutes: "minutos",
+  seconds: "segundos",
+  launchPrefixText: "Restam",
 };
 
 // Composed dictionaries

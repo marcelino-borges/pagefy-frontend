@@ -25,6 +25,8 @@ export const getLocalizedStringByComponentType = (type: ComponentType) => {
       return strings.icon;
     case ComponentType.Video:
       return strings.video;
+    case ComponentType.Launch:
+      return strings.launch;
     default:
       return strings.unknown;
   }

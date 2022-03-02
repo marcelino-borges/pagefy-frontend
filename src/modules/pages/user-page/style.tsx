@@ -111,6 +111,13 @@ export const ToolbarButton = styled(({ ...rest }: any) => <span {...rest} />)`
   cursor: pointer;
   min-width: 90px;
 
+  & span {
+    font-size: 12px;
+  }
+  & svg {
+    font-size: 30px;
+  }
+
   &:hover {
     color: ${PRIMARY_COLOR};
   }

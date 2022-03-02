@@ -68,7 +68,7 @@ const ComponentDialog = ({
   open,
   handleClose,
 }: IComponentDialogProps) => {
-  const defaultLaunchDate = moment().toISOString();
+  const defaultVisibleDate = moment().toISOString();
 
   const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -101,10 +101,10 @@ const ComponentDialog = ({
     useState<boolean>(false);
   const [showUploadDialog, setShowUploadDialog] = useState<boolean>(false);
   const [chosenImage, setChosenImage] = useState<File>();
-  const [showLaunchDateDialog, setShowLaunchDateDialog] =
+  const [showVisibleDateDialog, setShowVisibleDateDialog] =
     useState<boolean>(false);
-  const [launchDate, setLaunchDate] = useState<string>(defaultLaunchDate);
-  const [launchTime, setLaunchTime] = useState<string>(defaultLaunchDate);
+  const [visibleDate, setVisibleDate] = useState<string>(defaultVisibleDate);
+  const [visibleTime, setVisibleTime] = useState<string>(defaultVisibleDate);
 
   const clearStates = () => {
     // Step 1 buttons
@@ -120,7 +120,7 @@ const ComponentDialog = ({
     setShowFontColorPicker(false);
     setShowUploadDialog(false);
     setChosenImage(undefined);
-    setLaunchDate(defaultLaunchDate);
+    setVisibleDate(defaultVisibleDate);
     clearErrors();
   };
 
@@ -147,11 +147,14 @@ const ComponentDialog = ({
         return;
       }
 
-      const time = new Date(launchTime);
+      const time = new Date(visibleTime);
       const hour = time.getHours();
       const minute = time.getMinutes();
       const second = time.getSeconds();
-      let launch = moment(launchDate).hour(hour).minute(minute).second(second);
+      let visibleDateTime = moment(visibleDate)
+        .hour(hour)
+        .minute(minute)
+        .second(second);
 
       const newComponent: IUserComponent = {
         text: selectedType !== ComponentType.Image ? text : undefined,
@@ -169,7 +172,7 @@ const ComponentDialog = ({
         type: selectedType,
         mediaUrl: undefined,
         iconDetails: undefined,
-        launchDate: launch.toISOString(),
+        visibleDate: visibleDateTime.toISOString(),
       };
       if (pageId) {
         dispatch(addMiddleComponentInPage(newComponent, pageId));
@@ -242,12 +245,12 @@ const ComponentDialog = ({
     setFontColor(color.hex);
   };
 
-  const handleLaunchDate = (newDate: any) => {
-    setLaunchDate(moment(newDate).toISOString());
+  const handleVisibleDate = (newDate: any) => {
+    setVisibleDate(moment(newDate).toISOString());
   };
 
-  const handleLaunchTime = (newDate: any) => {
-    setLaunchTime(moment(newDate).toISOString());
+  const handleVisibleTime = (newDate: any) => {
+    setVisibleTime(moment(newDate).toISOString());
   };
 
   const Section = ({ title, icon, error }: any) => (
@@ -267,16 +270,16 @@ const ComponentDialog = ({
     </SectionHeader>
   );
 
-  const DialogLaunchDate = () => (
+  const DialogVisibleDate = () => (
     <Dialog
-      open={showLaunchDateDialog}
+      open={showVisibleDateDialog}
       onClose={() => {}}
       fullWidth
       fullScreen={isSmallerThanSM}
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.scheduleLaunchComponentDate}</DialogTitle>
+      <DialogTitle>{strings.scheduleComponentVisibleDate}</DialogTitle>
       <DialogContent
         style={{
           display: "flex",
@@ -304,8 +307,8 @@ const ComponentDialog = ({
               <DesktopDatePicker
                 label={strings.date}
                 inputFormat="DD/MM/yyyy"
-                value={moment(launchDate)}
-                onChange={handleLaunchDate}
+                value={moment(visibleDate)}
+                onChange={handleVisibleDate}
                 renderInput={(params) => (
                   <TextField
                     style={{
@@ -319,8 +322,8 @@ const ComponentDialog = ({
               <MobileDatePicker
                 label={strings.date}
                 inputFormat="DD/MM/yyyy"
-                value={moment(launchDate)}
-                onChange={handleLaunchDate}
+                value={moment(visibleDate)}
+                onChange={handleVisibleDate}
                 renderInput={(params) => (
                   <TextField
                     style={{
@@ -334,11 +337,11 @@ const ComponentDialog = ({
           </Grid>
           <Grid item xs={12} md={5}>
             <TimePicker
-              label="Time"
+              label={strings.time}
               ampm={false}
-              value={moment(launchTime).toDate()}
-              onChange={handleLaunchTime}
-              renderInput={(params) => (
+              value={moment(visibleTime).toDate()}
+              onChange={handleVisibleTime}
+              renderInput={(params: any) => (
                 <TextField
                   style={{
                     width: "100%",
@@ -353,15 +356,15 @@ const ComponentDialog = ({
       <DialogActions>
         <Button
           onClick={() => {
-            setLaunchDate(defaultLaunchDate);
-            setShowLaunchDateDialog(false);
+            setVisibleDate(defaultVisibleDate);
+            setShowVisibleDateDialog(false);
           }}
         >
           {strings.back}
         </Button>
         <Button
           onClick={() => {
-            setShowLaunchDateDialog(false);
+            setShowVisibleDateDialog(false);
           }}
         >
           {strings.save}
@@ -556,7 +559,7 @@ const ComponentDialog = ({
               setShowUploadDialog(false);
             }}
           />
-          <DialogLaunchDate />
+          <DialogVisibleDate />
           <Grid container direction="column">
             <form onSubmit={handleSubmit(onSubmit)}>
               {selectedType !== 1 && (
@@ -738,7 +741,7 @@ const ComponentDialog = ({
                 </CustomTooltip>
               </Grid>
 
-              {/* LaunchDate */}
+              {/* VisibleDate */}
               <Grid item>
                 <CustomTooltip
                   disableInteractive
@@ -749,7 +752,7 @@ const ComponentDialog = ({
                   <Grid item>
                     <IconButton
                       onClick={() => {
-                        setShowLaunchDateDialog(true);
+                        setShowVisibleDateDialog(true);
                       }}
                     >
                       <TimerIcon sx={{ fontSize: "28px", color: LIGHT_GREY }} />

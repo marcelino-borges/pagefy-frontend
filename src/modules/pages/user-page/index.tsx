@@ -10,6 +10,7 @@ import {
   VisibilityOff as VisibilityOffIcon,
   ImageSearch as ImageSearchIcon,
   Delete as DeleteIcon,
+  RocketLaunch as LaunchIcon,
 } from "@mui/icons-material";
 import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
@@ -45,8 +46,8 @@ import {
   updateUserPageUrl,
 } from "../../../store/user/actions";
 import DraggableUserComponent from "./draggable-component";
-import IconsDialog from "./icons-dialog";
 import { v4 as uuidv4 } from "uuid";
+import IconsDialog from "./icons-dialog";
 import ComponentDialog from "./component-dialog";
 import VideoDialog from "./video-dialog/index";
 import Header from "./../../components/header/index";
@@ -54,6 +55,7 @@ import ChooseFileDialog from "./../../components/dialog-file-upload/index";
 import { IMAGE_EXTENSIONS } from "../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation/index";
+import LaunchDialog from "./launch-dialog";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -70,6 +72,7 @@ const UserPage = () => {
   const [openIconsDialog, setOpenIconsDialog] = useState(false);
   const [openComponentDialog, setOpenComponentDialog] = useState(false);
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
+  const [openLaunchDialog, setOpenLaunchDialog] = useState(false);
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
   const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
@@ -166,6 +169,16 @@ const UserPage = () => {
 
   const handleCloseVideoDialog = () => {
     setOpenVideoDialog(false);
+  };
+
+  const handleOpenLaunchDialog = () => {
+    if (!page?._id) return;
+
+    setOpenLaunchDialog(true);
+  };
+
+  const handleCloseLaunchDialog = () => {
+    setOpenLaunchDialog(false);
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
@@ -335,7 +348,7 @@ const UserPage = () => {
               justifyContent={isSmallerThan600 ? "space-evenly" : "center"}
               style={{ paddingTop: isSmallerThan600 ? "24px" : "0" }}
             >
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenComponentDialog}>
                     <CreateComponentIcon />
@@ -359,7 +372,7 @@ const UserPage = () => {
                 </Grid>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenIconsDialog}>
                     <InsertIconIcon />
@@ -382,7 +395,7 @@ const UserPage = () => {
                 </Grid>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={3}>
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenVideoDialog}>
                     <YouTubeIcon />
@@ -391,6 +404,29 @@ const UserPage = () => {
                       strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
                       strings.addVideo.split(" ").length > 1 ? (
                         strings.addVideo.split(" ").map((word: string) => {
+                          return (
+                            <span key={uuidv4()}>
+                              {word} <br />
+                            </span>
+                          );
+                        })
+                      ) : (
+                        <>{strings.addVideo}</>
+                      )}
+                    </ToolbarIconText>
+                  </ToolbarButton>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={3}>
+                <Grid container item direction="column" alignItems="center">
+                  <ToolbarButton onClick={handleOpenLaunchDialog}>
+                    <LaunchIcon />
+                    <ToolbarIconText>
+                      {BREAK_TOOLBAR_TEXT &&
+                      strings.addLaunch.length > BREAK_POINT_TOOLBAR_TEXT &&
+                      strings.addLaunch.split(" ").length > 1 ? (
+                        strings.addLaunch.split(" ").map((word: string) => {
                           return (
                             <span key={uuidv4()}>
                               {word} <br />
@@ -528,6 +564,11 @@ const UserPage = () => {
         <VideoDialog
           open={openVideoDialog}
           handleClose={handleCloseVideoDialog}
+          pageId={page?._id}
+        />
+        <LaunchDialog
+          open={openLaunchDialog}
+          handleClose={handleCloseLaunchDialog}
           pageId={page?._id}
         />
         <ToolBar />
