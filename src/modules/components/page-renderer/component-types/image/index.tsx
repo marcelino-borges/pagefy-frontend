@@ -16,6 +16,7 @@ const ImageComponent = ({ component }: IProps) => {
       layout={component.layout}
       style={component.style}
       url={component.url}
+      animation={component.animation}
     >
       <Grid
         container

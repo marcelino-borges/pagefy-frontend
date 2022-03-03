@@ -66,7 +66,6 @@ export const LayoutPickerContainer = styled(
 )`
   padding: 8px;
   border-radius: 8px;
-  // border: 1px solid ${LIGHTER_GREY};
   width: 50%;
 
   margin-top: ${(props) => props.mt || ""};

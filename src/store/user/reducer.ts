@@ -2,6 +2,7 @@ import { moveElementInArrayFromToIndex } from "../../utils";
 import { IAction } from "../shared";
 import {
   ComponentType,
+  IComponentAnimation,
   IUserComponent,
   IUserPage,
   IUserState,
@@ -227,7 +228,7 @@ const initialState: IUserState = {
             text: "Portfolio",
             url: "http://www.devbox.eng.br",
             style: undefined,
-            _id: "233",
+            _id: "23312",
             visible: true,
             clicks: 0,
             mediaUrl:
@@ -468,7 +469,7 @@ const initialState: IUserState = {
             text: undefined,
             url: "http://www.devbox.eng.br",
             style: undefined,
-            _id: "233",
+            _id: "2333",
             visible: true,
             clicks: 0,
             mediaUrl:
@@ -483,7 +484,7 @@ const initialState: IUserState = {
             text: undefined,
             url: "http://www.devbox.eng.br",
             style: undefined,
-            _id: "233",
+            _id: "2334",
             visible: true,
             clicks: 0,
             mediaUrl:
@@ -503,7 +504,7 @@ const initialState: IUserState = {
               backgroundColor: "#924599",
               color: "#fff",
             },
-            _id: "3",
+            _id: "31vv31v46",
             visible: true,
             clicks: 0,
             layout: {
@@ -519,7 +520,7 @@ const initialState: IUserState = {
               backgroundColor: "#fff",
               color: "#000",
             },
-            _id: "3",
+            _id: "313131313",
             visible: true,
             clicks: 0,
             layout: {
@@ -535,7 +536,7 @@ const initialState: IUserState = {
               backgroundColor: "#fffdd1ab",
               color: "#000",
             },
-            _id: "3",
+            _id: "35467547",
             visible: true,
             clicks: 0,
             layout: {
@@ -549,7 +550,7 @@ const initialState: IUserState = {
             url: "https://www.youtube.com/watch?v=Bu4-86nBuPc",
             style: undefined,
             mediaUrl: "https://www.youtube.com/watch?v=Bu4-86nBuPc",
-            _id: "3",
+            _id: "387922",
             visible: true,
             clicks: 0,
             layout: {
@@ -575,6 +576,27 @@ const initialState: IUserState = {
             launchDate: "2022-05-03T13:50:08.000Z",
             type: ComponentType.Launch,
             mediaUrl: undefined,
+          },
+          {
+            text: "Animadinho",
+            url: "https://www.slproweb.com/",
+            style: {
+              backgroundColor: "#2162cc",
+              color: "#fff",
+            },
+            visible: true,
+            clicks: 0,
+            layout: {
+              rows: 1,
+              columns: 2,
+            },
+            type: 0,
+            animation: {
+              name: "pulse",
+              duration: 2,
+              startDelay: 0,
+              infinite: true,
+            },
           },
         ],
       },
@@ -635,7 +657,7 @@ const initialState: IUserState = {
               backgroundColor: "#d62",
               color: "#000",
             },
-            _id: "3",
+            _id: "3gv11v",
             visible: true,
             clicks: 0,
             layout: {
@@ -950,6 +972,78 @@ const userReducer = (
         return page;
       });
 
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.UPDATE_COMPONENT_ANIMATION: {
+      const pageId = action.payload.pageId as string;
+      const componentId = action.payload.componentId as string;
+      const animation = action.payload.animation as IComponentAnimation;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
+            (component: IUserComponent) => {
+              if (component._id === componentId) {
+                const updatedComponent: IUserComponent = {
+                  ...component,
+                  animation: animation,
+                };
+                return updatedComponent;
+              }
+              return component;
+            }
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            middleComponents: updatedComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          pages: updatedPages,
+        },
+      };
+    }
+
+    case UserActionTypes.UPDATE_COMPONENT_VISIBLE_DATE: {
+      const pageId = action.payload.pageId as string;
+      const componentId = action.payload.componentId as string;
+      const dateTime = action.payload.dateTime as string;
+
+      const updatedPages = state.profile.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
+            (component: IUserComponent) => {
+              if (component._id === componentId) {
+                const updatedComponent: IUserComponent = {
+                  ...component,
+                  visibleDate: dateTime,
+                };
+                return updatedComponent;
+              }
+              return component;
+            }
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            middleComponents: updatedComponents,
+          };
+          return updatedPage;
+        }
+        return page;
+      });
       return {
         ...state,
         profile: {

@@ -1,4 +1,8 @@
-import { IUserComponent, UserActionTypes } from "./../user/types";
+import {
+  IComponentAnimation,
+  IUserComponent,
+  UserActionTypes,
+} from "./../user/types";
 import { IUserPage } from "./types";
 
 export const getUser = (email: string) => (dispatch: any) => {
@@ -149,6 +153,24 @@ export const setComponentFontColor = (
 ) => ({
   payload: { pageId, componentId, newColor },
   type: UserActionTypes.UPDATE_COMPONENT_FONT_COLOR,
+});
+
+export const setComponentAnimation = (
+  pageId: string,
+  componentId: string,
+  animation: IComponentAnimation
+) => ({
+  payload: { pageId, componentId, animation },
+  type: UserActionTypes.UPDATE_COMPONENT_ANIMATION,
+});
+
+export const setComponentVisibleDate = (
+  pageId: string,
+  componentId: string,
+  dateTime: string
+) => ({
+  payload: { pageId, componentId, dateTime },
+  type: UserActionTypes.UPDATE_COMPONENT_VISIBLE_DATE,
 });
 
 export const deletePage = (pageId: string) => ({

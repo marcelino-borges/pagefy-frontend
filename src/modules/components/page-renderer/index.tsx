@@ -6,7 +6,11 @@ import {
   setPageBeingManaged,
 } from "../../../store/page-renderer/actions";
 import PageRendererContent from "./page-renderer-content";
-import { ComponentType, IUserPage } from "../../../store/user/types";
+import {
+  ComponentType,
+  IUserComponent,
+  IUserPage,
+} from "../../../store/user/types";
 import { IApplicationState } from "./../../../store/index";
 import { CircularProgress, Grid } from "@mui/material";
 import { PageName, PagePicture } from "./style";
@@ -95,13 +99,13 @@ const PageRenderer = ({ pageToRender }: IProps) => {
       case ComponentType.Image:
         return <ImageComponent component={component} key={component._id} />;
       case ComponentType.Text:
-        return <TextComponent component={component} />;
+        return <TextComponent component={component} key={component._id} />;
       case ComponentType.TextImage:
-        return <TextImageComponent component={component} />;
+        return <TextImageComponent component={component} key={component._id} />;
       case ComponentType.Video:
-        return <VideoComponent component={component} />;
+        return <VideoComponent component={component} key={component._id} />;
       case ComponentType.Launch:
-        return <LaunchComponent component={component} />;
+        return <LaunchComponent component={component} key={component._id} />;
     }
   };
 
@@ -134,9 +138,16 @@ const PageRenderer = ({ pageToRender }: IProps) => {
               <>
                 {middleComponents &&
                   middleComponents.length > 0 &&
-                  middleComponents.map((comp: any) =>
-                    renderComponentByType(comp)
-                  )}
+                  middleComponents.map((comp: IUserComponent) => {
+                    if (
+                      comp.visible &&
+                      (!comp.visibleDate ||
+                        new Date(comp.visibleDate) >= new Date())
+                    ) {
+                      return renderComponentByType(comp);
+                    }
+                    return null;
+                  })}
               </>
             )}
           </Grid>

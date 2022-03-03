@@ -9,13 +9,14 @@ import {
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
   Delete as DeleteIcon,
-  AutoFixHigh as ChooseEffectsIcon,
+  AutoFixHigh as ChooseAnimationIcon,
   TableRows as RowsIcon,
   ViewColumn as ColumnsIcon,
   TouchApp as ClicksCountIcon,
   Category as ComponentTypeIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
+  Timer as TimerIcon,
 } from "@mui/icons-material";
 import {
   Parent,
@@ -48,13 +49,19 @@ import {
   decreaseComponentIndexInPage,
   deleteMiddleComponentFromPage,
   increaseComponentIndexInPage,
+  setComponentAnimation,
   setComponentBackgroundColor,
   setComponentFontColor,
   setComponentLabel,
   setComponentUrl,
+  setComponentVisibleDate,
   toggleComponentVisibility,
 } from "../../../../store/user/actions";
-import { ComponentType, IUserComponent } from "../../../../store/user/types";
+import {
+  ComponentType,
+  IComponentAnimation,
+  IUserComponent,
+} from "../../../../store/user/types";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
@@ -62,6 +69,8 @@ import { IMAGE_EXTENSIONS } from "../../../constants";
 import DialogConfirmation from "../../../components/dialog-confirmation";
 import YoutubeEmbed from "../../../components/youtube-embed";
 import { getYoutubeIdFromUrl } from "./../../../../utils/index";
+import DialogChooseAnimation from "../../../components/dialog-choose-animation";
+import DialogVisibleDate from "./../../../components/dialog-visible-date/index";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -98,10 +107,13 @@ const DraggableUserComponent = ({
     url: component.url,
   });
   const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
+  const [openChooseAnimationDialog, setOpenChooseAnimationDialog] =
+    useState(false);
   const [chosenImage, setChosenImage] = useState();
   const [openDeleteComponentConfirmation, setOpenDeleteComponentConfirmation] =
     useState(false);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [openVisibleDateDialog, setOpenVisibleDateDialog] = useState(false);
 
   const pageBeingManaged = useSelector(
     (state: IApplicationState) => state.pageManagement.pageId
@@ -217,6 +229,27 @@ const DraggableUserComponent = ({
         cancelDialog={() => {
           setChosenImage(undefined);
           setOpenChooseFileDialog(false);
+        }}
+      />
+      <DialogChooseAnimation
+        open={openChooseAnimationDialog}
+        onClose={() => {
+          setOpenChooseAnimationDialog(false);
+        }}
+        saveAnimation={(animation: IComponentAnimation) => {
+          if (pageId && component._id)
+            dispatch(setComponentAnimation(pageId, component._id, animation));
+        }}
+        existingAnimation={component.animation}
+      />
+      <DialogVisibleDate
+        open={openVisibleDateDialog}
+        onClose={() => {
+          setOpenVisibleDateDialog(false);
+        }}
+        setDateTime={(dateTime: string) => {
+          if (pageId && component._id)
+            dispatch(setComponentVisibleDate(pageId, component._id, dateTime));
         }}
       />
       <Container
@@ -582,17 +615,48 @@ const DraggableUserComponent = ({
           disabled={!isHovering}
           disableInteractive
           leaveDelay={0.1}
-          title={strings.chooseEffect}
+          title={strings.scheduleComponentVisibleDate}
           placement={isLargerThan400 ? "right" : "bottom"}
         >
           <ToolGridItem item>
             <ToolIconButton
-              disabled={component.type === ComponentType.Video}
+              disabled={
+                component.type === ComponentType.Video ||
+                component.type === ComponentType.Launch
+              }
               hoveringWhite
               transitionDuration="0.4s"
               isHoveringComponent={isHovering}
+              onClick={() => {
+                setOpenVisibleDateDialog(true);
+              }}
             >
-              <ChooseEffectsIcon />
+              <TimerIcon />
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
+
+        <CustomTooltip
+          disabled={!isHovering}
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.chooseAnimation}
+          placement={isLargerThan400 ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              disabled={
+                component.type === ComponentType.Video ||
+                component.type === ComponentType.Launch
+              }
+              hoveringWhite
+              transitionDuration="0.4s"
+              isHoveringComponent={isHovering}
+              onClick={() => {
+                setOpenChooseAnimationDialog(true);
+              }}
+            >
+              <ChooseAnimationIcon />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>

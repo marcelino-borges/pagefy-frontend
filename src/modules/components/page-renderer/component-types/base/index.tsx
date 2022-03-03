@@ -4,12 +4,15 @@ import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_COMPONENT_RADIUS,
 } from "../../../../constants";
+import { IComponentAnimation } from "./../../../../../store/user/types";
+import { Root } from "./style";
 
 interface IProps {
   layout: IComponentLayout;
   style: any;
   children: any;
   url: string | undefined;
+  animation?: IComponentAnimation | undefined;
   [x: string]: any;
 }
 
@@ -18,6 +21,7 @@ const BaseComponentType = ({
   style,
   children,
   url,
+  animation,
   ...rest
 }: IProps) => {
   const openUrl = () => {
@@ -26,11 +30,14 @@ const BaseComponentType = ({
   };
 
   return (
-    <Grid
+    <Root
       container
       item
       xs={6 * layout.columns}
-      style={{ padding: "8px", cursor: "pointer" }}
+      animation={animation?.name}
+      duration={animation?.duration}
+      delay={animation?.startDelay}
+      infinite={animation?.infinite}
     >
       <Grid
         container
@@ -45,7 +52,7 @@ const BaseComponentType = ({
       >
         {children}
       </Grid>
-    </Grid>
+    </Root>
   );
 };
 

@@ -12,6 +12,7 @@ const TextComponent = ({ component }: IProps) => {
       url={component.url}
       layout={component.layout}
       style={component.style}
+      animation={component.animation}
     >
       <Grid container justifyContent="center" alignItems="center">
         {component.text}

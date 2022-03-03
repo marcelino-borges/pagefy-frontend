@@ -19,7 +19,13 @@ const IconsComponent = ({ iconsList }: IProps) => {
       justifyContent="center"
     >
       {iconsList.map((iconComponent: IUserComponent) => {
-        if (iconComponent.iconDetails && iconComponent.url) {
+        if (
+          iconComponent.iconDetails &&
+          iconComponent.url &&
+          iconComponent.visible &&
+          (!iconComponent.visibleDate ||
+            new Date(iconComponent.visibleDate) >= new Date())
+        ) {
           return (
             <CustomTooltip title={iconComponent.url} key={iconComponent._id}>
               <IconOverlaySpan>

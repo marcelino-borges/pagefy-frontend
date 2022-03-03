@@ -66,3 +66,9 @@ export const getYoutubeIdFromUrl = (url: string) => {
   }
   return id;
 };
+
+export const capitalizeFirstLetter = (original: string) => {
+  return (
+    original.slice(0, 1).toUpperCase() + original.slice(1, original.length)
+  );
+};

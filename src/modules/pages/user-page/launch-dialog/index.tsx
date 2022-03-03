@@ -132,6 +132,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   <TextField
                     error={!!dateTimeFieldError}
                     helperText={dateTimeFieldError || ""}
+                    fullWidth
                     {...params}
                   />
                 )}
@@ -147,13 +148,14 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   <TextField
                     error={dateTimeFieldError !== undefined}
                     helperText={dateTimeFieldError || ""}
+                    fullWidth
                     {...params}
                   />
                 )}
               />
             </Grid>
           </Grid>
-          <Grid container xs={12} style={{ paddingTop: "24px" }}>
+          <Grid container style={{ paddingTop: "24px" }}>
             <TextField
               error={!!messageFieldError}
               helperText={messageFieldError || ""}
@@ -173,7 +175,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
               }}
             />
           </Grid>
-          <Grid container xs={12} style={{ paddingTop: "24px" }}>
+          <Grid container style={{ paddingTop: "24px" }}>
             <TextField
               error={!!urlFieldError}
               helperText={urlFieldError || ""}

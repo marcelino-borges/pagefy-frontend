@@ -122,6 +122,7 @@ const TextImageComponent = ({ component }: IProps) => {
       url={component.url}
       layout={component.layout}
       style={component.style}
+      animation={component.animation}
     >
       <Content component={component} />
     </BaseComponentType>

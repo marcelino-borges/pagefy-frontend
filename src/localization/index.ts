@@ -53,6 +53,7 @@ interface IDictionary {
   webSiteExample: string;
   send: string;
   scheduleComponentVisibleDate: string;
+  scheduleComponentVisibleDateInstructions: string;
   save: string;
   date: string;
   hour: string;
@@ -91,6 +92,14 @@ interface IDictionary {
   seconds: string;
   secondsAbbreviated: string;
   launchPrefixText: string;
+  chooseAnimation: string;
+  selectAnOption: string;
+  duration: string;
+  startDelay: string;
+  animation: string;
+  animationInstruction: string;
+  noAnimation: string;
+  repeatInfinitely: string;
 }
 
 // Dictionaries
@@ -147,7 +156,9 @@ const en: IDictionary = {
   next: "Next",
   webSiteExample: "https://www.mywebsite.com",
   send: "Send",
-  scheduleComponentVisibleDate: "Launch date",
+  scheduleComponentVisibleDate: "Schedule visibility",
+  scheduleComponentVisibleDateInstructions:
+    "Your link will be visible from this date on.",
   save: "Save",
   date: "Date",
   hour: "Hour",
@@ -190,6 +201,14 @@ const en: IDictionary = {
   secondsAbbreviated: "sec",
   seconds: "seconds",
   launchPrefixText: "It's left",
+  chooseAnimation: "Choose animation",
+  selectAnOption: "Select an option",
+  duration: "Duration",
+  startDelay: "Start delay",
+  animation: "Animation",
+  animationInstruction: "Simulation of your component",
+  noAnimation: "No animation",
+  repeatInfinitely: "Repeat infinitely",
 };
 
 const pt: IDictionary = {
@@ -244,7 +263,9 @@ const pt: IDictionary = {
   next: "Avançar",
   webSiteExample: "https://www.meusite.com",
   send: "Enviar",
-  scheduleComponentVisibleDate: "Data de lançamento",
+  scheduleComponentVisibleDate: "Agendar visibilidade",
+  scheduleComponentVisibleDateInstructions:
+    "Seu link ficará visível a partir desta data.",
   save: "Salvar",
   date: "Data",
   hour: "Hora",
@@ -287,6 +308,14 @@ const pt: IDictionary = {
   seconds: "segundos",
   secondsAbbreviated: "seg",
   launchPrefixText: "Restam",
+  chooseAnimation: "Escolher animação",
+  selectAnOption: "Selecione uma opção",
+  duration: "Duração",
+  startDelay: "Atraso para iniciar",
+  animation: "Animação",
+  animationInstruction: "Simulação do seu componente",
+  noAnimation: "Nenhuma animação",
+  repeatInfinitely: "Repetir infinitamente",
 };
 
 // Composed dictionaries

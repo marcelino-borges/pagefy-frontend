@@ -9,6 +9,8 @@ export enum UserActionTypes {
   UPDATE_COMPONENT_URL = "@user/UPDATE_COMPONENT_URL",
   UPDATE_COMPONENT_BACKGROUND_COLOR = "@user/UPDATE_COMPONENT_BACKGROUND_COLOR",
   UPDATE_COMPONENT_FONT_COLOR = "@user/UPDATE_COMPONENT_FONT_COLOR",
+  UPDATE_COMPONENT_ANIMATION = "@user/UPDATE_COMPONENT_ANIMATION",
+  UPDATE_COMPONENT_VISIBLE_DATE = "@user/UPDATE_COMPONENT_VISIBLE_DATE",
   UPDATE_PAGE_BACKGROUND_COLOR = "@user/UPDATE_PAGE_BACKGROUND_COLOR",
   UPDATE_PAGE_FONT_COLOR = "@user/UPDATE_PAGE_FONT_COLOR",
   INCREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE = "@user/INCREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE",
@@ -55,6 +57,14 @@ export interface IUserComponent {
   iconDetails?: IIconDetails;
   visibleDate?: string;
   launchDate?: string;
+  animation?: IComponentAnimation;
+}
+
+export interface IComponentAnimation {
+  name: string;
+  startDelay: number;
+  duration: number;
+  infinite: boolean;
 }
 
 export interface IComponentLayout {
