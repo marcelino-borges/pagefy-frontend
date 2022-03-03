@@ -1,5 +1,6 @@
-export const PRIMARY_COLOR = "#CC3539";
-export const SECONDARY_COLOR = "#3F3D42";
+export const PRIMARY_COLOR = "#162B47";
+export const SECONDARY_COLOR = "#65C29B";
+export const COMPLEMENTARY_COLOR = "#3CB6D6";
 export const GLOBAL_LIGHT_BG = "#F7F9FC";
 export const MEDIUM_GREY = "#b9b9b9";
 export const LIGHT_GREY = "#C6C6C6";

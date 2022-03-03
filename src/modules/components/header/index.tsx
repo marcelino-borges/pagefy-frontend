@@ -13,6 +13,7 @@ import routes from "./../../../routes/paths";
 import images from "../../../assets/img";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import logos from "../../../assets/img/logos";
 
 const Header = () => {
   const theme = useTheme();
@@ -145,7 +146,7 @@ const Header = () => {
       >
         <Link to={routes.root}>
           <img
-            src={images.logoHeader}
+            src={logos.LogoHorizontalLightBGPNG}
             style={{
               height: "auto",
               width: isSmallerThan400 ? "125px" : "100%",

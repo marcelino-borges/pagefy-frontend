@@ -1,6 +1,7 @@
 :root {  
-  --primary: #CC3539;
-  --secondary: #3F3D42;
+  --primary: #65C29B;
+  --secondary: #3CB6D6;
+  --complementary: #162B47;
   --global-light-bg: #F7F9FC;
   --max-site-width: 900px;
   --max-site-width-page-renderer: 600px;
