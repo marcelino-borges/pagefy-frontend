@@ -4,7 +4,7 @@ import {
   YOUTUBE_FULL_URL_IDENTIFIER,
   YOUTUBE_SHORT_URL_IDENTIFIER,
 } from "../modules/constants";
-import { ComponentType } from "../store/user/types";
+import { ComponentType } from "../store/user-pages/types";
 
 export const stringShortener = (originalString: string, maxSize: number) => {
   if (originalString.length > maxSize)

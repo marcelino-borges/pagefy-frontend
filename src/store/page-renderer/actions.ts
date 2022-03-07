@@ -1,11 +1,14 @@
 import { PageRenderedTypes } from "./types";
-import { IUserPage } from "./../user/types";
+import { IUserPage } from "./../user-pages/types";
 import { IApplicationState } from "./../index";
 
 export const getPageByUrl =
   (url: string) => (dispatch: any, getState: () => IApplicationState) => {
     //TODO: Service call to API - Get page by url
-    const page = getState().user.profile?.pages[1];
+    const pages = getState().userPages.pages;
+    if (!pages || pages.length < 1) return;
+
+    const page = pages[1];
     if (page) dispatch(setPageBeingManaged(page));
   };
 

@@ -54,9 +54,9 @@ import {
   ComponentType,
   IComponentAnimation,
   IUserComponent,
-} from "../../../../store/user/types";
+} from "../../../../store/user-pages/types";
 import { showErrorToast } from "./../../../../utils/toast/index";
-import { addMiddleComponentInPage } from "../../../../store/user/actions";
+import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import DialogChooseAnimation from "./../../../components/dialog-choose-animation/index";
 import DialogVisibleDate from "../../../components/dialog-visible-date";
 

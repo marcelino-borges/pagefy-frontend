@@ -1,6 +1,6 @@
 import Countdown, { zeroPad } from "react-countdown";
 import { Grid } from "@mui/material";
-import { IUserComponent } from "../../../../../store/user/types";
+import { IUserComponent } from "../../../../../store/user-pages/types";
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_COMPONENT_RADIUS,

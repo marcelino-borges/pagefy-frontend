@@ -44,6 +44,7 @@ interface IDictionary {
   yes: string;
   no: string;
   or: string;
+  and: string;
   chooseFile: string;
   dragAndDropYourImage: string;
   dropYourImageHere: string;
@@ -51,6 +52,7 @@ interface IDictionary {
   imageReadyToUpload: string;
   next: string;
   webSiteExample: string;
+  emailExample: string;
   send: string;
   scheduleComponentVisibleDate: string;
   scheduleComponentVisibleDateInstructions: string;
@@ -100,6 +102,18 @@ interface IDictionary {
   animationInstruction: string;
   noAnimation: string;
   repeatInfinitely: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  confirmPassword: string;
+  email: string;
+  agreeWith: string;
+  privacyPolicy: string;
+  termsOfUse: string;
+  wishesCommunications: string;
+  register: string;
+  createYourAccount: string;
+  passwordRequirements: string;
 }
 
 // Dictionaries
@@ -148,6 +162,7 @@ const en: IDictionary = {
   yes: "Yes",
   no: "No",
   or: "or",
+  and: "and",
   chooseFile: "Choose a file",
   dragAndDropYourImage: "Drag and drop your image here",
   dropYourImageHere: "Drop your image here",
@@ -209,6 +224,20 @@ const en: IDictionary = {
   animationInstruction: "Simulation of your component",
   noAnimation: "No animation",
   repeatInfinitely: "Repeat infinitely",
+  firstName: "First name",
+  lastName: "Last name",
+  password: "Password",
+  confirmPassword: "Confirm Password",
+  email: "Email",
+  agreeWith: "Agree with",
+  termsOfUse: "Terms",
+  privacyPolicy: "Privacy Policies",
+  wishesCommunications: "Wish to receive news by email",
+  register: "Register",
+  createYourAccount: "Create your account",
+  emailExample: "email@example.com",
+  passwordRequirements:
+    "Password requirements: \n * Minimum 8 characters \n * At least 1 uppercase letter \n * At least 1 lowercase letter \n * At least 1 number \n * At least 1 special character",
 };
 
 const pt: IDictionary = {
@@ -255,6 +284,7 @@ const pt: IDictionary = {
   yes: "Sim",
   no: "Não",
   or: "ou",
+  and: "e",
   chooseFile: "Escolha um arquivo",
   dragAndDropYourImage: "Arraste e solte sua imagem aqui",
   dropYourImageHere: "Solte sua imagem aqui...",
@@ -316,6 +346,20 @@ const pt: IDictionary = {
   animationInstruction: "Simulação do seu componente",
   noAnimation: "Nenhuma animação",
   repeatInfinitely: "Repetir infinitamente",
+  firstName: "Primeiro nome",
+  lastName: "Sobrenome",
+  password: "Senha",
+  confirmPassword: "Confirmar Senha",
+  email: "E-mail",
+  agreeWith: "Concordo com os",
+  termsOfUse: "Termos de uso",
+  privacyPolicy: "Políticas de Privacidade",
+  wishesCommunications: "Desejo receber novidades por e-mail",
+  register: "Cadastrar",
+  createYourAccount: "Crie sua conta",
+  emailExample: "email@exemplo.com",
+  passwordRequirements:
+    "Requisitos para a senha: \n * No mínimo 8 caracteres \n * Pelo menos 1 letra maiúscula \n * Pelo menos 1 letra minúscula \n * Pelo menos 1 número \n * Pelo menos 1 caractere especial",
 };
 
 // Composed dictionaries

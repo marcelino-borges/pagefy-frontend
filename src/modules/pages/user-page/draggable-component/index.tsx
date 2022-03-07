@@ -56,12 +56,12 @@ import {
   setComponentUrl,
   setComponentVisibleDate,
   toggleComponentVisibility,
-} from "../../../../store/user/actions";
+} from "../../../../store/user-pages/actions";
 import {
   ComponentType,
   IComponentAnimation,
   IUserComponent,
-} from "../../../../store/user/types";
+} from "../../../../store/user-pages/types";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";

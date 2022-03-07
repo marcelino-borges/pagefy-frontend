@@ -1,10 +1,12 @@
 import { Grid } from "@mui/material";
-import { IComponentLayout } from "../../../../../store/user/types";
+import {
+  IComponentLayout,
+  IComponentAnimation,
+} from "../../../../../store/user-pages/types";
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_COMPONENT_RADIUS,
 } from "../../../../constants";
-import { IComponentAnimation } from "./../../../../../store/user/types";
 import { Root } from "./style";
 
 interface IProps {

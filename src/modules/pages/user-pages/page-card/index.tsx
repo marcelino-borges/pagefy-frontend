@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Grid, useMediaQuery } from "@mui/material";
-import { IUserPage } from "../../../../store/user/types";
+import { IUserPage } from "../../../../store/user-pages/types";
 import TransparentTextField from "../../../components/transparent-textfield";
-import { deletePage, updateUserPageName } from "../../../../store/user/actions";
+import {
+  deletePage,
+  updateUserPageName,
+} from "../../../../store/user-pages/actions";
 import strings from "../../../../localization";
 import {
   Card,

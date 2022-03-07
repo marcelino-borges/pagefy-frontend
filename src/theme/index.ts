@@ -8,6 +8,7 @@ declare module "@mui/material/styles" {
 }
 
 const defaultTheme = createTheme();
+
 const theme: ThemeOptions = {
   breakpoints: {
     values: {

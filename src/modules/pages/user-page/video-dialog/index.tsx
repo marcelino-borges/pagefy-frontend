@@ -18,8 +18,11 @@ import { isUrlValid } from "../../../../utils/validators/url";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
 import YoutubeEmbed from "./../../../components/youtube-embed/index";
-import { ComponentType, IUserComponent } from "../../../../store/user/types";
-import { addMiddleComponentInPage } from "../../../../store/user/actions";
+import {
+  ComponentType,
+  IUserComponent,
+} from "../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import { v4 as uuidv4 } from "uuid";
 import { getYoutubeIdFromUrl } from "../../../../utils";
 

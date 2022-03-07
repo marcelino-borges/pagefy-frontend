@@ -10,7 +10,7 @@ import {
   ComponentType,
   IUserComponent,
   IUserPage,
-} from "../../../store/user/types";
+} from "../../../store/user-pages/types";
 import { IApplicationState } from "./../../../store/index";
 import { CircularProgress, Grid } from "@mui/material";
 import { PageName, PagePicture } from "./style";

@@ -28,12 +28,12 @@ import {
   ComponentType,
   IIconDetails,
   IUserComponent,
-} from "../../../../store/user/types";
+} from "../../../../store/user-pages/types";
 import { SketchPicker } from "react-color";
 import CustomTooltip from "../../../components/tooltip";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { addTopComponentInPage } from "../../../../store/user/actions";
+import { addTopComponentInPage } from "../../../../store/user-pages/actions";
 import { v4 as uuidv4 } from "uuid";
 import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
 import { Icon } from "@iconify/react";

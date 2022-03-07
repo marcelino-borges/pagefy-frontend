@@ -13,8 +13,11 @@ import strings from "../../../../localization/index";
 import { DescriptionText } from "./styles";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { ComponentType, IUserComponent } from "../../../../store/user/types";
-import { addMiddleComponentInPage } from "../../../../store/user/actions";
+import {
+  ComponentType,
+  IUserComponent,
+} from "../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import { v4 as uuidv4 } from "uuid";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";

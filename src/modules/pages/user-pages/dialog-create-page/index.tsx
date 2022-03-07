@@ -10,9 +10,10 @@ import {
   TextField,
 } from "@mui/material";
 import strings from "../../../../localization";
-import { IUserPage } from "../../../../store/user/types";
-import { useDispatch } from "react-redux";
-import { createUserPage } from "../../../../store/user/actions";
+import { IUserPage } from "../../../../store/user-pages/types";
+import { useDispatch, useSelector } from "react-redux";
+import { createUserPage } from "../../../../store/user-pages/actions";
+import { IApplicationState } from "./../../../../store/index";
 
 interface IProps {
   open: boolean;
@@ -22,6 +23,9 @@ interface IProps {
 
 const CreatePageDialog = ({ open, onClose, title }: IProps) => {
   const dispatch = useDispatch();
+  const userId = useSelector(
+    (state: IApplicationState) => state.user.profile?._id
+  );
 
   const [errorPageNameField, setErrorPageNameField] = useState<string>();
   const [errorPageUrlField, setErrorPageUrlField] = useState<string>();
@@ -38,6 +42,7 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
   };
 
   const onSubmit = () => {
+    if (!userId) return;
     setErrorPageNameField(undefined);
     setErrorPageUrlField(undefined);
     let hasErrors = false;
@@ -66,6 +71,7 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
 
     const newPage: IUserPage = {
       name: pageName,
+      userId,
       url,
       isPublic: false,
       views: 0,

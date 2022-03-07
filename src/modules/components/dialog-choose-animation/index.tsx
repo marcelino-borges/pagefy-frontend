@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import { IComponentAnimation } from "../../../store/user/types";
+import { IComponentAnimation } from "../../../store/user-pages/types";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 import { capitalizeFirstLetter } from "../../../utils";
 import { COMPONENT_ANIMATIONS } from "../../constants";

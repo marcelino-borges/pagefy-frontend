@@ -14,7 +14,7 @@ import {
 } from "@mui/icons-material";
 import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
-import { IUserComponent, IUserPage } from "../../../store/user/types";
+import { IUserComponent, IUserPage } from "../../../store/user-pages/types";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
@@ -44,7 +44,7 @@ import {
   togglePageIsPublic,
   updateUserPageName,
   updateUserPageUrl,
-} from "../../../store/user/actions";
+} from "../../../store/user-pages/actions";
 import DraggableUserComponent from "./draggable-component";
 import { v4 as uuidv4 } from "uuid";
 import IconsDialog from "./icons-dialog";
@@ -88,8 +88,8 @@ const UserPage = () => {
   let navigate = useNavigate();
   let { id } = useParams();
 
-  const userProfileState = useSelector(
-    (state: IApplicationState) => state.user.profile
+  const userPagesState = useSelector(
+    (state: IApplicationState) => state.userPages
   );
 
   const listContainer = useRef(null);
@@ -97,11 +97,11 @@ const UserPage = () => {
   useEffect(() => {
     if (
       id &&
-      !!userProfileState &&
-      userProfileState.pages &&
-      userProfileState.pages.length > 0
+      !!userPagesState &&
+      userPagesState.pages &&
+      userPagesState.pages.length > 0
     ) {
-      const pageFound = userProfileState.pages.find(
+      const pageFound = userPagesState.pages.find(
         (page: IUserPage) => page._id === id
       );
       if (pageFound) {
@@ -111,7 +111,7 @@ const UserPage = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, userProfileState?.pages]);
+  }, [id, userPagesState?.pages]);
 
   useEffect(() => {
     if (page && page._id) {

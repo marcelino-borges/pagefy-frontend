@@ -1,6 +1,6 @@
 import { Grid, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
-import { IUserComponent } from "../../../../../store/user/types";
+import { IUserComponent } from "../../../../../store/user-pages/types";
 import { getYoutubeIdFromUrl } from "../../../../../utils";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "../../../../constants";
 import YoutubeEmbed from "../../../youtube-embed";

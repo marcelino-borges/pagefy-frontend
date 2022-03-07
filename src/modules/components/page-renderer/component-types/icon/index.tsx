@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { IUserComponent } from "../../../../../store/user/types";
+import { IUserComponent } from "../../../../../store/user-pages/types";
 import CustomTooltip from "../../../tooltip";
 import { IconOverlaySpan } from "./style";
 import { Icon } from "@iconify/react";

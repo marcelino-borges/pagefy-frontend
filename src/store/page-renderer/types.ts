@@ -1,4 +1,4 @@
-import { IUserPage } from "../user/types";
+import { IUserPage } from "../user-pages/types";
 
 export enum PageRenderedTypes {
   SET_PAGE_BEING_RENDERED = "@page-rendered/SET_PAGE_BEING_RENDERED",

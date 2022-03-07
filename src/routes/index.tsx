@@ -10,6 +10,7 @@ import strings from "./../localization/index";
 import UserPage from "./../modules/pages/user-page/index";
 import LoadingSpinner from "../modules/components/loading-spinner";
 import PageRenderer from "./../modules/components/page-renderer/index";
+import SignInPage from "../modules/pages/sign-up";
 
 const AppRoutes = () => {
   const appState = useSelector((state: IApplicationState) => state);
@@ -26,6 +27,7 @@ const AppRoutes = () => {
       {isLoading && <LoadingSpinner />}
       <Routes>
         <Route path={routes.root} element={<Dashboard />} />
+        <Route path={routes.signIn} element={<SignInPage />} />
         <Route path={routes.pages} element={<UserPages />} />
         <Route path={`${routes.page}/:id`} element={<UserPage />} />
         <Route path="/:url" element={<PageRenderer />} />
