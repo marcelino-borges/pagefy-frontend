@@ -336,7 +336,7 @@ const initialState: IUserPagesState = {
     {
       _id: "2",
       userId: "1",
-      name: "QTR Turismo",
+      name: "SocialBIO.me",
       url: "pg2",
       isPublic: true,
       views: 0,
@@ -345,8 +345,7 @@ const initialState: IUserPagesState = {
         backgroundImage: "url(https://devbox.eng.br/bg.png)",
         backgroundPosition: "center",
       },
-      pageImageUrl:
-        "https://upis.br/blog/wp-content/uploads/2019/11/o-que-e-turismo-quais-os-tipos.jpg",
+      pageImageUrl: "https://devbox.eng.br/logo.png",
 
       topComponents: [
         {
@@ -499,7 +498,7 @@ const initialState: IUserPagesState = {
           text: "Meu Site",
           url: "http://www.devbox.eng.br",
           style: {
-            backgroundColor: "#924599",
+            backgroundColor: "#162B47",
             color: "#fff",
           },
           _id: "31vv31v46",
@@ -512,10 +511,10 @@ const initialState: IUserPagesState = {
           type: ComponentType.Text,
         },
         {
-          text: "Curriculum Vitae",
+          text: "Loja Online",
           url: "http://www.devbox.eng.br",
           style: {
-            backgroundColor: "#fff",
+            backgroundColor: "#3CB6D6ab",
             color: "#000",
           },
           _id: "313131313",
@@ -531,7 +530,7 @@ const initialState: IUserPagesState = {
           text: "Portfolio",
           url: "http://www.devbox.eng.br",
           style: {
-            backgroundColor: "#fffdd1ab",
+            backgroundColor: "#65C29Bab",
             color: "#000",
           },
           _id: "35467547",
@@ -562,7 +561,7 @@ const initialState: IUserPagesState = {
           text: "para a inauguração da nossa loja online no Shopping Recife!",
           url: "http://www.devbox.eng.br",
           style: {
-            backgroundColor: "#f24",
+            backgroundColor: "#8f5bcfab",
             color: "#fff",
           },
           visible: true,
@@ -576,7 +575,7 @@ const initialState: IUserPagesState = {
           mediaUrl: undefined,
         },
         {
-          text: "Animadinho",
+          text: "Para saber mais!",
           url: "https://www.slproweb.com/",
           style: {
             backgroundColor: "#2162cc",

@@ -57,7 +57,9 @@ const SignInPage = () => {
     });
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    //dispatch(signUp())
+  };
 
   return (
     <>
