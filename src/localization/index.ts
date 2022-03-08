@@ -113,7 +113,21 @@ interface IDictionary {
   wishesCommunications: string;
   register: string;
   createYourAccount: string;
+  signUp: string;
+  signIn: string;
+  signIn2: string;
+  accessAccount: string;
   passwordRequirements: string;
+  errorSignUp: string;
+  errorSignIn: string;
+  errorSignOut: string;
+  requiredPrivacyAccept: string;
+  passwordPolicyNotMet: string;
+  userAlreadyExists: string;
+  profile: string;
+  signOut: string;
+  noAccountYet: string;
+  alreadyHaveAccount: string;
 }
 
 // Dictionaries
@@ -235,9 +249,23 @@ const en: IDictionary = {
   wishesCommunications: "Wish to receive news by email",
   register: "Register",
   createYourAccount: "Create your account",
+  signUp: "Sign Up",
+  signIn: "Sign In",
+  signIn2: "Sign In",
+  accessAccount: "Access your account",
   emailExample: "email@example.com",
   passwordRequirements:
     "Password requirements: \n * Minimum 8 characters \n * At least 1 uppercase letter \n * At least 1 lowercase letter \n * At least 1 number \n * At least 1 special character",
+  errorSignUp: "Error creating your account.",
+  errorSignIn: "Error to sign in.",
+  errorSignOut: "Error to sign out.",
+  requiredPrivacyAccept: "You must accept terms and privacy to continue.",
+  passwordPolicyNotMet: "Password don't match security rules",
+  userAlreadyExists: "User already exists, try another email.",
+  profile: "Profile",
+  signOut: "Sign Out",
+  noAccountYet: "I have no account",
+  alreadyHaveAccount: "I already have an account",
 };
 
 const pt: IDictionary = {
@@ -357,9 +385,24 @@ const pt: IDictionary = {
   wishesCommunications: "Desejo receber novidades por e-mail",
   register: "Cadastrar",
   createYourAccount: "Crie sua conta",
+  signUp: "Cadastrar",
+  accessAccount: "Acesse sua conta",
+  signIn: "Entre",
+  signIn2: "Entrar",
   emailExample: "email@exemplo.com",
   passwordRequirements:
     "Requisitos para a senha: \n * No mínimo 8 caracteres \n * Pelo menos 1 letra maiúscula \n * Pelo menos 1 letra minúscula \n * Pelo menos 1 número \n * Pelo menos 1 caractere especial",
+  errorSignUp: "Erro ao criar sua conta.",
+  errorSignIn: "Erro ao entrar.",
+  errorSignOut: "Erro ao sair.",
+  requiredPrivacyAccept:
+    "Você precisa aceitar os termos de uso e as políticas de privacidade para continuar.",
+  passwordPolicyNotMet: "Senha não atende requisitos de segurança.",
+  userAlreadyExists: "Usuário já existente, tente outro e-mail.",
+  profile: "Perfil",
+  signOut: "Sair",
+  noAccountYet: "Ainda não possuo conta",
+  alreadyHaveAccount: "Já possuo uma conta",
 };
 
 // Composed dictionaries

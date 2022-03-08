@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import {
   HeaderLinkDesktop,
@@ -10,16 +11,18 @@ import {
 } from "./style";
 import strings from "../../../localization";
 import routes from "./../../../routes/paths";
-import images from "../../../assets/img";
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logos from "../../../assets/img/logos";
+import UserLoggedIn from "./user-loggedin";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../store";
 
 const Header = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallerThan400 = useMediaQuery("(max-width:400px)");
-  const navigate = useNavigate();
+  const authState = useSelector((state: IApplicationState) => state.auth);
 
   const [isShowingDrawer, setIsShowingDrawer] = useState(false);
 
@@ -62,7 +65,7 @@ const Header = () => {
         </Grid>
 
         <Grid container item md={4} justifyContent="center" padding={3}>
-          User Logged In
+          <UserLoggedIn />
         </Grid>
       </>
     );
@@ -98,7 +101,7 @@ const Header = () => {
 
           <Grid container direction="column" alignItems="center">
             <Grid item style={{ marginTop: "50px" }}>
-              User Logged In
+              <UserLoggedIn />
             </Grid>
             <span style={{ height: "70px" }} />
             <MobileMenuGridItem

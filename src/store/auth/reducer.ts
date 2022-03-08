@@ -12,7 +12,7 @@ const authReducer = (
   action: IAction
 ): IAuthState => {
   switch (action.type) {
-    case AuthActionTypes.SIGNIN_REQUEST:
+    case AuthActionTypes.SIGNIN_LOADING:
       return {
         ...state,
         loading: true,
@@ -32,7 +32,7 @@ const authReducer = (
         error: action.payload,
       };
 
-    case AuthActionTypes.SIGNUP_REQUEST:
+    case AuthActionTypes.SIGNUP_LOADING:
       return {
         ...state,
         loading: true,
@@ -53,7 +53,7 @@ const authReducer = (
         error: action.payload,
       };
 
-    case AuthActionTypes.SIGNOUT_REQUEST:
+    case AuthActionTypes.SIGNOUT_LOADING:
       return {
         ...state,
         loading: true,
@@ -61,11 +61,7 @@ const authReducer = (
       };
 
     case AuthActionTypes.SIGNOUT_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: undefined,
-      };
+      return initialState;
 
     case AuthActionTypes.SIGNOUT_ERROR:
       return {

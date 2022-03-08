@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import { Root, CircularProgressIcon } from "./style";
 
 const LoadingSpinner = () => {

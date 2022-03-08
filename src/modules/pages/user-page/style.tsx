@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { Avatar, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
 import {
   LIGHTER_GREY,
@@ -46,47 +46,6 @@ export const PageUrl = styled(
 )`
   font-weight: 300;
   text-align: center;
-`;
-
-export const PageAvatar = styled(({ ...rest }: any) => <Avatar {...rest} />)`
-  height: 100px;
-  width: 100px;
-  font-size: 2em;
-  position: relative;
-  cursor: pointer;
-
-  &:hover .MuiAvatar-root {
-    display: flex;
-  }
-`;
-
-export const AvatarOverlay = styled(({ ...rest }: any) => <Avatar {...rest} />)`
-  font-size: 2em;
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: ${PRIMARY_COLOR};
-  opacity: 0.5;
-  cursor: pointer;
-  display: none;
-
-  & svg {
-    display: none;
-  }
-`;
-
-export const AvatarEditBadge = styled(({ ...rest }: any) => (
-  <Avatar {...rest} />
-))`
-  height: 32px;
-  width: 32px;
-  font-size: 2em;
-  border-radius: 50%;
-  background-color: ${PRIMARY_COLOR};
-  cursor: pointer;
 `;
 
 const toolbarIcon = `

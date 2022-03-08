@@ -1,3 +1,7 @@
+import { AxiosError, AxiosResponse } from "axios";
+import * as PagesService from "../../services/user-pages";
+import { translateError } from "../../utils/api-errors-mapping";
+import { IAppResult } from "../shared";
 import {
   IComponentAnimation,
   IUserComponent,
@@ -5,13 +9,44 @@ import {
   UserPagesActionTypes,
 } from "./types";
 
-export const createUserPage = (page: IUserPage) => (dispatch: any) => {
-  dispatch(createUserPageSuccess(page));
-};
+export const createUserPage =
+  (
+    page: IUserPage,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  (dispatch: any) => {
+    dispatch(createUserPageLoading());
+
+    PagesService.createPage(page)
+      .then((res: AxiosResponse) => {
+        dispatch(createUserPageSuccess(res.data));
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(createUserPageError(error));
+
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else if (onErrorCallback) onErrorCallback();
+      });
+  };
+
+const createUserPageLoading = () => ({
+  type: UserPagesActionTypes.CREATE_PAGE_LOADING,
+});
 
 const createUserPageSuccess = (page: IUserPage) => ({
   payload: page,
-  type: UserPagesActionTypes.CREATE_PAGE,
+  type: UserPagesActionTypes.CREATE_PAGE_SUCCESS,
+});
+
+const createUserPageError = (error: IAppResult) => ({
+  payload: error,
+  type: UserPagesActionTypes.CREATE_PAGE_SUCCESS,
 });
 
 export const updateUserPageName =
@@ -162,5 +197,5 @@ export const setComponentVisibleDate = (
 
 export const deletePage = (pageId: string) => ({
   payload: pageId,
-  type: UserPagesActionTypes.DELETE_PAGE,
+  type: UserPagesActionTypes.DELETE_PAGE_SUCCESS,
 });

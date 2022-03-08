@@ -1,14 +1,16 @@
 import { AuthActionTypes, IAuthTokens, IUserCredentials } from "./types";
 import * as AuthService from "../../services/auth";
-import { AxiosResponse } from "axios";
-import { IUser } from "../user/types";
+import { AxiosError, AxiosResponse } from "axios";
 import { IApplicationState } from "./../index";
+import { translateError } from "../../utils/api-errors-mapping";
+import strings from "../../localization";
+import { IAppResult } from "../shared";
 
 export const signIn =
   (
     credentials: IUserCredentials,
-    onSuccessCallback: any | null = null,
-    onErrorCallback: any | null = null
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
   ) =>
   (dispatch: any) => {
     dispatch(signInLoading());
@@ -16,17 +18,22 @@ export const signIn =
       .then((res: AxiosResponse) => {
         dispatch(signInSuccess(res.data));
 
-        if (onSuccessCallback) onSuccessCallback();
+        if (onSuccessCallback)
+          onSuccessCallback((res.data as IAuthTokens).accessToken);
       })
-      .catch((e: any) => {
-        dispatch(signInError(e));
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(signInError(error));
 
-        if (onErrorCallback) onErrorCallback();
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else if (onErrorCallback) onErrorCallback(strings.errorSignIn);
       });
   };
 
 const signInLoading = () => ({
-  type: AuthActionTypes.SIGNIN_REQUEST,
+  type: AuthActionTypes.SIGNIN_LOADING,
 });
 
 const signInSuccess = (tokens: IAuthTokens) => ({
@@ -34,17 +41,13 @@ const signInSuccess = (tokens: IAuthTokens) => ({
   type: AuthActionTypes.SIGNIN_SUCCESS,
 });
 
-const signInError = (error: any) => ({
+const signInError = (error: IAppResult) => ({
   payload: error,
   type: AuthActionTypes.SIGNIN_ERROR,
 });
 
 export const signUp =
-  (
-    user: IUser,
-    onSuccessCallback: any | null = null,
-    onErrorCallback: any | null = null
-  ) =>
+  (user: any, onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any) => {
     dispatch(signUpLoading());
     AuthService.signUp(user)
@@ -53,55 +56,65 @@ export const signUp =
 
         if (onSuccessCallback) onSuccessCallback();
       })
-      .catch((e: any) => {
-        dispatch(signUpError(e));
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(signUpError(e.response?.data));
 
-        if (onErrorCallback) onErrorCallback();
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else if (onErrorCallback) onErrorCallback(strings.errorSignUp);
       });
   };
 
 const signUpLoading = () => ({
-  type: AuthActionTypes.SIGNUP_REQUEST,
+  type: AuthActionTypes.SIGNUP_LOADING,
 });
 
 const signUpSuccess = () => ({
   type: AuthActionTypes.SIGNUP_SUCCESS,
 });
 
-const signUpError = (error: any) => ({
+const signUpError = (error: IAppResult) => ({
   payload: error,
   type: AuthActionTypes.SIGNUP_ERROR,
 });
 
 export const signOut =
-  (onSuccessCallback: any | null = null, onErrorCallback: any | null = null) =>
+  (onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any, getState: () => IApplicationState) => {
     dispatch(signOutLoading());
     const state = getState();
-    if (state.auth && state.auth.tokens) {
+    if (state.auth && state.auth.tokens && state.auth.tokens.refreshToken) {
       AuthService.signOut(state.auth.tokens.refreshToken)
-        .then((res: AxiosResponse) => {
+        .then(() => {
           dispatch(signOutSuccess());
 
           if (onSuccessCallback) onSuccessCallback();
         })
-        .catch((e: any) => {
-          dispatch(signOutError(e));
+        .catch((e: AxiosError) => {
+          const error: IAppResult = e.response?.data;
+          dispatch(signOutError(e.response?.data));
 
-          if (onErrorCallback) onErrorCallback();
+          if (error && error.errorDetails) {
+            const translatedError = translateError(error.errorDetails);
+            if (onErrorCallback) onErrorCallback(translatedError);
+          } else if (onErrorCallback) onErrorCallback(strings.errorSignOut);
         });
+    } else {
+      if (onSuccessCallback) onSuccessCallback();
     }
   };
 
 const signOutLoading = () => ({
-  type: AuthActionTypes.SIGNOUT_REQUEST,
+  type: AuthActionTypes.SIGNOUT_LOADING,
 });
 
 const signOutSuccess = () => ({
   type: AuthActionTypes.SIGNOUT_SUCCESS,
 });
 
-const signOutError = (error: any) => ({
+const signOutError = (error: IAppResult) => ({
   payload: error,
   type: AuthActionTypes.SIGNOUT_ERROR,
 });

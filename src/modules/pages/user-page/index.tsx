@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { SketchPicker } from "react-color";
-import { Badge, Grid, IconButton, useMediaQuery } from "@mui/material";
+import { Grid, IconButton, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -24,17 +24,14 @@ import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
   PageToolbar,
   PageName,
-  PageAvatar,
   ToolbarButton,
   ToolbarIconText,
   PageUrl,
-  AvatarEditBadge,
-  AvatarOverlay,
   ToolbarBottomToolsStyled,
   ColorPickerSpan,
+  EditPenIcon,
 } from "./style";
 import strings from "../../../localization";
-import { EditPenIcon } from "./style";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
 import {
@@ -56,6 +53,7 @@ import { IMAGE_EXTENSIONS } from "../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation/index";
 import LaunchDialog from "./launch-dialog";
+import ProfileEditablePicture from "../../components/profile-editable-picture";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -317,25 +315,11 @@ const UserPage = () => {
           <Grid item>
             <Grid container justifyContent="center" alignItems="center">
               {page && (
-                <Badge
-                  overlap="circular"
-                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                  onClick={() => {
-                    setOpenUploadDialog(true);
-                  }}
-                  badgeContent={
-                    <AvatarEditBadge>
-                      <EditPenIcon
-                        style={{ fontSize: "20px", color: "white" }}
-                      />
-                    </AvatarEditBadge>
-                  }
-                >
-                  <PageAvatar src={page.pageImageUrl}>
-                    {page.name.split(" ")[0][0]}
-                    <AvatarOverlay />
-                  </PageAvatar>
-                </Badge>
+                <ProfileEditablePicture
+                  text={page.name}
+                  imageUrl={page.pageImageUrl}
+                  onClick={() => setOpenUploadDialog(true)}
+                />
               )}
             </Grid>
           </Grid>

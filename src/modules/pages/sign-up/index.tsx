@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -7,48 +7,46 @@ import {
   IconButton,
   InputAdornment,
   TextField,
-  useMediaQuery,
 } from "@mui/material";
 import {
   Visibility as ShowPasswordIcon,
   VisibilityOff as HidePasswordIcon,
 } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
-import { IApplicationState } from "../../../store/index";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header/index";
 import DashboardContent from "../../components/site-content";
 import { useState } from "react";
 import strings from "../../../localization";
 import { PrimaryColoredText } from "./style";
+import ChooseFileDialog from "./../../components/dialog-file-upload/index";
+import { IMAGE_EXTENSIONS } from "../../constants";
+import ProfileEditablePicture from "../../components/profile-editable-picture";
+import { signIn, signUp } from "../../../store/auth/actions";
+import { showErrorToast } from "./../../../utils/toast/index";
+import routes from "./../../../routes/paths";
+import { getUser } from "../../../store/user/actions";
+const INITIAL_VALUES = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
-const BREAK_TOOLBAR_TEXT = true;
-const BREAK_POINT_TOOLBAR_TEXT = 12;
-
-const SignInPage = () => {
+const SignUpPage = () => {
   const dispatch = useDispatch();
-  const isSmallerThanMD = useMediaQuery("(max-width: 600px)");
 
   const { handleSubmit } = useForm();
-
   let navigate = useNavigate();
-  let { id } = useParams();
 
-  const userPagesState = useSelector(
-    (state: IApplicationState) => state.userPages
-  );
-
-  const [values, setValues] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
+  const [values, setValues] = useState(INITIAL_VALUES);
   const [agreePrivacy, setAgreePrivacy] = useState(false);
   const [receiveCommunications, setReceiveCommunications] = useState(false);
   const [showingPassword, setShowingPassword] = useState(false);
+  const [openUploadDialog, setOpenUploadDialog] = useState(false);
+  const [chosenImage, setChosenImage] = useState<File>();
+  const [profileImageUrl, setProfileImageUrl] = useState(undefined);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -58,17 +56,81 @@ const SignInPage = () => {
   };
 
   const onSubmit = () => {
-    //dispatch(signUp())
+    if (!agreePrivacy) {
+      showErrorToast(strings.requiredPrivacyAccept);
+    }
+    //TODO: Enviar imagem e salvar url aqui
+    const newUser = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+      receiveCommunications,
+      agreePrivacy,
+    };
+    dispatch(
+      signUp(
+        newUser,
+        () => {
+          dispatch(
+            signIn(
+              { email: values.email, password: values.password },
+              (token: string) => {
+                dispatch(
+                  getUser(values.email, token, () => {
+                    navigate(routes.pages);
+                  })
+                );
+              }
+            )
+          );
+        },
+        (errorTranslated: any) => {
+          showErrorToast(errorTranslated);
+        }
+      )
+    );
   };
 
   return (
     <>
       <Header />
+      <ChooseFileDialog
+        openChooseFileDialog={openUploadDialog}
+        setOpenChooseFileDialog={setOpenUploadDialog}
+        chosenImage={chosenImage}
+        setChosenImage={setChosenImage}
+        acceptedFiles={IMAGE_EXTENSIONS}
+        submitDialog={() => {
+          if (!chosenImage) {
+            return;
+          }
+          // TODO: Send file
+          setOpenUploadDialog(false);
+        }}
+        cancelDialog={() => {
+          setChosenImage(undefined);
+          setOpenUploadDialog(false);
+        }}
+      />
       <DashboardContent>
         <h1 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.createYourAccount}
         </h1>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container pb="24px">
+            <Grid container justifyContent="center" alignItems="center">
+              <ProfileEditablePicture
+                imageUrl={profileImageUrl}
+                onClick={() => setOpenUploadDialog(true)}
+                height="100px"
+                width="100px"
+                noUserIconSize="60px"
+                badgeBgSize="36px"
+              />
+            </Grid>
+          </Grid>
           <Grid container direction="row">
             {/* Line 1 */}
             <Grid item xs={12} sm={6} p="12px">
@@ -199,6 +261,17 @@ const SignInPage = () => {
             {/* Line 4 */}
             <Grid container direction="column" p="12px">
               <FormControlLabel
+                label={strings.wishesCommunications}
+                control={
+                  <Checkbox
+                    checked={receiveCommunications}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setReceiveCommunications(event.target.checked);
+                    }}
+                  />
+                }
+              />
+              <FormControlLabel
                 label={
                   <>
                     {strings.agreeWith}{" "}
@@ -220,25 +293,20 @@ const SignInPage = () => {
                   />
                 }
               />
-              <FormControlLabel
-                label={strings.wishesCommunications}
-                style={{ marginTop: "16px" }}
-                control={
-                  <Checkbox
-                    checked={receiveCommunications}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                      setReceiveCommunications(event.target.checked);
-                    }}
-                  />
-                }
-              />
             </Grid>
 
             {/* Last line - Buttons */}
             <Grid container item justifyContent="center" p="12px">
-              <Button type="submit" variant="contained">
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!agreePrivacy}
+              >
                 {strings.register}
               </Button>
+            </Grid>
+            <Grid container item justifyContent="center" fontSize="0.9em">
+              <Link to={routes.signIn}>{strings.alreadyHaveAccount}</Link>
             </Grid>
           </Grid>
         </form>
@@ -247,4 +315,4 @@ const SignInPage = () => {
   );
 };
 
-export default SignInPage;
+export default SignUpPage;

@@ -10,16 +10,20 @@ import strings from "./../localization/index";
 import UserPage from "./../modules/pages/user-page/index";
 import LoadingSpinner from "../modules/components/loading-spinner";
 import PageRenderer from "./../modules/components/page-renderer/index";
-import SignInPage from "../modules/pages/sign-up";
+import SignInPage from "../modules/pages/sign-in";
+import SignUpPage from "../modules/pages/sign-up";
 
 const AppRoutes = () => {
   const appState = useSelector((state: IApplicationState) => state);
 
   useEffect(() => {
-    const isAppLoading = appState.user.loading;
-
+    const isAppLoading =
+      !!appState.user.loading ||
+      !!appState.user.loading ||
+      !!appState.userPages.loading;
     setIsLoading(isAppLoading);
   }, [appState]);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
@@ -28,6 +32,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path={routes.root} element={<Dashboard />} />
         <Route path={routes.signIn} element={<SignInPage />} />
+        <Route path={routes.signUp} element={<SignUpPage />} />
         <Route path={routes.pages} element={<UserPages />} />
         <Route path={`${routes.page}/:id`} element={<UserPage />} />
         <Route path="/:url" element={<PageRenderer />} />
