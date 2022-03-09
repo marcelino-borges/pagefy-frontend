@@ -311,7 +311,7 @@ export const deletePage =
     onErrorCallback: any = null
   ) =>
   async (dispatch: any) => {
-    dispatch(updatePageLoading());
+    dispatch(deletePageLoading());
 
     const token = await getFirebaseToken();
 
@@ -338,6 +338,10 @@ export const deletePage =
         }
       });
   };
+
+export const deletePageLoading = () => ({
+  type: UserPagesActionTypes.DELETE_PAGE_LOADING,
+});
 
 export const deletePageSuccess = (pageId: string) => ({
   payload: pageId,
