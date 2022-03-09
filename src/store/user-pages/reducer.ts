@@ -792,7 +792,7 @@ const pagesReducer = (
     case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
       return {
         ...state,
-        loading: true,
+        loading: false,
         error: undefined,
         pageBeingSaved: undefined,
       };
@@ -842,6 +842,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPagesList],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -874,6 +875,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPagesList],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -902,6 +904,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -943,6 +946,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -985,6 +989,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1027,6 +1032,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1059,6 +1065,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1101,6 +1108,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1143,6 +1151,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1175,6 +1184,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1220,6 +1230,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1265,6 +1276,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1307,6 +1319,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1347,6 +1360,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1379,6 +1393,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1411,6 +1426,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1454,6 +1470,7 @@ const pagesReducer = (
             return {
               ...page,
               middleComponents: [component],
+              loading: false,
             };
           }
         }
@@ -1463,6 +1480,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -1490,6 +1508,7 @@ const pagesReducer = (
             return {
               ...page,
               topComponents: [component],
+              loading: false,
             };
           }
         }
@@ -1499,6 +1518,7 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
+        loading: false,
       };
 
       if (pageToBeSaved) {
