@@ -47,6 +47,9 @@ const userReducer = (
         loading: false,
       };
 
+    case UserActionTypes.CLEAR_STATE:
+      return initialState;
+
     default:
       return state;
   }

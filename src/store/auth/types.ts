@@ -15,14 +15,13 @@ export interface IUserCredentials {
   password: string;
 }
 
-export interface IAuthTokens {
+export interface IUserAuth {
+  uid: string;
   accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
 }
 
 export interface IAuthState {
   loading: boolean;
   error?: any;
-  tokens?: IAuthTokens;
+  auth?: IUserAuth;
 }

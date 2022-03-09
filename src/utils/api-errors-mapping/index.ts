@@ -1,7 +1,7 @@
 import strings from "../../localization";
 
 const apiErrors: any = {
-  "Password policy not met": strings.passwordPolicyNotMet,
+  "URL already exist.": strings.urlAlreadyExists,
   "User exists with same username": strings.userAlreadyExists,
 };
 

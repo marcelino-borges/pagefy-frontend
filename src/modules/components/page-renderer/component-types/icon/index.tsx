@@ -45,7 +45,7 @@ const IconsComponent = ({ iconsList }: IProps) => {
             </CustomTooltip>
           );
         }
-        return null;
+        return <span key={iconComponent._id}></span>;
       })}
     </Grid>
   );

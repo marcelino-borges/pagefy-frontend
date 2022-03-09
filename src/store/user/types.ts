@@ -5,14 +5,23 @@ export enum UserActionTypes {
   UPLOAD_USER_LOADING = "@user/UPLOAD_USER_LOADING",
   UPLOAD_USER_SUCCESS = "@user/UPLOAD_USER_SUCCESS",
   UPLOAD_USER_ERROR = "@user/UPLOAD_USER_ERROR",
+  CLEAR_STATE = "@user/CLEAR_STATE",
 }
 
 export interface IUser {
   _id?: string;
+  authId?: string;
+  profileImageUrl?: string;
   firstName: string;
   lastName: string;
   email: string;
-  profileImageUrl?: string;
+  plan: IPlan;
+}
+
+export enum IPlan {
+  FREE = 0,
+  P1 = 1,
+  P2 = 2,
 }
 
 export interface IUserState {

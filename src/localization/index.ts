@@ -122,7 +122,7 @@ interface IDictionary {
   errorSignIn: string;
   errorSignOut: string;
   requiredPrivacyAccept: string;
-  passwordPolicyNotMet: string;
+  urlAlreadyExists: string;
   userAlreadyExists: string;
   profile: string;
   signOut: string;
@@ -260,7 +260,7 @@ const en: IDictionary = {
   errorSignIn: "Error to sign in.",
   errorSignOut: "Error to sign out.",
   requiredPrivacyAccept: "You must accept terms and privacy to continue.",
-  passwordPolicyNotMet: "Password don't match security rules",
+  urlAlreadyExists: "URl already exists.",
   userAlreadyExists: "User already exists, try another email.",
   profile: "Profile",
   signOut: "Sign Out",
@@ -397,7 +397,7 @@ const pt: IDictionary = {
   errorSignOut: "Erro ao sair.",
   requiredPrivacyAccept:
     "Você precisa aceitar os termos de uso e as políticas de privacidade para continuar.",
-  passwordPolicyNotMet: "Senha não atende requisitos de segurança.",
+  urlAlreadyExists: "URL já existe.",
   userAlreadyExists: "Usuário já existente, tente outro e-mail.",
   profile: "Perfil",
   signOut: "Sair",

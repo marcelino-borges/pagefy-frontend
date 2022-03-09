@@ -1,6 +1,13 @@
 export enum UserPagesActionTypes {
-  UPDATE_USER_PAGE_NAME = "@user-pages/UPDATE_USER_PAGE_NAME",
-  UPDATE_USER_PAGE_URL = "@user-pages/UPDATE_USER_PAGE_URL",
+  // Update page name
+  UPDATE_USER_PAGE_NAME_LOADING = "@user-pages/UPDATE_USER_PAGE_NAME_LOADING",
+  UPDATE_USER_PAGE_NAME_SUCCESS = "@user-pages/UPDATE_USER_PAGE_NAME_SUCCESS",
+  UPDATE_USER_PAGE_NAME_ERROR = "@user-pages/UPDATE_USER_PAGE_NAME_ERROR",
+  //Update page url
+  UPDATE_USER_PAGE_URL_LOADING = "@user-pages/UPDATE_USER_PAGE_URL_LOADING",
+  UPDATE_USER_PAGE_URL_SUCCESS = "@user-pages/UPDATE_USER_PAGE_URL_SUCCESS",
+  UPDATE_USER_PAGE_URL_ERROR = "@user-pages/UPDATE_USER_PAGE_URL_ERROR",
+  //
   TOGGLE_COMPONENT_VISIBILITY = "@user-pages/TOGGLE_COMPONENT_VISIBILITY",
   TOGGLE_PAGE_IS_PUBLIC = "@user-pages/TOGGLE_PAGE_IS_PUBLIC",
   //Components
@@ -26,6 +33,17 @@ export enum UserPagesActionTypes {
   CREATE_PAGE_LOADING = "@user-pages/CREATE_PAGE_LOADING",
   CREATE_PAGE_SUCCESS = "@user-pages/CREATE_PAGE_SUCCESS",
   CREATE_PAGE_ERROR = "@user-pages/CREATE_PAGE_ERROR",
+  //Update page
+  UPDATE_PAGE_LOADING = "@user-pages/UPDATE_PAGE_LOADING",
+  UPDATE_PAGE_SUCCESS = "@user-pages/UPDATE_PAGE_SUCCESS",
+  UPDATE_PAGE_ERROR = "@user-pages/UPDATE_PAGE_ERROR",
+  //GET ALL USER PAGES
+  GET_ALL_USER_PAGES_LOADING = "@user-pages/GET_ALL_USER_PAGES_LOADING",
+  GET_ALL_USER_PAGES_SUCCESS = "@user-pages/GET_ALL_USER_PAGES_SUCCESS",
+  GET_ALL_USER_PAGES_ERROR = "@user-pages/GET_ALL_USER_PAGES_ERROR",
+  SET_PAGE_TO_BE_SAVED = "@user-pages/SET_PAGE_TO_BE_SAVED",
+
+  CLEAR_STATE = "@user-pages/CLEAR_STATE",
 }
 
 export interface IUserPage {
@@ -95,5 +113,6 @@ export const enum ComponentType {
 export interface IUserPagesState {
   loading: boolean;
   error?: any;
-  pages?: IUserPage[];
+  pages: IUserPage[];
+  pageBeingSaved?: IUserPage;
 }

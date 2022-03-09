@@ -15,7 +15,18 @@ export const getUser = async (
   await api.get(`/user?email=${email}`, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: "Bearer " + token,
+    },
+  });
+
+export const createUser = async (
+  user: IUser,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await api.post("/user", user, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
   });
 
@@ -26,6 +37,6 @@ export const updateUser = async (
   await api.put("/user", user, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: token,
+      Authorization: "Bearer " + token,
     },
   });

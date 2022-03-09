@@ -3,6 +3,7 @@ import * as UserService from "./../../services/user";
 import { AxiosError, AxiosResponse } from "axios";
 import { IAppResult } from "../shared";
 import { translateError } from "../../utils/api-errors-mapping";
+import { getAllUserPages } from "./../user-pages/actions";
 
 export const getUser =
   (
@@ -13,11 +14,15 @@ export const getUser =
   ) =>
   (dispatch: any) => {
     dispatch(getUserLoading());
+
     UserService.getUser(email, token)
       .then((res: AxiosResponse) => {
+        const user: IUser = res.data;
         dispatch(getUserSuccess(res.data));
 
-        if (onSuccessCallback) onSuccessCallback();
+        if (onSuccessCallback) onSuccessCallback(user);
+
+        if (user._id) dispatch(getAllUserPages(user._id));
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
@@ -34,7 +39,7 @@ const getUserLoading = () => ({
   type: UserActionTypes.GET_USER_LOADING,
 });
 
-const getUserSuccess = (user: IUser) => ({
+export const getUserSuccess = (user: IUser) => ({
   payload: user,
   type: UserActionTypes.GET_USER_SUCCESS,
 });
@@ -80,4 +85,8 @@ const updateUserSuccess = (user: IUser) => ({
 
 const updateUserError = (e: IAppResult) => ({
   type: UserActionTypes.UPLOAD_USER_ERROR,
+});
+
+export const clearUserState = () => ({
+  type: UserActionTypes.CLEAR_STATE,
 });

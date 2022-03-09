@@ -1,4 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 // Types
 import { IUserState } from "./user/types";
@@ -22,14 +32,30 @@ export interface IApplicationState {
   pageRendered: IPageRenderedState;
 }
 
+const persistConfig = {
+  key: "appState",
+  storage: storage,
+  blacklist: ["loading"],
+};
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  user: userReducer,
+  userPages: userPagesReducer,
+  pageManagement: pageManagementReducer,
+  pageRendered: pageRendererReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    user: userReducer,
-    userPages: userPagesReducer,
-    pageManagement: pageManagementReducer,
-    pageRendered: pageRendererReducer,
-  },
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware: any) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
 export default store;

@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import * as PagesService from "../../services/user-pages";
 import { translateError } from "../../utils/api-errors-mapping";
+import { getFirebaseToken } from "../../utils/firebase-config";
 import { IAppResult } from "../shared";
 import {
   IComponentAnimation,
@@ -9,29 +10,88 @@ import {
   UserPagesActionTypes,
 } from "./types";
 
+export const getAllUserPages =
+  (
+    userId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(getAllUserPagesLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    PagesService.getAllUserPages(userId, token)
+      .then((res: AxiosResponse) => {
+        dispatch(getAllUserPagesSuccess(res.data));
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(getAllUserPagesError(error));
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+const getAllUserPagesLoading = () => ({
+  type: UserPagesActionTypes.GET_ALL_USER_PAGES_LOADING,
+});
+
+const getAllUserPagesSuccess = (pages: IUserPage[]) => ({
+  payload: pages,
+  type: UserPagesActionTypes.GET_ALL_USER_PAGES_SUCCESS,
+});
+
+const getAllUserPagesError = (error: IAppResult) => ({
+  payload: error,
+  type: UserPagesActionTypes.GET_ALL_USER_PAGES_ERROR,
+});
+
 export const createUserPage =
   (
     page: IUserPage,
     onSuccessCallback: any = null,
     onErrorCallback: any = null
   ) =>
-  (dispatch: any) => {
+  async (dispatch: any) => {
     dispatch(createUserPageLoading());
 
-    PagesService.createPage(page)
-      .then((res: AxiosResponse) => {
-        dispatch(createUserPageSuccess(res.data));
+    const token = await getFirebaseToken();
 
-        if (onSuccessCallback) onSuccessCallback();
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    PagesService.createPage(page, token)
+      .then((res: AxiosResponse) => {
+        const newPage: IUserPage = res.data;
+        dispatch(createUserPageSuccess(newPage));
+
+        if (onSuccessCallback) onSuccessCallback(newPage);
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
         dispatch(createUserPageError(error));
 
-        if (error && error.errorDetails) {
-          const translatedError = translateError(error.errorDetails);
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
           if (onErrorCallback) onErrorCallback(translatedError);
-        } else if (onErrorCallback) onErrorCallback();
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
       });
   };
 
@@ -46,17 +106,66 @@ const createUserPageSuccess = (page: IUserPage) => ({
 
 const createUserPageError = (error: IAppResult) => ({
   payload: error,
-  type: UserPagesActionTypes.CREATE_PAGE_SUCCESS,
+  type: UserPagesActionTypes.CREATE_PAGE_ERROR,
+});
+
+export const updatePage =
+  (
+    page: IUserPage,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(updatePageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    PagesService.updatePage(page, token)
+      .then((res: AxiosResponse) => {
+        dispatch(updatePageSuccess(res.data));
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(updatePageError(error));
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+const updatePageLoading = () => ({
+  type: UserPagesActionTypes.UPDATE_PAGE_LOADING,
+});
+
+const updatePageSuccess = (page: IUserPage) => ({
+  payload: page,
+  type: UserPagesActionTypes.UPDATE_PAGE_SUCCESS,
+});
+
+const updatePageError = (error: IAppResult) => ({
+  payload: error,
+  type: UserPagesActionTypes.UPDATE_PAGE_ERROR,
 });
 
 export const updateUserPageName =
-  (pageId: string, newName: string) => (dispatch: any) => {
+  (pageId: string, newName: string) => async (dispatch: any) => {
     dispatch(updateUserPageNameInStore(pageId, newName));
   };
 
 const updateUserPageNameInStore = (pageId: string, newName: string) => ({
   payload: { pageId, newName },
-  type: UserPagesActionTypes.UPDATE_USER_PAGE_NAME,
+  type: UserPagesActionTypes.UPDATE_USER_PAGE_NAME_LOADING,
 });
 
 export const updateUserPageUrl =
@@ -67,7 +176,7 @@ export const updateUserPageUrl =
 
 const updateUserPageUrlInStore = (pageId: string, newUrl: string) => ({
   payload: { pageId, newUrl },
-  type: UserPagesActionTypes.UPDATE_USER_PAGE_URL,
+  type: UserPagesActionTypes.UPDATE_USER_PAGE_URL_LOADING,
 });
 
 export const togglePageIsPublic = (pageId: string) => ({
@@ -195,7 +304,56 @@ export const setComponentVisibleDate = (
   type: UserPagesActionTypes.UPDATE_COMPONENT_VISIBLE_DATE,
 });
 
-export const deletePage = (pageId: string) => ({
+export const deletePage =
+  (
+    pageId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(updatePageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    PagesService.deletePage(pageId, token)
+      .then(() => {
+        dispatch(deletePageSuccess(pageId));
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(deletePageError(error));
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+export const deletePageSuccess = (pageId: string) => ({
   payload: pageId,
   type: UserPagesActionTypes.DELETE_PAGE_SUCCESS,
+});
+
+export const deletePageError = (error: IAppResult) => ({
+  payload: error,
+  type: UserPagesActionTypes.DELETE_PAGE_ERROR,
+});
+
+export const clearUserPagesState = () => ({
+  type: UserPagesActionTypes.CLEAR_STATE,
+});
+
+export const setPageToBeSaved = (page: IUserPage) => ({
+  payload: page,
+  type: UserPagesActionTypes.SET_PAGE_TO_BE_SAVED,
 });

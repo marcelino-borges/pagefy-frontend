@@ -14,6 +14,8 @@ import { IUserPage } from "../../../../store/user-pages/types";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserPage } from "../../../../store/user-pages/actions";
 import { IApplicationState } from "./../../../../store/index";
+import { useNavigate } from "react-router-dom";
+import routes from "../../../../routes/paths";
 
 interface IProps {
   open: boolean;
@@ -23,6 +25,7 @@ interface IProps {
 
 const CreatePageDialog = ({ open, onClose, title }: IProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userId = useSelector(
     (state: IApplicationState) => state.user.profile?._id
   );
@@ -80,9 +83,22 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
       bottomComponents: [],
     };
 
-    dispatch(createUserPage(newPage));
-    onClose();
-    clearStates();
+    dispatch(
+      createUserPage(
+        newPage,
+        (newPage: IUserPage) => {
+          onClose();
+          clearStates();
+          if (!newPage._id) return;
+
+          navigate(routes.page + "/" + newPage._id);
+        },
+        (errorMsg: string) => {
+          console.log(errorMsg);
+          setErrorPageUrlField(errorMsg);
+        }
+      )
+    );
   };
 
   return (

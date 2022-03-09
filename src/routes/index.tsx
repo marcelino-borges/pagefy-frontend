@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { IApplicationState } from "../store";
 import Dashboard from "./../modules/pages/dashboard/index";
@@ -12,17 +12,27 @@ import LoadingSpinner from "../modules/components/loading-spinner";
 import PageRenderer from "./../modules/components/page-renderer/index";
 import SignInPage from "../modules/pages/sign-in";
 import SignUpPage from "../modules/pages/sign-up";
+import "../utils/firebase-config";
+import { updatePage } from "./../store/user-pages/actions";
 
 const AppRoutes = () => {
+  const dispatch = useDispatch();
   const appState = useSelector((state: IApplicationState) => state);
 
   useEffect(() => {
     const isAppLoading =
-      !!appState.user.loading ||
-      !!appState.user.loading ||
-      !!appState.userPages.loading;
+      appState.user.loading === true ||
+      appState.auth.loading === true ||
+      appState.userPages.loading === true;
+
     setIsLoading(isAppLoading);
-  }, [appState]);
+  }, [appState.user, appState.auth, appState.userPages]);
+
+  useEffect(() => {
+    if (appState.userPages.pageBeingSaved) {
+      dispatch(updatePage(appState.userPages.pageBeingSaved));
+    }
+  }, [dispatch, appState.userPages.pageBeingSaved]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

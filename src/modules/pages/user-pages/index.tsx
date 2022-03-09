@@ -8,6 +8,7 @@ import PageCard from "./page-card/index";
 import CreatePageDialog from "./dialog-create-page/index";
 import strings from "../../../localization";
 import { IUserPage } from "../../../store/user-pages/types";
+import PrivateRouteChecker from "./../../components/private-route-checker/index";
 
 const UserPages = () => {
   const userPagesState = useSelector(
@@ -18,6 +19,7 @@ const UserPages = () => {
 
   return (
     <>
+      <PrivateRouteChecker />
       <Header />
       <CreatePageDialog
         open={showCreatePageDialog}

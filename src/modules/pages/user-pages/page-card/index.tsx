@@ -27,6 +27,7 @@ import CustomTooltip from "../../../components/tooltip";
 import routes from "../../../../routes/paths";
 import DialogConfirmation from "./../../../components/dialog-confirmation/index";
 import images from "./../../../../assets/img/index";
+import { showErrorToast } from "../../../../utils/toast";
 
 interface IPageCardProps {
   page: IUserPage;
@@ -78,7 +79,12 @@ const PageCard = ({ page }: IPageCardProps) => {
           setShowDeletePageDialog(false);
         }}
         onConfirmCallback={() => {
-          if (page._id) dispatch(deletePage(page._id));
+          if (page._id)
+            dispatch(
+              deletePage(page._id, null, (errorMsg: string) => {
+                showErrorToast(errorMsg);
+              })
+            );
         }}
         title={strings.deletePage}
         message={strings.deletePageConfirmation}

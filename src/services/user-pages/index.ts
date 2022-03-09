@@ -15,13 +15,45 @@ export const getPageByUrl = async (url: string): Promise<AxiosResponse<any>> =>
   await api.get(`/page/url/${url}`);
 
 export const getAllUserPages = async (
-  userId: string
-): Promise<AxiosResponse<any>> => await api.get(`/page/all/user/${userId}`);
+  userId: string,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await api.get(`/page/all/user/${userId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
 
 export const createPage = async (
-  page: IUserPage
-): Promise<AxiosResponse<any>> => await api.post("/page", page);
+  page: IUserPage,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await api.post("/page", page, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
 
 export const updatePage = async (
-  page: IUserPage
-): Promise<AxiosResponse<any>> => await api.put("/page", page);
+  page: IUserPage,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await api.put("/page", page, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+export const deletePage = async (
+  pageId: string,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await api.delete(`/page/id/${pageId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });

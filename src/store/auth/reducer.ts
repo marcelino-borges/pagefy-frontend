@@ -4,7 +4,7 @@ import { AuthActionTypes, IAuthState } from "./types";
 const initialState: IAuthState = {
   error: undefined,
   loading: false,
-  tokens: undefined,
+  auth: undefined,
 };
 
 const authReducer = (
@@ -23,7 +23,7 @@ const authReducer = (
         ...state,
         loading: false,
         error: undefined,
-        tokens: action.payload,
+        auth: action.payload,
       };
     case AuthActionTypes.SIGNIN_ERROR:
       return {

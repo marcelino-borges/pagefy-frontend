@@ -20,6 +20,9 @@ const pageRenderedReducer = (
         page: undefined,
       };
 
+    case PageRenderedTypes.CLEAR_STATE:
+      return initialState;
+
     default:
       return state;
   }

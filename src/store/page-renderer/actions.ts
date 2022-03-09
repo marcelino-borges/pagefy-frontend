@@ -24,3 +24,7 @@ export const clearPageBeingRendered = () => (dispatch: any) => {
 const clearPageBeingManagedSuccess = () => ({
   type: PageRenderedTypes.CLEAR_PAGE_BEING_RENDERED,
 });
+
+export const clearPageRendererState = () => ({
+  type: PageRenderedTypes.CLEAR_STATE,
+});

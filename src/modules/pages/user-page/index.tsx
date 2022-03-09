@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
 import DashboardContent from "../../components/site-content";
-import LoadingSpinner from "../../components/loading-spinner";
 import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
   PageToolbar,
@@ -54,6 +53,7 @@ import IconsComponent from "../../components/page-renderer/component-types/icon"
 import DialogConfirmation from "./../../components/dialog-confirmation/index";
 import LaunchDialog from "./launch-dialog";
 import ProfileEditablePicture from "../../components/profile-editable-picture";
+import PrivateRouteChecker from "./../../components/private-route-checker/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -501,6 +501,7 @@ const UserPage = () => {
 
   return (
     <>
+      <PrivateRouteChecker />
       <Header />
       <DashboardContent>
         <DialogConfirmation
@@ -574,7 +575,10 @@ const UserPage = () => {
             )}
           </Grid>
         ) : (
-          <LoadingSpinner />
+          <></>
+        )}
+        {page && page.bottomComponents && page.bottomComponents.length > 0 && (
+          <IconsComponent iconsList={page.bottomComponents} />
         )}
       </DashboardContent>
     </>

@@ -16,3 +16,7 @@ export const clearPageBeingManaged = () => (dispatch: any) => {
 const clearPageBeingManagedSuccess = () => ({
   type: PageManagementTypes.CLEAR_PAGE_BEING_MANAGED,
 });
+
+export const clearPageManagementState = () => ({
+  type: PageManagementTypes.CLEAR_STATE,
+});

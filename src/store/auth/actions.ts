@@ -1,10 +1,16 @@
-import { AuthActionTypes, IAuthTokens, IUserCredentials } from "./types";
-import * as AuthService from "../../services/auth";
+import { AuthActionTypes, IUserAuth, IUserCredentials } from "./types";
+import * as AuthService from "../../services/firebase-auth";
+import * as UserService from "../../services/user";
 import { AxiosError, AxiosResponse } from "axios";
-import { IApplicationState } from "./../index";
 import { translateError } from "../../utils/api-errors-mapping";
 import strings from "../../localization";
 import { IAppResult } from "../shared";
+import { UserCredential } from "firebase/auth";
+import { getFirebaseToken } from "./../../utils/firebase-config/index";
+import { IUser } from "../user/types";
+import { clearUserState, getUserSuccess } from "../user/actions";
+import { clearPageManagementState } from "../page-management/actions";
+import { clearUserPagesState } from "../user-pages/actions";
 
 export const signIn =
   (
@@ -15,11 +21,22 @@ export const signIn =
   (dispatch: any) => {
     dispatch(signInLoading());
     AuthService.signIn(credentials)
-      .then((res: AxiosResponse) => {
-        dispatch(signInSuccess(res.data));
+      .then(async (user: UserCredential) => {
+        const token = await getFirebaseToken();
 
-        if (onSuccessCallback)
-          onSuccessCallback((res.data as IAuthTokens).accessToken);
+        if (!token) {
+          if (onErrorCallback) onErrorCallback();
+          return;
+        }
+
+        dispatch(
+          signInSuccess({
+            accessToken: token,
+            uid: user.user.uid,
+          })
+        );
+
+        if (onSuccessCallback) onSuccessCallback(token);
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
@@ -36,8 +53,8 @@ const signInLoading = () => ({
   type: AuthActionTypes.SIGNIN_LOADING,
 });
 
-const signInSuccess = (tokens: IAuthTokens) => ({
-  payload: tokens,
+export const signInSuccess = (auth: IUserAuth) => ({
+  payload: auth,
   type: AuthActionTypes.SIGNIN_SUCCESS,
 });
 
@@ -50,11 +67,35 @@ export const signUp =
   (user: any, onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any) => {
     dispatch(signUpLoading());
-    AuthService.signUp(user)
-      .then(() => {
-        dispatch(signUpSuccess());
 
-        if (onSuccessCallback) onSuccessCallback();
+    AuthService.signUp({
+      email: user.email,
+      password: user.password,
+    })
+      .then(async (userCredential: UserCredential) => {
+        // Success creating user auth
+
+        const token = await getFirebaseToken();
+
+        if (!token) {
+          if (onErrorCallback) onErrorCallback();
+          return;
+        }
+
+        let userToSave = {
+          ...(user as IUser),
+          authId: userCredential.user.uid,
+        };
+        UserService.createUser(userToSave, token)
+          .then((res: AxiosResponse) => {
+            dispatch(signUpSuccess());
+            dispatch(getUserSuccess(res.data));
+            if (onSuccessCallback) onSuccessCallback();
+          })
+          .catch((error: AxiosError) => {
+            AuthService.deleteUserAuth();
+            throw error;
+          });
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
@@ -82,35 +123,30 @@ const signUpError = (error: IAppResult) => ({
 
 export const signOut =
   (onSuccessCallback: any = null, onErrorCallback: any = null) =>
-  (dispatch: any, getState: () => IApplicationState) => {
+  (dispatch: any) => {
     dispatch(signOutLoading());
-    const state = getState();
-    if (state.auth && state.auth.tokens && state.auth.tokens.refreshToken) {
-      AuthService.signOut(state.auth.tokens.refreshToken)
-        .then(() => {
-          dispatch(signOutSuccess());
+    AuthService.signOut()
+      .then(() => {
+        dispatch(clearAllStates());
 
-          if (onSuccessCallback) onSuccessCallback();
-        })
-        .catch((e: AxiosError) => {
-          const error: IAppResult = e.response?.data;
-          dispatch(signOutError(e.response?.data));
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(signOutError(e.response?.data));
 
-          if (error && error.errorDetails) {
-            const translatedError = translateError(error.errorDetails);
-            if (onErrorCallback) onErrorCallback(translatedError);
-          } else if (onErrorCallback) onErrorCallback(strings.errorSignOut);
-        });
-    } else {
-      if (onSuccessCallback) onSuccessCallback();
-    }
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else if (onErrorCallback) onErrorCallback(strings.errorSignOut);
+      });
   };
 
 const signOutLoading = () => ({
   type: AuthActionTypes.SIGNOUT_LOADING,
 });
 
-const signOutSuccess = () => ({
+export const signOutSuccess = () => ({
   type: AuthActionTypes.SIGNOUT_SUCCESS,
 });
 
@@ -118,3 +154,10 @@ const signOutError = (error: IAppResult) => ({
   payload: error,
   type: AuthActionTypes.SIGNOUT_ERROR,
 });
+
+export const clearAllStates = () => (dispatch: any) => {
+  dispatch(signOutSuccess());
+  dispatch(clearPageManagementState());
+  dispatch(clearUserState());
+  dispatch(clearUserPagesState());
+};

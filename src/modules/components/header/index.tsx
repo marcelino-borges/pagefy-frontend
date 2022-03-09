@@ -14,15 +14,12 @@ import routes from "./../../../routes/paths";
 import { Link, useNavigate } from "react-router-dom";
 import logos from "../../../assets/img/logos";
 import UserLoggedIn from "./user-loggedin";
-import { useSelector } from "react-redux";
-import { IApplicationState } from "../../../store";
 
 const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallerThan400 = useMediaQuery("(max-width:400px)");
-  const authState = useSelector((state: IApplicationState) => state.auth);
 
   const [isShowingDrawer, setIsShowingDrawer] = useState(false);
 

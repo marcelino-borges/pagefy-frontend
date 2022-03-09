@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 import { ThemeProvider } from "@mui/material";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -11,17 +13,21 @@ import "./styles/global-style.css";
 import "react-toastify/dist/ReactToastify.css";
 import strings from "./localization/index";
 
+let persistor = persistStore(store);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <LocalizationProvider
-          dateAdapter={DateAdapter}
-          locale={strings.getInterfaceLanguage()}
-        >
-          <App className="App" />
-        </LocalizationProvider>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <LocalizationProvider
+            dateAdapter={DateAdapter}
+            locale={strings.getInterfaceLanguage()}
+          >
+            <App className="App" />
+          </LocalizationProvider>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -26,6 +26,7 @@ import { signIn, signUp } from "../../../store/auth/actions";
 import { showErrorToast } from "./../../../utils/toast/index";
 import routes from "./../../../routes/paths";
 import { getUser } from "../../../store/user/actions";
+import { IPlan } from "../../../store/user/types";
 const INITIAL_VALUES = {
   firstName: "",
   lastName: "",
@@ -68,22 +69,16 @@ const SignUpPage = () => {
       confirmPassword: values.confirmPassword,
       receiveCommunications,
       agreePrivacy,
+      plan: IPlan.FREE,
     };
     dispatch(
       signUp(
         newUser,
         () => {
           dispatch(
-            signIn(
-              { email: values.email, password: values.password },
-              (token: string) => {
-                dispatch(
-                  getUser(values.email, token, () => {
-                    navigate(routes.pages);
-                  })
-                );
-              }
-            )
+            signIn({ email: values.email, password: values.password }, () => {
+              navigate(routes.pages);
+            })
           );
         },
         (errorTranslated: any) => {
