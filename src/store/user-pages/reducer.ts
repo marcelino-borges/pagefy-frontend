@@ -9,7 +9,6 @@ import {
 } from "./types";
 
 const initialState: IUserPagesState = {
-  loading: false,
   error: undefined,
   pages: [],
   pageBeingSaved: undefined,
@@ -32,7 +31,6 @@ const pagesReducer = (
       return {
         ...state,
         error: action.payload,
-        loading: false,
       };
     }
 
@@ -47,14 +45,12 @@ const pagesReducer = (
     case UserPagesActionTypes.UPDATE_USER_PAGE_NAME_LOADING: {
       return {
         ...state,
-        loading: true,
       };
     }
 
     case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
       return {
         ...state,
-        loading: false,
         error: undefined,
         pageBeingSaved: undefined,
       };
@@ -65,7 +61,6 @@ const pagesReducer = (
         ...state,
         pages: action.payload,
         error: undefined,
-        loading: false,
       };
     }
 
@@ -77,7 +72,6 @@ const pagesReducer = (
         ...state,
         pages: updatedPages,
         error: undefined,
-        loading: false,
       };
     }
 
@@ -104,7 +98,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPagesList],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -137,7 +130,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPagesList],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -166,7 +158,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -208,7 +199,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -251,7 +241,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -294,7 +283,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -327,7 +315,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -370,7 +357,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -413,7 +399,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -446,7 +431,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -492,7 +476,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -538,7 +521,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -581,7 +563,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -622,7 +603,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -655,7 +635,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -688,7 +667,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -708,7 +686,7 @@ const pagesReducer = (
       return {
         ...state,
         pages: [...updatedPages],
-        loading: false,
+
         error: undefined,
       };
     }
@@ -732,7 +710,6 @@ const pagesReducer = (
             return {
               ...page,
               middleComponents: [component],
-              loading: false,
             };
           }
         }
@@ -742,7 +719,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {
@@ -770,7 +746,6 @@ const pagesReducer = (
             return {
               ...page,
               topComponents: [component],
-              loading: false,
             };
           }
         }
@@ -780,7 +755,6 @@ const pagesReducer = (
       let newState: any = {
         ...state,
         pages: [...updatedPages],
-        loading: false,
       };
 
       if (pageToBeSaved) {

@@ -4,14 +4,14 @@ import LogoHorizontalLightBGPNG from "./logo-horizontal-lightbg.png";
 import { LogoIconColor } from "./logo-icon-color";
 import { LogoIconSingleColor } from "./logo-icon-single-color";
 import { LogoVerticalDarkBG } from "./logo-vertical-darkbg";
-import { LogoVerticalLightBG } from "./logo-vertical-lightbg";
+import LogoVerticalLightBGPNG from "./logo-vertical-lightbg.png";
 
 const Logos = {
   LogoHorizontalDarkBG,
   LogoHorizontalLightBGSVG,
   LogoHorizontalLightBGPNG,
   LogoVerticalDarkBG,
-  LogoVerticalLightBG,
+  LogoVerticalLightBGPNG,
   LogoIconColor,
   LogoIconSingleColor,
 };

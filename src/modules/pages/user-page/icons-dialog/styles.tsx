@@ -65,8 +65,3 @@ export const SelectedIconButton = styled(({ ...rest }: any) => (
 ))`
   position: static;
 `;
-
-export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
-  position: fixed;
-  z-index: 100;
-`;

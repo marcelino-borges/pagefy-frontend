@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { SketchPicker } from "react-color";
 import { Grid, useMediaQuery } from "@mui/material";
 import {
   Link as LinkIcon,
@@ -33,7 +32,6 @@ import {
   ContentRow,
   DarkBG,
   ComponentArrowGridItem,
-  ColorPickerSpan,
   DeleteContainer,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
@@ -71,6 +69,7 @@ import YoutubeEmbed from "../../../components/youtube-embed";
 import { getYoutubeIdFromUrl } from "./../../../../utils/index";
 import DialogChooseAnimation from "../../../components/dialog-choose-animation";
 import DialogVisibleDate from "./../../../components/dialog-visible-date/index";
+import ColorPicker from "./../../../components/color-picker/index";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -173,6 +172,7 @@ const DraggableUserComponent = ({
         setComponentBackgroundColor(pageId, component._id, String(color.hex))
       );
       setIsKeepToolsOpen(false);
+      setShowBackgroundColorPicker(false);
     }
   };
 
@@ -180,6 +180,7 @@ const DraggableUserComponent = ({
     if (component._id && pageId) {
       dispatch(setComponentFontColor(pageId, component._id, String(color.hex)));
       setIsKeepToolsOpen(false);
+      setShowFontColorPicker(false);
     }
   };
 
@@ -538,12 +539,10 @@ const DraggableUserComponent = ({
               />
             </ToolIconButton>
             {showBackgroundColorPicker && (
-              <ColorPickerSpan>
-                <SketchPicker
-                  color={component.style?.backgroundColor}
-                  onChangeComplete={handleChangeBackgroundColorComplete}
-                />
-              </ColorPickerSpan>
+              <ColorPicker
+                color={component.style?.backgroundColor}
+                onChangeComplete={handleChangeBackgroundColorComplete}
+              />
             )}
           </ToolGridItem>
         </CustomTooltip>
@@ -579,12 +578,10 @@ const DraggableUserComponent = ({
               />
             </ToolIconButton>
             {showFontColorPicker && (
-              <ColorPickerSpan>
-                <SketchPicker
-                  color={component.style?.color}
-                  onChangeComplete={handleChangeFontColorComplete}
-                />
-              </ColorPickerSpan>
+              <ColorPicker
+                color={component.style?.color}
+                onChangeComplete={handleChangeFontColorComplete}
+              />
             )}
           </ToolGridItem>
         </CustomTooltip>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { SketchPicker } from "react-color";
 import {
   Button,
   Dialog,
@@ -28,7 +27,6 @@ import {
 } from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
-  ColorPickerSpan,
   ComponentDetailsButton,
   LayoutPickerContainer,
   LayoutPickerHeaderText,
@@ -59,6 +57,7 @@ import { showErrorToast } from "./../../../../utils/toast/index";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import DialogChooseAnimation from "./../../../components/dialog-choose-animation/index";
 import DialogVisibleDate from "../../../components/dialog-visible-date";
+import ColorPicker from "./../../../components/color-picker/index";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -238,10 +237,12 @@ const ComponentDialog = ({
 
   const handleChangeBackgroundColorComplete = (color: any) => {
     setBackgroundColor(color.hex);
+    setShowBackgroundColorPicker(false);
   };
 
   const handleChangeFontColorComplete = (color: any) => {
     setFontColor(color.hex);
+    setShowFontColorPicker(false);
   };
 
   const Section = ({ title, icon, error }: any) => (
@@ -570,12 +571,10 @@ const ComponentDialog = ({
                       />
                     </IconButton>
                     {showFontColorPicker && (
-                      <ColorPickerSpan>
-                        <SketchPicker
-                          color={fontColor}
-                          onChangeComplete={handleChangeFontColorComplete}
-                        />
-                      </ColorPickerSpan>
+                      <ColorPicker
+                        color={fontColor}
+                        onChangeComplete={handleChangeFontColorComplete}
+                      />
                     )}
                   </Grid>
                 </CustomTooltip>
@@ -603,12 +602,10 @@ const ComponentDialog = ({
                       />
                     </IconButton>
                     {showBackgroundColorPicker && (
-                      <ColorPickerSpan>
-                        <SketchPicker
-                          color={backgroundColor}
-                          onChangeComplete={handleChangeBackgroundColorComplete}
-                        />
-                      </ColorPickerSpan>
+                      <ColorPicker
+                        color={backgroundColor}
+                        onChangeComplete={handleChangeBackgroundColorComplete}
+                      />
                     )}
                   </Grid>
                 </CustomTooltip>

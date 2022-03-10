@@ -16,13 +16,13 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header/index";
 import DashboardContent from "../../components/site-content";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { PrimaryColoredText } from "./style";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
 import { IMAGE_EXTENSIONS } from "../../constants";
 import ProfileEditablePicture from "../../components/profile-editable-picture";
-import { signIn, signUp } from "../../../store/auth/actions";
+import { signIn, signOut, signUp } from "../../../store/auth/actions";
 import { showErrorToast } from "./../../../utils/toast/index";
 import routes from "./../../../routes/paths";
 import { getUser } from "../../../store/user/actions";
@@ -48,6 +48,10 @@ const SignUpPage = () => {
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
   const [profileImageUrl, setProfileImageUrl] = useState(undefined);
+
+  useEffect(() => {
+    dispatch(signOut());
+  }, [dispatch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({

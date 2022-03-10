@@ -12,6 +12,8 @@ import { useDropzone } from "react-dropzone";
 import strings from "../../../localization";
 import { Check as CheckIcon } from "@mui/icons-material";
 import { Dropzone, DropzoneFileReady } from "./styles";
+import { MAXIMUM_FILE_SIZE } from "../../../constants";
+import { showErrorToast } from "./../../../utils/toast/index";
 
 interface IProps {
   openChooseFileDialog: boolean;
@@ -35,8 +37,20 @@ const ChooseFileDialog = ({
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const onDrop = useCallback((acceptedFiles) => {
-    setChosenImage(acceptedFiles[0]);
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      console.log("file.size: " + file.size);
+      const actualSizeInMB = file.size / 1000;
+
+      if (actualSizeInMB > MAXIMUM_FILE_SIZE) {
+        showErrorToast(
+          strings.maximumFileSizeOf + " " + MAXIMUM_FILE_SIZE + "MB"
+        );
+        return;
+      }
+    }
+    setChosenImage(file);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -53,7 +67,13 @@ const ChooseFileDialog = ({
           <br />
           {strings.or}
           <br />
-          {strings.clickToSearchIt}
+          {strings.clickToSearchIt.toLowerCase()}.
+          <br />
+          <br />
+          <br />
+          {strings.maximumFileSizeOf}
+          <br />
+          {MAXIMUM_FILE_SIZE + "MB"}
         </p>
       );
   };
@@ -84,7 +104,7 @@ const ChooseFileDialog = ({
             >
               <CheckIcon fontSize="medium" />
               <span style={{ color: "black" }}>
-                {strings.imageReadyToUpload}
+                {strings.fileReadyToUpload}
               </span>
             </DropzoneFileReady>
           </>

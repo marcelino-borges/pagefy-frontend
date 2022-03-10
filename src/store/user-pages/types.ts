@@ -111,7 +111,6 @@ export const enum ComponentType {
 }
 
 export interface IUserPagesState {
-  loading: boolean;
   error?: any;
   pages: IUserPage[];
   pageBeingSaved?: IUserPage;

@@ -22,6 +22,7 @@ interface IDictionary {
   backgroundColor: string;
   fontColor: string;
   uploadImage: string;
+  uploadBackgroundImage: string;
   chooseEffect: string;
   toggleVisibility: string;
   remove: string;
@@ -49,7 +50,7 @@ interface IDictionary {
   dragAndDropYourImage: string;
   dropYourImageHere: string;
   clickToSearchIt: string;
-  imageReadyToUpload: string;
+  fileReadyToUpload: string;
   next: string;
   webSiteExample: string;
   emailExample: string;
@@ -128,6 +129,8 @@ interface IDictionary {
   signOut: string;
   noAccountYet: string;
   alreadyHaveAccount: string;
+  couldntFindPage: string;
+  maximumFileSizeOf: string;
 }
 
 // Dictionaries
@@ -154,6 +157,7 @@ const en: IDictionary = {
   backgroundColor: "Background color",
   fontColor: "Font color",
   uploadImage: "Upload image",
+  uploadBackgroundImage: "Upload background image",
   chooseEffect: "Choose effect",
   toggleVisibility: "Toggle visibility",
   remove: "Remove",
@@ -181,7 +185,7 @@ const en: IDictionary = {
   dragAndDropYourImage: "Drag and drop your image here",
   dropYourImageHere: "Drop your image here",
   clickToSearchIt: "Click to search",
-  imageReadyToUpload: "Image ready to upload",
+  fileReadyToUpload: "File ready to upload",
   next: "Next",
   webSiteExample: "https://www.mywebsite.com",
   send: "Send",
@@ -266,6 +270,8 @@ const en: IDictionary = {
   signOut: "Sign Out",
   noAccountYet: "I have no account",
   alreadyHaveAccount: "I already have an account",
+  couldntFindPage: "Couldn't find the page",
+  maximumFileSizeOf: "Maximum allowed size of the file is",
 };
 
 const pt: IDictionary = {
@@ -290,6 +296,7 @@ const pt: IDictionary = {
   backgroundColor: "Cor do fundo",
   fontColor: "Cor da fonte",
   uploadImage: "Enviar imagem",
+  uploadBackgroundImage: "Enviar imagem de fundo",
   chooseEffect: "Escolher efeito",
   toggleVisibility: "Mudar visibilidade",
   remove: "Remover",
@@ -317,7 +324,7 @@ const pt: IDictionary = {
   dragAndDropYourImage: "Arraste e solte sua imagem aqui",
   dropYourImageHere: "Solte sua imagem aqui...",
   clickToSearchIt: "Clique para procurar",
-  imageReadyToUpload: "Imagem pronta para enviar",
+  fileReadyToUpload: "Arquivo pronto para enviar",
   next: "Avançar",
   webSiteExample: "https://www.meusite.com",
   send: "Enviar",
@@ -403,6 +410,8 @@ const pt: IDictionary = {
   signOut: "Sair",
   noAccountYet: "Ainda não possuo conta",
   alreadyHaveAccount: "Já possuo uma conta",
+  couldntFindPage: "Não foi possível localizar a página.",
+  maximumFileSizeOf: "Tamanho máximo permitido do arquivo:",
 };
 
 // Composed dictionaries

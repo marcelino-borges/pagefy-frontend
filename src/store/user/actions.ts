@@ -45,6 +45,7 @@ export const getUserSuccess = (user: IUser) => ({
 });
 
 const getUserError = (e: IAppResult) => ({
+  payload: e,
   type: UserActionTypes.GET_USER_ERROR,
 });
 

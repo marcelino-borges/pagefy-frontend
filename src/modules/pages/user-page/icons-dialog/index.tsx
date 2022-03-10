@@ -19,7 +19,6 @@ import {
   IconsSearchResultsArea,
   ColorPickerIcon,
   SelectedIconButton,
-  ColorPickerSpan,
   ColorPickerOverlay,
 } from "./styles";
 import { useForm } from "react-hook-form";
@@ -29,7 +28,6 @@ import {
   IIconDetails,
   IUserComponent,
 } from "../../../../store/user-pages/types";
-import { SketchPicker } from "react-color";
 import CustomTooltip from "../../../components/tooltip";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
@@ -37,6 +35,7 @@ import { addTopComponentInPage } from "../../../../store/user-pages/actions";
 import { v4 as uuidv4 } from "uuid";
 import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
 import { Icon } from "@iconify/react";
+import ColorPicker from "./../../../components/color-picker/index";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -137,6 +136,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
   const handleChangeColorComplete = (color: any) => {
     setColorSelected(String(color.hex));
+    setShowColorPicker(false);
   };
 
   const toggleColorPicker = () => {
@@ -300,12 +300,10 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                       </ColorPickerOverlay>
                     </SelectedIconButton>
                     {showColorPicker && (
-                      <ColorPickerSpan>
-                        <SketchPicker
-                          color={colorSelected}
-                          onChangeComplete={handleChangeColorComplete}
-                        />
-                      </ColorPickerSpan>
+                      <ColorPicker
+                        color={colorSelected}
+                        onChangeComplete={handleChangeColorComplete}
+                      />
                     )}
                   </Grid>
                 </CustomTooltip>

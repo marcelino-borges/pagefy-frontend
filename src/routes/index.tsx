@@ -21,9 +21,7 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const isAppLoading =
-      appState.user.loading === true ||
-      appState.auth.loading === true ||
-      appState.userPages.loading === true;
+      appState.user.loading === true || appState.auth.loading === true;
 
     setIsLoading(isAppLoading);
   }, [appState.user, appState.auth, appState.userPages]);
@@ -40,7 +38,7 @@ const AppRoutes = () => {
     <BrowserRouter>
       {isLoading && <LoadingSpinner />}
       <Routes>
-        <Route path={routes.root} element={<Dashboard />} />
+        <Route path={routes.root} element={<SignInPage />} />
         <Route path={routes.signIn} element={<SignInPage />} />
         <Route path={routes.signUp} element={<SignUpPage />} />
         <Route path={routes.pages} element={<UserPages />} />

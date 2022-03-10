@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { SketchPicker } from "react-color";
 import { Grid, IconButton, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
@@ -27,7 +26,6 @@ import {
   ToolbarIconText,
   PageUrl,
   ToolbarBottomToolsStyled,
-  ColorPickerSpan,
   EditPenIcon,
 } from "./style";
 import strings from "../../../localization";
@@ -54,6 +52,8 @@ import DialogConfirmation from "./../../components/dialog-confirmation/index";
 import LaunchDialog from "./launch-dialog";
 import ProfileEditablePicture from "../../components/profile-editable-picture";
 import PrivateRouteChecker from "./../../components/private-route-checker/index";
+import CustomTooltip from "../../components/tooltip";
+import ColorPicker from "./../../components/color-picker/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -182,12 +182,14 @@ const UserPage = () => {
   const handleChangeBackgroundColorComplete = (color: any) => {
     if (page && page._id) {
       dispatch(setPageBackgroundColor(page._id, String(color.hex)));
+      setShowBackgroundColorPicker(false);
     }
   };
 
   const handleChangeFontColorComplete = (color: any) => {
     if (page && page._id) {
       dispatch(setPageFontColor(page._id, String(color.hex)));
+      setShowFontColorPicker(false);
     }
   };
 
@@ -206,66 +208,70 @@ const UserPage = () => {
         wrap="nowrap"
       >
         <Grid item>
-          <IconButton size="large" onClick={() => toggleIsPublic()}>
-            {page?.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
-          </IconButton>
+          <CustomTooltip title={strings.toggleVisibility}>
+            <IconButton size="large" onClick={() => toggleIsPublic()}>
+              {page?.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            </IconButton>
+          </CustomTooltip>
         </Grid>
 
         <Grid item>
-          <IconButton
-            size="large"
-            onClick={() => {
-              setShowBackgroundColorPicker(!showBackgroundColorPicker);
-            }}
-          >
-            <BackgroundColorIcon
-              bucketColor="rgba(0, 0, 0, 0.54)"
-              selectedColor={
-                page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
-              }
-            />
-          </IconButton>
+          <CustomTooltip title={strings.backgroundColor}>
+            <IconButton
+              size="large"
+              onClick={() => {
+                setShowBackgroundColorPicker(!showBackgroundColorPicker);
+              }}
+            >
+              <BackgroundColorIcon
+                bucketColor="rgba(0, 0, 0, 0.54)"
+                selectedColor={
+                  page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
+                }
+              />
+            </IconButton>
+          </CustomTooltip>
           {showBackgroundColorPicker && (
-            <ColorPickerSpan>
-              <SketchPicker
-                color={page?.style?.backgroundColor || "white"}
-                onChangeComplete={handleChangeBackgroundColorComplete}
-              />
-            </ColorPickerSpan>
-          )}
-        </Grid>
-
-        <Grid item>
-          <IconButton
-            size="large"
-            onClick={() => {
-              setShowFontColorPicker(!showFontColorPicker);
-            }}
-          >
-            <FontColorIcon
-              bucketColor="rgba(0, 0, 0, 0.54)"
-              selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
+            <ColorPicker
+              color={page?.style?.backgroundColor || "white"}
+              onChangeComplete={handleChangeBackgroundColorComplete}
             />
-          </IconButton>
-          {showFontColorPicker && (
-            <ColorPickerSpan>
-              <SketchPicker
-                color={page?.style?.color || "white"}
-                onChangeComplete={handleChangeFontColorComplete}
-              />
-            </ColorPickerSpan>
           )}
         </Grid>
 
         <Grid item>
-          <IconButton
-            size="large"
-            onClick={() => {
-              setOpenChooseFileDialog(true);
-            }}
-          >
-            <ImageSearchIcon />
-          </IconButton>
+          <CustomTooltip title={strings.fontColor}>
+            <IconButton
+              size="large"
+              onClick={() => {
+                setShowFontColorPicker(!showFontColorPicker);
+              }}
+            >
+              <FontColorIcon
+                bucketColor="rgba(0, 0, 0, 0.54)"
+                selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
+              />
+            </IconButton>
+          </CustomTooltip>
+          {showFontColorPicker && (
+            <ColorPicker
+              color={page?.style?.color || "white"}
+              onChangeComplete={handleChangeFontColorComplete}
+            />
+          )}
+        </Grid>
+
+        <Grid item>
+          <CustomTooltip title={strings.uploadBackgroundImage}>
+            <IconButton
+              size="large"
+              onClick={() => {
+                setOpenChooseFileDialog(true);
+              }}
+            >
+              <ImageSearchIcon />
+            </IconButton>
+          </CustomTooltip>
           <ChooseFileDialog
             openChooseFileDialog={openChooseFileDialog}
             setOpenChooseFileDialog={setOpenChooseFileDialog}
@@ -284,14 +290,16 @@ const UserPage = () => {
           />
         </Grid>
         <Grid item>
-          <IconButton
-            size="large"
-            onClick={() => {
-              setShowDeletePageConfirmation(true);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <CustomTooltip title={strings.remove}>
+            <IconButton
+              size="large"
+              onClick={() => {
+                setShowDeletePageConfirmation(true);
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </CustomTooltip>
         </Grid>
       </ToolbarBottomToolsStyled>
     );

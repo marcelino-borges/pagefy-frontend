@@ -14,9 +14,9 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header/index";
 import DashboardContent from "../../components/site-content";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import { signIn } from "../../../store/auth/actions";
+import { signIn, signOut } from "../../../store/auth/actions";
 import routes from "../../../routes/paths";
 import { IUserCredentials } from "../../../store/auth/types";
 import { showErrorToast } from "../../../utils/toast";
@@ -36,6 +36,10 @@ const SignInPage = () => {
 
   const [values, setValues] = useState(INITIAL_VALUES);
   const [showingPassword, setShowingPassword] = useState(false);
+
+  useEffect(() => {
+    dispatch(signOut());
+  }, [dispatch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -71,17 +75,17 @@ const SignInPage = () => {
     <>
       <Header />
       <DashboardContent>
-        <h1 style={{ textAlign: "center", marginBottom: "56px" }}>
+        <h2 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.accessAccount}
-        </h1>
+        </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <Grid container maxWidth="350px">
+          <Grid container maxWidth="400px">
             <Grid container>
               {/* Line 1 */}
-              <Grid container item p="12px">
+              <Grid container item p="24px">
                 <TextField
                   label={strings.email}
                   name="email"
@@ -96,7 +100,7 @@ const SignInPage = () => {
               </Grid>
 
               {/* Line 2 */}
-              <Grid container item p="12px">
+              <Grid container item p="24px">
                 <TextField
                   label={strings.password}
                   name="password"
@@ -135,12 +139,18 @@ const SignInPage = () => {
             </Grid>
 
             {/* Last line - Buttons */}
-            <Grid container item justifyContent="center" p="24px">
+            <Grid container item justifyContent="center" p="36px">
               <Button type="submit" variant="contained">
                 {strings.signIn}
               </Button>
             </Grid>
-            <Grid container item justifyContent="center" fontSize="0.9em">
+            <Grid
+              container
+              item
+              justifyContent="center"
+              fontSize="0.9em"
+              pt="12px"
+            >
               <Link to={routes.signUp}>{strings.noAccountYet}</Link>
             </Grid>
           </Grid>

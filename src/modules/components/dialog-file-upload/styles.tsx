@@ -5,6 +5,7 @@ export const DropzoneFileReady = styled(({ ...rest }: any) => (
   <Grid {...rest} />
 ))`
   color: #3dd381;
+  height: 100%;
 `;
 
 export const Dropzone = styled(({ ...rest }: any) => <Grid {...rest} />)`
@@ -12,6 +13,7 @@ export const Dropzone = styled(({ ...rest }: any) => <Grid {...rest} />)`
   display: flex;
   font-size: 18px;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
   padding: 20px;
@@ -23,6 +25,7 @@ export const Dropzone = styled(({ ...rest }: any) => <Grid {...rest} />)`
   outline: none;
   transition: border 0.24s ease-in-out, color 0.24s ease-in-out;
   cursor: pointer;
+  height: 100%;
 
   &:hover {
     color: var(--theme-primary);

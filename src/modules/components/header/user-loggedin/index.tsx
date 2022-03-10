@@ -46,7 +46,7 @@ const UserLoggedIn = () => {
     }
   };
 
-  return authState.auth && authState.auth.accessToken ? (
+  return userState.profile && userState.profile._id ? (
     <Grid
       container
       item

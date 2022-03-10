@@ -22,7 +22,7 @@ const CustomTooltip = ({
       disableFocusListener={disabled}
       disableTouchListener={disabled}
       disableHoverListener={disabled}
-      leaveDelay={leaveDelay || 500}
+      leaveDelay={leaveDelay || 100}
       title={title}
       arrow
       disableInteractive={disableInteractive !== undefined}

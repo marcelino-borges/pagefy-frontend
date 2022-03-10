@@ -228,11 +228,6 @@ export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
   }
 `;
 
-export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
-  position: fixed;
-  z-index: 100;
-`;
-
 export const DropzoneFileReady = styled(({ ...rest }: any) => (
   <Grid {...rest} />
 ))`

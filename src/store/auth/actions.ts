@@ -124,11 +124,11 @@ const signUpError = (error: IAppResult) => ({
 export const signOut =
   (onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any) => {
+    dispatch(clearAllStates());
     dispatch(signOutLoading());
     AuthService.signOut()
       .then(() => {
-        dispatch(clearAllStates());
-
+        dispatch(signOutSuccess());
         if (onSuccessCallback) onSuccessCallback();
       })
       .catch((e: AxiosError) => {
@@ -156,7 +156,6 @@ const signOutError = (error: IAppResult) => ({
 });
 
 export const clearAllStates = () => (dispatch: any) => {
-  dispatch(signOutSuccess());
   dispatch(clearPageManagementState());
   dispatch(clearUserState());
   dispatch(clearUserPagesState());
