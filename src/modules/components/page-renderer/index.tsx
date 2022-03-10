@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPageByUrl,
@@ -12,7 +12,7 @@ import {
   IUserPage,
 } from "../../../store/user-pages/types";
 import { IApplicationState } from "./../../../store/index";
-import { CircularProgress, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { PageName, PagePicture } from "./style";
 import ImageComponent from "./component-types/image";
 import TextComponent from "./component-types/text";
@@ -21,6 +21,8 @@ import IconsComponent from "./component-types/icon/index";
 import VideoComponent from "./component-types/video/index";
 import strings from "../../../localization";
 import LaunchComponent from "./component-types/launch/index";
+import Logos from "./../../../assets/img/logos";
+import routes from "./../../../routes/paths";
 
 interface IProps {
   pageToRender?: IUserPage;
@@ -48,9 +50,10 @@ const PageRenderer = ({ pageToRender }: IProps) => {
   }, [dispatch, pageToRender, url]);
 
   useEffect(() => {
-    if (renderedPageState.page) {
+    if (!page && renderedPageState.page && renderedPageState.page.isPublic) {
       setPage(renderedPageState.page);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [renderedPageState]);
 
   useEffect(() => {
@@ -111,14 +114,34 @@ const PageRenderer = ({ pageToRender }: IProps) => {
 
   return (
     <PageRendererContent>
-      {page && !page.isPublic && (
-        <Grid container>
-          <Grid container item justifyContent="center">
+      {!page && (
+        <Grid container p="12px">
+          <Grid container justifyContent="center">
+            <Link to={routes.root}>
+              <img
+                src={Logos.LogoVerticalLightBGPNG}
+                style={{ width: "100%", maxWidth: "300px" }}
+                alt="Logo Social Bio"
+              />
+            </Link>
+          </Grid>
+          <Grid
+            container
+            item
+            justifyContent="center"
+            textAlign="center"
+            pt="200px"
+          >
             {strings.warningPrivatePage}
+          </Grid>
+          <Grid container justifyContent="center" pt="50px">
+            <Grid container justifyContent="center">
+              <Link to={routes.root}>Faça agora a sua bio!</Link>
+            </Grid>
           </Grid>
         </Grid>
       )}
-      {page && page.isPublic ? (
+      {page && page.isPublic && (
         <Grid container>
           <Grid container item justifyContent="center">
             <PagePicture backgroundImage={page.pageImageUrl} />
@@ -158,14 +181,6 @@ const PageRenderer = ({ pageToRender }: IProps) => {
               <IconsComponent iconsList={bottomComponents} />
             )}
           </Grid>
-        </Grid>
-      ) : (
-        <Grid container justifyContent="center">
-          {renderedPageState.error ? (
-            <>{renderedPageState.error}</>
-          ) : (
-            <CircularProgress color="primary" />
-          )}
         </Grid>
       )}
     </PageRendererContent>
