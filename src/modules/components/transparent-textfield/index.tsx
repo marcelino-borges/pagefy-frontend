@@ -11,6 +11,8 @@ interface IProps {
   name?: string;
   autoFocus?: any;
   textAlign?: string;
+  error?: boolean | undefined;
+  helperText?: string | undefined;
   // All other props
   [x: string]: any;
 }
@@ -26,6 +28,8 @@ const TransparentTextField = ({
   name,
   autoFocus,
   textAlign,
+  error,
+  helperText,
   ...rest
 }: IProps) => {
   return (
@@ -39,6 +43,8 @@ const TransparentTextField = ({
       fontSize={fontSize}
       fontStyle={fontStyle}
       textAlign={textAlign}
+      error={error !== undefined && error === true}
+      helperText={helperText || ""}
       {...register}
       {...rest}
     />

@@ -12,13 +12,14 @@ import theme from "./theme";
 import "./styles/global-style.css";
 import "react-toastify/dist/ReactToastify.css";
 import strings from "./localization/index";
+import LoadingSpinner from "./modules/components/loading-spinner/index";
 
 let persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
         <ThemeProvider theme={theme}>
           <LocalizationProvider
             dateAdapter={DateAdapter}

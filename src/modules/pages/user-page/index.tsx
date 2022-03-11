@@ -58,6 +58,9 @@ import CustomTooltip from "../../components/tooltip";
 import ColorPicker from "./../../components/color-picker/index";
 import { getUser } from "../../../store/user/actions";
 import IconButtonTheme from "./../../components/icon-button-theme/index";
+import { getPageByUrl } from "../../../services/user-pages";
+import { AxiosResponse } from "axios";
+import { isConstructorDeclaration } from "typescript";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -84,6 +87,7 @@ const UserPage = () => {
   const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
   const [showDeletePageConfirmation, setShowDeletePageConfirmation] =
     useState(false);
+  const [urlFieldError, setUrlFieldError] = useState<string | undefined>();
 
   const { handleSubmit } = useForm();
 
@@ -141,14 +145,37 @@ const UserPage = () => {
 
   const onSubmitPageNameForm = () => {
     if (!page || !page._id) return;
+    if (pageName !== page.name)
+      dispatch(updateUserPageName(page._id, pageName));
     setIsEdittingPageName(false);
-    dispatch(updateUserPageName(page._id, pageName));
   };
 
   const onSubmitPageUrlForm = () => {
-    if (!page || !page._id) return;
-    setIsEdittingPageUrl(false);
-    dispatch(updateUserPageUrl(page._id, pageUrl));
+    const savePage = () => {
+      if (page && page._id && pageUrl !== page.url) {
+        console.log("saving");
+        dispatch(updateUserPageUrl(page._id, pageUrl));
+      }
+    };
+
+    setUrlFieldError(undefined);
+    getPageByUrl(pageUrl)
+      .then((result: AxiosResponse) => {
+        if (page && page._id && result.data && result.data._id) {
+          if (result.data._id !== page._id) {
+            setUrlFieldError(strings.urlAlreadyExists);
+            setIsEdittingPageUrl(false);
+          } else {
+            savePage();
+          }
+        }
+      })
+      .catch(() => {
+        savePage();
+      })
+      .finally(() => {
+        setIsEdittingPageUrl(false);
+      });
   };
 
   const handleOpenIconsDialog = () => {
@@ -219,16 +246,16 @@ const UserPage = () => {
         pt="16px"
         wrap="nowrap"
       >
-        <Grid item>
-          <CustomTooltip title={strings.toggleVisibility}>
+        <CustomTooltip title={strings.toggleVisibility}>
+          <Grid item>
             <IconButtonTheme size="large" onClick={() => toggleIsPublic()}>
               {page?.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </IconButtonTheme>
-          </CustomTooltip>
-        </Grid>
+          </Grid>
+        </CustomTooltip>
 
-        <Grid item>
-          <CustomTooltip title={strings.backgroundColor}>
+        <CustomTooltip title={strings.backgroundColor}>
+          <Grid item>
             <IconButtonTheme
               size="large"
               onClick={() => {
@@ -242,17 +269,17 @@ const UserPage = () => {
                 }
               />
             </IconButtonTheme>
-          </CustomTooltip>
-          {showBackgroundColorPicker && (
-            <ColorPicker
-              color={page?.style?.backgroundColor || "white"}
-              onChangeComplete={handleChangeBackgroundColorComplete}
-            />
-          )}
-        </Grid>
+            {showBackgroundColorPicker && (
+              <ColorPicker
+                color={page?.style?.backgroundColor || "white"}
+                onChangeComplete={handleChangeBackgroundColorComplete}
+              />
+            )}
+          </Grid>
+        </CustomTooltip>
 
-        <Grid item>
-          <CustomTooltip title={strings.fontColor}>
+        <CustomTooltip title={strings.fontColor}>
+          <Grid item>
             <IconButtonTheme
               size="large"
               onClick={() => {
@@ -264,17 +291,17 @@ const UserPage = () => {
                 selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
               />
             </IconButtonTheme>
-          </CustomTooltip>
-          {showFontColorPicker && (
-            <ColorPicker
-              color={page?.style?.color || "white"}
-              onChangeComplete={handleChangeFontColorComplete}
-            />
-          )}
-        </Grid>
+            {showFontColorPicker && (
+              <ColorPicker
+                color={page?.style?.color || "white"}
+                onChangeComplete={handleChangeFontColorComplete}
+              />
+            )}
+          </Grid>
+        </CustomTooltip>
 
-        <Grid item>
-          <CustomTooltip title={strings.uploadBackgroundImage}>
+        <CustomTooltip title={strings.uploadBackgroundImage}>
+          <Grid item>
             <IconButtonTheme
               size="large"
               onClick={() => {
@@ -283,26 +310,27 @@ const UserPage = () => {
             >
               <ImageSearchIcon />
             </IconButtonTheme>
-          </CustomTooltip>
-          <ChooseFileDialog
-            openChooseFileDialog={openChooseFileDialog}
-            setOpenChooseFileDialog={setOpenChooseFileDialog}
-            chosenImage={chosenImage}
-            setChosenImage={setChosenImage}
-            acceptedFiles={IMAGE_EXTENSIONS}
-            submitDialog={() => {
-              if (!chosenImage) return;
-              // TODO: Send file
-              setOpenChooseFileDialog(false);
-            }}
-            cancelDialog={() => {
-              setChosenImage(undefined);
-              setOpenChooseFileDialog(false);
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <CustomTooltip title={strings.remove}>
+            <ChooseFileDialog
+              openChooseFileDialog={openChooseFileDialog}
+              setOpenChooseFileDialog={setOpenChooseFileDialog}
+              chosenImage={chosenImage}
+              setChosenImage={setChosenImage}
+              acceptedFiles={IMAGE_EXTENSIONS}
+              submitDialog={() => {
+                if (!chosenImage) return;
+                // TODO: Send file
+                setOpenChooseFileDialog(false);
+              }}
+              cancelDialog={() => {
+                setChosenImage(undefined);
+                setOpenChooseFileDialog(false);
+              }}
+            />
+          </Grid>
+        </CustomTooltip>
+
+        <CustomTooltip title={strings.remove}>
+          <Grid item>
             <IconButtonTheme
               size="large"
               onClick={() => {
@@ -311,10 +339,11 @@ const UserPage = () => {
             >
               <DeleteIcon />
             </IconButtonTheme>
-          </CustomTooltip>
-        </Grid>
-        <Grid item>
-          <CustomTooltip title={strings.viewPage}>
+          </Grid>
+        </CustomTooltip>
+
+        <CustomTooltip title={strings.viewPage}>
+          <Grid item>
             <Link
               to={"/" + page?.url}
               target="_blank"
@@ -324,8 +353,8 @@ const UserPage = () => {
                 <OpenInNewIcon />
               </IconButtonTheme>
             </Link>
-          </CustomTooltip>
-        </Grid>
+          </Grid>
+        </CustomTooltip>
       </ToolbarBottomToolsStyled>
     );
   };
@@ -477,16 +506,16 @@ const UserPage = () => {
                 }}
                 InputProps={{
                   style: { width: "100%" },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => onSubmitPageNameForm()}
-                        edge="end"
-                      >
-                        <SaveIcon fontSize="medium" color="disabled" />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                  // endAdornment: (
+                  //   <InputAdornment position="end">
+                  //     <IconButton
+                  //       onClick={() => onSubmitPageNameForm()}
+                  //       edge="end"
+                  //     >
+                  //       <SaveIcon fontSize="medium" color="disabled" />
+                  //     </IconButton>
+                  //   </InputAdornment>
+                  // ),
                 }}
               />
             </form>
@@ -510,20 +539,22 @@ const UserPage = () => {
             <form onSubmit={handleSubmit(onSubmitPageUrlForm)}>
               <TransparentTextField
                 autoFocus
+                error={!!urlFieldError}
+                helperText={urlFieldError || ""}
                 color="#bfbfbf"
                 fontSize="1.2em"
                 InputProps={{
                   style: { width: "100%" },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => onSubmitPageNameForm()}
-                        edge="end"
-                      >
-                        <SaveIcon fontSize="medium" color="disabled" />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                  // endAdornment: (
+                  //   <InputAdornment position="end">
+                  //     <IconButton
+                  //       onClick={() => onSubmitPageUrlForm()}
+                  //       edge="end"
+                  //     >
+                  //       <SaveIcon fontSize="medium" color="disabled" />
+                  //     </IconButton>
+                  //   </InputAdornment>
+                  // ),
                 }}
                 fontWeight="300"
                 textAlign="center"

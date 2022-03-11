@@ -146,7 +146,13 @@ const PageRenderer = ({ pageToRender }: IProps) => {
           <Grid container item justifyContent="center">
             <PagePicture backgroundImage={page.pageImageUrl} />
           </Grid>
-          <Grid container item justifyContent="center" pb="24px">
+          <Grid
+            container
+            item
+            justifyContent="center"
+            pb="24px"
+            color={page.style?.color || "black"}
+          >
             <PageName>{page.name}</PageName>
           </Grid>
 

@@ -53,8 +53,9 @@ const PageCard = ({ page }: IPageCardProps) => {
 
   const onSubmitNameForm = () => {
     if (!page._id) return;
+    if (pageName !== page.name)
+      dispatch(updateUserPageName(page._id, pageName));
     setIsEditting(false);
-    dispatch(updateUserPageName(page._id, pageName));
   };
 
   const loadPage = () => {
@@ -132,13 +133,13 @@ const PageCard = ({ page }: IPageCardProps) => {
                   style: {
                     width: "100%",
                   },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={() => onSubmitNameForm()} edge="end">
-                        <SaveIcon fontSize="medium" color="disabled" />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                  // endAdornment: (
+                  //   <InputAdornment position="end">
+                  //     <IconButton type="submit" edge="end">
+                  //       <SaveIcon fontSize="medium" color="disabled" />
+                  //     </IconButton>
+                  //   </InputAdornment>
+                  // ),
                 }}
                 value={pageName}
                 onChange={handleChangePageName}

@@ -17,6 +17,7 @@ import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
   Timer as TimerIcon,
   Save as SaveIcon,
+  CopyAll as CopyAllIcon,
 } from "@mui/icons-material";
 import {
   Parent,
@@ -45,6 +46,7 @@ import strings from "../../../../localization";
 import TransparentTextField from "../../../components/transparent-textfield";
 import { IApplicationState } from "../../../../store";
 import {
+  addMiddleComponentInPage,
   decreaseComponentIndexInPage,
   deleteMiddleComponentFromPage,
   increaseComponentIndexInPage,
@@ -71,6 +73,7 @@ import { getYoutubeIdFromUrl } from "./../../../../utils/index";
 import DialogChooseAnimation from "../../../components/dialog-choose-animation";
 import DialogVisibleDate from "./../../../components/dialog-visible-date/index";
 import ColorPicker from "./../../../components/color-picker/index";
+import { MEDIUM_GREY } from "./../../../../styles/colors";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -290,7 +293,10 @@ const DraggableUserComponent = ({
               if (pageId) dispatch(decreaseComponentIndexInPage(index, pageId));
             }}
           >
-            <KeyboardArrowUpIcon />
+            <KeyboardArrowUpIcon
+              color="inherit"
+              style={{ color: MEDIUM_GREY }}
+            />
           </ComponentArrowGridItem>
           <ComponentArrowGridItem
             item
@@ -299,7 +305,10 @@ const DraggableUserComponent = ({
               if (pageId) dispatch(increaseComponentIndexInPage(index, pageId));
             }}
           >
-            <KeyboardArrowDownIcon />
+            <KeyboardArrowDownIcon
+              color="inherit"
+              style={{ color: MEDIUM_GREY }}
+            />
           </ComponentArrowGridItem>
         </Grid>
 
@@ -539,6 +548,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               disabled={component.type === ComponentType.Video}
               transitionDuration="0.25s"
               isHoveringComponent={isHovering}
@@ -548,6 +558,7 @@ const DraggableUserComponent = ({
               }}
             >
               <BackgroundColorIcon
+                style={{ transform: "scale(0.7)" }}
                 bucketColor={
                   component.type === ComponentType.Video
                     ? "rgba(0, 0, 0, 0.26)"
@@ -578,6 +589,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               disabled={component.type === ComponentType.Video}
               transitionDuration="0.3s"
               isHoveringComponent={isHovering}
@@ -587,6 +599,7 @@ const DraggableUserComponent = ({
               }}
             >
               <FontColorIcon
+                style={{ transform: "scale(0.7)" }}
                 bucketColor={
                   component.type === ComponentType.Video
                     ? "rgba(0, 0, 0, 0.26)"
@@ -617,6 +630,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               disabled={component.type === ComponentType.Video}
               hoveringWhite
               transitionDuration="0.35s"
@@ -625,7 +639,7 @@ const DraggableUserComponent = ({
                 setOpenChooseFileDialog(true);
               }}
             >
-              <ImageSearchIcon />
+              <ImageSearchIcon style={{ transform: "scale(0.7)" }} />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
@@ -639,6 +653,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               disabled={
                 component.type === ComponentType.Video ||
                 component.type === ComponentType.Launch
@@ -650,7 +665,7 @@ const DraggableUserComponent = ({
                 setOpenVisibleDateDialog(true);
               }}
             >
-              <TimerIcon />
+              <TimerIcon style={{ transform: "scale(0.7)" }} />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
@@ -664,6 +679,7 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               disabled={
                 component.type === ComponentType.Video ||
                 component.type === ComponentType.Launch
@@ -675,7 +691,7 @@ const DraggableUserComponent = ({
                 setOpenChooseAnimationDialog(true);
               }}
             >
-              <ChooseAnimationIcon />
+              <ChooseAnimationIcon style={{ transform: "scale(0.7)" }} />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
@@ -689,12 +705,40 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               hoveringWhite
               transitionDuration="0.45s"
               isHoveringComponent={isHovering}
               onClick={() => toggleVisibility()}
             >
-              {component.visible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              {component.visible ? (
+                <VisibilityIcon style={{ transform: "scale(0.7)" }} />
+              ) : (
+                <VisibilityOffIcon style={{ transform: "scale(0.7)" }} />
+              )}
+            </ToolIconButton>
+          </ToolGridItem>
+        </CustomTooltip>
+
+        <CustomTooltip
+          disabled={!isHovering}
+          disableInteractive
+          leaveDelay={0.1}
+          title={strings.duplicate}
+          placement={isLargerThan400 ? "right" : "bottom"}
+        >
+          <ToolGridItem item>
+            <ToolIconButton
+              size="small"
+              hoveringWhite
+              transitionDuration="0.5s"
+              isHoveringComponent={isHovering}
+              onClick={() => {
+                if (pageId)
+                  dispatch(addMiddleComponentInPage(component, pageId));
+              }}
+            >
+              <CopyAllIcon style={{ transform: "scale(0.7)" }} />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
@@ -708,12 +752,13 @@ const DraggableUserComponent = ({
         >
           <ToolGridItem item>
             <ToolIconButton
+              size="small"
               hoveringWhite
               transitionDuration="0.5s"
               isHoveringComponent={isHovering}
               onClick={() => setOpenDeleteComponentConfirmation(true)}
             >
-              <DeleteIcon />
+              <DeleteIcon style={{ transform: "scale(0.7)" }} />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>

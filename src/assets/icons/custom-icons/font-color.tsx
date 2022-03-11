@@ -2,6 +2,7 @@ const FontColorIcon = ({
   size = 25,
   bucketColor = "white",
   selectedColor = "white",
+  ...rest
 }: any) => (
   <svg
     width={size}
@@ -9,6 +10,7 @@ const FontColorIcon = ({
     //viewBox="0 0 25 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    {...rest}
   >
     <path d="M0 17.8333H25V21.9999H0V17.8333Z" fill={selectedColor} />
     <path
