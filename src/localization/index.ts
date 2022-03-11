@@ -26,6 +26,7 @@ interface IDictionary {
   chooseEffect: string;
   toggleVisibility: string;
   remove: string;
+  viewPage: string;
   addLink: string;
   addIcon: string;
   addVideo: string;
@@ -272,6 +273,7 @@ const en: IDictionary = {
   alreadyHaveAccount: "I already have an account",
   couldntFindPage: "Couldn't find the page",
   maximumFileSizeOf: "Maximum allowed size of the file is",
+  viewPage: "View page",
 };
 
 const pt: IDictionary = {
@@ -412,6 +414,7 @@ const pt: IDictionary = {
   alreadyHaveAccount: "Já possuo uma conta",
   couldntFindPage: "Não foi possível localizar a página.",
   maximumFileSizeOf: "Tamanho máximo permitido do arquivo:",
+  viewPage: "Visualizar página",
 };
 
 // Composed dictionaries

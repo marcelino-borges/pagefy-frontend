@@ -51,6 +51,7 @@ const ChooseFileDialog = ({
       }
     }
     setChosenImage(file);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

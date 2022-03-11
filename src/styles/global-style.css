@@ -131,16 +131,29 @@
   src: url(../assets/fonts/Comfortaa-VariableFont_wght.ttf) format('opentype');
 }
 
+@font-face {
+  font-family: "Montserrat";
+  src: url(../assets/fonts//montserrat/Montserrat-VariableFont_wght.ttf) format("opentype");
+  font-weight: 100 900;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url(../assets/fonts//montserrat/Montserrat-Italic-VariableFont_wght.ttf) format("opentype");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
 body {
   margin: 0;
-  font-family: 'Source Sans Pro', 'Roboto', 'Oxygen',
+  font-family: 'Montserrat', 'Source Sans Pro', 'Roboto',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: .02em;
   font-weight: 300;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
 #root {

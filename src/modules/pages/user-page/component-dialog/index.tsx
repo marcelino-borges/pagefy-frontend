@@ -282,7 +282,7 @@ const ComponentDialog = ({
             transform: step === 0 ? "unset" : "translateX(-1000px)",
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
             display: "flex",
-            alignItems: isSmallerThanXM ? "flex-start" : "center",
+            alignItems: "flex-start",
           }}
         >
           <Grid container direction="column">
@@ -292,8 +292,14 @@ const ComponentDialog = ({
               error={typeError}
             />
 
-            <Grid container wrap={isSmallerThanXM ? "wrap" : "nowrap"}>
-              <Grid container item xs={4} justifyContent="center">
+            {/* TYPE section */}
+            <Grid
+              container
+              wrap={isSmallerThanXM ? "wrap" : "nowrap"}
+              justifyContent="flex-start"
+            >
+              {/* Only text */}
+              <Grid item pr="24px">
                 <ComponentDetailsButton
                   size="60px"
                   isSelected={selectedType === ComponentType.Text}
@@ -303,7 +309,8 @@ const ComponentDialog = ({
                 </ComponentDetailsButton>
               </Grid>
 
-              <Grid container item xs={4} justifyContent="center">
+              {/* Image & Text */}
+              <Grid item pr="24px">
                 <ComponentDetailsButton
                   size="60px"
                   isSelected={selectedType === ComponentType.TextImage}
@@ -317,7 +324,8 @@ const ComponentDialog = ({
                 </ComponentDetailsButton>
               </Grid>
 
-              <Grid container item xs={4} justifyContent="center">
+              {/* Only image */}
+              <Grid item>
                 <ComponentDetailsButton
                   size="60px"
                   isSelected={selectedType === ComponentType.Image}
@@ -328,24 +336,16 @@ const ComponentDialog = ({
               </Grid>
             </Grid>
 
-            {/* Layout selector */}
-            <Grid container>
-              {/* Columns selector */}
-              <LayoutPickerContainer
-                container
-                item
-                mt="16px"
-                direction="column"
-                xs={12}
-                sm={6}
-              >
-                <Section
-                  title={strings.columns}
-                  icon={<ColumnsIcon />}
-                  error={columnsError}
-                />
+            {/* Columns selector */}
+            <Grid container width="100%" pt="24px">
+              <Section
+                title={strings.columns}
+                icon={<ColumnsIcon />}
+                error={columnsError}
+              />
+              <LayoutPickerContainer container item direction="column">
                 <Grid container item wrap="nowrap">
-                  <Grid container item xs={12} sm={6} justifyContent="center">
+                  <Grid item>
                     <ComponentDetailsButton
                       size="60px"
                       fontSize="27px"
@@ -358,7 +358,7 @@ const ComponentDialog = ({
                     </ComponentDetailsButton>
                   </Grid>
 
-                  <Grid container item xs={12} sm={6} justifyContent="center">
+                  <Grid item pl="24px">
                     <ComponentDetailsButton
                       size="60px"
                       fontSize="27px"
@@ -372,23 +372,18 @@ const ComponentDialog = ({
                   </Grid>
                 </Grid>
               </LayoutPickerContainer>
+            </Grid>
 
-              {/* Rows selector */}
-              <LayoutPickerContainer
-                container
-                item
-                mt="16px"
-                direction="column"
-                xs={12}
-                sm={6}
-              >
-                <Section
-                  title={strings.rows}
-                  icon={<RowsIcon />}
-                  error={rowsError}
-                />
+            {/* Rows selector */}
+            <Grid container pt="24px">
+              <Section
+                title={strings.rows}
+                icon={<RowsIcon />}
+                error={rowsError}
+              />
+              <LayoutPickerContainer container item direction="column">
                 <Grid container item wrap="nowrap">
-                  <Grid container item xs={12} sm={6} justifyContent="center">
+                  <Grid item>
                     <ComponentDetailsButton
                       size="60px"
                       fontSize="27px"
@@ -401,7 +396,7 @@ const ComponentDialog = ({
                     </ComponentDetailsButton>
                   </Grid>
 
-                  <Grid container item xs={12} sm={6} justifyContent="center">
+                  <Grid item pl="24px">
                     <ComponentDetailsButton
                       size="60px"
                       fontSize="27px"

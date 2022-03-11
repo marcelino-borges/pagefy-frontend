@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { IApplicationState } from "../store";
-import Dashboard from "./../modules/pages/dashboard/index";
 import routes from "./paths";
 import Support from "./../modules/pages/support/index";
 import UserPages from "./../modules/pages/user-pages/index";
@@ -21,7 +20,9 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const isAppLoading =
-      appState.user.loading === true || appState.auth.loading === true;
+      appState.user.loading === true ||
+      appState.auth.loading === true ||
+      appState.userPages.loading === true;
 
     setIsLoading(isAppLoading);
   }, [appState.user, appState.auth, appState.userPages]);

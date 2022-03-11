@@ -39,6 +39,7 @@ export const signIn =
         if (onSuccessCallback) onSuccessCallback(token);
       })
       .catch((e: AxiosError) => {
+        console.log("e: " + e);
         const error: IAppResult = e.response?.data;
         dispatch(signInError(error));
 

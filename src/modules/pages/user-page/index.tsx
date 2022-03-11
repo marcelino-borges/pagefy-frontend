@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Grid, IconButton, useMediaQuery } from "@mui/material";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Grid, IconButton, InputAdornment, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -10,6 +10,8 @@ import {
   ImageSearch as ImageSearchIcon,
   Delete as DeleteIcon,
   RocketLaunch as LaunchIcon,
+  Save as SaveIcon,
+  OpenInNew as OpenInNewIcon,
 } from "@mui/icons-material";
 import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
@@ -54,6 +56,8 @@ import ProfileEditablePicture from "../../components/profile-editable-picture";
 import PrivateRouteChecker from "./../../components/private-route-checker/index";
 import CustomTooltip from "../../components/tooltip";
 import ColorPicker from "./../../components/color-picker/index";
+import { getUser } from "../../../store/user/actions";
+import IconButtonTheme from "./../../components/icon-button-theme/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -90,7 +94,15 @@ const UserPage = () => {
     (state: IApplicationState) => state.userPages
   );
 
+  const userEmailState = useSelector(
+    (state: IApplicationState) => state.user.profile?.email
+  );
+
   const listContainer = useRef(null);
+
+  useEffect(() => {
+    if (userEmailState) dispatch(getUser(userEmailState, null));
+  }, [dispatch, userEmailState]);
 
   useEffect(() => {
     if (
@@ -209,15 +221,15 @@ const UserPage = () => {
       >
         <Grid item>
           <CustomTooltip title={strings.toggleVisibility}>
-            <IconButton size="large" onClick={() => toggleIsPublic()}>
+            <IconButtonTheme size="large" onClick={() => toggleIsPublic()}>
               {page?.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </IconButton>
+            </IconButtonTheme>
           </CustomTooltip>
         </Grid>
 
         <Grid item>
           <CustomTooltip title={strings.backgroundColor}>
-            <IconButton
+            <IconButtonTheme
               size="large"
               onClick={() => {
                 setShowBackgroundColorPicker(!showBackgroundColorPicker);
@@ -229,7 +241,7 @@ const UserPage = () => {
                   page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
                 }
               />
-            </IconButton>
+            </IconButtonTheme>
           </CustomTooltip>
           {showBackgroundColorPicker && (
             <ColorPicker
@@ -241,7 +253,7 @@ const UserPage = () => {
 
         <Grid item>
           <CustomTooltip title={strings.fontColor}>
-            <IconButton
+            <IconButtonTheme
               size="large"
               onClick={() => {
                 setShowFontColorPicker(!showFontColorPicker);
@@ -251,7 +263,7 @@ const UserPage = () => {
                 bucketColor="rgba(0, 0, 0, 0.54)"
                 selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
               />
-            </IconButton>
+            </IconButtonTheme>
           </CustomTooltip>
           {showFontColorPicker && (
             <ColorPicker
@@ -263,14 +275,14 @@ const UserPage = () => {
 
         <Grid item>
           <CustomTooltip title={strings.uploadBackgroundImage}>
-            <IconButton
+            <IconButtonTheme
               size="large"
               onClick={() => {
                 setOpenChooseFileDialog(true);
               }}
             >
               <ImageSearchIcon />
-            </IconButton>
+            </IconButtonTheme>
           </CustomTooltip>
           <ChooseFileDialog
             openChooseFileDialog={openChooseFileDialog}
@@ -291,14 +303,27 @@ const UserPage = () => {
         </Grid>
         <Grid item>
           <CustomTooltip title={strings.remove}>
-            <IconButton
+            <IconButtonTheme
               size="large"
               onClick={() => {
                 setShowDeletePageConfirmation(true);
               }}
             >
               <DeleteIcon />
-            </IconButton>
+            </IconButtonTheme>
+          </CustomTooltip>
+        </Grid>
+        <Grid item>
+          <CustomTooltip title={strings.viewPage}>
+            <Link
+              to={"/" + page?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IconButtonTheme onClick={() => {}} size="large">
+                <OpenInNewIcon />
+              </IconButtonTheme>
+            </Link>
           </CustomTooltip>
         </Grid>
       </ToolbarBottomToolsStyled>
@@ -443,15 +468,25 @@ const UserPage = () => {
                 autoFocus
                 color="#bfbfbf"
                 fontSize="26px"
-                InputProps={{
-                  style: { width: "100%" },
-                }}
                 textAlign="center"
                 value={pageName}
                 onChange={handleChangePageName}
                 onBlur={() => {
                   if (page) setPageName(page.name);
                   setIsEdittingPageName(false);
+                }}
+                InputProps={{
+                  style: { width: "100%" },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => onSubmitPageNameForm()}
+                        edge="end"
+                      >
+                        <SaveIcon fontSize="medium" color="disabled" />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
               />
             </form>
@@ -479,6 +514,16 @@ const UserPage = () => {
                 fontSize="1.2em"
                 InputProps={{
                   style: { width: "100%" },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => onSubmitPageNameForm()}
+                        edge="end"
+                      >
+                        <SaveIcon fontSize="medium" color="disabled" />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
                 fontWeight="300"
                 textAlign="center"

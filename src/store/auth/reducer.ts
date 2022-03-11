@@ -56,7 +56,6 @@ const authReducer = (
     case AuthActionTypes.SIGNOUT_LOADING:
       return {
         ...state,
-        loading: true,
         error: undefined,
       };
 
@@ -71,7 +70,7 @@ const authReducer = (
       };
 
     default:
-      return state;
+      return { ...state };
   }
 };
 

@@ -4,18 +4,31 @@ import { AxiosError, AxiosResponse } from "axios";
 import { IAppResult } from "../shared";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getAllUserPages } from "./../user-pages/actions";
+import { getFirebaseToken } from "../../utils/firebase-config";
 
 export const getUser =
   (
     email: string,
-    token: string,
+    token: string | null,
     onSuccessCallback: any = null,
     onErrorCallback: any = null
   ) =>
-  (dispatch: any) => {
+  async (dispatch: any) => {
     dispatch(getUserLoading());
+    let validToken;
 
-    UserService.getUser(email, token)
+    if (!token) {
+      validToken = await getFirebaseToken();
+
+      if (!validToken) {
+        if (onErrorCallback) onErrorCallback();
+        return;
+      }
+    } else {
+      validToken = token;
+    }
+
+    UserService.getUser(email, validToken)
       .then((res: AxiosResponse) => {
         const user: IUser = res.data;
         dispatch(getUserSuccess(res.data));

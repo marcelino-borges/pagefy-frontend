@@ -79,7 +79,7 @@ export const ContentRow = styled(Grid)`
 
 export const LabelText = styled(Grid)`
   padding-right: 16px;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
   transform: translateY(-5px);
   cursor: pointer;

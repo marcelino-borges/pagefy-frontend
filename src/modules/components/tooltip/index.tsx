@@ -1,3 +1,4 @@
+import React from "react";
 import { Tooltip } from "@mui/material";
 
 interface ITooltipProps {
@@ -17,20 +18,23 @@ const CustomTooltip = ({
   children,
   disabled = false,
 }: ITooltipProps) => {
-  return (
+  const MyTooltip = React.forwardRef((props, ref) => (
     <Tooltip
+      ref={ref}
+      title={title}
       disableFocusListener={disabled}
       disableTouchListener={disabled}
       disableHoverListener={disabled}
       leaveDelay={leaveDelay || 100}
-      title={title}
       arrow
       disableInteractive={disableInteractive !== undefined}
       placement={placement || "bottom"}
+      {...props}
     >
       {children}
     </Tooltip>
-  );
+  ));
+  return <MyTooltip />;
 };
 
 export default CustomTooltip;

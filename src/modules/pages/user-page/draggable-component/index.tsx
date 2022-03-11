@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Grid, IconButton, InputAdornment, useMediaQuery } from "@mui/material";
 import {
   Link as LinkIcon,
   ImageSearch as ImageSearchIcon,
@@ -16,6 +16,7 @@ import {
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowDown as KeyboardArrowDownIcon,
   Timer as TimerIcon,
+  Save as SaveIcon,
 } from "@mui/icons-material";
 import {
   Parent,
@@ -334,13 +335,21 @@ const DraggableUserComponent = ({
                       <TransparentTextField
                         autoFocus
                         InputProps={{
-                          style: {
-                            width: `100%`,
-                          },
+                          style: { width: "100%" },
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                onClick={() => onSubmitLabelForm()}
+                                edge="end"
+                              >
+                                <SaveIcon fontSize="medium" color="disabled" />
+                              </IconButton>
+                            </InputAdornment>
+                          ),
                         }}
                         onChange={handleChangeLabel}
                         value={values.label}
-                        fontSize={isSmallerThan600 ? "16px" : "24px"}
+                        fontSize={isSmallerThan600 ? "16px" : "22px"}
                         onBlur={() => {
                           onSubmitLabelForm();
                           setIsEdittingLabel(false);
@@ -422,6 +431,19 @@ const DraggableUserComponent = ({
                               width: "100%",
                               margin: !isSmallerThan400 ? "0px 16px" : "0",
                             },
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  onClick={() => onSubmitUrlForm()}
+                                  edge="end"
+                                >
+                                  <SaveIcon
+                                    fontSize="medium"
+                                    color="disabled"
+                                  />
+                                </IconButton>
+                              </InputAdornment>
+                            ),
                           }}
                           fontSize={isSmallerThan600 ? "16px" : "22px"}
                           onBlur={() => {

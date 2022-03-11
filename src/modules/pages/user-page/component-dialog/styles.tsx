@@ -39,21 +39,12 @@ export const ComponentDetailsButton = styled(
     margin: 12px 0px;
   }
 
-  &:hover {
-    background-color: #f0f0f0;
-  }
-
-  &:active {
-    background-color: ${LIGHT_GREY};
-  }
-
   ${(props) =>
     !props.isSelected
       ? ""
       : `
     color: white;
     background-color: ${PRIMARY_COLOR};
-    border-radius: 50%;
   `}
 
   svg {

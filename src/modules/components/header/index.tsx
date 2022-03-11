@@ -141,7 +141,7 @@ const Header = () => {
         alignItems="center"
         style={{
           paddingLeft: "32px",
-          height: isSmallerThanMD ? "unset" : "125px",
+          height: isSmallerThanMD ? "unset" : "117px",
         }}
       >
         <Link to={routes.root}>

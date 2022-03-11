@@ -9,6 +9,7 @@ import {
 } from "./types";
 
 const initialState: IUserPagesState = {
+  loading: false,
   error: undefined,
   pages: [],
   pageBeingSaved: undefined,
@@ -33,12 +34,16 @@ const pagesReducer = (
         error: action.payload,
       };
     }
+    case UserPagesActionTypes.UPDATE_PAGE_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
 
     /*
      * LOADINGS
      */
     case UserPagesActionTypes.CREATE_PAGE_LOADING:
-    case UserPagesActionTypes.UPDATE_PAGE_LOADING:
     case UserPagesActionTypes.DELETE_PAGE_LOADING:
     case UserPagesActionTypes.GET_ALL_USER_PAGES_LOADING:
     case UserPagesActionTypes.UPDATE_USER_PAGE_URL_LOADING:
@@ -51,6 +56,7 @@ const pagesReducer = (
     case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
       return {
         ...state,
+        loading: false,
         error: undefined,
         pageBeingSaved: undefined,
       };
@@ -95,16 +101,11 @@ const pagesReducer = (
         });
       }
 
-      let newState: any = {
+      return {
         ...state,
         pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_USER_PAGE_URL_SUCCESS: {
@@ -127,23 +128,18 @@ const pagesReducer = (
         });
       }
 
-      let newState: any = {
+      return {
         ...state,
         pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.TOGGLE_PAGE_IS_PUBLIC: {
       const pageId = action.payload.pageId as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedPage: IUserPage = {
             ...page,
@@ -155,16 +151,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.TOGGLE_COMPONENT_VISIBILITY: {
@@ -172,7 +163,7 @@ const pagesReducer = (
       const componentId = action.payload.componentId as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -196,16 +187,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_COMPONENT_LABEL: {
@@ -214,7 +200,7 @@ const pagesReducer = (
       const newLabel = action.payload.newLabel as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -238,16 +224,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_COMPONENT_URL: {
@@ -256,7 +237,7 @@ const pagesReducer = (
       const newUrl = action.payload.newUrl as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -280,16 +261,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_PAGE_BACKGROUND_COLOR: {
@@ -297,7 +273,7 @@ const pagesReducer = (
       const newColor = action.payload.newColor as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedPage: IUserPage = {
             ...page,
@@ -312,16 +288,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_COMPONENT_ANIMATION: {
@@ -330,7 +301,7 @@ const pagesReducer = (
       const animation = action.payload.animation as IComponentAnimation;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -354,16 +325,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_COMPONENT_VISIBLE_DATE: {
@@ -372,7 +338,7 @@ const pagesReducer = (
       const dateTime = action.payload.dateTime as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -396,16 +362,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_PAGE_FONT_COLOR: {
@@ -413,7 +374,7 @@ const pagesReducer = (
       const newColor = action.payload.newColor as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedPage: IUserPage = {
             ...page,
@@ -428,16 +389,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_COMPONENT_BACKGROUND_COLOR: {
@@ -446,7 +402,7 @@ const pagesReducer = (
       const newColor = action.payload.newColor as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -473,16 +429,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.UPDATE_COMPONENT_FONT_COLOR: {
@@ -491,7 +442,7 @@ const pagesReducer = (
       const newColor = action.payload.newColor as string;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.map(
             (component: IUserComponent) => {
@@ -518,16 +469,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.INCREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE: {
@@ -536,7 +482,7 @@ const pagesReducer = (
       const pageId = action.payload.pageId;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           if (
             currentIndex === page.middleComponents.length - 1 ||
@@ -560,16 +506,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.DECREASE_MIDDLE_COMPONENT_INDEX_IN_PAGE: {
@@ -578,7 +519,7 @@ const pagesReducer = (
       const pageId = action.payload.pageId;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           if (currentIndex <= 0) {
             return page;
@@ -600,16 +541,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE: {
@@ -617,7 +553,7 @@ const pagesReducer = (
       const componentId = action.payload.componentId;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.middleComponents) {
           const updatedComponents = page.middleComponents.filter(
             (component: IUserComponent) => component._id !== componentId
@@ -632,16 +568,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.DELETE_TOP_COMPONENT_FROM_PAGE: {
@@ -649,7 +580,7 @@ const pagesReducer = (
       const componentId = action.payload.componentId;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId && page.topComponents) {
           const updatedComponents = page.topComponents.filter(
             (component: IUserComponent) => component._id !== componentId
@@ -664,16 +595,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.DELETE_PAGE_SUCCESS: {
@@ -686,7 +612,6 @@ const pagesReducer = (
       return {
         ...state,
         pages: [...updatedPages],
-
         error: undefined,
       };
     }
@@ -696,7 +621,7 @@ const pagesReducer = (
       const component: IUserComponent = action.payload.component;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId) {
           if (page.middleComponents) {
             const updatedComponents = [...page.middleComponents, component];
@@ -716,23 +641,18 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
     case UserPagesActionTypes.ADD_TOP_COMPONENT_IN_PAGE: {
       const pageId = action.payload.pageId;
       const component: IUserComponent = action.payload.component;
       let pageToBeSaved;
 
-      const updatedPages = state.pages.map((page: IUserPage) => {
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
         if (page._id === pageId) {
           if (page.topComponents) {
             const updatedComponents = [...page.topComponents, component];
@@ -752,16 +672,11 @@ const pagesReducer = (
         return page;
       });
 
-      let newState: any = {
+      return {
         ...state,
-        pages: [...updatedPages],
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
       };
-
-      if (pageToBeSaved) {
-        newState.pageBeingSaved = pageToBeSaved;
-      }
-
-      return newState;
     }
 
     case UserPagesActionTypes.CLEAR_STATE:

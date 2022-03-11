@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid } from "@mui/material";
 import { IApplicationState } from "../../../store";
 import Header from "../../components/header";
@@ -9,13 +9,24 @@ import CreatePageDialog from "./dialog-create-page/index";
 import strings from "../../../localization";
 import { IUserPage } from "../../../store/user-pages/types";
 import PrivateRouteChecker from "./../../components/private-route-checker/index";
+import { getUser } from "../../../store/user/actions";
 
 const UserPages = () => {
+  const dispatch = useDispatch();
+
   const userPagesState = useSelector(
     (state: IApplicationState) => state.userPages
   );
 
   const [showCreatePageDialog, setShowCreatePageDialog] = useState(false);
+
+  const userEmailState = useSelector(
+    (state: IApplicationState) => state.user.profile?.email
+  );
+
+  useEffect(() => {
+    if (userEmailState) dispatch(getUser(userEmailState, null));
+  }, [dispatch, userEmailState]);
 
   return (
     <>

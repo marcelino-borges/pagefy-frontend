@@ -48,10 +48,10 @@ const userReducer = (
       };
 
     case UserActionTypes.CLEAR_STATE:
-      return initialState;
+      return { ...initialState };
 
     default:
-      return state;
+      return { ...state };
   }
 };
 

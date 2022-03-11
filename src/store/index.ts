@@ -7,6 +7,7 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
+  createTransform,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -32,10 +33,21 @@ export interface IApplicationState {
   pageRendered: IPageRenderedState;
 }
 
+let blacklistTransform = createTransform((inboundState: any, key: any) => {
+  let state = inboundState;
+
+  if (state["loading"]) {
+    state["loading"] = false;
+  }
+
+  return state;
+});
+
 const persistConfig = {
   key: "appState",
   storage: storage,
-  blacklist: ["loading"],
+  blacklist: ["pageRenderer"],
+  transforms: [blacklistTransform],
 };
 
 const rootReducer = combineReducers({

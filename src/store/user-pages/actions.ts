@@ -158,25 +158,14 @@ const updatePageError = (error: IAppResult) => ({
   type: UserPagesActionTypes.UPDATE_PAGE_ERROR,
 });
 
-export const updateUserPageName =
-  (pageId: string, newName: string) => async (dispatch: any) => {
-    dispatch(updateUserPageNameInStore(pageId, newName));
-  };
-
-const updateUserPageNameInStore = (pageId: string, newName: string) => ({
+export const updateUserPageName = (pageId: string, newName: string) => ({
   payload: { pageId, newName },
-  type: UserPagesActionTypes.UPDATE_USER_PAGE_NAME_LOADING,
+  type: UserPagesActionTypes.UPDATE_USER_PAGE_NAME_SUCCESS,
 });
 
-export const updateUserPageUrl =
-  (pageId: string, newUrl: string) => (dispatch: any) => {
-    //TODO: Check if page url doesn't exist first
-    dispatch(updateUserPageUrlInStore(pageId, newUrl));
-  };
-
-const updateUserPageUrlInStore = (pageId: string, newUrl: string) => ({
+export const updateUserPageUrl = (pageId: string, newUrl: string) => ({
   payload: { pageId, newUrl },
-  type: UserPagesActionTypes.UPDATE_USER_PAGE_URL_LOADING,
+  type: UserPagesActionTypes.UPDATE_USER_PAGE_URL_SUCCESS,
 });
 
 export const togglePageIsPublic = (pageId: string) => ({

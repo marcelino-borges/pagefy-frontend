@@ -13,7 +13,6 @@ const UserLoggedIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userState = useSelector((state: IApplicationState) => state.user);
-  const authState = useSelector((state: IApplicationState) => state.auth);
   const theme = useTheme();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -71,7 +70,11 @@ const UserLoggedIn = () => {
           noUserIconSize="36px"
         />
       </Grid>
-      <Stack direction="column" pl={!isSmallerThanMD ? "12px" : "0px"}>
+      <Stack
+        direction="column"
+        justifyContent="center"
+        pl={!isSmallerThanMD ? "12px" : "0px"}
+      >
         <UserName>{get2FirstNames()}</UserName>
         <Stack
           direction="row"
