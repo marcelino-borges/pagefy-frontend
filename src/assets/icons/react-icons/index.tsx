@@ -7,96 +7,42 @@ export interface IIconifyIcon {
 const icons: IIconifyIcon[] = [
   {
     userFriendlyName: "WhatsApp",
-    variations: [
-      "logos:whatsapp",
-      "dashicons:whatsapp",
-      "fa-brands:whatsapp",
-      "uil:whatsapp-alt",
-    ],
+    variations: ["dashicons:whatsapp"],
     keywords: ["whatsapp", "wpp", "zap", "zapzap", "zap zap"],
   },
   {
     userFriendlyName: "TikTok",
-    variations: [
-      "ic:baseline-tiktok",
-      "ph:tiktok-logo-light",
-      "iconoir:tiktok",
-      "logos:tiktok",
-      "logos:tiktok-icon",
-    ],
+    variations: ["cib:tiktok"],
     keywords: ["tiktok", "tik", "tok"],
   },
   {
     userFriendlyName: "Instagram",
-    variations: [
-      "ant-design:instagram-outlined",
-      "ant-design:instagram-filled",
-      "entypo-social:instagram-with-circle",
-      "fa-brands:instagram-square",
-      "icomoon-free:instagram",
-      "logos:instagram",
-    ],
+    variations: ["ant-design:instagram-filled"],
     keywords: ["instagram", "insta"],
   },
   {
     userFriendlyName: "Facebook",
-    variations: [
-      "bi:facebook",
-      "entypo-social:facebook",
-      "bx:bxl-facebook",
-      "iconoir:facebook",
-    ],
+    variations: ["bi:facebook"],
     keywords: ["facebook", "face", "fb", "book"],
   },
   {
     userFriendlyName: "Email",
-    variations: [
-      "carbon:email",
-      "clarity:email-line",
-      "clarity:email-solid",
-      "ic:round-email",
-      "fxemoji:email",
-      "ic:sharp-alternate-email",
-      "icon-park:email-block",
-    ],
+    variations: ["ic:round-email"],
     keywords: ["email", "e-mail", "mail", "@", "message", "mensagem", "msg"],
   },
   {
     userFriendlyName: "Twitter",
-    variations: [
-      "akar-icons:twitter-fill",
-      "logos:twitter",
-      "entypo-social:twitter-with-circle",
-      "et:twitter",
-      "fa-brands:twitter-square",
-    ],
+    variations: ["entypo-social:twitter-with-circle"],
     keywords: ["twitter"],
   },
   {
     userFriendlyName: "YouTube",
-    variations: [
-      "akar-icons:youtube-fill",
-      "ant-design:youtube-outlined",
-      "foundation:social-youtube",
-      "entypo-social:youtube-with-circle",
-      "logos:youtube",
-      "openmoji:youtube",
-      "entypo-social:youtube-with-circle",
-      "fa-brands:youtube-square",
-    ],
+    variations: ["entypo-social:youtube"],
     keywords: ["youtube", "yt", "you", "tube", "video", "vídeo"],
   },
   {
     userFriendlyName: "Phone",
-    variations: [
-      "akar-icons:phone",
-      "ant-design:phone-filled",
-      "carbon:phone-voice-filled",
-      "carbon:phone-voice",
-      "bi:phone",
-      "bi:phone-fill",
-      "carbon:phone-ip",
-    ],
+    variations: ["el:phone-alt"],
     keywords: [
       "phone",
       "fone",
@@ -110,22 +56,12 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Spotify",
-    variations: [
-      "akar-icons:spotify-fill",
-      "logos:spotify-icon",
-      "logos:spotify",
-      "simple-line-icons:social-spotify",
-    ],
+    variations: ["akar-icons:spotify-fill"],
     keywords: ["spotify", "spot"],
   },
   {
     userFriendlyName: "Website",
-    variations: [
-      "whh:website",
-      "dashicons:whatsapp",
-      "fa-brands:whatsapp",
-      "uil:whatsapp-alt",
-    ],
+    variations: ["majesticons:link-circle"],
     keywords: [
       "website",
       "web",
@@ -139,74 +75,37 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "LinkedIn",
-    variations: [
-      "akar-icons:linkedin-fill",
-      "entypo-social:linkedin-with-circle",
-      "et:linkedin",
-      "fa-brands:linkedin-in",
-      "logos:linkedin",
-      "logos:linkedin-icon",
-    ],
+    variations: ["entypo-social:linkedin-with-circle"],
     keywords: ["linkedin", "in"],
   },
   {
     userFriendlyName: "Twitch",
-    variations: [
-      "akar-icons:twitch-fill",
-      "ph:twitch-logo-fill",
-      "ph:twitch-logo-light",
-      "logos:twitch",
-    ],
+    variations: ["akar-icons:twitch-fill"],
     keywords: ["twitch"],
   },
   {
     userFriendlyName: "Discord",
-    variations: [
-      "akar-icons:discord-fill",
-      "bx:bxl-discord",
-      "logos:discord",
-      "logos:discord-icon",
-    ],
+    variations: ["akar-icons:discord-fill"],
     keywords: ["discord"],
   },
   {
     userFriendlyName: "Telegram",
-    variations: [
-      "akar-icons:telegram-fill",
-      "bx:bxl-telegram",
-      "la:telegram",
-      "logos:telegram",
-    ],
+    variations: ["akar-icons:telegram-fill"],
     keywords: ["telegram"],
   },
   {
     userFriendlyName: "Snapchat",
-    variations: [
-      "akar-icons:snapchat-fill",
-      "bi:snapchat",
-      "fa:snapchat-square",
-      "fa:snapchat",
-    ],
+    variations: ["fa-brands:snapchat"],
     keywords: ["snapchat"],
   },
   {
     userFriendlyName: "Pinterest",
-    variations: [
-      "akar-icons:pinterest-fill",
-      "bx:bxl-pinterest-alt",
-      "fa-brands:pinterest-square",
-      "logos:pinterest",
-    ],
+    variations: ["akar-icons:pinterest-fill"],
     keywords: ["pinterest"],
   },
   {
     userFriendlyName: "Shop",
-    variations: [
-      "ant-design:shop-filled",
-      "ant-design:shop-outlined",
-      "flat-color-icons:shop",
-      "grommet-icons:shop",
-    ],
+    variations: ["el:shopping-cart-sign"],
     keywords: [
       "shop",
       "shopping",
@@ -220,16 +119,12 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "SoundCloud",
-    variations: [
-      "akar-icons:soundcloud-fill",
-      "icomoon-free:soundcloud2",
-      "logos:soundcloud",
-    ],
+    variations: ["akar-icons:soundcloud-fill"],
     keywords: ["soundcloud"],
   },
   {
     userFriendlyName: "Messenger",
-    variations: ["bi:messenger", "teenyicons:messenger-outline"],
+    variations: ["bi:messenger"],
     keywords: ["messenger"],
   },
   {
@@ -239,13 +134,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "PayPal",
-    variations: [
-      "bi:paypal",
-      "bx:bxl-paypal",
-      "cib:cc-paypal",
-      "fontisto:paypal",
-      "logos:paypal",
-    ],
+    variations: ["fa:paypal"],
     keywords: ["paypal"],
   },
   {
@@ -255,19 +144,12 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Amazon",
-    variations: [
-      "ant-design:amazon-circle-filled",
-      "ant-design:amazon-outlined",
-      "ant-design:amazon-square-filled",
-      "cib:amazon-aws",
-      "cib:amazon-pay",
-      "cib:cc-amazon-pay",
-    ],
+    variations: ["ant-design:amazon-circle-filled"],
     keywords: ["amazon", "amazon pay"],
   },
   {
     userFriendlyName: "Deezer",
-    variations: ["fa-brands:deezer", "jam:deezer-circle", "jam:deezer-square"],
+    variations: ["bxl:deezer"],
     keywords: ["deezer"],
   },
   {
@@ -308,139 +190,77 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Google Drive",
-    variations: [
-      "uil:google-drive",
-      "mdi:folder-google-drive",
-      "logos:google-drive",
-      "uit:google-drive-alt",
-    ],
+    variations: ["uil:google-drive"],
     keywords: ["google", "drive", "google drive"],
   },
   {
     userFriendlyName: "Wattpad",
-    variations: ["cib:wattpad", "simple-icons:wattpad"],
+    variations: ["simple-icons:wattpad"],
     keywords: ["wattpad", "watt"],
   },
   {
     userFriendlyName: "Etsy",
-    variations: ["bx:bxl-etsy", "cib:etsy"],
+    variations: ["cib:etsy"],
     keywords: ["etsy"],
   },
   {
     userFriendlyName: "Shopify",
-    variations: [
-      "bx:bxl-shopify",
-      "jam:shopify-circle",
-      "jam:shopify-square",
-      "logos:shopify",
-    ],
+    variations: ["bxl:shopify"],
     keywords: ["shopify", "Shop"],
   },
   {
     userFriendlyName: "Reddit",
-    variations: [
-      "ant-design:reddit-circle-filled",
-      "ant-design:reddit-square-filled",
-      "ant-design:reddit-outlined",
-      "dashicons:reddit",
-      "logos:reddit",
-      "flat-color-icons:reddit",
-      "logos:reddit-icon",
-    ],
+    variations: ["akar-icons:reddit-fill"],
     keywords: ["reddit", "red"],
   },
   {
     userFriendlyName: "Viber",
-    variations: [
-      "cib:viber",
-      "jam:viber-circle",
-      "jam:viber-square",
-      "whh:viber",
-      "whh:squareviber",
-    ],
+    variations: ["jam:viber"],
     keywords: ["viber", "vibe"],
   },
   {
     userFriendlyName: "Goodreads",
-    variations: ["cib:goodreads", "fa-brands:goodreads", "la:goodreads"],
+    variations: ["cib:goodreads"],
     keywords: ["goodreads", "good", "reads"],
   },
   {
     userFriendlyName: "Skype",
-    variations: [
-      "ant-design:skype-filled",
-      "ant-design:skype-outlined",
-      "jam:skype-circle",
-      "jam:skype-square",
-      "logos:skype",
-      "entypo-social:skype-with-circle",
-    ],
+    variations: ["ant-design:skype-filled"],
     keywords: ["skype", "sky"],
   },
   {
     userFriendlyName: "Medium",
-    variations: [
-      "akar-icons:medium-fill",
-      "ant-design:medium-circle-filled",
-      "ant-design:medium-square-filled",
-      "ant-design:medium-workmark-outlined",
-    ],
+    variations: ["ant-design:medium-circle-filled"],
     keywords: ["medium", "med"],
   },
   {
     userFriendlyName: "Google Play",
-    variations: [
-      "ph:google-play-logo-light",
-      "ri:google-play-fill",
-      "jam:google-play-circle",
-      "jam:google-play-square",
-      "logos:google-play",
-      "logos:google-play-icon",
-    ],
+    variations: ["ant-design:medium-circle-filled"],
     keywords: ["google", "play", "google play"],
   },
   {
     userFriendlyName: "Vimeo",
-    variations: [
-      "akar-icons:vimeo-fill",
-      "brandico:vimeo-rect",
-      "entypo-social:vimeo-with-circle",
-      "jam:vimeo-circle",
-      "jam:vimeo-square",
-      "logos:vimeo",
-      "logos:vimeo-icon",
-    ],
+    variations: ["entypo-social:vimeo-with-circle"],
     keywords: ["vimeo"],
   },
   {
     userFriendlyName: "Patreon",
-    variations: [
-      "bx:bxl-patreon",
-      "jam:patreon-circle",
-      "jam:patreon-square",
-      "la:patreon",
-      "logos:patreon",
-    ],
+    variations: ["cib:patreon"],
     keywords: ["patreon"],
   },
   {
     userFriendlyName: "Bandcamp",
-    variations: ["brandico:bandcamp", "fa-brands:bandcamp", "la:bandcamp"],
+    variations: ["fa:bandcamp"],
     keywords: ["bandcamp", "band", "camp"],
   },
   {
     userFriendlyName: "VSCO",
-    variations: ["cib:vsco"],
+    variations: ["arcticons:vsco"],
     keywords: ["vsco"],
   },
   {
     userFriendlyName: "VK",
-    variations: [
-      "akar-icons:vk-fill",
-      "cib:vk",
-      "entypo-social:vk-with-circle",
-      "uit:vk-alt",
-    ],
+    variations: ["entypo-social:vk-with-circle"],
     keywords: ["vk"],
   },
   {
@@ -450,12 +270,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "WeChat",
-    variations: [
-      "ant-design:wechat-filled",
-      "ri:wechat-2-fill",
-      "ri:wechat-2-line",
-      "xxxxxxx",
-    ],
+    variations: ["ant-design:wechat-filled"],
     keywords: ["wechat", "we", "chat"],
   },
   {
@@ -465,37 +280,22 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "AppStore",
-    variations: [
-      "ion:logo-apple-appstore",
-      "simple-icons:appstore",
-      "tabler:brand-appstore",
-      "uiw:appstore",
-      "uiw:appstore-o",
-    ],
+    variations: ["ion:logo-apple-appstore"],
     keywords: ["apple", "appstore", "app", "store", "loja"],
   },
   {
     userFriendlyName: "Napster",
-    variations: [
-      "xxxfa-brands:napsterxxxx",
-      "jam:napster-circle",
-      "jam:napster-square",
-    ],
+    variations: ["fa-brands:napster"],
     keywords: ["napster", "nap", "naps"],
   },
   {
     userFriendlyName: "Flickr",
-    variations: [
-      "bx:bxl-flickr",
-      "fa-brands:flickr",
-      "entypo-social:flickr-with-circle",
-      "logos:flickr",
-    ],
-    keywords: ["flickr", "flic"],
+    variations: ["ion:logo-flickr"],
+    keywords: ["flickr", "flic", "flik", "fliker", "flicr"],
   },
   {
     userFriendlyName: "Ebay",
-    variations: ["bx:bxl-ebay", "grommet-icons:ebay", "xxxxxxx", "xxxxxxx"],
+    variations: ["bxl:ebay"],
     keywords: [
       "ebay",
       "loja",
@@ -508,31 +308,17 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Flipboard",
-    variations: [
-      "cib:flipboard",
-      "fontisto:flipboard",
-      "la:flipboard",
-      "whh:flipboard",
-    ],
+    variations: ["fontisto:flipboard"],
     keywords: ["flipboard", "flip", "board"],
   },
   {
     userFriendlyName: "Last.FM",
-    variations: [
-      "brandico:lastfm",
-      "brandico:lastfm-rect",
-      "entypo-social:lastfm-with-circle",
-      "logos:lastfm",
-    ],
+    variations: ["el:lastfm"],
     keywords: ["lastfm", "last", "fm"],
   },
   {
     userFriendlyName: "Weibo",
-    variations: [
-      "ant-design:weibo-circle-filled",
-      "ant-design:weibo-outlined",
-      "ant-design:weibo-square-filled",
-    ],
+    variations: ["ant-design:weibo-circle-filled"],
     keywords: ["weibo", "wei"],
   },
   {
@@ -561,7 +347,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Venmo",
-    variations: ["bx:bxl-venmo", "cib:venmo", "ion:logo-venmo"],
+    variations: ["bxl:venmo"],
     keywords: ["venmo"],
   },
   {
@@ -576,13 +362,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Blogger",
-    variations: [
-      "brandico:blogger",
-      "brandico:blogger-rect",
-      "jam:blogger-circle",
-      "jam:blogger-square",
-      "logos:blogger",
-    ],
+    variations: ["cib:blogger-b"],
     keywords: ["blogger", "blog"],
   },
   {
@@ -592,12 +372,12 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Amazon Prime",
-    variations: ["simple-icons:amazonprime", "xxxxxxx", "xxxxxxx", "xxxxxxx"],
+    variations: ["simple-icons:amazonprime"],
     keywords: ["amazon arime", "amazon", "prime"],
   },
   {
     userFriendlyName: "Google Maps",
-    variations: ["logos:google-maps", "mdi:google-maps", "zmdi:google-maps"],
+    variations: ["mdi:google-maps"],
     keywords: [
       "google",
       "maps",
@@ -622,7 +402,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Uber",
-    variations: ["cib:uber", "fa-brands:uber", "la:uber", "simple-icons:uber"],
+    variations: ["cib:uber"],
     keywords: ["uber"],
   },
   {
@@ -637,30 +417,18 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Google Podcast",
-    variations: ["mdi:google-podcast", "ph:google-podcasts-logo-light"],
+    variations: ["cib:google-podcasts"],
     keywords: ["google", "podcast", "google podcast", "podcasts"],
   },
   {
     userFriendlyName: "GitHub",
-    variations: [
-      "akar-icons:github-fill",
-      "akar-icons:github-outline-fill",
-      "brandico:github",
-      "brandico:github-text",
-      "fa-brands:github-square",
-      "jam:github",
-    ],
+    variations: ["akar-icons:github-fill"],
     keywords: ["github", "git", "hub"],
   },
   {
     userFriendlyName: "Git",
-    variations: ["bi:git", "bx:bx-git-branch", "fa-brands:git-square"],
+    variations: ["mdi:git"],
     keywords: ["git"],
-  },
-  {
-    userFriendlyName: "XXXX",
-    variations: ["xxxxxxx", "xxxxxxx", "xxxxxxx", "xxxxxxx"],
-    keywords: ["xxxxxxx", "xxxxxxx"],
   },
   {
     userFriendlyName: "Redbubble",
@@ -669,12 +437,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Fiverr",
-    variations: [
-      "jam:fiverr",
-      "jam:fiverr-circle",
-      "jam:fiverr-square",
-      "simple-icons:fiverr",
-    ],
+    variations: ["jam:fiverr"],
     keywords: ["fiverr", "five", "fiver"],
   },
   {
@@ -684,13 +447,7 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Bitcoin",
-    variations: [
-      "akar-icons:bitcoin-fill",
-      "bi:currency-bitcoin",
-      "bx:bxl-bitcoin",
-      "whh:bitcoinsquare",
-      "logos:bitcoin",
-    ],
+    variations: ["akar-icons:bitcoin-fill"],
     keywords: [
       "bitcoin",
       "bit",
@@ -709,61 +466,32 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Wordpress",
-    variations: [
-      "bi:wordpress",
-      "brandico:wordpress",
-      "cib:wordpress",
-      "logos:wordpress",
-    ],
+    variations: ["brandico:wordpress"],
     keywords: ["wordpress", "word", "press"],
   },
   {
     userFriendlyName: "Bank",
-    variations: [
-      "ant-design:bank-filled",
-      "ant-design:bank-outlined",
-      "bi:piggy-bank",
-      "bi:piggy-bank-fill",
-    ],
+    variations: ["fluent:building-bank-28-filled"],
     keywords: ["bank", "piggy"],
   },
   {
     userFriendlyName: "Generic Currency",
-    variations: [
-      "bi:currency-dollar",
-      "bi:currency-euro",
-      "bi:currency-yen",
-      "grommet-icons:currency",
-    ],
+    variations: ["heroicons-solid:currency-dollar"],
     keywords: ["currency", "moeda"],
   },
   {
     userFriendlyName: "Dollar",
-    variations: [
-      "ant-design:dollar-circle-filled",
-      "ant-design:dollar-circle-outlined",
-      "bx:bxs-badge-dollar",
-      "healthicons:dollar-negative",
-    ],
+    variations: ["bxs:dollar-circle"],
     keywords: ["dolar", "dólar", "dollar"],
   },
   {
     userFriendlyName: "Euro",
-    variations: [
-      "ant-design:euro-circle-filled",
-      "ant-design:euro-circle-outlined",
-      "foundation:euro",
-    ],
+    variations: ["ant-design:euro-circle-filled"],
     keywords: ["euro"],
   },
   {
     userFriendlyName: "Visual Studio",
-    variations: [
-      "bx:bxl-visual-studio",
-      "cib:visual-studio",
-      "logos:visual-studio",
-      "logos:visual-studio-code",
-    ],
+    variations: ["cib:visual-studio"],
     keywords: [
       "visual",
       "studio",
@@ -781,32 +509,17 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Notepad",
-    variations: [
-      "bx:bx-notepad",
-      "bx:bxs-notepad",
-      "fluent:notepad-16-filled",
-      "fluent:notepad-16-regular",
-    ],
-    keywords: ["notepad", "note", "caderno"],
+    variations: ["bxs:notepad"],
+    keywords: ["notepad", "note", "caderno", "papel", "paper"],
   },
   {
     userFriendlyName: "Calendar",
-    variations: [
-      "ant-design:calendar-filled",
-      "ant-design:calendar-outlined",
-      "el:calendar-sign",
-      "el:calendar",
-    ],
+    variations: ["el:calendar-sign"],
     keywords: ["calendar", "calendário"],
   },
   {
     userFriendlyName: "Clock",
-    variations: [
-      "akar-icons:clock",
-      "ant-design:clock-circle-filled",
-      "ep:alarm-clock",
-      "clarity:alarm-clock-solid",
-    ],
+    variations: ["ant-design:clock-circle-filled"],
     keywords: [
       "clock",
       "relógio",
@@ -821,58 +534,28 @@ const icons: IIconifyIcon[] = [
   },
   {
     userFriendlyName: "Timer",
-    variations: [
-      "bx:bx-timer",
-      "bx:bxs-timer",
-      "cil:av-timer",
-      "fluent:timer-16-filled",
-      "fluent:timer-16-regular",
-    ],
-    keywords: ["timer", "cronômetro", "cronometro"],
+    variations: ["fluent:timer-20-filled"],
+    keywords: ["timer", "cronômetro", "cronometro", "time", "tempo"],
   },
   {
     userFriendlyName: "Android",
-    variations: [
-      "logos:android-icon",
-      "ant-design:android-filled",
-      "ic:baseline-android",
-      "jam:android-circle",
-      "jam:android-square",
-    ],
+    variations: ["raphael:android"],
     keywords: ["android"],
   },
   {
     userFriendlyName: "Upload",
-    variations: [
-      "bx:bxs-cloud-upload",
-      "bx:bx-upload",
-      "fa-solid:file-upload",
-      "jam:android-circle",
-      "fluent:arrow-upload-24-filled",
-    ],
+    variations: ["bxs:cloud-upload"],
     keywords: ["upload", "enviar", "subir"],
   },
   {
     userFriendlyName: "Download",
-    variations: [
-      "bx:bx-cloud-download",
-      "bi:download",
-      "bx:bxs-download",
-      "jam:android-circle",
-      "entypo:download",
-    ],
+    variations: ["fa:cloud-download"],
     keywords: ["download", "baixar"],
   },
   {
     userFriendlyName: "Smartphone",
-    variations: [
-      "cil:screen-smartphone",
-      "si-glyph:smartphone",
-      "zmdi:smartphone-iphone",
-      "jam:android-circle",
-      "entypo:download",
-    ],
-    keywords: ["smartphone", "celular", "cel", "phone"],
+    variations: ["eva:smartphone-fill"],
+    keywords: ["smartphone", "celular", "cel", "phone", "telefone"],
   },
 ];
 
