@@ -735,7 +735,12 @@ const DraggableUserComponent = ({
               isHoveringComponent={isHovering}
               onClick={() => {
                 if (pageId)
-                  dispatch(addMiddleComponentInPage(component, pageId));
+                  dispatch(
+                    addMiddleComponentInPage(
+                      { ...component, visible: false },
+                      pageId
+                    )
+                  );
               }}
             >
               <CopyAllIcon style={{ transform: "scale(0.7)" }} />
