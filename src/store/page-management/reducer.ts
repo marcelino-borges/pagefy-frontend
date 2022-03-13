@@ -1,4 +1,4 @@
-import { IAction } from "../shared";
+import { IAction } from "../shared/types";
 import { IPageManagementState, PageManagementTypes } from "./types";
 
 const initialState: IPageManagementState = {

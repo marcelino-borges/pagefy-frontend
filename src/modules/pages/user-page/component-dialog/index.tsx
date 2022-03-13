@@ -33,7 +33,7 @@ import {
   SectionHeader,
 } from "./styles";
 import theme from "../../../../theme";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ACESSIBILITY_GREEN,
   ACESSIBILITY_RED,
@@ -58,6 +58,10 @@ import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import DialogChooseAnimation from "./../../../components/dialog-choose-animation/index";
 import DialogVisibleDate from "../../../components/dialog-visible-date";
 import ColorPicker from "./../../../components/color-picker/index";
+import { getFirebaseToken } from "../../../../utils/firebase-config";
+import { uploadImage } from "../../../../services/files";
+import { clearLoading, setLoading } from "../../../../store/shared/actions";
+import { IApplicationState } from "../../../../store";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -73,6 +77,10 @@ const ComponentDialog = ({
   const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallerThanXM = useMediaQuery(theme.breakpoints.down("xm"));
+
+  const userState = useSelector(
+    (state: IApplicationState) => state.user.profile
+  );
 
   const { handleSubmit, register } = useForm();
 
@@ -138,7 +146,7 @@ const ComponentDialog = ({
     setErrorTextField(undefined);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     clearErrors();
 
     if (step === 0) {
@@ -151,6 +159,22 @@ const ComponentDialog = ({
     } else if (step === 1) {
       if (!isStep2Valid()) {
         return;
+      }
+      const token = await getFirebaseToken();
+      let urlMedia: string | undefined = undefined;
+
+      if (token && chosenImage && userState && userState._id) {
+        dispatch(setLoading());
+        urlMedia = (
+          await uploadImage(
+            userState._id,
+            chosenImage,
+            "profile",
+            undefined,
+            token
+          )
+        ).data;
+        dispatch(clearLoading());
       }
 
       const newComponent: IUserComponent = {
@@ -167,7 +191,7 @@ const ComponentDialog = ({
           columns: selectedColumnsCount,
         },
         type: selectedType,
-        mediaUrl: undefined,
+        mediaUrl: urlMedia,
         iconDetails: undefined,
         visibleDate: visibleDateTime,
         animation,
@@ -176,6 +200,7 @@ const ComponentDialog = ({
         dispatch(addMiddleComponentInPage(newComponent, pageId));
       }
       handleClose();
+      clearStates();
     }
   };
 
@@ -432,10 +457,6 @@ const ComponentDialog = ({
             setChosenImage={setChosenImage}
             acceptedFiles={IMAGE_EXTENSIONS}
             submitDialog={() => {
-              if (!chosenImage) {
-                return;
-              }
-              // TODO: Send file
               setShowUploadDialog(false);
             }}
             cancelDialog={() => {

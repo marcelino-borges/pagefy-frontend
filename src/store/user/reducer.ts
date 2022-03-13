@@ -1,4 +1,4 @@
-import { IAction } from "../shared";
+import { IAction } from "../shared/types";
 import { IUserState, UserActionTypes } from "./types";
 
 // const initialStateMock: IUserState = {

@@ -22,10 +22,11 @@ const AppRoutes = () => {
     const isAppLoading =
       appState.user.loading === true ||
       appState.auth.loading === true ||
-      appState.userPages.loading === true;
+      appState.userPages.loading === true ||
+      appState.shared.loading === true;
 
     setIsLoading(isAppLoading);
-  }, [appState.user, appState.auth, appState.userPages]);
+  }, [appState.user, appState.auth, appState.userPages, appState.shared]);
 
   useEffect(() => {
     if (appState.userPages.pageBeingSaved) {

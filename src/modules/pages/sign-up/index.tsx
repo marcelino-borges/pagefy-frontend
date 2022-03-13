@@ -94,13 +94,10 @@ const SignUpPage = () => {
 
             if (imageUrl && imageUrl.length > 0) {
               dispatch(
-                updateUser(
-                  {
-                    ...newUser,
-                    profileImageUrl: imageUrl,
-                  },
-                  token
-                )
+                updateUser({
+                  ...newUser,
+                  profileImageUrl: imageUrl,
+                })
               );
             }
           }

@@ -1,4 +1,4 @@
-import { IAction } from "../shared";
+import { IAction } from "../shared/types";
 import { IPageRenderedState, PageRenderedTypes } from "./types";
 
 const initialState: IPageRenderedState = {

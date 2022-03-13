@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 import { AxiosError } from "axios";
 import strings from "../../localization";
 import { translateError } from "../../utils/api-errors-mapping";
-import { IAppResult } from "../shared";
+import { IAppResult } from "../shared/types";
 
 export const getPageByUrl =
   (url: string, onSuccessCallback: any = null, onErrorCallback: any = null) =>

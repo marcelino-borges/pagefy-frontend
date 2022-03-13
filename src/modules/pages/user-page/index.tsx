@@ -33,9 +33,9 @@ import strings from "../../../localization";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
 import {
-  deleteImage,
   deletePage,
   setPageBackgroundColor,
+  setPageBGImage,
   setPageFontColor,
   setPageImage,
   togglePageIsPublic,
@@ -63,6 +63,9 @@ import IconButtonTheme from "./../../components/icon-button-theme/index";
 import { getPageByUrl } from "../../../services/user-pages";
 import { AxiosResponse } from "axios";
 import { showErrorToast } from "./../../../utils/toast/index";
+import { clearLoading, setLoading } from "../../../store/shared/actions";
+import { deleteImage } from "../../../services/files";
+import { getFirebaseToken } from "../../../utils/firebase-config";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -112,7 +115,6 @@ const UserPage = () => {
   }, [dispatch, userEmailState]);
 
   useEffect(() => {
-    console.log("pages");
     if (
       id &&
       !!userPagesState &&
@@ -122,14 +124,15 @@ const UserPage = () => {
       const pageFound = userPagesState.pages.find(
         (page: IUserPage) => page._id === id
       );
+
       if (pageFound) {
-        setPage(pageFound);
+        setPage({ ...pageFound });
       } else {
         navigate(routes.notFound);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, userPagesState?.pages]);
+  }, [id, userPagesState]);
 
   useEffect(() => {
     if (page && page._id) {
@@ -241,6 +244,105 @@ const UserPage = () => {
     dispatch(togglePageIsPublic(page._id));
   };
 
+  const savePageImage = async () => {
+    const token = await getFirebaseToken();
+    if (!chosenImage || !token || !page || !page._id) return;
+
+    if (page.pageImageUrl && page.pageImageUrl.length > 0) {
+      dispatch(setLoading());
+      await deleteImage(page.pageImageUrl, page.userId, token);
+    }
+
+    dispatch(
+      setPageImage(
+        chosenImage,
+        page,
+        (url: string) => {
+          const pageToSave: IUserPage = {
+            ...page,
+            pageImageUrl: url,
+          };
+          dispatch(
+            updatePage(
+              pageToSave,
+              () => {
+                dispatch(clearLoading());
+                setPage({
+                  ...page,
+                  pageImageUrl: pageToSave.pageImageUrl,
+                });
+              },
+              () => {
+                dispatch(clearLoading());
+              }
+            )
+          );
+        },
+        (errorTranslated: string) => {
+          showErrorToast(errorTranslated);
+          dispatch(clearLoading());
+        }
+      )
+    );
+    setChosenImage(undefined);
+  };
+
+  const savePageBGImage = async () => {
+    const token = await getFirebaseToken();
+    if (!chosenImage || !token || !page || !page._id) return;
+
+    if (
+      page.style &&
+      page.style.backgroundImage &&
+      page.style.backgroundImage.length > 0
+    ) {
+      const urlToDelete = page.style.backgroundImage
+        .replace("url", "")
+        .replaceAll("(", "")
+        .replaceAll(")", "");
+      dispatch(setLoading());
+      await deleteImage(urlToDelete, page.userId, token);
+    }
+    dispatch(
+      setPageBGImage(
+        chosenImage,
+        page,
+        (url: string) => {
+          const pageToSave: IUserPage = {
+            ...page,
+            style: {
+              ...page.style,
+              backgroundImage: `url(${url})`,
+            },
+          };
+          dispatch(
+            updatePage(
+              pageToSave,
+              () => {
+                dispatch(clearLoading());
+                setPage({
+                  ...page,
+                  style: {
+                    ...page.style,
+                    backgroundImage: `url(${url})`,
+                  },
+                });
+              },
+              () => {
+                dispatch(clearLoading());
+              }
+            )
+          );
+        },
+        (errorTranslated: string) => {
+          dispatch(clearLoading());
+          showErrorToast(errorTranslated);
+        }
+      )
+    );
+    setChosenImage(undefined);
+  };
+
   const ToolbarBottomTools = () => {
     return (
       <ToolbarBottomToolsStyled
@@ -321,29 +423,7 @@ const UserPage = () => {
               setChosenImage={setChosenImage}
               acceptedFiles={IMAGE_EXTENSIONS}
               submitDialog={async () => {
-                if (!chosenImage || !page || !page._id) return;
-
-                if (page.pageImageUrl && page.pageImageUrl.length > 0) {
-                  await deleteImage(page.pageImageUrl, page.userId);
-                }
-
-                dispatch(
-                  setPageImage(
-                    chosenImage,
-                    page,
-                    (url: string) => {
-                      const pageToSave: IUserPage = {
-                        ...page,
-                        pageImageUrl: url,
-                      };
-                      dispatch(updatePage(pageToSave));
-                    },
-                    (errorTranslated: string) => {
-                      showErrorToast(errorTranslated);
-                    }
-                  )
-                );
-                setChosenImage(undefined);
+                savePageBGImage();
                 setOpenChooseFileBGDialog(false);
               }}
               cancelDialog={() => {
@@ -634,29 +714,7 @@ const UserPage = () => {
           setChosenImage={setChosenImage}
           acceptedFiles={IMAGE_EXTENSIONS}
           submitDialog={async () => {
-            if (!chosenImage || !page || !page._id) return;
-
-            if (page.pageImageUrl && page.pageImageUrl.length > 0) {
-              await deleteImage(page.pageImageUrl, page.userId);
-            }
-
-            dispatch(
-              setPageImage(
-                chosenImage,
-                page,
-                (url: string) => {
-                  const pageToSave: IUserPage = {
-                    ...page,
-                    pageImageUrl: url,
-                  };
-                  dispatch(updatePage(pageToSave));
-                },
-                (errorTranslated: string) => {
-                  showErrorToast(errorTranslated);
-                }
-              )
-            );
-            setChosenImage(undefined);
+            savePageImage();
             setOpenChooseFilePageDialog(false);
           }}
           cancelDialog={() => {

@@ -17,6 +17,7 @@ import { IUserPagesState } from "./user-pages/types";
 import { IPageManagementState } from "./page-management/types";
 import { IPageRenderedState } from "./page-renderer/types";
 import { IAuthState } from "./auth/types";
+import { ISharedState } from "./shared/types";
 
 // Reducers
 import userReducer from "./user/reducer";
@@ -24,6 +25,7 @@ import pageManagementReducer from "./page-management/reducer";
 import pageRendererReducer from "./page-renderer/reducer";
 import userPagesReducer from "./user-pages/reducer";
 import authReducer from "./auth/reducer";
+import sharedReducer from "./shared/reducer";
 
 export interface IApplicationState {
   auth: IAuthState;
@@ -31,6 +33,7 @@ export interface IApplicationState {
   userPages: IUserPagesState;
   pageManagement: IPageManagementState;
   pageRendered: IPageRenderedState;
+  shared: ISharedState;
 }
 
 let blacklistTransform = createTransform((inboundState: any, key: any) => {
@@ -56,6 +59,7 @@ const rootReducer = combineReducers({
   userPages: userPagesReducer,
   pageManagement: pageManagementReducer,
   pageRendered: pageRendererReducer,
+  shared: sharedReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

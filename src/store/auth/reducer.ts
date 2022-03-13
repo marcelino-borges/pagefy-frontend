@@ -1,4 +1,4 @@
-import { IAction } from "../shared";
+import { IAction } from "../shared/types";
 import { AuthActionTypes, IAuthState } from "./types";
 
 const initialState: IAuthState = {

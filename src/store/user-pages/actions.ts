@@ -3,13 +3,15 @@ import * as PagesService from "../../services/user-pages";
 import * as FilesService from "../../services/files";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getFirebaseToken } from "../../utils/firebase-config";
-import { IAppResult } from "../shared";
+import { IAppResult } from "../shared/types";
+import { IApplicationState } from "..";
 import {
   IComponentAnimation,
   IUserComponent,
   IUserPage,
   UserPagesActionTypes,
 } from "./types";
+import { IUser } from "../user/types";
 
 export const getAllUserPages =
   (
@@ -232,11 +234,80 @@ export const addMiddleComponentInPage = (
   type: UserPagesActionTypes.ADD_MIDDLE_COMPONENT_IN_PAGE,
 });
 
-export const deleteMiddleComponentFromPage = (
-  componentId: string,
-  pageId: string
-) => ({
-  payload: { componentId, pageId },
+export const deleteMiddleComponentFromPage =
+  (
+    componentId: string,
+    pageId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any, getState: () => IApplicationState) => {
+    const user: IUser | undefined = getState().user.profile;
+    const pages: IUserPage[] | undefined = getState().userPages.pages;
+    const userId: string | undefined = user?._id;
+    const token = await getFirebaseToken();
+
+    if (!token || !userId || !pages) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    let pageToUpdate;
+
+    const updatedPagesList = pages.map((page: IUserPage) => {
+      if (page._id === pageId && page.middleComponents) {
+        const updatedComponents = page.middleComponents.filter(
+          (component: IUserComponent) => {
+            if (component._id !== componentId) {
+              if (component.mediaUrl && component.mediaUrl.length > 0)
+                dispatch(deleteImage(component.mediaUrl, userId));
+
+              if (
+                component.style &&
+                component.style.backgroundImage &&
+                component.style.backgroundImage.length > 0
+              )
+                dispatch(deleteImage(component.style.backgroundImage, userId));
+              pageToUpdate = page;
+              return true;
+            }
+            return false;
+          }
+        );
+        const updatedPage: IUserPage = {
+          ...page,
+          middleComponents: updatedComponents,
+        };
+        return updatedPage;
+      }
+      return page;
+    });
+
+    if (!pageToUpdate) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    PagesService.updatePage(pageToUpdate, token)
+      .then(() => {
+        dispatch(deleteMiddleComponentFromPageStore(updatedPagesList));
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+const deleteMiddleComponentFromPageStore = (updatedPagesList: IUserPage[]) => ({
+  payload: updatedPagesList,
   type: UserPagesActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE,
 });
 
@@ -372,7 +443,7 @@ export const setPageImage =
     FilesService.uploadImage(page.userId, image, undefined, page._id, token)
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
-        dispatch(setPageImageSuccess());
+        dispatch(setPageImageSuccess(imageUrl));
 
         if (onSuccessCallback) onSuccessCallback(imageUrl);
       })
@@ -393,12 +464,13 @@ export const setPageImageLoading = () => ({
   type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_LOADING,
 });
 
-export const setPageImageSuccess = () => ({
+export const setPageImageSuccess = (url: string) => ({
+  payload: url,
   type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_SUCCESS,
 });
 
 export const setPageImageError = (error: IAppResult) => ({
-  paylod: error,
+  payload: error,
   type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_ERROR,
 });
 
@@ -430,3 +502,111 @@ export const deleteImage = async (
       }
     });
 };
+
+export const setPageBGImage =
+  (
+    image: File,
+    page: IUserPage,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(setPageBGImageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    FilesService.uploadImage(page.userId, image, undefined, page._id, token)
+      .then((res: AxiosResponse) => {
+        const imageUrl = res.data;
+        dispatch(setPageBGImageSuccess(imageUrl));
+
+        if (onSuccessCallback) onSuccessCallback(imageUrl);
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(setPageBGImageError(error));
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+export const setPageBGImageLoading = () => ({
+  type: UserPagesActionTypes.UPDATE_PAGE_BG_IMAGE_LOADING,
+});
+
+export const setPageBGImageSuccess = (url: string) => ({
+  payload: url,
+  type: UserPagesActionTypes.UPDATE_PAGE_BG_IMAGE_SUCCESS,
+});
+
+export const setPageBGImageError = (error: IAppResult) => ({
+  payload: error,
+  type: UserPagesActionTypes.UPDATE_PAGE_BG_IMAGE_ERROR,
+});
+
+export const setComponentImage =
+  (
+    image: File,
+    componentId: string,
+    pageId: string,
+    userId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(setComponentImageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    FilesService.uploadImage(userId, image, undefined, pageId, token)
+      .then((res: AxiosResponse) => {
+        const imageUrl = res.data;
+        dispatch(setComponentImageSuccess(pageId, componentId, imageUrl));
+
+        if (onSuccessCallback) onSuccessCallback(imageUrl);
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(setComponentImageError(error));
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+export const setComponentImageLoading = () => ({
+  type: UserPagesActionTypes.UPDATE_COMPONENT_IMAGE_LOADING,
+});
+
+export const setComponentImageSuccess = (
+  pageId: string,
+  componentId: string,
+  url: string
+) => ({
+  payload: { pageId, componentId, url },
+  type: UserPagesActionTypes.UPDATE_COMPONENT_IMAGE_SUCCESS,
+});
+
+export const setComponentImageError = (error: IAppResult) => ({
+  payload: error,
+  type: UserPagesActionTypes.UPDATE_COMPONENT_IMAGE_ERROR,
+});

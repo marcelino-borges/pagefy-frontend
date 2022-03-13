@@ -53,6 +53,7 @@ import {
   setComponentAnimation,
   setComponentBackgroundColor,
   setComponentFontColor,
+  setComponentImage,
   setComponentLabel,
   setComponentUrl,
   setComponentVisibleDate,
@@ -74,6 +75,9 @@ import DialogChooseAnimation from "../../../components/dialog-choose-animation";
 import DialogVisibleDate from "./../../../components/dialog-visible-date/index";
 import ColorPicker from "./../../../components/color-picker/index";
 import { MEDIUM_GREY } from "./../../../../styles/colors";
+import { getFirebaseToken } from "../../../../utils/firebase-config";
+import { clearLoading, setLoading } from "../../../../store/shared/actions";
+import { deleteImage } from "../../../../services/files";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -112,7 +116,7 @@ const DraggableUserComponent = ({
   const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
   const [openChooseAnimationDialog, setOpenChooseAnimationDialog] =
     useState(false);
-  const [chosenImage, setChosenImage] = useState();
+  const [chosenImage, setChosenImage] = useState<File | undefined>();
   const [openDeleteComponentConfirmation, setOpenDeleteComponentConfirmation] =
     useState(false);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
@@ -120,6 +124,10 @@ const DraggableUserComponent = ({
 
   const pageBeingManaged = useSelector(
     (state: IApplicationState) => state.pageManagement.pageId
+  );
+
+  const userState = useSelector(
+    (state: IApplicationState) => state.user.profile
   );
 
   const AnalyticsItem = ({ tooltipKey, tooltipValue, icon }: any) => {
@@ -226,10 +234,49 @@ const DraggableUserComponent = ({
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={() => {
-          if (!chosenImage) return;
-          // TODO: Send file
+        submitDialog={async () => {
+          const token = await getFirebaseToken();
+          if (
+            !chosenImage ||
+            !token ||
+            !userState ||
+            !userState._id ||
+            !component._id ||
+            !pageId
+          )
+            return;
+
+          if (
+            component.style &&
+            component.style.backgroundImage &&
+            component.style.backgroundImage.length > 0
+          ) {
+            const urlToDelete = component.style.backgroundImage
+              .replace("url", "")
+              .replaceAll("(", "")
+              .replaceAll(")", "");
+
+            dispatch(setLoading());
+            await deleteImage(urlToDelete, userState._id, token);
+          }
+
+          dispatch(
+            setComponentImage(
+              chosenImage,
+              component._id,
+              pageId,
+              userState._id,
+              () => {
+                dispatch(clearLoading());
+              },
+              () => {
+                dispatch(clearLoading());
+              }
+            )
+          );
+
           setOpenChooseFileDialog(false);
+          setChosenImage(undefined);
         }}
         cancelDialog={() => {
           setChosenImage(undefined);

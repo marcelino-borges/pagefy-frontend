@@ -1,5 +1,5 @@
 import { moveElementInArrayFromToIndex } from "../../utils";
-import { IAction } from "../shared";
+import { IAction } from "../shared/types";
 import {
   IComponentAnimation,
   IUserComponent,
@@ -30,6 +30,7 @@ const pagesReducer = (
     case UserPagesActionTypes.UPDATE_USER_PAGE_NAME_ERROR:
     case UserPagesActionTypes.GET_ALL_USER_PAGES_ERROR:
     case UserPagesActionTypes.UPDATE_PAGE_IMAGE_ERROR:
+    case UserPagesActionTypes.UPDATE_COMPONENT_IMAGE_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -37,6 +38,8 @@ const pagesReducer = (
 
     case UserPagesActionTypes.UPDATE_PAGE_LOADING:
     case UserPagesActionTypes.UPDATE_PAGE_IMAGE_LOADING:
+    case UserPagesActionTypes.UPDATE_PAGE_BG_IMAGE_LOADING:
+    case UserPagesActionTypes.UPDATE_COMPONENT_IMAGE_LOADING:
       return {
         ...state,
         loading: true,
@@ -54,13 +57,58 @@ const pagesReducer = (
         ...state,
       };
 
-    case UserPagesActionTypes.UPDATE_PAGE_IMAGE_SUCCESS:
+    case UserPagesActionTypes.UPDATE_PAGE_IMAGE_SUCCESS: {
+      let updatedPagesList: IUserPage[] = state.pages ? [...state.pages] : [];
+
+      if (updatedPagesList && updatedPagesList.length > 0) {
+        updatedPagesList = updatedPagesList.map((page: IUserPage) => {
+          if (page._id === action.payload.pageId) {
+            const updatedPage: IUserPage = {
+              ...page,
+              pageImageUrl: action.payload,
+            };
+
+            return updatedPage;
+          }
+          return page;
+        });
+      }
+
       return {
         ...state,
         loading: false,
         error: undefined,
-        pageBeingSaved: undefined,
+        pages: [...updatedPagesList],
       };
+    }
+
+    case UserPagesActionTypes.UPDATE_PAGE_BG_IMAGE_SUCCESS: {
+      let updatedPagesList: IUserPage[] = state.pages ? [...state.pages] : [];
+
+      if (updatedPagesList && updatedPagesList.length > 0) {
+        updatedPagesList = updatedPagesList.map((page: IUserPage) => {
+          if (page._id === action.payload.pageId) {
+            const updatedPage: IUserPage = {
+              ...page,
+              style: {
+                ...page.style,
+                backgroundImage: `url(${action.payload})`,
+              },
+            };
+
+            return updatedPage;
+          }
+          return page;
+        });
+      }
+
+      return {
+        ...state,
+        loading: false,
+        error: undefined,
+        pages: [...updatedPagesList],
+      };
+    }
 
     case UserPagesActionTypes.GET_ALL_USER_PAGES_SUCCESS: {
       return {
@@ -127,6 +175,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -154,6 +203,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -177,6 +227,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -213,6 +264,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -250,6 +302,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -287,6 +340,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -314,6 +368,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -351,6 +406,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -388,6 +444,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -415,6 +472,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -455,6 +513,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -495,6 +554,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -532,6 +592,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -567,33 +628,17 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
     case UserPagesActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE: {
-      const pageId = action.payload.pageId;
-      const componentId = action.payload.componentId;
-      let pageToBeSaved;
-
-      const updatedPagesList = state.pages.map((page: IUserPage) => {
-        if (page._id === pageId && page.middleComponents) {
-          const updatedComponents = page.middleComponents.filter(
-            (component: IUserComponent) => component._id !== componentId
-          );
-          const updatedPage: IUserPage = {
-            ...page,
-            middleComponents: updatedComponents,
-          };
-          pageToBeSaved = updatedPage;
-          return updatedPage;
-        }
-        return page;
-      });
+      const updatedPagesList = action.payload.updatedPagesList;
 
       return {
         ...state,
         pages: [...updatedPagesList],
-        pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -621,6 +666,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 
@@ -635,6 +681,7 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPages],
         error: undefined,
+        loading: false,
       };
     }
 
@@ -657,6 +704,7 @@ const pagesReducer = (
             return {
               ...page,
               middleComponents: [component],
+              loading: false,
             };
           }
         }
@@ -698,6 +746,45 @@ const pagesReducer = (
         ...state,
         pages: [...updatedPagesList],
         pageBeingSaved: pageToBeSaved,
+        loading: false,
+      };
+    }
+
+    case UserPagesActionTypes.UPDATE_COMPONENT_IMAGE_SUCCESS: {
+      const pageId = action.payload.pageId as string;
+      const componentId = action.payload.componentId as string;
+      const url = action.payload.url as string;
+      let pageToBeSaved;
+
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
+            (component: IUserComponent) => {
+              if (component._id === componentId) {
+                const updatedComponent: IUserComponent = {
+                  ...component,
+                  mediaUrl: `url(${url})`,
+                };
+                return updatedComponent;
+              }
+              return component;
+            }
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            middleComponents: updatedComponents,
+          };
+          pageToBeSaved = updatedPage;
+          return updatedPage;
+        }
+        return page;
+      });
+
+      return {
+        ...state,
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
+        loading: false,
       };
     }
 

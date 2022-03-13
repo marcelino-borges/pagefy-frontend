@@ -8,13 +8,23 @@ import strings from "../../../../localization";
 import { signOut } from "./../../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import { LIGHTER_GREY } from "../../../../styles/colors";
+import ChooseFileDialog from "../../dialog-file-upload";
+import { useState } from "react";
+import { IMAGE_EXTENSIONS } from "../../../../constants";
+import { deleteImage } from "../../../../services/files";
+import { setUserProfileImage } from "../../../../store/user/actions";
+import { getFirebaseToken } from "../../../../utils/firebase-config";
+import { clearLoading, setLoading } from "./../../../../store/shared/actions";
 
 const UserLoggedIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userState = useSelector((state: IApplicationState) => state.user);
   const theme = useTheme();
+  const userState = useSelector((state: IApplicationState) => state.user);
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
+
+  const [openChooseFileBGDialog, setOpenChooseFileBGDialog] = useState(false);
+  const [chosenImage, setChosenImage] = useState<File>();
 
   const get2FirstNames = () => {
     if (!userState.profile) return "";
@@ -53,6 +63,51 @@ const UserLoggedIn = () => {
       justifyContent="flex-end"
       pr={!isSmallerThanMD ? "32px" : "0px"}
     >
+      <ChooseFileDialog
+        openChooseFileDialog={openChooseFileBGDialog}
+        setOpenChooseFileDialog={setOpenChooseFileBGDialog}
+        chosenImage={chosenImage}
+        setChosenImage={setChosenImage}
+        acceptedFiles={IMAGE_EXTENSIONS}
+        submitDialog={async () => {
+          const token = await getFirebaseToken();
+          if (!chosenImage || !token || !userState.profile) return;
+
+          if (
+            userState.profile &&
+            userState.profile._id &&
+            userState.profile.profileImageUrl &&
+            userState.profile.profileImageUrl.length > 0
+          ) {
+            dispatch(setLoading());
+            await deleteImage(
+              userState.profile.profileImageUrl,
+              userState.profile._id,
+              token
+            );
+          }
+
+          dispatch(
+            setUserProfileImage(
+              chosenImage,
+              userState.profile,
+              () => {
+                dispatch(clearLoading());
+              },
+              () => {
+                dispatch(clearLoading());
+              }
+            )
+          );
+
+          setChosenImage(undefined);
+          setOpenChooseFileBGDialog(false);
+        }}
+        cancelDialog={() => {
+          setChosenImage(undefined);
+          setOpenChooseFileBGDialog(false);
+        }}
+      />
       <Grid
         container={!!isSmallerThanMD ? true : undefined}
         item
@@ -61,7 +116,7 @@ const UserLoggedIn = () => {
         <ProfileEditablePicture
           imageUrl={userState.profile?.profileImageUrl}
           onClick={() => {
-            //
+            setOpenChooseFileBGDialog(true);
           }}
           width="50px"
           height="50px"

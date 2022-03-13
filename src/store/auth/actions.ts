@@ -4,7 +4,7 @@ import * as UserService from "../../services/user";
 import { AxiosError, AxiosResponse } from "axios";
 import { translateError } from "../../utils/api-errors-mapping";
 import strings from "../../localization";
-import { IAppResult } from "../shared";
+import { IAppResult } from "../shared/types";
 import { UserCredential } from "firebase/auth";
 import { getFirebaseToken } from "./../../utils/firebase-config/index";
 import { IUser } from "../user/types";

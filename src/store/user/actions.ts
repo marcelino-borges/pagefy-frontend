@@ -1,7 +1,8 @@
 import { IUser, UserActionTypes } from "./../user/types";
 import * as UserService from "./../../services/user";
+import * as FilesService from "./../../services/files";
 import { AxiosError, AxiosResponse } from "axios";
-import { IAppResult } from "../shared";
+import { IAppResult, UserStorageFolder } from "../shared/types";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getAllUserPages } from "./../user-pages/actions";
 import { getFirebaseToken } from "../../utils/firebase-config";
@@ -63,14 +64,17 @@ const getUserError = (e: IAppResult) => ({
 });
 
 export const updateUser =
-  (
-    user: IUser,
-    token: string,
-    onSuccessCallback: any = null,
-    onErrorCallback: any = null
-  ) =>
-  (dispatch: any) => {
+  (user: IUser, onSuccessCallback: any = null, onErrorCallback: any = null) =>
+  async (dispatch: any) => {
     dispatch(updateUserLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
     UserService.updateUser(user, token)
       .then((res: AxiosResponse) => {
         dispatch(updateUserSuccess(res.data));
@@ -104,3 +108,49 @@ const updateUserError = (e: IAppResult) => ({
 export const clearUserState = () => ({
   type: UserActionTypes.CLEAR_STATE,
 });
+
+export const setUserProfileImage =
+  (
+    image: File,
+    user: IUser,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    const token = await getFirebaseToken();
+
+    if (!token || !user._id) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    FilesService.uploadImage(
+      user._id,
+      image,
+      UserStorageFolder.PROFILE,
+      undefined,
+      token
+    )
+      .then((res: AxiosResponse) => {
+        const urlImage: string = res.data;
+
+        if (urlImage && urlImage.length > 0) {
+          dispatch(
+            updateUser({
+              ...user,
+              profileImageUrl: urlImage,
+            })
+          );
+        }
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else if (onErrorCallback) onErrorCallback();
+      });
+  };
