@@ -3,7 +3,7 @@ import { IUserComponent } from "../../../../../store/user-pages/types";
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_COMPONENT_RADIUS,
-} from "../../../../constants";
+} from "../../../../../constants";
 import BaseComponentType from "../base";
 
 interface IProps {

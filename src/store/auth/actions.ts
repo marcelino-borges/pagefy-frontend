@@ -25,7 +25,7 @@ export const signIn =
         const token = await getFirebaseToken();
 
         if (!token) {
-          if (onErrorCallback) onErrorCallback();
+          if (onErrorCallback) onErrorCallback(user);
           return;
         }
 
@@ -91,7 +91,7 @@ export const signUp =
           .then((res: AxiosResponse) => {
             dispatch(signUpSuccess());
             dispatch(getUserSuccess(res.data));
-            if (onSuccessCallback) onSuccessCallback();
+            if (onSuccessCallback) onSuccessCallback(res.data, token);
           })
           .catch((error: AxiosError) => {
             AuthService.deleteUserAuth();

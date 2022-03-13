@@ -47,7 +47,7 @@ import CustomTooltip from "../../../components/tooltip";
 import FontColorIcon from "./../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "./../../../../assets/icons/custom-icons/background-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
-import { IMAGE_EXTENSIONS } from "../../../constants";
+import { IMAGE_EXTENSIONS } from "../../../../constants";
 import {
   ComponentType,
   IComponentAnimation,

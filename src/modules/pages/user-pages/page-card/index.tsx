@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Grid, IconButton, InputAdornment, useMediaQuery } from "@mui/material";
-import { Save as SaveIcon } from "@mui/icons-material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { IUserPage } from "../../../../store/user-pages/types";
 import TransparentTextField from "../../../components/transparent-textfield";
 import {

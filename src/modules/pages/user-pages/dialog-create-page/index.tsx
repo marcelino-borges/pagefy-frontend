@@ -12,7 +12,7 @@ import {
 import strings from "../../../../localization";
 import { IUserPage } from "../../../../store/user-pages/types";
 import { useDispatch, useSelector } from "react-redux";
-import { createUserPage } from "../../../../store/user-pages/actions";
+import { createPage } from "../../../../store/user-pages/actions";
 import { IApplicationState } from "./../../../../store/index";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../../routes/paths";
@@ -84,7 +84,7 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
     };
 
     dispatch(
-      createUserPage(
+      createPage(
         newPage,
         (newPage: IUserPage) => {
           onClose();

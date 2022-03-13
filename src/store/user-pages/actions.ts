@@ -1,5 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import * as PagesService from "../../services/user-pages";
+import * as FilesService from "../../services/files";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getFirebaseToken } from "../../utils/firebase-config";
 import { IAppResult } from "../shared";
@@ -59,14 +60,14 @@ const getAllUserPagesError = (error: IAppResult) => ({
   type: UserPagesActionTypes.GET_ALL_USER_PAGES_ERROR,
 });
 
-export const createUserPage =
+export const createPage =
   (
     page: IUserPage,
     onSuccessCallback: any = null,
     onErrorCallback: any = null
   ) =>
   async (dispatch: any) => {
-    dispatch(createUserPageLoading());
+    dispatch(createPageLoading());
 
     const token = await getFirebaseToken();
 
@@ -78,7 +79,7 @@ export const createUserPage =
     PagesService.createPage(page, token)
       .then((res: AxiosResponse) => {
         const newPage: IUserPage = res.data;
-        dispatch(createUserPageSuccess(newPage));
+        dispatch(createPageSuccess(newPage));
 
         if (onSuccessCallback) onSuccessCallback(newPage);
       })
@@ -95,11 +96,11 @@ export const createUserPage =
       });
   };
 
-const createUserPageLoading = () => ({
+const createPageLoading = () => ({
   type: UserPagesActionTypes.CREATE_PAGE_LOADING,
 });
 
-const createUserPageSuccess = (page: IUserPage) => ({
+const createPageSuccess = (page: IUserPage) => ({
   payload: page,
   type: UserPagesActionTypes.CREATE_PAGE_SUCCESS,
 });
@@ -350,3 +351,82 @@ export const setPageToBeSaved = (page: IUserPage) => ({
   payload: page,
   type: UserPagesActionTypes.SET_PAGE_TO_BE_SAVED,
 });
+
+export const setPageImage =
+  (
+    image: File,
+    page: IUserPage,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(setPageImageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    FilesService.uploadImage(page.userId, image, undefined, page._id, token)
+      .then((res: AxiosResponse) => {
+        const imageUrl = res.data;
+        dispatch(setPageImageSuccess());
+
+        if (onSuccessCallback) onSuccessCallback(imageUrl);
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(setPageImageError(error));
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+export const setPageImageLoading = () => ({
+  type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_LOADING,
+});
+
+export const setPageImageSuccess = () => ({
+  type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_SUCCESS,
+});
+
+export const setPageImageError = (error: IAppResult) => ({
+  paylod: error,
+  type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_ERROR,
+});
+
+export const deleteImage = async (
+  url: string,
+  userId: string,
+  onSuccessCallback: any = null,
+  onErrorCallback: any = null
+) => {
+  const token = await getFirebaseToken();
+
+  if (!token) {
+    if (onErrorCallback) onErrorCallback();
+    return;
+  }
+
+  FilesService.deleteImage(url, userId, token)
+    .then(() => {
+      if (onSuccessCallback) onSuccessCallback();
+    })
+    .catch((e: AxiosError) => {
+      const error: IAppResult = e.response?.data;
+
+      if (error && error.message) {
+        const translatedError = translateError(error.message);
+        if (onErrorCallback) onErrorCallback(translatedError);
+      } else {
+        if (onErrorCallback) onErrorCallback();
+      }
+    });
+};

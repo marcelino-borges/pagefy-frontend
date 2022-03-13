@@ -66,7 +66,7 @@ import {
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
-import { IMAGE_EXTENSIONS } from "../../../constants";
+import { IMAGE_EXTENSIONS } from "../../../../constants";
 import DialogConfirmation from "../../../components/dialog-confirmation";
 import YoutubeEmbed from "../../../components/youtube-embed";
 import { getYoutubeIdFromUrl } from "./../../../../utils/index";

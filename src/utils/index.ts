@@ -3,7 +3,7 @@ import {
   YOUTUBE_EMBED_URL_IDENTIFIER,
   YOUTUBE_FULL_URL_IDENTIFIER,
   YOUTUBE_SHORT_URL_IDENTIFIER,
-} from "../modules/constants";
+} from "../constants";
 import { ComponentType } from "../store/user-pages/types";
 
 export const stringShortener = (originalString: string, maxSize: number) => {

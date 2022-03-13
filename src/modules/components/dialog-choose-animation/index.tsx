@@ -20,7 +20,7 @@ import strings from "../../../localization";
 import { IComponentAnimation } from "../../../store/user-pages/types";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 import { capitalizeFirstLetter } from "../../../utils";
-import { COMPONENT_ANIMATIONS } from "../../constants";
+import { COMPONENT_ANIMATIONS } from "../../../constants";
 import { AnimatedSquare } from "./styles";
 
 interface IProps {

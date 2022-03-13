@@ -28,13 +28,15 @@ const pagesReducer = (
     case UserPagesActionTypes.DELETE_PAGE_ERROR:
     case UserPagesActionTypes.UPDATE_USER_PAGE_URL_ERROR:
     case UserPagesActionTypes.UPDATE_USER_PAGE_NAME_ERROR:
-    case UserPagesActionTypes.GET_ALL_USER_PAGES_ERROR: {
+    case UserPagesActionTypes.GET_ALL_USER_PAGES_ERROR:
+    case UserPagesActionTypes.UPDATE_PAGE_IMAGE_ERROR:
       return {
         ...state,
         error: action.payload,
       };
-    }
+
     case UserPagesActionTypes.UPDATE_PAGE_LOADING:
+    case UserPagesActionTypes.UPDATE_PAGE_IMAGE_LOADING:
       return {
         ...state,
         loading: true,
@@ -47,20 +49,18 @@ const pagesReducer = (
     case UserPagesActionTypes.DELETE_PAGE_LOADING:
     case UserPagesActionTypes.GET_ALL_USER_PAGES_LOADING:
     case UserPagesActionTypes.UPDATE_USER_PAGE_URL_LOADING:
-    case UserPagesActionTypes.UPDATE_USER_PAGE_NAME_LOADING: {
+    case UserPagesActionTypes.UPDATE_USER_PAGE_NAME_LOADING:
       return {
         ...state,
       };
-    }
 
-    case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
+    case UserPagesActionTypes.UPDATE_PAGE_IMAGE_SUCCESS:
       return {
         ...state,
         loading: false,
         error: undefined,
         pageBeingSaved: undefined,
       };
-    }
 
     case UserPagesActionTypes.GET_ALL_USER_PAGES_SUCCESS: {
       return {
@@ -77,6 +77,28 @@ const pagesReducer = (
       return {
         ...state,
         pages: updatedPages,
+        error: undefined,
+      };
+    }
+
+    case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
+      let updatedPagesList: IUserPage[] = state.pages ? [...state.pages] : [];
+
+      if (updatedPagesList && updatedPagesList.length > 0) {
+        updatedPagesList = updatedPagesList.map((page: IUserPage) => {
+          if (page._id === action.payload._id) {
+            return {
+              ...page,
+            };
+          }
+          return page;
+        });
+      }
+
+      return {
+        ...state,
+        pages: [...updatedPagesList],
+        loading: false,
         error: undefined,
       };
     }

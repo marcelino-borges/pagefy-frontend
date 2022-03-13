@@ -14,12 +14,16 @@ import routes from "./../../../routes/paths";
 import { Link, useNavigate } from "react-router-dom";
 import logos from "../../../assets/img/logos";
 import UserLoggedIn from "./user-loggedin";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../store";
 
 const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallerThan400 = useMediaQuery("(max-width:400px)");
+
+  const userState = useSelector((state: IApplicationState) => state.user);
 
   const [isShowingDrawer, setIsShowingDrawer] = useState(false);
 
@@ -144,7 +148,7 @@ const Header = () => {
           height: isSmallerThanMD ? "unset" : "117px",
         }}
       >
-        <Link to={routes.root}>
+        <Link to={userState.profile?._id ? routes.pages : routes.root}>
           <img
             src={logos.LogoHorizontalLightBGPNG}
             style={{

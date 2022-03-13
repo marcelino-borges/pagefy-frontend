@@ -20,13 +20,14 @@ import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { PrimaryColoredText } from "./style";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
-import { IMAGE_EXTENSIONS } from "../../constants";
+import { IMAGE_EXTENSIONS } from "../../../constants";
 import ProfileEditablePicture from "../../components/profile-editable-picture";
 import { signIn, signOut, signUp } from "../../../store/auth/actions";
 import { showErrorToast } from "./../../../utils/toast/index";
 import routes from "./../../../routes/paths";
-import { getUser } from "../../../store/user/actions";
-import { IPlan } from "../../../store/user/types";
+import { IPlan, IUser } from "../../../store/user/types";
+import { uploadImage } from "../../../services/files";
+import { updateUser } from "./../../../store/user/actions";
 const INITIAL_VALUES = {
   firstName: "",
   lastName: "",
@@ -47,7 +48,8 @@ const SignUpPage = () => {
   const [showingPassword, setShowingPassword] = useState(false);
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
-  const [profileImageUrl, setProfileImageUrl] = useState(undefined);
+  const [profileImageTemporaryUrl, setProfileImageTemporaryUrl] =
+    useState<any>(undefined);
 
   useEffect(() => {
     dispatch(signOut());
@@ -64,7 +66,7 @@ const SignUpPage = () => {
     if (!agreePrivacy) {
       showErrorToast(strings.requiredPrivacyAccept);
     }
-    //TODO: Enviar imagem e salvar url aqui
+
     const newUser = {
       firstName: values.firstName,
       lastName: values.lastName,
@@ -78,7 +80,30 @@ const SignUpPage = () => {
     dispatch(
       signUp(
         newUser,
-        () => {
+        async (user: IUser, token: string) => {
+          if (user._id && chosenImage) {
+            const imageUrl: string = (
+              await uploadImage(
+                user._id,
+                chosenImage,
+                "profile",
+                undefined,
+                token
+              )
+            ).data;
+
+            if (imageUrl && imageUrl.length > 0) {
+              dispatch(
+                updateUser(
+                  {
+                    ...newUser,
+                    profileImageUrl: imageUrl,
+                  },
+                  token
+                )
+              );
+            }
+          }
           dispatch(
             signIn({ email: values.email, password: values.password }, () => {
               navigate(routes.pages);
@@ -105,7 +130,7 @@ const SignUpPage = () => {
           if (!chosenImage) {
             return;
           }
-          // TODO: Send file
+          setProfileImageTemporaryUrl(URL.createObjectURL(chosenImage));
           setOpenUploadDialog(false);
         }}
         cancelDialog={() => {
@@ -121,7 +146,7 @@ const SignUpPage = () => {
           <Grid container pb="24px">
             <Grid container justifyContent="center" alignItems="center">
               <ProfileEditablePicture
-                imageUrl={profileImageUrl}
+                imageUrl={profileImageTemporaryUrl}
                 onClick={() => setOpenUploadDialog(true)}
                 height="100px"
                 width="100px"
@@ -295,7 +320,7 @@ const SignUpPage = () => {
             </Grid>
 
             {/* Last line - Buttons */}
-            <Grid container item justifyContent="center" p="12px">
+            <Grid container item justifyContent="center" p="36px">
               <Button
                 type="submit"
                 variant="contained"

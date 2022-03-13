@@ -6,7 +6,7 @@ import {
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_COMPONENT_RADIUS,
-} from "../../../../constants";
+} from "../../../../../constants";
 import { Root } from "./style";
 
 interface IProps {

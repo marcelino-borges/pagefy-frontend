@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from "uuid";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
-import { RENDERED_PAGE_LAUNCH_COMPONENT_ROWS } from "../../../constants";
+import { RENDERED_PAGE_LAUNCH_COMPONENT_ROWS } from "../../../../constants";
 
 interface IIconsDialogProps {
   pageId?: string;

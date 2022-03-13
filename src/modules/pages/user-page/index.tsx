@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Grid, IconButton, InputAdornment, useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import {
   Construction as CreateComponentIcon,
   InsertEmoticon as InsertIconIcon,
@@ -10,7 +10,6 @@ import {
   ImageSearch as ImageSearchIcon,
   Delete as DeleteIcon,
   RocketLaunch as LaunchIcon,
-  Save as SaveIcon,
   OpenInNew as OpenInNewIcon,
 } from "@mui/icons-material";
 import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
@@ -34,10 +33,13 @@ import strings from "../../../localization";
 import TransparentTextField from "./../../components/transparent-textfield/index";
 import { useForm } from "react-hook-form";
 import {
+  deleteImage,
   deletePage,
   setPageBackgroundColor,
   setPageFontColor,
+  setPageImage,
   togglePageIsPublic,
+  updatePage,
   updateUserPageName,
   updateUserPageUrl,
 } from "../../../store/user-pages/actions";
@@ -48,7 +50,7 @@ import ComponentDialog from "./component-dialog";
 import VideoDialog from "./video-dialog/index";
 import Header from "./../../components/header/index";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
-import { IMAGE_EXTENSIONS } from "../../constants";
+import { IMAGE_EXTENSIONS } from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation/index";
 import LaunchDialog from "./launch-dialog";
@@ -60,7 +62,7 @@ import { getUser } from "../../../store/user/actions";
 import IconButtonTheme from "./../../components/icon-button-theme/index";
 import { getPageByUrl } from "../../../services/user-pages";
 import { AxiosResponse } from "axios";
-import { isConstructorDeclaration } from "typescript";
+import { showErrorToast } from "./../../../utils/toast/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -78,13 +80,14 @@ const UserPage = () => {
   const [openComponentDialog, setOpenComponentDialog] = useState(false);
   const [openVideoDialog, setOpenVideoDialog] = useState(false);
   const [openLaunchDialog, setOpenLaunchDialog] = useState(false);
-  const [openUploadDialog, setOpenUploadDialog] = useState(false);
+  const [openChooseFilePageDialog, setOpenChooseFilePageDialog] =
+    useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
   const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
     useState<boolean>(false);
   const [showFontColorPicker, setShowFontColorPicker] =
     useState<boolean>(false);
-  const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
+  const [openChooseFileBGDialog, setOpenChooseFileBGDialog] = useState(false);
   const [showDeletePageConfirmation, setShowDeletePageConfirmation] =
     useState(false);
   const [urlFieldError, setUrlFieldError] = useState<string | undefined>();
@@ -109,6 +112,7 @@ const UserPage = () => {
   }, [dispatch, userEmailState]);
 
   useEffect(() => {
+    console.log("pages");
     if (
       id &&
       !!userPagesState &&
@@ -305,25 +309,46 @@ const UserPage = () => {
             <IconButtonTheme
               size="large"
               onClick={() => {
-                setOpenChooseFileDialog(true);
+                setOpenChooseFileBGDialog(true);
               }}
             >
               <ImageSearchIcon />
             </IconButtonTheme>
             <ChooseFileDialog
-              openChooseFileDialog={openChooseFileDialog}
-              setOpenChooseFileDialog={setOpenChooseFileDialog}
+              openChooseFileDialog={openChooseFileBGDialog}
+              setOpenChooseFileDialog={setOpenChooseFileBGDialog}
               chosenImage={chosenImage}
               setChosenImage={setChosenImage}
               acceptedFiles={IMAGE_EXTENSIONS}
-              submitDialog={() => {
-                if (!chosenImage) return;
-                // TODO: Send file
-                setOpenChooseFileDialog(false);
+              submitDialog={async () => {
+                if (!chosenImage || !page || !page._id) return;
+
+                if (page.pageImageUrl && page.pageImageUrl.length > 0) {
+                  await deleteImage(page.pageImageUrl, page.userId);
+                }
+
+                dispatch(
+                  setPageImage(
+                    chosenImage,
+                    page,
+                    (url: string) => {
+                      const pageToSave: IUserPage = {
+                        ...page,
+                        pageImageUrl: url,
+                      };
+                      dispatch(updatePage(pageToSave));
+                    },
+                    (errorTranslated: string) => {
+                      showErrorToast(errorTranslated);
+                    }
+                  )
+                );
+                setChosenImage(undefined);
+                setOpenChooseFileBGDialog(false);
               }}
               cancelDialog={() => {
                 setChosenImage(undefined);
-                setOpenChooseFileDialog(false);
+                setOpenChooseFileBGDialog(false);
               }}
             />
           </Grid>
@@ -380,7 +405,7 @@ const UserPage = () => {
                 <ProfileEditablePicture
                   text={page.name}
                   imageUrl={page.pageImageUrl}
-                  onClick={() => setOpenUploadDialog(true)}
+                  onClick={() => setOpenChooseFilePageDialog(true)}
                 />
               )}
             </Grid>
@@ -603,21 +628,40 @@ const UserPage = () => {
           message={strings.deletePageConfirmation}
         />
         <ChooseFileDialog
-          openChooseFileDialog={openUploadDialog}
-          setOpenChooseFileDialog={setOpenUploadDialog}
+          openChooseFileDialog={openChooseFilePageDialog}
+          setOpenChooseFileDialog={setOpenChooseFilePageDialog}
           chosenImage={chosenImage}
           setChosenImage={setChosenImage}
           acceptedFiles={IMAGE_EXTENSIONS}
-          submitDialog={() => {
-            if (!chosenImage) {
-              return;
+          submitDialog={async () => {
+            if (!chosenImage || !page || !page._id) return;
+
+            if (page.pageImageUrl && page.pageImageUrl.length > 0) {
+              await deleteImage(page.pageImageUrl, page.userId);
             }
-            // TODO: Send file
-            setOpenUploadDialog(false);
+
+            dispatch(
+              setPageImage(
+                chosenImage,
+                page,
+                (url: string) => {
+                  const pageToSave: IUserPage = {
+                    ...page,
+                    pageImageUrl: url,
+                  };
+                  dispatch(updatePage(pageToSave));
+                },
+                (errorTranslated: string) => {
+                  showErrorToast(errorTranslated);
+                }
+              )
+            );
+            setChosenImage(undefined);
+            setOpenChooseFilePageDialog(false);
           }}
           cancelDialog={() => {
             setChosenImage(undefined);
-            setOpenUploadDialog(false);
+            setOpenChooseFilePageDialog(false);
           }}
         />
         <IconsDialog
