@@ -11,6 +11,7 @@ import { IUser } from "../user/types";
 import { clearUserState, getUserSuccess } from "../user/actions";
 import { clearPageManagementState } from "../page-management/actions";
 import { clearUserPagesState } from "../user-pages/actions";
+import { FirebaseError } from "firebase/app";
 
 export const signIn =
   (
@@ -38,15 +39,14 @@ export const signIn =
 
         if (onSuccessCallback) onSuccessCallback(token);
       })
-      .catch((e: AxiosError) => {
-        console.log("e: " + e);
-        const error: IAppResult = e.response?.data;
-        dispatch(signInError(error));
+      .catch((e: FirebaseError) => {
+        const errorCode: string = e.code;
+        dispatch(signInError(errorCode));
 
-        if (error && error.errorDetails) {
-          const translatedError = translateError(error.errorDetails);
+        if (errorCode) {
+          const translatedError = translateError(errorCode);
           if (onErrorCallback) onErrorCallback(translatedError);
-        } else if (onErrorCallback) onErrorCallback(strings.errorSignIn);
+        } else if (onErrorCallback) onErrorCallback(strings.errorSignUp);
       });
   };
 
@@ -59,7 +59,7 @@ export const signInSuccess = (auth: IUserAuth) => ({
   type: AuthActionTypes.SIGNIN_SUCCESS,
 });
 
-const signInError = (error: IAppResult) => ({
+const signInError = (error: any) => ({
   payload: error,
   type: AuthActionTypes.SIGNIN_ERROR,
 });
@@ -98,12 +98,12 @@ export const signUp =
             throw error;
           });
       })
-      .catch((e: AxiosError) => {
-        const error: IAppResult = e.response?.data;
-        dispatch(signUpError(e.response?.data));
+      .catch((e: FirebaseError) => {
+        const errorCode: string = e.code;
+        dispatch(signUpError(errorCode));
 
-        if (error && error.errorDetails) {
-          const translatedError = translateError(error.errorDetails);
+        if (errorCode) {
+          const translatedError = translateError(errorCode);
           if (onErrorCallback) onErrorCallback(translatedError);
         } else if (onErrorCallback) onErrorCallback(strings.errorSignUp);
       });
@@ -117,7 +117,7 @@ const signUpSuccess = () => ({
   type: AuthActionTypes.SIGNUP_SUCCESS,
 });
 
-const signUpError = (error: IAppResult) => ({
+const signUpError = (error: any) => ({
   payload: error,
   type: AuthActionTypes.SIGNUP_ERROR,
 });

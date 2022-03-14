@@ -133,6 +133,7 @@ interface IDictionary {
   alreadyHaveAccount: string;
   couldntFindPage: string;
   maximumFileSizeOf: string;
+  invalidCredentials: string;
 }
 
 // Dictionaries
@@ -276,6 +277,7 @@ const en: IDictionary = {
   maximumFileSizeOf: "Maximum allowed size of the file is",
   viewPage: "View page",
   duplicate: "Duplicate",
+  invalidCredentials: "Invalid credentials",
 };
 
 const pt: IDictionary = {
@@ -418,6 +420,7 @@ const pt: IDictionary = {
   maximumFileSizeOf: "Tamanho máximo permitido do arquivo:",
   viewPage: "Visualizar página",
   duplicate: "Duplicar",
+  invalidCredentials: "Credenciais inválidas",
 };
 
 // Composed dictionaries
