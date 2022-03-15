@@ -14,7 +14,7 @@ export const getPageByUrl =
 
     UserPagesService.getPageByUrl(url)
       .then((res: AxiosResponse) => {
-        dispatch(setPageBeingManaged(res.data));
+        dispatch(setPageBeingRendered(res.data));
         if (onSuccessCallback) onSuccessCallback();
       })
       .catch((e: AxiosError) => {
@@ -39,7 +39,7 @@ const getPageByUrlError = (error: any) => ({
   type: PageRenderedTypes.GET_PAGE_BY_URL_ERROR,
 });
 
-export const setPageBeingManaged = (page: IUserPage) => ({
+export const setPageBeingRendered = (page: IUserPage) => ({
   payload: page,
   type: PageRenderedTypes.SET_PAGE_BEING_RENDERED,
 });

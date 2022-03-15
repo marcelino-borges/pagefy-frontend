@@ -23,7 +23,6 @@ import {
   IUserComponent,
 } from "../../../../store/user-pages/types";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import { v4 as uuidv4 } from "uuid";
 import { getYoutubeIdFromUrl } from "../../../../utils";
 
 interface IIconsDialogProps {

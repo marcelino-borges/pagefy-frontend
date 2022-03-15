@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPageByUrl,
-  setPageBeingManaged,
+  setPageBeingRendered,
 } from "../../../store/page-renderer/actions";
 import PageRendererContent from "./page-renderer-content";
 import {
@@ -43,7 +43,7 @@ const PageRenderer = ({ pageToRender }: IProps) => {
 
   useEffect(() => {
     if (pageToRender) {
-      dispatch(setPageBeingManaged(pageToRender));
+      dispatch(setPageBeingRendered(pageToRender));
     } else if (url) {
       dispatch(getPageByUrl(url));
     }

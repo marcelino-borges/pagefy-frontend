@@ -789,7 +789,7 @@ const pagesReducer = (
     }
 
     case UserPagesActionTypes.CLEAR_STATE:
-      return initialState;
+      return { ...initialState };
 
     default:
       return state;
