@@ -74,7 +74,6 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     }
 
     const newComponent: IUserComponent = {
-      _id: uuidv4(),
       text: undefined,
       url: videoUrl,
       style: undefined,
