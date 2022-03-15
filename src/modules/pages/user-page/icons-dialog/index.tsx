@@ -154,7 +154,6 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     if (!pageId || !iconSelected) return;
 
     const newComponent: IUserComponent = {
-      _id: uuidv4(),
       text: undefined,
       url,
       style: {
