@@ -20,13 +20,20 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const isAppLoading =
-      appState.user.loading === true ||
-      appState.auth.loading === true ||
-      appState.userPages.loading === true ||
-      appState.shared.loading === true;
+      (appState.user.loading === true ||
+        appState.auth.loading === true ||
+        appState.userPages.loading === true ||
+        appState.shared.loading === true) &&
+      !appState.pageRendered.page;
 
     setIsLoading(isAppLoading);
-  }, [appState.user, appState.auth, appState.userPages, appState.shared]);
+  }, [
+    appState.user,
+    appState.auth,
+    appState.userPages,
+    appState.shared,
+    appState.pageRendered.page,
+  ]);
 
   useEffect(() => {
     if (appState.userPages.pageBeingSaved) {

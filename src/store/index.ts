@@ -49,7 +49,7 @@ let blacklistTransform = createTransform((inboundState: any, key: any) => {
 const persistConfig = {
   key: "appState",
   storage: storage,
-  blacklist: ["pageRenderer"],
+  blacklist: ["pageRendered"],
   transforms: [blacklistTransform],
 };
 

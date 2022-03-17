@@ -14,7 +14,7 @@ export const TransparentTextFieldStyled = styled(
     font-size: ${(props) => props.fontSize || "1.5em"};
     padding: 0;
     width: 100%;
-    font-family: 'Source Sans Pro';
+    font-family: 'Montserrat';
     font-style: ${(props) => props.fontStyle || "normal"};
     text-align: ${(props) => props.textAlign || "unset"};
   }

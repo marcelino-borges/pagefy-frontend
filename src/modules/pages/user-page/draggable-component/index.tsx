@@ -39,6 +39,7 @@ import {
 import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
   getLocalizedStringByComponentType,
+  removeCssUrlWrapper,
   stringShortener,
 } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
@@ -122,10 +123,6 @@ const DraggableUserComponent = ({
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [openVisibleDateDialog, setOpenVisibleDateDialog] = useState(false);
 
-  const pageBeingManaged = useSelector(
-    (state: IApplicationState) => state.pageManagement.pageId
-  );
-
   const userState = useSelector(
     (state: IApplicationState) => state.user.profile
   );
@@ -153,29 +150,29 @@ const DraggableUserComponent = ({
   };
 
   const onSubmitLabelForm = () => {
-    if (!component._id || !pageBeingManaged) return;
+    if (!component._id || !pageId) return;
     setIsEdittingLabel(false);
-    dispatch(setComponentLabel(pageBeingManaged, component._id, values.label));
+    dispatch(setComponentLabel(pageId, component._id, values.label));
   };
 
   const onSubmitUrlForm = () => {
-    if (!component._id || !pageBeingManaged || !values.url) return;
+    if (!component._id || !pageId || !values.url) return;
     setIsEdittingUrl(false);
-    dispatch(setComponentUrl(pageBeingManaged, component._id, values.url));
+    dispatch(setComponentUrl(pageId, component._id, values.url));
   };
 
   const deleteComponent = () => {
-    if (!component._id || !pageBeingManaged) return;
+    if (!component._id || !pageId) return;
     setIsDeleted(true);
     setTimeout(() => {
-      if (!component._id || !pageBeingManaged) return;
-      dispatch(deleteMiddleComponentFromPage(component._id, pageBeingManaged));
+      if (!component._id || !pageId) return;
+      dispatch(deleteMiddleComponentFromPage(component._id, pageId));
     }, 250);
   };
 
   const toggleVisibility = () => {
-    if (!component._id || !pageBeingManaged) return;
-    dispatch(toggleComponentVisibility(pageBeingManaged, component._id));
+    if (!component._id || !pageId) return;
+    dispatch(toggleComponentVisibility(pageId, component._id));
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
@@ -237,15 +234,15 @@ const DraggableUserComponent = ({
         submitDialog={async () => {
           const token = await getFirebaseToken();
           if (
-            !chosenImage ||
-            !token ||
-            !userState ||
-            !userState._id ||
-            !component._id ||
-            !pageId
-          )
+            chosenImage === undefined ||
+            token === undefined ||
+            userState === undefined ||
+            userState._id === undefined ||
+            component._id === undefined ||
+            pageId === undefined
+          ) {
             return;
-
+          }
           if (
             component.style &&
             component.style.backgroundImage &&
@@ -259,7 +256,6 @@ const DraggableUserComponent = ({
             dispatch(setLoading());
             await deleteImage(urlToDelete, userState._id, token);
           }
-
           dispatch(
             setComponentImage(
               chosenImage,
@@ -405,7 +401,7 @@ const DraggableUserComponent = ({
                         }}
                         onChange={handleChangeLabel}
                         value={values.label}
-                        fontSize={isSmallerThan600 ? "16px" : "22px"}
+                        fontSize={isSmallerThan600 ? "15px" : "18px"}
                         onBlur={() => {
                           onSubmitLabelForm();
                           setIsEdittingLabel(false);
@@ -463,11 +459,11 @@ const DraggableUserComponent = ({
             {/* URL */}
             {component.type !== ComponentType.Video && (
               <ContentRow container item alignItems="center" wrap="nowrap">
-                {!isSmallerThan400 && (
+                <CustomTooltip title={component.url || ""}>
                   <UrlIconItem item>
                     <LinkIcon />
                   </UrlIconItem>
-                )}
+                </CustomTooltip>
                 {isEdittingUrl ? (
                   <Grid container item>
                     <form
@@ -501,7 +497,7 @@ const DraggableUserComponent = ({
                               </InputAdornment>
                             ),
                           }}
-                          fontSize={isSmallerThan600 ? "16px" : "22px"}
+                          fontSize={isSmallerThan600 ? "15px" : "18px"}
                           onBlur={() => {
                             onSubmitUrlForm();
                             setIsEdittingUrl(false);
@@ -511,23 +507,39 @@ const DraggableUserComponent = ({
                     </form>
                   </Grid>
                 ) : (
-                  <UrlTextItem
-                    item
-                    onClick={() => {
-                      setIsEdittingUrl(true);
-                      setValues({ ...values, url: component.url || "" });
-                    }}
-                  >
-                    {component.url
-                      ? stringShortener(
-                          component.url,
-                          isLargerThan400 ? 50 : 20
-                        )
-                      : ""}
-                  </UrlTextItem>
+                  <CustomTooltip title={component.url || ""}>
+                    <UrlTextItem
+                      item
+                      onClick={() => {
+                        setIsEdittingUrl(true);
+                        setValues({ ...values, url: component.url || "" });
+                      }}
+                    >
+                      {component.url
+                        ? stringShortener(
+                            component.url,
+                            isSmallerThan600 ? 10 : 50
+                          )
+                        : ""}
+                    </UrlTextItem>
+                  </CustomTooltip>
                 )}
               </ContentRow>
             )}
+
+            <ContentRow container item alignItems="center" wrap="nowrap">
+              {component.mediaUrl && component.mediaUrl.length > 0 && (
+                <img
+                  src={removeCssUrlWrapper(component.mediaUrl)}
+                  alt="Media of the component"
+                  style={{
+                    maxWidth: "100px",
+                    maxHeight: "60px",
+                    borderRadius: "5px",
+                  }}
+                />
+              )}
+            </ContentRow>
           </Grid>
 
           {/* 2nd content column */}
@@ -784,7 +796,7 @@ const DraggableUserComponent = ({
                 if (pageId)
                   dispatch(
                     addMiddleComponentInPage(
-                      { ...component, visible: false },
+                      { ...component, visible: false, _id: undefined },
                       pageId
                     )
                   );

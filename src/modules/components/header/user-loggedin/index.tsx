@@ -62,6 +62,7 @@ const UserLoggedIn = () => {
       direction={isSmallerThanMD ? "column" : "row"}
       justifyContent="flex-end"
       pr={!isSmallerThanMD ? "32px" : "0px"}
+      wrap="nowrap"
     >
       <ChooseFileDialog
         openChooseFileDialog={openChooseFileBGDialog}
@@ -129,12 +130,14 @@ const UserLoggedIn = () => {
         direction="column"
         justifyContent="center"
         pl={!isSmallerThanMD ? "12px" : "0px"}
+        flexWrap="nowrap"
       >
         <UserName>{get2FirstNames()}</UserName>
         <Stack
           direction="row"
           alignItems="center"
           justifyContent={isSmallerThanMD ? "center" : undefined}
+          flexWrap="nowrap"
         >
           <SubtitleLinks to={routes.profile}>{strings.profile}</SubtitleLinks>
           <Grid item px="8px" color={LIGHTER_GREY}>

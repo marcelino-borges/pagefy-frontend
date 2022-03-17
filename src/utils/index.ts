@@ -72,3 +72,7 @@ export const capitalizeFirstLetter = (original: string) => {
     original.slice(0, 1).toUpperCase() + original.slice(1, original.length)
   );
 };
+
+export const removeCssUrlWrapper = (str: string) => {
+  return str.replace("url(", "").replace(")", "");
+};

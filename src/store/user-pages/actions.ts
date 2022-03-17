@@ -290,7 +290,7 @@ export const deleteMiddleComponentFromPage =
 
     PagesService.updatePage(pageToUpdate, token)
       .then(() => {
-        dispatch(deleteMiddleComponentFromPageStore(updatedPagesList));
+        dispatch(deleteMiddleComponentFromPageSuccess(updatedPagesList));
 
         if (onSuccessCallback) onSuccessCallback();
       })
@@ -306,16 +306,91 @@ export const deleteMiddleComponentFromPage =
       });
   };
 
-const deleteMiddleComponentFromPageStore = (updatedPagesList: IUserPage[]) => ({
+const deleteMiddleComponentFromPageSuccess = (
+  updatedPagesList: IUserPage[]
+) => ({
   payload: updatedPagesList,
   type: UserPagesActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE,
 });
 
-export const deleteTopComponentFromPage = (
-  componentId: string,
-  pageId: string
+export const deleteTopComponentFromPage =
+  (
+    componentId: string,
+    pageId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any, getState: () => IApplicationState) => {
+    const user: IUser | undefined = getState().user.profile;
+    const pages: IUserPage[] | undefined = getState().userPages.pages;
+    const userId: string | undefined = user?._id;
+    const token = await getFirebaseToken();
+
+    if (!token || !userId || !pages) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    let pageToUpdate;
+
+    const updatedPagesList = pages.map((page: IUserPage) => {
+      if (page._id === pageId && page.topComponents) {
+        const updatedComponents = page.topComponents.filter(
+          (component: IUserComponent) => {
+            if (component._id !== componentId) {
+              if (component.mediaUrl && component.mediaUrl.length > 0)
+                dispatch(deleteImage(component.mediaUrl, userId));
+
+              if (
+                component.style &&
+                component.style.backgroundImage &&
+                component.style.backgroundImage.length > 0
+              )
+                dispatch(deleteImage(component.style.backgroundImage, userId));
+              pageToUpdate = page;
+              return true;
+            }
+            return false;
+          }
+        );
+        const updatedPage: IUserPage = {
+          ...page,
+          topComponents: updatedComponents,
+        };
+        return updatedPage;
+      }
+      return page;
+    });
+
+    if (!pageToUpdate) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    PagesService.updatePage(pageToUpdate, token)
+      .then(() => {
+        console.log("componentId: " + componentId);
+        dispatch(deleteTopComponentFromPageSuccess(updatedPagesList));
+
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        console.log("e: " + e);
+        const error: IAppResult = e.response?.data;
+
+        if (error && error.message) {
+          const translatedError = translateError(error.message);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        } else {
+          if (onErrorCallback) onErrorCallback();
+        }
+      });
+  };
+
+export const deleteTopComponentFromPageSuccess = (
+  updatedPagesList: IUserPage[]
 ) => ({
-  payload: { componentId, pageId },
+  payload: updatedPagesList,
   type: UserPagesActionTypes.DELETE_TOP_COMPONENT_FROM_PAGE,
 });
 

@@ -69,17 +69,17 @@ export const ContentRow = styled(Grid)`
   display: inline-flex;
 
   @media (max-width: 600px) {
-    margin-left: 8px;
+    margin-left: 0px;
     .MuiGrid-item,
     svg {
-      font-size: 16px !important;
+      font-size: 16px;
     }
   }
 `;
 
 export const LabelText = styled(Grid)`
   padding-right: 16px;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: bold;
   transform: translateY(-5px);
   cursor: pointer;
@@ -96,7 +96,7 @@ export const UrlIconItem = styled(Grid)`
 
 export const UrlTextItem = styled(Grid)`
   padding: 0px 16px;
-  font-size: 22px;
+  font-size: 18px;
   color: ${MEDIUM_GREY};
   font-style: italic;
   transform: translateY(-5px);

@@ -34,6 +34,7 @@ import TransparentTextField from "./../../components/transparent-textfield/index
 import { useForm } from "react-hook-form";
 import {
   deletePage,
+  deleteTopComponentFromPage,
   setPageBackgroundColor,
   setPageBGImage,
   setPageFontColor,
@@ -94,6 +95,9 @@ const UserPage = () => {
   const [showDeletePageConfirmation, setShowDeletePageConfirmation] =
     useState(false);
   const [urlFieldError, setUrlFieldError] = useState<string | undefined>();
+  const [openDeleteIconConfirmation, setOpenDeleteIconConfirmation] =
+    useState(false);
+  const [idIconToDelete, setIdIconToDelete] = useState<string | undefined>();
 
   const { handleSubmit } = useForm();
 
@@ -694,6 +698,33 @@ const UserPage = () => {
       <Header />
       <DashboardContent>
         <DialogConfirmation
+          open={openDeleteIconConfirmation}
+          onClose={() => {
+            setOpenDeleteIconConfirmation(false);
+          }}
+          onConfirmCallback={() => {
+            if (
+              !idIconToDelete ||
+              idIconToDelete.length < 1 ||
+              !page ||
+              !page._id
+            )
+              return;
+            dispatch(
+              deleteTopComponentFromPage(
+                idIconToDelete,
+                page._id,
+                null,
+                (translatedError: string) => {
+                  showErrorToast(translatedError);
+                }
+              )
+            );
+          }}
+          title={strings.deleteIcon}
+          message={strings.deleteIconConfirmation}
+        />
+        <DialogConfirmation
           open={showDeletePageConfirmation}
           title={strings.deletePage}
           onClose={() => {
@@ -745,7 +776,13 @@ const UserPage = () => {
         <ToolBar />
         <ToolbarBottomTools />
         {page && page.topComponents && page.topComponents.length > 0 && (
-          <IconsComponent iconsList={page.topComponents} />
+          <IconsComponent
+            iconsList={page.topComponents}
+            onClickIcon={(iconComponent: IUserComponent) => {
+              if (iconComponent._id) setIdIconToDelete(iconComponent._id);
+              setOpenDeleteIconConfirmation(true);
+            }}
+          />
         )}
         {page && page.middleComponents && page.middleComponents.length > 0 ? (
           <Grid container direction="column" ref={listContainer}>

@@ -633,7 +633,7 @@ const pagesReducer = (
     }
 
     case UserPagesActionTypes.DELETE_MIDDLE_COMPONENT_FROM_PAGE: {
-      const updatedPagesList = action.payload.updatedPagesList;
+      const updatedPagesList = action.payload;
 
       return {
         ...state,
@@ -643,29 +643,12 @@ const pagesReducer = (
     }
 
     case UserPagesActionTypes.DELETE_TOP_COMPONENT_FROM_PAGE: {
-      const pageId = action.payload.pageId;
-      const componentId = action.payload.componentId;
-      let pageToBeSaved;
-
-      const updatedPagesList = state.pages.map((page: IUserPage) => {
-        if (page._id === pageId && page.topComponents) {
-          const updatedComponents = page.topComponents.filter(
-            (component: IUserComponent) => component._id !== componentId
-          );
-          const updatedPage: IUserPage = {
-            ...page,
-            topComponents: updatedComponents,
-          };
-          pageToBeSaved = updatedPage;
-          return updatedPage;
-        }
-        return page;
-      });
+      console.log("top action.payload: " + action.payload);
+      const updatedPagesList = action.payload;
 
       return {
         ...state,
         pages: [...updatedPagesList],
-        pageBeingSaved: pageToBeSaved,
         loading: false,
       };
     }

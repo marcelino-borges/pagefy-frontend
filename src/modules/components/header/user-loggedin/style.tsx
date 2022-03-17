@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export const UserName = styled("div")`
   font-weight: 500;
   color: ${MEDIUM_GREY};
+  white-space: nowrap;
 `;
 
 export const SubtitleLinks = styled(Link)`

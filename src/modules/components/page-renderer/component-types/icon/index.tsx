@@ -6,9 +6,10 @@ import { Icon } from "@iconify/react";
 
 interface IProps {
   iconsList: IUserComponent[];
+  onClickIcon?: (iconComponent: IUserComponent) => void;
 }
 
-const IconsComponent = ({ iconsList }: IProps) => {
+const IconsComponent = ({ iconsList, onClickIcon }: IProps) => {
   return (
     <Grid
       container
@@ -30,6 +31,9 @@ const IconsComponent = ({ iconsList }: IProps) => {
             <CustomTooltip title={iconComponent.url} key={iconComponent._id}>
               <IconOverlaySpan>
                 <Icon
+                  onClick={() => {
+                    if (onClickIcon) onClickIcon(iconComponent);
+                  }}
                   icon={iconComponent.iconDetails.icon}
                   style={{
                     fontSize: "46px",
