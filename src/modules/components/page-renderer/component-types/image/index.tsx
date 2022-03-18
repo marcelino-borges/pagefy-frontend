@@ -5,18 +5,26 @@ import {
   RENDERED_PAGE_COMPONENT_RADIUS,
 } from "../../../../../constants";
 import BaseComponentType from "../base";
+import { useDispatch } from "react-redux";
+import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
 interface IProps {
   component: IUserComponent;
+  pageId?: string | undefined;
 }
 
-const ImageComponent = ({ component }: IProps) => {
+const ImageComponent = ({ component, pageId }: IProps) => {
+  const dispatch = useDispatch();
   return (
     <BaseComponentType
       layout={component.layout}
       style={component.style}
       url={component.url}
       animation={component.animation}
+      onClick={() => {
+        if (pageId && component._id)
+          dispatch(incrementComponentClicks(pageId, component._id));
+      }}
     >
       <Grid
         container

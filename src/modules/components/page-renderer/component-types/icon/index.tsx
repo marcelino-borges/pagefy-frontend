@@ -4,13 +4,23 @@ import CustomTooltip from "../../../tooltip";
 import { IconOverlaySpan } from "./style";
 import { Icon } from "@iconify/react";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
 interface IProps {
   iconsList: IUserComponent[];
   onClickIcon?: (iconComponent: IUserComponent) => void;
+  pageId?: string | undefined;
+  isRenderer?: boolean | undefined;
 }
 
-const IconsComponent = ({ iconsList, onClickIcon }: IProps) => {
+const IconsComponent = ({
+  iconsList,
+  onClickIcon,
+  pageId,
+  isRenderer,
+}: IProps) => {
+  const dispatch = useDispatch();
   return (
     <Grid
       container
@@ -31,7 +41,19 @@ const IconsComponent = ({ iconsList, onClickIcon }: IProps) => {
         ) {
           return (
             <CustomTooltip title={iconComponent.url} key={iconComponent._id}>
-              <IconOverlaySpan>
+              <IconOverlaySpan
+                onClick={() => {
+                  if (
+                    isRenderer !== undefined &&
+                    isRenderer !== false &&
+                    pageId &&
+                    iconComponent._id
+                  )
+                    dispatch(
+                      incrementComponentClicks(pageId, iconComponent._id)
+                    );
+                }}
+              >
                 <Icon
                   onClick={() => {
                     if (onClickIcon) onClickIcon(iconComponent);

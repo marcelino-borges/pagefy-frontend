@@ -44,6 +44,29 @@ export const setPageBeingRendered = (page: IUserPage) => ({
   type: PageRenderedTypes.SET_PAGE_BEING_RENDERED,
 });
 
+export const getRendererPageByUrl =
+  (url: string, onSuccessCallback: any = null, onErrorCallback: any = null) =>
+  (dispatch: any) => {
+    dispatch(getPageByUrlLoading());
+
+    UserPagesService.getRendererPageByUrl(url)
+      .then((res: AxiosResponse) => {
+        dispatch(setPageBeingRendered(res.data));
+        if (onSuccessCallback) onSuccessCallback();
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(getPageByUrlError(e.response?.data));
+
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+          return;
+        }
+        if (onErrorCallback) onErrorCallback(strings.couldntFindPage);
+      });
+  };
+
 export const clearPageBeingRendered = () => (dispatch: any) => {
   dispatch(clearPageBeingManagedSuccess());
 };
@@ -55,3 +78,27 @@ const clearPageBeingManagedSuccess = () => ({
 export const clearPageRendererState = () => ({
   type: PageRenderedTypes.CLEAR_STATE,
 });
+
+export const incrementComponentClicks = (
+  pageId: string,
+  componentId: string,
+  onSuccessCallback: any = null,
+  onErrorCallback: any = null
+) => {
+  UserPagesService.incrementComponentClicks(pageId, componentId)
+    .then(() => {
+      if (onSuccessCallback) onSuccessCallback();
+    })
+    .catch((e: AxiosError) => {
+      const error: IAppResult = e.response?.data;
+
+      if (error && error.errorDetails) {
+        const translatedError = translateError(error.errorDetails);
+        console.log(
+          "Error incrementing click on component with ID " + componentId
+        );
+        if (onErrorCallback) onErrorCallback(translatedError);
+        return;
+      }
+    });
+};

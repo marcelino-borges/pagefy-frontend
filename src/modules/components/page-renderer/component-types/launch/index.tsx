@@ -12,12 +12,16 @@ import {
   CountdownOuterTexts,
   CountdownSeparator,
 } from "./style";
+import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
+import { useDispatch } from "react-redux";
 
 interface IProps {
   component: IUserComponent;
+  pageId?: string | undefined;
 }
 
-const LaunchComponent = ({ component }: IProps) => {
+const LaunchComponent = ({ component, pageId }: IProps) => {
+  const dispatch = useDispatch();
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (!completed) {
       return (
@@ -116,6 +120,10 @@ const LaunchComponent = ({ component }: IProps) => {
       layout={component.layout}
       style={component.style}
       url={component.url}
+      onClick={() => {
+        if (pageId && component._id)
+          dispatch(incrementComponentClicks(pageId, component._id));
+      }}
     >
       <Grid
         container

@@ -2,12 +2,16 @@ import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import { RENDERED_PAGE_COMPONENT_RADIUS } from "../../../../../constants";
 import BaseComponentType from "../base";
+import { useDispatch } from "react-redux";
+import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
 interface IProps {
   component: IUserComponent;
+  pageId?: string | undefined;
 }
 
-const TextImageComponent = ({ component }: IProps) => {
+const TextImageComponent = ({ component, pageId }: IProps) => {
+  const dispatch = useDispatch();
   const Content = ({ component }: IProps) => {
     const { rows, columns } = component.layout;
     if (columns === 1) {
@@ -123,6 +127,10 @@ const TextImageComponent = ({ component }: IProps) => {
       layout={component.layout}
       style={component.style}
       animation={component.animation}
+      onClick={() => {
+        if (pageId && component._id)
+          dispatch(incrementComponentClicks(pageId, component._id));
+      }}
     >
       <Content component={component} />
     </BaseComponentType>

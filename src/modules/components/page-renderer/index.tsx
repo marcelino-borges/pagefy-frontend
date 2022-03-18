@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getPageByUrl,
+  getRendererPageByUrl,
   setPageBeingRendered,
 } from "../../../store/page-renderer/actions";
 import PageRendererContent from "./page-renderer-content";
@@ -45,7 +45,7 @@ const PageRenderer = ({ pageToRender }: IProps) => {
     if (pageToRender) {
       dispatch(setPageBeingRendered(pageToRender));
     } else if (url) {
-      dispatch(getPageByUrl(url));
+      dispatch(getRendererPageByUrl(url));
     }
   }, [dispatch, pageToRender, url]);
 
@@ -100,15 +100,45 @@ const PageRenderer = ({ pageToRender }: IProps) => {
 
     switch (type) {
       case ComponentType.Image:
-        return <ImageComponent component={component} key={component._id} />;
+        return (
+          <ImageComponent
+            pageId={page?._id}
+            component={component}
+            key={component._id}
+          />
+        );
       case ComponentType.Text:
-        return <TextComponent component={component} key={component._id} />;
+        return (
+          <TextComponent
+            pageId={page?._id}
+            component={component}
+            key={component._id}
+          />
+        );
       case ComponentType.TextImage:
-        return <TextImageComponent component={component} key={component._id} />;
+        return (
+          <TextImageComponent
+            pageId={page?._id}
+            component={component}
+            key={component._id}
+          />
+        );
       case ComponentType.Video:
-        return <VideoComponent component={component} key={component._id} />;
+        return (
+          <VideoComponent
+            pageId={page?._id}
+            component={component}
+            key={component._id}
+          />
+        );
       case ComponentType.Launch:
-        return <LaunchComponent component={component} key={component._id} />;
+        return (
+          <LaunchComponent
+            pageId={page?._id}
+            component={component}
+            key={component._id}
+          />
+        );
     }
   };
 
@@ -158,7 +188,7 @@ const PageRenderer = ({ pageToRender }: IProps) => {
 
           {/* TOP COMPONENTS */}
           {topComponents && topComponents.length > 0 && (
-            <IconsComponent iconsList={topComponents} />
+            <IconsComponent isRenderer iconsList={topComponents} />
           )}
 
           {/* MIDDLE COMPONENTS */}
@@ -184,7 +214,7 @@ const PageRenderer = ({ pageToRender }: IProps) => {
           {/* BOTTOM COMPONENTS */}
           <Grid container item>
             {bottomComponents && bottomComponents.length > 0 && (
-              <IconsComponent iconsList={bottomComponents} />
+              <IconsComponent isRenderer iconsList={bottomComponents} />
             )}
           </Grid>
         </Grid>

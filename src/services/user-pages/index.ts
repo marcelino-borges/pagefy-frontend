@@ -14,6 +14,10 @@ export const getPageById = async (id: string): Promise<AxiosResponse<any>> =>
 export const getPageByUrl = async (url: string): Promise<AxiosResponse<any>> =>
   await api.get(`/page/url/${url}`);
 
+export const getRendererPageByUrl = async (
+  url: string
+): Promise<AxiosResponse<any>> => await api.get(`/page/url/renderer/${url}`);
+
 export const getAllUserPages = async (
   userId: string,
   token: string
@@ -57,3 +61,17 @@ export const deletePage = async (
       Authorization: "Bearer " + token,
     },
   });
+
+export const incrementComponentClicks = async (
+  pageId: string,
+  componentId: string
+): Promise<AxiosResponse<any>> =>
+  await api.post(
+    "/page/component-clicks",
+    { pageId, componentId },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
