@@ -35,6 +35,7 @@ import { addTopComponentInPage } from "../../../../store/user-pages/actions";
 import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
 import { Icon } from "@iconify/react";
 import ColorPicker from "./../../../components/color-picker/index";
+import { v4 as uuidv4 } from "uuid";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -107,6 +108,19 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setColorSelected("black");
   };
 
+  const clearStates = () => {
+    setResultsList([]);
+    setLastSearch(undefined);
+    setIsSearchInvalid(false);
+    setIconSelected(undefined);
+    setShowLoading(false);
+    setShowColorPicker(false);
+    setUrl("");
+    setColorSelected("black");
+    setSearch("");
+    setIsUrlInvalid(false);
+  };
+
   const onSubmitUrl = () => {
     if (!isUrlValid(url)) {
       setIsUrlInvalid(true);
@@ -123,14 +137,6 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setSearch("");
     setUrl("");
     clearStates();
-  };
-
-  const clearStates = () => {
-    setResultsList([]);
-    setLastSearch(undefined);
-    setIsSearchInvalid(false);
-    setIconSelected(undefined);
-    setShowLoading(false);
   };
 
   const handleChangeColorComplete = (color: any) => {
@@ -246,7 +252,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           )}
           {!iconSelected &&
             resultsList.map((icon: IIconifyIcon) => (
-              <>
+              <span key={uuidv4()}>
                 {icon.variations.map((variation: string) => (
                   <IconsResult
                     key={variation}
@@ -260,7 +266,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     <Icon icon={variation} />
                   </IconsResult>
                 ))}
-              </>
+              </span>
             ))}
           {iconSelected && (
             <form
@@ -348,7 +354,14 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         </IconsSearchResultsArea>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>{strings.back}</Button>
+        <Button
+          onClick={() => {
+            clearStates();
+            handleClose();
+          }}
+        >
+          {strings.back}
+        </Button>
         <Button
           onClick={() => {
             onAddIcon();

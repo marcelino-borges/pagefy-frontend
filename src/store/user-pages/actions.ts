@@ -258,26 +258,36 @@ export const deleteMiddleComponentFromPage =
       if (page._id === pageId && page.middleComponents) {
         const updatedComponents = page.middleComponents.filter(
           (component: IUserComponent) => {
-            if (component._id !== componentId) {
-              if (component.mediaUrl && component.mediaUrl.length > 0)
-                dispatch(deleteImage(component.mediaUrl, userId));
+            if (component._id === componentId) {
+              try {
+                if (component.mediaUrl && component.mediaUrl.length > 0)
+                  dispatch(deleteImage(component.mediaUrl, userId));
 
-              if (
-                component.style &&
-                component.style.backgroundImage &&
-                component.style.backgroundImage.length > 0
-              )
-                dispatch(deleteImage(component.style.backgroundImage, userId));
-              pageToUpdate = page;
-              return true;
+                if (
+                  component.style &&
+                  component.style.backgroundImage &&
+                  component.style.backgroundImage.length > 0
+                )
+                  dispatch(
+                    deleteImage(component.style.backgroundImage, userId)
+                  );
+              } catch (e: any) {
+                console.log(
+                  "Erro ao deletar imagens do componente. Detalhes: " +
+                    e.message
+                );
+              }
+              return false;
             }
-            return false;
+            return true;
           }
         );
         const updatedPage: IUserPage = {
           ...page,
           middleComponents: updatedComponents,
         };
+        pageToUpdate = updatedPage;
+
         return updatedPage;
       }
       return page;
@@ -337,7 +347,7 @@ export const deleteTopComponentFromPage =
       if (page._id === pageId && page.topComponents) {
         const updatedComponents = page.topComponents.filter(
           (component: IUserComponent) => {
-            if (component._id !== componentId) {
+            if (component._id === componentId) {
               if (component.mediaUrl && component.mediaUrl.length > 0)
                 dispatch(deleteImage(component.mediaUrl, userId));
 
@@ -347,16 +357,16 @@ export const deleteTopComponentFromPage =
                 component.style.backgroundImage.length > 0
               )
                 dispatch(deleteImage(component.style.backgroundImage, userId));
-              pageToUpdate = page;
-              return true;
+              return false;
             }
-            return false;
+            return true;
           }
         );
         const updatedPage: IUserPage = {
           ...page,
           topComponents: updatedComponents,
         };
+        pageToUpdate = updatedPage;
         return updatedPage;
       }
       return page;
@@ -369,7 +379,6 @@ export const deleteTopComponentFromPage =
 
     PagesService.updatePage(pageToUpdate, token)
       .then(() => {
-        console.log("componentId: " + componentId);
         dispatch(deleteTopComponentFromPageSuccess(updatedPagesList));
 
         if (onSuccessCallback) onSuccessCallback();

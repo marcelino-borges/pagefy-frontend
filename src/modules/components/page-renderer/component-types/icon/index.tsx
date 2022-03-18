@@ -3,6 +3,7 @@ import { IUserComponent } from "../../../../../store/user-pages/types";
 import CustomTooltip from "../../../tooltip";
 import { IconOverlaySpan } from "./style";
 import { Icon } from "@iconify/react";
+import { v4 as uuidv4 } from "uuid";
 
 interface IProps {
   iconsList: IUserComponent[];
@@ -18,6 +19,7 @@ const IconsComponent = ({ iconsList, onClickIcon }: IProps) => {
         marginBottom: "24px",
       }}
       justifyContent="center"
+      key={uuidv4()}
     >
       {iconsList.map((iconComponent: IUserComponent) => {
         if (

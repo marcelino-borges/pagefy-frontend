@@ -18,7 +18,6 @@ import {
   IUserComponent,
 } from "../../../../store/user-pages/types";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import { v4 as uuidv4 } from "uuid";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
@@ -78,7 +77,6 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     }
 
     const newComponent: IUserComponent = {
-      _id: uuidv4(),
       text: message,
       url,
       style: undefined,

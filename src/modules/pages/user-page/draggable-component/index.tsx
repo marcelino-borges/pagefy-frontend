@@ -167,6 +167,9 @@ const DraggableUserComponent = ({
     setTimeout(() => {
       if (!component._id || !pageId) return;
       dispatch(deleteMiddleComponentFromPage(component._id, pageId));
+      setTimeout(() => {
+        setIsDeleted(false);
+      }, 250);
     }, 250);
   };
 
@@ -527,19 +530,23 @@ const DraggableUserComponent = ({
               </ContentRow>
             )}
 
-            <ContentRow container item alignItems="center" wrap="nowrap">
-              {component.mediaUrl && component.mediaUrl.length > 0 && (
-                <img
-                  src={removeCssUrlWrapper(component.mediaUrl)}
-                  alt="Media of the component"
-                  style={{
-                    maxWidth: "100px",
-                    maxHeight: "60px",
-                    borderRadius: "5px",
-                  }}
-                />
+            {component.type !== ComponentType.Video &&
+              component.type !== ComponentType.Text &&
+              component.type !== ComponentType.Launch &&
+              component.mediaUrl &&
+              component.mediaUrl.length > 0 && (
+                <ContentRow container item alignItems="center" wrap="nowrap">
+                  <img
+                    src={removeCssUrlWrapper(component.mediaUrl)}
+                    alt="Component media"
+                    style={{
+                      maxWidth: "100px",
+                      maxHeight: "60px",
+                      borderRadius: "5px",
+                    }}
+                  />
+                </ContentRow>
               )}
-            </ContentRow>
           </Grid>
 
           {/* 2nd content column */}
@@ -608,7 +615,10 @@ const DraggableUserComponent = ({
           <ToolGridItem item>
             <ToolIconButton
               size="small"
-              disabled={component.type === ComponentType.Video}
+              disabled={
+                component.type === ComponentType.Video ||
+                component.type === ComponentType.Image
+              }
               transitionDuration="0.25s"
               isHoveringComponent={isHovering}
               onClick={() => {
@@ -619,12 +629,14 @@ const DraggableUserComponent = ({
               <BackgroundColorIcon
                 style={{ transform: "scale(0.7)" }}
                 bucketColor={
-                  component.type === ComponentType.Video
+                  component.type === ComponentType.Video ||
+                  component.type === ComponentType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : "white"
                 }
                 selectedColor={
-                  component.type === ComponentType.Video
+                  component.type === ComponentType.Video ||
+                  component.type === ComponentType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : component.style?.backgroundColor
                 }
@@ -649,7 +661,10 @@ const DraggableUserComponent = ({
           <ToolGridItem item>
             <ToolIconButton
               size="small"
-              disabled={component.type === ComponentType.Video}
+              disabled={
+                component.type === ComponentType.Video ||
+                component.type === ComponentType.Image
+              }
               transitionDuration="0.3s"
               isHoveringComponent={isHovering}
               onClick={() => {
@@ -660,12 +675,14 @@ const DraggableUserComponent = ({
               <FontColorIcon
                 style={{ transform: "scale(0.7)" }}
                 bucketColor={
-                  component.type === ComponentType.Video
+                  component.type === ComponentType.Video ||
+                  component.type === ComponentType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : "white"
                 }
                 selectedColor={
-                  component.type === ComponentType.Video
+                  component.type === ComponentType.Video ||
+                  component.type === ComponentType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : component.style?.color
                 }
@@ -690,7 +707,10 @@ const DraggableUserComponent = ({
           <ToolGridItem item>
             <ToolIconButton
               size="small"
-              disabled={component.type === ComponentType.Video}
+              disabled={
+                component.type === ComponentType.Video ||
+                component.type === ComponentType.Launch
+              }
               hoveringWhite
               transitionDuration="0.35s"
               isHoveringComponent={isHovering}
@@ -698,7 +718,12 @@ const DraggableUserComponent = ({
                 setOpenChooseFileDialog(true);
               }}
             >
-              <ImageSearchIcon style={{ transform: "scale(0.7)" }} />
+              <ImageSearchIcon
+                color="inherit"
+                style={{
+                  transform: "scale(0.7)",
+                }}
+              />
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>

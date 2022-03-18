@@ -136,6 +136,84 @@ interface IDictionary {
   couldntFindPage: string;
   maximumFileSizeOf: string;
   invalidCredentials: string;
+  animations: {
+    bounce: string;
+    bounceIn: string;
+    bounceInDown: string;
+    bounceInLeft: string;
+    bounceInRight: string;
+    bounceInUp: string;
+    bounceOut: string;
+    bounceOutDown: string;
+    bounceOutLeft: string;
+    bounceOutRight: string;
+    bounceOutUp: string;
+    fadeIn: string;
+    fadeInDown: string;
+    fadeInDownBig: string;
+    fadeInLeft: string;
+    fadeInLeftBig: string;
+    fadeInRight: string;
+    fadeInRightBig: string;
+    fadeInUp: string;
+    fadeInUpBig: string;
+    fadeOut: string;
+    fadeOutDown: string;
+    fadeOutDownBig: string;
+    fadeOutLeft: string;
+    fadeOutLeftBig: string;
+    fadeOutRight: string;
+    fadeOutRightBig: string;
+    fadeOutUp: string;
+    fadeOutUpBig: string;
+    flash: string;
+    flip: string;
+    flipInX: string;
+    flipInY: string;
+    flipOutX: string;
+    flipOutY: string;
+    headShake: string;
+    hinge: string;
+    jello: string;
+    lightSpeedIn: string;
+    lightSpeedOut: string;
+    pulse: string;
+    rollIn: string;
+    rollOut: string;
+    rotateIn: string;
+    rotateInDownLeft: string;
+    rotateInDownRight: string;
+    rotateInUpLeft: string;
+    rotateInUpRight: string;
+    rotateOut: string;
+    rotateOutDownLeft: string;
+    rotateOutDownRight: string;
+    rotateOutUpLeft: string;
+    rotateOutUpRight: string;
+    rubberBand: string;
+    shake: string;
+    slideInDown: string;
+    slideInLeft: string;
+    slideInRight: string;
+    slideInUp: string;
+    slideOutDown: string;
+    slideOutLeft: string;
+    slideOutRight: string;
+    slideOutUp: string;
+    swing: string;
+    tada: string;
+    wobble: string;
+    zoomIn: string;
+    zoomInDown: string;
+    zoomInLeft: string;
+    zoomInRight: string;
+    zoomInUp: string;
+    zoomOut: string;
+    zoomOutDown: string;
+    zoomOutLeft: string;
+    zoomOutRight: string;
+    zoomOutUp: string;
+  };
 }
 
 // Dictionaries
@@ -282,6 +360,84 @@ const en: IDictionary = {
   viewPage: "View page",
   duplicate: "Duplicate",
   invalidCredentials: "Invalid credentials",
+  animations: {
+    bounce: "Bounce",
+    bounceIn: "Bounce In",
+    bounceInDown: "Bounce In Down",
+    bounceInLeft: "Bounce In Left",
+    bounceInRight: "Bounce In Right",
+    bounceInUp: "Bounce In Up",
+    bounceOut: "Bounce Out",
+    bounceOutDown: "Bounce Out Down",
+    bounceOutLeft: "Bounce Out Left",
+    bounceOutRight: "Bounce Out Right",
+    bounceOutUp: "Bounce Out Up",
+    fadeIn: "Fade In",
+    fadeInDown: "Fade In Down",
+    fadeInDownBig: "Fade In Down Big",
+    fadeInLeft: "Fade In Left",
+    fadeInLeftBig: "Fade In Left Big",
+    fadeInRight: "Fade In Right",
+    fadeInRightBig: "Fade In Right Big",
+    fadeInUp: "Fade In Up",
+    fadeInUpBig: "Fade In Up Big",
+    fadeOut: "Fade Out",
+    fadeOutDown: "Fade Out Down",
+    fadeOutDownBig: "Fade Out Down Big",
+    fadeOutLeft: "Fade Out Left",
+    fadeOutLeftBig: "Fade Out Left Big",
+    fadeOutRight: "Fade Out Right",
+    fadeOutRightBig: "Fade Out Right Big",
+    fadeOutUp: "Fade Out Up",
+    fadeOutUpBig: "Fade Out Up Big",
+    flash: "Flash",
+    flip: "Flip",
+    flipInX: "Flip In X",
+    flipInY: "Flip In Y",
+    flipOutX: "Flip Out X",
+    flipOutY: "Flip Out Y",
+    headShake: "Head Shake",
+    hinge: "Hinge",
+    jello: "Jello",
+    lightSpeedIn: "Light Speed In",
+    lightSpeedOut: "Light Speed Out",
+    pulse: "Pulse",
+    rollIn: "Roll In",
+    rollOut: "Roll Out",
+    rotateIn: "Rotate In",
+    rotateInDownLeft: "Rotate In Down Left",
+    rotateInDownRight: "Rotate In Down Right",
+    rotateInUpLeft: "Rotate In Up Left",
+    rotateInUpRight: "Rotate In Up Right",
+    rotateOut: "Rotate Out",
+    rotateOutDownLeft: "Rotate Out Down Left",
+    rotateOutDownRight: "Rotate Out Down Right",
+    rotateOutUpLeft: "Rotate Out Up Left",
+    rotateOutUpRight: "Rotate Out Up Right",
+    rubberBand: "Rubber Band",
+    shake: "Shake",
+    slideInDown: "Slide In Down",
+    slideInLeft: "Slide In Left",
+    slideInRight: "Slide In Right",
+    slideInUp: "Slide In Up",
+    slideOutDown: "Slide Out Down",
+    slideOutLeft: "Slide Out Left",
+    slideOutRight: "Slide Out Right",
+    slideOutUp: "Slide Out Up",
+    swing: "Swing",
+    tada: "Ta-da!",
+    wobble: "Wobble!",
+    zoomIn: "Zoom In",
+    zoomInDown: "Zoom In Down",
+    zoomInLeft: "Zoom In Left",
+    zoomInRight: "Zoom In Right",
+    zoomInUp: "Zoom In Up",
+    zoomOut: "Zoom Out",
+    zoomOutDown: "Zoom Out Down",
+    zoomOutLeft: "Zoom Out Left",
+    zoomOutRight: "Zoom Out Right",
+    zoomOutUp: "Zoom Out Up",
+  },
 };
 
 const pt: IDictionary = {
@@ -427,6 +583,84 @@ const pt: IDictionary = {
   viewPage: "Visualizar página",
   duplicate: "Duplicar",
   invalidCredentials: "Credenciais inválidas",
+  animations: {
+    bounce: "Pulo",
+    bounceIn: "Pulo entrando",
+    bounceInDown: "Pulo entrando para baixo",
+    bounceInLeft: "Pulo entrando para a esquerda",
+    bounceInRight: "Pulo entrando para a direita",
+    bounceInUp: "Pulo entrando para cima",
+    bounceOut: "Pulo saindo",
+    bounceOutDown: "Pulo saindo para baixo",
+    bounceOutLeft: "Pulo saindo para a esquerda",
+    bounceOutRight: "Pulo saindo para direita",
+    bounceOutUp: "Pulo saindo para cima",
+    fadeIn: "Esmaecer entrando",
+    fadeInDown: "Esmaecer entrando para baixo",
+    fadeInDownBig: "Esmaecer entrando alto para baixo",
+    fadeInLeft: "Esmaecer entrando para a esquerda",
+    fadeInLeftBig: "Esmaecer entrando de longe para a esquerda",
+    fadeInRight: "Esmaecer entrando para a direita",
+    fadeInRightBig: "Esmaecer entrando de longe para a direita",
+    fadeInUp: "Esmaecer entrando para cima",
+    fadeInUpBig: "Esmaecer entrando de longe para cima",
+    fadeOut: "Esmaecer saindo",
+    fadeOutDown: "Esmaecer saindo para baixo",
+    fadeOutDownBig: "Esmaecer saindo para longe abaixo",
+    fadeOutLeft: "Esmaecer saindo para a esquerda",
+    fadeOutLeftBig: "Esmaecer saindo para longe à esquerda",
+    fadeOutRight: "Esmaecer saindo para a direita",
+    fadeOutRightBig: "Esmaecer saindo para longe à direita",
+    fadeOutUp: "Esmaecer saindo para cima",
+    fadeOutUpBig: "Esmaecer saindo para longe acima",
+    flash: "Piscar",
+    flip: "Virar",
+    flipInX: "Virar entrando no eixo X",
+    flipInY: "Virar entrando no eixo Y",
+    flipOutX: "Virar saindo no eixo X",
+    flipOutY: "Virar saindo no eixo Y",
+    headShake: "Vibrar",
+    hinge: "Cair como junta",
+    jello: "Distorcer",
+    lightSpeedIn: "Velocidade da luz entrando",
+    lightSpeedOut: "Velocidade da luz saindo",
+    pulse: "Pulsar",
+    rollIn: "Rolar para dentro",
+    rollOut: "Rolar para fora",
+    rotateIn: "Girar entrando",
+    rotateInDownLeft: "Girar para baixo entrando a partir da esquerda",
+    rotateInDownRight: "Girar para baixo entrando a partir da direita",
+    rotateInUpLeft: "Girar para cima entrando a partir da esquerda",
+    rotateInUpRight: "Girar para cima entrando a partir da direita",
+    rotateOut: "Girar para fora",
+    rotateOutDownLeft: "Girar para baixo saindo para a esquerda",
+    rotateOutDownRight: "Girar para baixo saindo para a direita",
+    rotateOutUpLeft: "Girar para cima saindo para a esquerda",
+    rotateOutUpRight: "Girar para cima saindo para a direita",
+    rubberBand: "Efeito elástico",
+    shake: "Balançar",
+    slideInDown: "Deslizar entrando para a baixo",
+    slideInLeft: "Deslizar entrando para a esquerda",
+    slideInRight: "Deslizar entrando para a direita",
+    slideInUp: "Deslizar entrando para cima",
+    slideOutDown: "Deslizar saindo para baixo",
+    slideOutLeft: "Deslizar saindo para a esquerda",
+    slideOutRight: "Deslizar saindo para a direita",
+    slideOutUp: "Deslizar saindo para cima",
+    swing: "Dançar",
+    tada: "Assustar",
+    wobble: "Oscilar forte",
+    zoomIn: "Zoom para perto",
+    zoomInDown: "Zoom para perto e para baixo",
+    zoomInLeft: "Zoom  para perto e para a esquerda",
+    zoomInRight: "Zoom para perto e para direita",
+    zoomInUp: "Zoom para perto e para cima",
+    zoomOut: "Zoom para longe",
+    zoomOutDown: "Zoom para longe e para baixo",
+    zoomOutLeft: "Zoom para longe e para a esquerda",
+    zoomOutRight: "Zoom para longe e para a direita",
+    zoomOutUp: "Zoom para longe e para cima",
+  },
 };
 
 // Composed dictionaries

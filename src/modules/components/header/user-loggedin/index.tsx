@@ -81,11 +81,15 @@ const UserLoggedIn = () => {
             userState.profile.profileImageUrl.length > 0
           ) {
             dispatch(setLoading());
-            await deleteImage(
-              userState.profile.profileImageUrl,
-              userState.profile._id,
-              token
-            );
+            try {
+              await deleteImage(
+                userState.profile.profileImageUrl,
+                userState.profile._id,
+                token
+              );
+            } catch (e: any) {
+              console.log("Erro ao deletar imagem. Detalhes: ", e.message);
+            }
           }
 
           dispatch(
