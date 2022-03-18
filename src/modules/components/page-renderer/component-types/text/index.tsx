@@ -1,5 +1,4 @@
 import { Grid } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import BaseComponentType from "../base";
@@ -10,7 +9,6 @@ interface IProps {
 }
 
 const TextComponent = ({ component, pageId }: IProps) => {
-  const dispatch = useDispatch();
   return (
     <BaseComponentType
       url={component.url}
@@ -19,7 +17,7 @@ const TextComponent = ({ component, pageId }: IProps) => {
       animation={component.animation}
       onClick={() => {
         if (pageId && component._id)
-          dispatch(incrementComponentClicks(pageId, component._id));
+          incrementComponentClicks(pageId, component._id);
       }}
     >
       <Grid container justifyContent="center" alignItems="center">

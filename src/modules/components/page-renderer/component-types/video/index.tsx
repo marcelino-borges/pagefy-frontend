@@ -5,7 +5,6 @@ import { getYoutubeIdFromUrl } from "../../../../../utils";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "../../../../../constants";
 import YoutubeEmbed from "../../../youtube-embed";
 import BaseComponentType from "../base";
-import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
 interface IProps {
@@ -14,7 +13,6 @@ interface IProps {
 }
 
 const VideoComponent = ({ component, pageId }: IProps) => {
-  const dispatch = useDispatch();
   const isSmallerThan500 = useMediaQuery("(max-width: 499px)");
 
   const [widthMultiplier, setWidthMultiplier] = useState<number>(0);
@@ -45,7 +43,7 @@ const VideoComponent = ({ component, pageId }: IProps) => {
       }}
       onClick={() => {
         if (pageId && component._id)
-          dispatch(incrementComponentClicks(pageId, component._id));
+          incrementComponentClicks(pageId, component._id);
       }}
     >
       <Grid style={{ width: "100%" }}>
