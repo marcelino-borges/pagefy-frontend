@@ -214,6 +214,7 @@ interface IDictionary {
     zoomOutRight: string;
     zoomOutUp: string;
   };
+  recomended: string;
 }
 
 // Dictionaries
@@ -438,6 +439,7 @@ const en: IDictionary = {
     zoomOutRight: "Zoom Out Right",
     zoomOutUp: "Zoom Out Up",
   },
+  recomended: "Recomended",
 };
 
 const pt: IDictionary = {
@@ -661,6 +663,7 @@ const pt: IDictionary = {
     zoomOutRight: "Zoom para longe e para a direita",
     zoomOutUp: "Zoom para longe e para cima",
   },
+  recomended: "Recomendado",
 };
 
 // Composed dictionaries

@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions } from "@mui/material";
-import { PRIMARY_COLOR } from "../styles/colors";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "../styles/colors";
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
@@ -19,6 +19,9 @@ const theme: ThemeOptions = {
   palette: {
     primary: {
       main: PRIMARY_COLOR,
+    },
+    secondary: {
+      main: SECONDARY_COLOR,
     },
   },
   components: {

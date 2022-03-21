@@ -9,3 +9,4 @@ export const LIGHTEST_GREY = "#fafafa";
 export const TRANSPARENT = "#00000000";
 export const ACESSIBILITY_GREEN = "#2e8540";
 export const ACESSIBILITY_RED = "#cd2026";
+export const DEEP_DARK_GREEN = "#41525C";

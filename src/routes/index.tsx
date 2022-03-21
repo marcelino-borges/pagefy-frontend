@@ -3,16 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { IApplicationState } from "../store";
 import routes from "./paths";
-import Support from "./../modules/pages/support/index";
-import UserPages from "./../modules/pages/user-pages/index";
-import strings from "./../localization/index";
-import UserPage from "./../modules/pages/user-page/index";
+import Support from "./../modules/pages/support";
+import UserPages from "./../modules/pages/user-pages";
+import strings from "./../localization";
+import UserPage from "./../modules/pages/user-page";
 import LoadingSpinner from "../modules/components/loading-spinner";
-import PageRenderer from "./../modules/components/page-renderer/index";
+import PageRenderer from "./../modules/components/page-renderer";
 import SignInPage from "../modules/pages/sign-in";
 import SignUpPage from "../modules/pages/sign-up";
 import "../utils/firebase-config";
 import { updatePage } from "./../store/user-pages/actions";
+import Home from "./../modules/pages/home";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const AppRoutes = () => {
     <BrowserRouter>
       {isLoading && <LoadingSpinner />}
       <Routes>
-        <Route path={routes.root} element={<SignInPage />} />
+        <Route path={routes.root} element={<Home />} />
         <Route path={routes.signIn} element={<SignInPage />} />
         <Route path={routes.signUp} element={<SignUpPage />} />
         <Route path={routes.pages} element={<UserPages />} />
