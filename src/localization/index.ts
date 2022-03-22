@@ -1,5 +1,93 @@
 import LocalizedStrings from "react-localization";
 
+interface IAnimations {
+  bounce: string;
+  bounceIn: string;
+  bounceInDown: string;
+  bounceInLeft: string;
+  bounceInRight: string;
+  bounceInUp: string;
+  bounceOut: string;
+  bounceOutDown: string;
+  bounceOutLeft: string;
+  bounceOutRight: string;
+  bounceOutUp: string;
+  fadeIn: string;
+  fadeInDown: string;
+  fadeInDownBig: string;
+  fadeInLeft: string;
+  fadeInLeftBig: string;
+  fadeInRight: string;
+  fadeInRightBig: string;
+  fadeInUp: string;
+  fadeInUpBig: string;
+  fadeOut: string;
+  fadeOutDown: string;
+  fadeOutDownBig: string;
+  fadeOutLeft: string;
+  fadeOutLeftBig: string;
+  fadeOutRight: string;
+  fadeOutRightBig: string;
+  fadeOutUp: string;
+  fadeOutUpBig: string;
+  flash: string;
+  flip: string;
+  flipInX: string;
+  flipInY: string;
+  flipOutX: string;
+  flipOutY: string;
+  headShake: string;
+  hinge: string;
+  jello: string;
+  lightSpeedIn: string;
+  lightSpeedOut: string;
+  pulse: string;
+  rollIn: string;
+  rollOut: string;
+  rotateIn: string;
+  rotateInDownLeft: string;
+  rotateInDownRight: string;
+  rotateInUpLeft: string;
+  rotateInUpRight: string;
+  rotateOut: string;
+  rotateOutDownLeft: string;
+  rotateOutDownRight: string;
+  rotateOutUpLeft: string;
+  rotateOutUpRight: string;
+  rubberBand: string;
+  shake: string;
+  slideInDown: string;
+  slideInLeft: string;
+  slideInRight: string;
+  slideInUp: string;
+  slideOutDown: string;
+  slideOutLeft: string;
+  slideOutRight: string;
+  slideOutUp: string;
+  swing: string;
+  tada: string;
+  wobble: string;
+  zoomIn: string;
+  zoomInDown: string;
+  zoomInLeft: string;
+  zoomInRight: string;
+  zoomInUp: string;
+  zoomOut: string;
+  zoomOutDown: string;
+  zoomOutLeft: string;
+  zoomOutRight: string;
+  zoomOutUp: string;
+}
+
+interface IPlanDetails {
+  name: string;
+  benefit1: string;
+  benefit2: string;
+  benefit3: string;
+  benefit4: string;
+  benefit5: string;
+}
+
 interface IDictionary {
   home: string;
   pages: string;
@@ -136,85 +224,24 @@ interface IDictionary {
   couldntFindPage: string;
   maximumFileSizeOf: string;
   invalidCredentials: string;
-  animations: {
-    bounce: string;
-    bounceIn: string;
-    bounceInDown: string;
-    bounceInLeft: string;
-    bounceInRight: string;
-    bounceInUp: string;
-    bounceOut: string;
-    bounceOutDown: string;
-    bounceOutLeft: string;
-    bounceOutRight: string;
-    bounceOutUp: string;
-    fadeIn: string;
-    fadeInDown: string;
-    fadeInDownBig: string;
-    fadeInLeft: string;
-    fadeInLeftBig: string;
-    fadeInRight: string;
-    fadeInRightBig: string;
-    fadeInUp: string;
-    fadeInUpBig: string;
-    fadeOut: string;
-    fadeOutDown: string;
-    fadeOutDownBig: string;
-    fadeOutLeft: string;
-    fadeOutLeftBig: string;
-    fadeOutRight: string;
-    fadeOutRightBig: string;
-    fadeOutUp: string;
-    fadeOutUpBig: string;
-    flash: string;
-    flip: string;
-    flipInX: string;
-    flipInY: string;
-    flipOutX: string;
-    flipOutY: string;
-    headShake: string;
-    hinge: string;
-    jello: string;
-    lightSpeedIn: string;
-    lightSpeedOut: string;
-    pulse: string;
-    rollIn: string;
-    rollOut: string;
-    rotateIn: string;
-    rotateInDownLeft: string;
-    rotateInDownRight: string;
-    rotateInUpLeft: string;
-    rotateInUpRight: string;
-    rotateOut: string;
-    rotateOutDownLeft: string;
-    rotateOutDownRight: string;
-    rotateOutUpLeft: string;
-    rotateOutUpRight: string;
-    rubberBand: string;
-    shake: string;
-    slideInDown: string;
-    slideInLeft: string;
-    slideInRight: string;
-    slideInUp: string;
-    slideOutDown: string;
-    slideOutLeft: string;
-    slideOutRight: string;
-    slideOutUp: string;
-    swing: string;
-    tada: string;
-    wobble: string;
-    zoomIn: string;
-    zoomInDown: string;
-    zoomInLeft: string;
-    zoomInRight: string;
-    zoomInUp: string;
-    zoomOut: string;
-    zoomOutDown: string;
-    zoomOutLeft: string;
-    zoomOutRight: string;
-    zoomOutUp: string;
-  };
+  animations: IAnimations;
   recomended: string;
+  createNowYour: string;
+  bio: string;
+  forYourSocialMedia: string;
+  landingPage: string;
+  forYourProductOrBusiness: string;
+  dependOnNoneToReleaseCreativity: string;
+  haveAccessToPremiumResources: string;
+  differentiate: string;
+  plan: string;
+  freePlan: IPlanDetails;
+  vipPlan: IPlanDetails;
+  premiumPlan: IPlanDetails;
+  currency: string;
+  year: string;
+  purchase: string;
+  andWinAVipPlanFor: string;
 }
 
 // Dictionaries
@@ -440,6 +467,45 @@ const en: IDictionary = {
     zoomOutUp: "Zoom Out Up",
   },
   recomended: "Recomended",
+  createNowYour: "Create now your",
+  bio: "bio",
+  forYourSocialMedia: "for your social media",
+  landingPage: "landing page",
+  forYourProductOrBusiness: "for your product or business",
+  dependOnNoneToReleaseCreativity:
+    "Release your creativity depending on NOBODY!",
+  haveAccessToPremiumResources:
+    "Access premium resources with a low investment!",
+  differentiate: "Differentiate from the others!",
+  plan: "Plan",
+  freePlan: {
+    name: "Free",
+    benefit1: "Manage multiple accounts",
+    benefit2: "Create until 2 pages",
+    benefit3: "Unlimited components",
+    benefit4: "",
+    benefit5: "",
+  },
+  vipPlan: {
+    name: "Vip",
+    benefit1: "",
+    benefit2: "",
+    benefit3: "",
+    benefit4: "",
+    benefit5: "",
+  },
+  premiumPlan: {
+    name: "Platinum",
+    benefit1: "",
+    benefit2: "",
+    benefit3: "",
+    benefit4: "",
+    benefit5: "",
+  },
+  currency: "U$",
+  year: "year",
+  purchase: "Purchase",
+  andWinAVipPlanFor: "and win a VIP plan for",
 };
 
 const pt: IDictionary = {
@@ -664,6 +730,45 @@ const pt: IDictionary = {
     zoomOutUp: "Zoom para longe e para cima",
   },
   recomended: "Recomendado",
+  createNowYour: "Crie agora sua",
+  bio: "bio",
+  forYourSocialMedia: "para suas redes sociais",
+  landingPage: "landing page",
+  forYourProductOrBusiness: "para seu produto ou negócio",
+  dependOnNoneToReleaseCreativity:
+    "Dependa de NINGUÉM para liberar sua criatividade!",
+  haveAccessToPremiumResources:
+    "Tenha acesso a recursos premium por um baixo investimento!",
+  differentiate: "Diferencie-se dos outros!",
+  plan: "Plano",
+  freePlan: {
+    name: "Grátis",
+    benefit1: "Gerencie múltiplas contas",
+    benefit2: "Crie até 2 páginas",
+    benefit3: "Componentes ilimitados",
+    benefit4: "",
+    benefit5: "",
+  },
+  vipPlan: {
+    name: "Vip",
+    benefit1: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
+    benefit2: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
+    benefit3: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
+    benefit4: "",
+    benefit5: "",
+  },
+  premiumPlan: {
+    name: "Platinum",
+    benefit1: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
+    benefit2: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
+    benefit3: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
+    benefit4: "",
+    benefit5: "",
+  },
+  currency: "R$",
+  year: "ano",
+  purchase: "Adquirir",
+  andWinAVipPlanFor: "e ganhe um plano VIP por",
 };
 
 // Composed dictionaries

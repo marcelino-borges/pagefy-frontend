@@ -7,8 +7,14 @@ import strings from "../../../localization";
 import Section1 from "./../../components/section1/index";
 import ButtonWhite from "./../../components/button-white/index";
 import routes from "./../../../routes/paths";
+import { DEEP_DARK_GREEN } from "../../../styles/colors";
+import { useDispatch } from "react-redux";
+import { setPurchaseValue } from "../../../store/purchase/actions";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const isSmallerThan400 = useMediaQuery("(max-width: 400px");
   const isSmallerThan600 = useMediaQuery("(max-width: 600px");
   const isSmallerThan900 = useMediaQuery("(max-width: 900px");
 
@@ -26,56 +32,149 @@ const Home = () => {
           position: "relative",
         }}
       >
+        {/* BANNER */}
         <Grid container>
-          <img
-            src={
-              isSmallerThan600 ? images.bannerMobile1 : images.bannerDesktop1
-            }
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            alt="Banner desktop"
-          />
+          <span style={{ position: "relative" }}>
+            <img
+              src={
+                isSmallerThan600 ? images.bannerMobile1 : images.bannerDesktop1
+              }
+              style={{
+                width: "100%",
+                height: "auto",
+                zIndex: -1,
+              }}
+              alt="Banner desktop"
+            />
+            <Grid
+              container
+              style={{
+                position: "absolute",
+                top: !isSmallerThan600 ? 0 : "unset",
+                bottom: isSmallerThan600 ? 0 : "unset",
+                zIndex: 100,
+                fontWeight: 600,
+                color: DEEP_DARK_GREEN,
+                padding: "7% 32px",
+                height: "70%",
+              }}
+              fontSize={isSmallerThan400 ? "0.8em" : "1.2em"}
+              direction="column"
+              justifyContent={isSmallerThan600 ? "center" : "flex-start"}
+              wrap="nowrap"
+            >
+              <Grid container fontSize="1.5em">
+                {strings.createNowYour}
+              </Grid>
+              <Grid container alignItems="baseline">
+                <Grid item fontSize="1.5em" color="white" pr="4px">
+                  {strings.bio.toUpperCase()}
+                </Grid>
+                <Grid item>{strings.forYourSocialMedia}</Grid>
+              </Grid>
+              <Grid container alignItems="baseline">
+                <Grid item pr="4px">
+                  {strings.or}
+                </Grid>
+                <Grid item fontSize="1.5em" color="white">
+                  {strings.landingPage.toUpperCase()}
+                </Grid>
+              </Grid>
+              <Grid container>{strings.forYourProductOrBusiness}</Grid>
+              <Grid container fontSize="0.75em !important" pt="5%">
+                {strings.dependOnNoneToReleaseCreativity}
+                <br />
+                {strings.haveAccessToPremiumResources}
+                <br />
+                {strings.differentiate}
+              </Grid>
+            </Grid>
+          </span>
         </Grid>
-        <Grid container direction={isSmallerThan600 ? "column" : "row"}>
+
+        {/* FEATURED CARDS */}
+        <Grid
+          container
+          direction={isSmallerThan600 ? "column" : "row"}
+          pt="32px"
+          pb="50px"
+        >
           <RecomendedCard
             item
             sm={!isSmallerThan600 ? 4 : undefined}
-            overTitle="Plano"
-            title="GRÁTIS"
+            overTitle={strings.plan}
+            title={strings.freePlan.name.toUpperCase()}
           >
-            <ul>
-              <li>Gerencie múltiplas páginas na mesma conta</li>
-              <li>Até 2 páginas</li>
-              <li>Componentes ilimitados</li>
-            </ul>
+            <Grid container justifyContent="center">
+              <ul>
+                <li>{strings.freePlan.benefit1}</li>
+                <li>{strings.freePlan.benefit2}</li>
+                <li>{strings.freePlan.benefit3}</li>
+              </ul>
+            </Grid>
+            <Grid container justifyContent="center">
+              <ButtonWhite to={routes.signUp}>{strings.signUp}</ButtonWhite>
+            </Grid>
           </RecomendedCard>
           <RecomendedCard
             item
             sm={!isSmallerThan600 ? 4 : undefined}
             recomendedText={strings.recomended}
-            overTitle="Plano"
-            title="VIP"
+            overTitle={strings.plan}
+            title={strings.vipPlan.name.toUpperCase()}
           >
-            <ul>
-              <li>Será que daqui pra 2023 Netinho e Andrew definem isso?</li>
-              <li>Será que daqui pra 2023 Netinho e Andrew definem isso?</li>
-              <li>Será que daqui pra 2023 Netinho e Andrew definem isso?</li>
-            </ul>
+            <Grid container justifyContent="center">
+              <ul>
+                <li>{strings.vipPlan.benefit1}</li>
+                <li>{strings.vipPlan.benefit1}</li>
+                <li>{strings.vipPlan.benefit1}</li>
+              </ul>
+            </Grid>
+            <Grid container justifyContent="center">
+              <ButtonWhite
+                to={routes.signUp}
+                onClick={() => dispatch(setPurchaseValue(149.9))}
+              >
+                {strings.purchase}
+              </ButtonWhite>
+            </Grid>
+            <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
+              <i>
+                {strings.currency} 149.90/{strings.year}
+              </i>
+            </Grid>
           </RecomendedCard>
           <RecomendedCard
             item
             sm={!isSmallerThan600 ? 4 : undefined}
-            overTitle="Plano"
-            title="PLATINUM"
+            overTitle={strings.plan}
+            title={strings.premiumPlan.name.toUpperCase()}
           >
-            <ul>
-              <li>Será que daqui pra 2023 Netinho e Andrew definem isso?</li>
-              <li>Será que daqui pra 2023 Netinho e Andrew definem isso?</li>
-              <li>Será que daqui pra 2023 Netinho e Andrew definem isso?</li>
-            </ul>
+            <Grid container justifyContent="center">
+              <ul>
+                <li>{strings.premiumPlan.benefit1}</li>
+                <li>{strings.premiumPlan.benefit1}</li>
+                <li>{strings.premiumPlan.benefit1}</li>
+              </ul>
+            </Grid>
+            <Grid container justifyContent="center">
+              <ButtonWhite
+                to={routes.signUp}
+                onClick={() => dispatch(setPurchaseValue(249.9))}
+              >
+                {strings.purchase}
+              </ButtonWhite>
+            </Grid>
+            <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
+              <i>
+                {strings.currency} 249.90/{strings.year}
+              </i>
+            </Grid>
           </RecomendedCard>
+        </Grid>
+
+        {/* LAST SECTION */}
+        <Grid container direction={isSmallerThan600 ? "column" : "row"}>
           <Section1>
             <Grid container alignItems="center" minHeight="400px">
               <Grid
@@ -91,8 +190,11 @@ const Home = () => {
                     lineHeight: "2",
                   }}
                 >
-                  Crie sua página agora
-                  <br />e ganhe um plano VIP por
+                  {strings.createNowYour} {strings.bio}
+                  <br />
+                  {strings.or} {strings.landingPage}
+                  <br />
+                  {strings.andWinAVipPlanFor}
                   <br />
                 </span>
                 <span
@@ -102,7 +204,7 @@ const Home = () => {
                     fontWeight: "600",
                   }}
                 >
-                  30 dias
+                  30 {strings.days}
                 </span>
               </Grid>
               <Grid
@@ -111,7 +213,7 @@ const Home = () => {
                 sm={!isSmallerThan600 ? 6 : undefined}
                 textAlign="center"
               >
-                <ButtonWhite to={routes.signUp}>Cadastre-se</ButtonWhite>
+                <ButtonWhite to={routes.signUp}>{strings.signUp}</ButtonWhite>
               </Grid>
             </Grid>
           </Section1>
