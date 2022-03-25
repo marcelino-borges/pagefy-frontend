@@ -107,9 +107,9 @@ const Home = () => {
           >
             <Grid container justifyContent="center">
               <ul>
-                <li>{strings.freePlan.benefit1}</li>
-                <li>{strings.freePlan.benefit2}</li>
-                <li>{strings.freePlan.benefit3}</li>
+                {strings.freePlan.benefits.map((benefit: string) => (
+                  <li>{benefit}</li>
+                ))}
               </ul>
             </Grid>
             <Grid container justifyContent="center">
@@ -125,9 +125,12 @@ const Home = () => {
           >
             <Grid container justifyContent="center">
               <ul>
-                <li>{strings.vipPlan.benefit1}</li>
-                <li>{strings.vipPlan.benefit1}</li>
-                <li>{strings.vipPlan.benefit1}</li>
+                {strings.freePlan.benefits.map((benefit: string) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+                {strings.vipPlan.benefits.map((benefit: string) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
               </ul>
             </Grid>
             <Grid container justifyContent="center">
@@ -152,9 +155,15 @@ const Home = () => {
           >
             <Grid container justifyContent="center">
               <ul>
-                <li>{strings.premiumPlan.benefit1}</li>
-                <li>{strings.premiumPlan.benefit1}</li>
-                <li>{strings.premiumPlan.benefit1}</li>
+                {strings.freePlan.benefits.map((benefit: string) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+                {strings.vipPlan.benefits.map((benefit: string) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+                {strings.premiumPlan.benefits.map((benefit: string) => (
+                  <li>{benefit}</li>
+                ))}
               </ul>
             </Grid>
             <Grid container justifyContent="center">

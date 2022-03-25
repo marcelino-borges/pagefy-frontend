@@ -81,11 +81,7 @@ interface IAnimations {
 
 interface IPlanDetails {
   name: string;
-  benefit1: string;
-  benefit2: string;
-  benefit3: string;
-  benefit4: string;
-  benefit5: string;
+  benefits: string[];
 }
 
 interface IDictionary {
@@ -480,27 +476,37 @@ const en: IDictionary = {
   plan: "Plan",
   freePlan: {
     name: "Free",
-    benefit1: "Manage multiple accounts",
-    benefit2: "Create until 2 pages",
-    benefit3: "Unlimited components",
-    benefit4: "",
-    benefit5: "",
+    benefits: [
+      "No need for registering credit card",
+      "Support",
+      "Unlimited components",
+      "Scheduled components",
+      "Unlimited sharing",
+      "Embeded Youtube video",
+      "Many types of components layouts",
+      "Custom links",
+      "Traffic analytics",
+      "Fully customizable buttons",
+      "Animated buttons",
+      "Social media and more icons",
+      "Customizable backgrounds",
+      "1 page by account",
+    ],
   },
   vipPlan: {
     name: "Vip",
-    benefit1: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit2: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit3: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit4: "",
-    benefit5: "",
+    benefits: [
+      "3 pages by account",
+      "VIP support",
+      "Integration with Google Analytics",
+      "Integration with Facebook Pixel",
+      "No ads",
+      "No SocialBio logo",
+    ],
   },
   premiumPlan: {
     name: "Platinum",
-    benefit1: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit2: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit3: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit4: "",
-    benefit5: "",
+    benefits: ["Platinum support", "Unlimited pages by account"],
   },
   currency: "U$",
   year: "year",
@@ -742,28 +748,38 @@ const pt: IDictionary = {
   differentiate: "Diferencie-se dos outros!",
   plan: "Plano",
   freePlan: {
-    name: "Grátis",
-    benefit1: "Gerencie múltiplas contas",
-    benefit2: "Crie até 2 páginas",
-    benefit3: "Componentes ilimitados",
-    benefit4: "",
-    benefit5: "",
+    name: "Free",
+    benefits: [
+      "Não precisa cadastrar cartão de crédito",
+      "Suporte",
+      "Links personalizados",
+      "Componentes ilimitados",
+      "Componentes publicados com agendamento",
+      "Compartilhamento ilimitado",
+      "Vídeo do Youtube incorporado",
+      "Vários tipos de layout componentes",
+      "Estatísticas de tráfego",
+      "Botões totalmente personalizáveis",
+      "Botões animados",
+      "Ícones para redes sociais e mais",
+      "Planos de fundo personalizáveis",
+      "1 página por conta",
+    ],
   },
   vipPlan: {
     name: "Vip",
-    benefit1: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit2: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit3: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit4: "",
-    benefit5: "",
+    benefits: [
+      "3 páginas por conta",
+      "Suporte VIP",
+      "Integração com Google Analytics",
+      "Integração com Facebook Pixel",
+      "Sem anúncios",
+      "Sem a logo do SocialBio",
+    ],
   },
   premiumPlan: {
     name: "Platinum",
-    benefit1: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit2: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit3: "Será que daqui pra 2023 Netinho e Andrew definem isso?",
-    benefit4: "",
-    benefit5: "",
+    benefits: ["Suporte platinum", "Páginas ilimitadas por conta"],
   },
   currency: "R$",
   year: "ano",
