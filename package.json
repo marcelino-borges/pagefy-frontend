@@ -48,9 +48,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "integrate": "git push origin main && git push heroku main",
-    "heroku_logs": "heroku logs --tail --app social-bio"
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
