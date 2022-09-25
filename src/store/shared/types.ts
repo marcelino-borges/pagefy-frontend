@@ -1,6 +1,8 @@
 export enum SharedActionTypes {
   SET_LOADING = "@shared/SET_LOADING",
   CLEAR_LOADING = "@shared/CLEAR_LOADING",
+  INCREMENT_CONTINUOUS_TIME_LOADING = "@shared/INCREMENT_CONTINUOUS_TIME_LOADING",
+  CLEAR_CONTINUOUS_TIME_LOADING = "@shared/CLEAR_CONTINUOUS_TIME_LOADING",
 }
 
 export interface IAction {
@@ -21,4 +23,5 @@ export enum UserStorageFolder {
 
 export interface ISharedState {
   loading: boolean;
+  continuousTimeLoading: number;
 }

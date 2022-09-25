@@ -10,6 +10,7 @@ import strings from "../../../localization";
 import { IUserPage } from "../../../store/user-pages/types";
 import PrivateRouteChecker from "./../../components/private-route-checker/index";
 import { getUser } from "../../../store/user/actions";
+import { clearLoading } from "./../../../store/shared/actions";
 
 const UserPages = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const UserPages = () => {
 
   useEffect(() => {
     if (userEmailState) dispatch(getUser(userEmailState, null));
+
+    return () => {
+      dispatch(clearLoading());
+    };
   }, [dispatch, userEmailState]);
 
   return (

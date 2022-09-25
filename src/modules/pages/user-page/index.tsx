@@ -792,7 +792,7 @@ const UserPage = () => {
                   component={component}
                   index={index}
                   pageId={page._id}
-                  key={component._id}
+                  key={uuidv4()}
                 />
               )
             )}

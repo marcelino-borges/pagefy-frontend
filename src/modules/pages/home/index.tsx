@@ -10,6 +10,7 @@ import routes from "./../../../routes/paths";
 import { DEEP_DARK_GREEN } from "../../../styles/colors";
 import { useDispatch } from "react-redux";
 import { setPurchaseValue } from "../../../store/purchase/actions";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -108,7 +109,7 @@ const Home = () => {
             <Grid container justifyContent="center">
               <ul>
                 {strings.freePlan.benefits.map((benefit: string) => (
-                  <li>{benefit}</li>
+                  <li key={uuidv4()}>{benefit}</li>
                 ))}
               </ul>
             </Grid>
@@ -126,10 +127,10 @@ const Home = () => {
             <Grid container justifyContent="center">
               <ul>
                 {strings.freePlan.benefits.map((benefit: string) => (
-                  <li key={benefit}>{benefit}</li>
+                  <li key={uuidv4()}>{benefit}</li>
                 ))}
                 {strings.vipPlan.benefits.map((benefit: string) => (
-                  <li key={benefit}>{benefit}</li>
+                  <li key={uuidv4()}>{benefit}</li>
                 ))}
               </ul>
             </Grid>
@@ -156,13 +157,13 @@ const Home = () => {
             <Grid container justifyContent="center">
               <ul>
                 {strings.freePlan.benefits.map((benefit: string) => (
-                  <li key={benefit}>{benefit}</li>
+                  <li key={uuidv4()}>{benefit}</li>
                 ))}
                 {strings.vipPlan.benefits.map((benefit: string) => (
-                  <li key={benefit}>{benefit}</li>
+                  <li key={uuidv4()}>{benefit}</li>
                 ))}
                 {strings.premiumPlan.benefits.map((benefit: string) => (
-                  <li>{benefit}</li>
+                  <li key={uuidv4()}>{benefit}</li>
                 ))}
               </ul>
             </Grid>

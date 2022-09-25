@@ -42,8 +42,8 @@ export interface IApplicationState {
 let blacklistTransform = createTransform((inboundState: any, key: any) => {
   let state = { ...inboundState };
 
-  if (state["loading"]) {
-    state["loading"] = false;
+  if (state.loading !== undefined) {
+    state.loading = false;
   }
 
   return state;

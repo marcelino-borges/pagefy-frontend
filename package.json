@@ -2,6 +2,7 @@
   "name": "social-bio",
   "version": "0.1.0",
   "private": true,
+  "author": "Marcelino Borges",
   "engines": {
     "node": "16.x",
     "npm": "8.x"
