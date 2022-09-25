@@ -11,6 +11,8 @@ import { DEEP_DARK_GREEN } from "../../../styles/colors";
 import { useDispatch } from "react-redux";
 import { setPurchaseValue } from "../../../store/purchase/actions";
 import { v4 as uuidv4 } from "uuid";
+import { useEffect } from "react";
+import { clearLoading } from "../../../store/shared/actions";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,10 @@ const Home = () => {
   const isSmallerThan400 = useMediaQuery("(max-width: 400px");
   const isSmallerThan600 = useMediaQuery("(max-width: 600px");
   const isSmallerThan900 = useMediaQuery("(max-width: 900px");
+
+  useEffect(() => {
+    dispatch(clearLoading());
+  }, [dispatch]);
 
   return (
     <>
