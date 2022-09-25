@@ -34,6 +34,7 @@ const pagesReducer = (
       return {
         ...state,
         error: action.payload,
+        loading: false,
       };
 
     case UserPagesActionTypes.UPDATE_PAGE_LOADING:

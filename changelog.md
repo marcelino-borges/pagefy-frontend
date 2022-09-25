@@ -16,7 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
-### [1.0.1] - 2022-09-18
+### [1.0.2] - 2022-09-25
+
+- user-pages reducer setting loading = false in for all error types
+
+### [1.0.1] - 2022-09-25
 
 - Home page clearing "loading" from global state
 

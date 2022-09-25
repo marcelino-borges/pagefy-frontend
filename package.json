@@ -1,6 +1,6 @@
 {
   "name": "social-bio",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "author": "Marcelino Borges",
   "engines": {
@@ -55,7 +55,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-dev": "ts-node ./src/utils/update-version-pkg-json/index.ts && react-scripts start",
+    "start-dev": "npm run update-pkg-version && react-scripts start",
+    "update-pkg-version": "ts-node ./src/utils/update-version-pkg-json/index.ts",
     "build": "react-scripts build",
     "test": "react-scripts test"
   },
