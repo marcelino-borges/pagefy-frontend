@@ -37,11 +37,7 @@ import {
   DeleteContainer,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
-import {
-  getLocalizedStringByComponentType,
-  removeCssUrlWrapper,
-  stringShortener,
-} from "../../../../utils";
+import { removeCssUrlWrapper, stringShortener } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import strings from "../../../../localization";
 import TransparentTextField from "../../../components/transparent-textfield";
@@ -79,6 +75,7 @@ import { MEDIUM_GREY } from "./../../../../styles/colors";
 import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { deleteImage } from "../../../../services/files";
+import { getLocalizedStringByComponentType } from "../../../../localization/utils";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;

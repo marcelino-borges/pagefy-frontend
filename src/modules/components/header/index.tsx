@@ -59,6 +59,11 @@ const Header = () => {
             </HeaderLinkDesktop>
           </Grid>
           <Grid item padding={2}>
+            <HeaderLinkDesktop to={routes.faq}>
+              {strings.faq.menu}
+            </HeaderLinkDesktop>
+          </Grid>
+          <Grid item padding={2}>
             <HeaderLinkDesktop to={routes.support}>
               {strings.support}
             </HeaderLinkDesktop>
@@ -124,6 +129,14 @@ const Header = () => {
             <MobileMenuGridItem
               item
               alignItems="center"
+              onClick={() => onClickLinkCallback(routes.faq)}
+            >
+              {strings.faq.menu}
+            </MobileMenuGridItem>
+
+            <MobileMenuGridItem
+              item
+              alignItems="center"
               onClick={() => onClickLinkCallback(routes.support)}
             >
               {strings.support}
@@ -153,7 +166,7 @@ const Header = () => {
             src={logos.LogoHorizontalLightBGPNG}
             style={{
               height: "auto",
-              width: isSmallerThan400 ? "125px" : "100%",
+              width: isSmallerThan400 ? "125px" : "80%",
               margin: "8px",
               maxHeight: "80px",
             }}

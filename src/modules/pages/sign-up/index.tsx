@@ -20,7 +20,11 @@ import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { PrimaryColoredText } from "./style";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
-import { IMAGE_EXTENSIONS } from "../../../constants";
+import {
+  EMAIL_REGEX,
+  IMAGE_EXTENSIONS,
+  PASSWORD_REGEX,
+} from "../../../constants";
 import ProfileEditablePicture from "../../components/profile-editable-picture";
 import { signIn, signOut, signUp } from "../../../store/auth/actions";
 import { showErrorToast } from "./../../../utils/toast/index";
@@ -28,6 +32,7 @@ import routes from "./../../../routes/paths";
 import { IPlan, IUser } from "../../../store/user/types";
 import { uploadImage } from "../../../services/files";
 import { updateUser } from "./../../../store/user/actions";
+import { capitalizeOnlyFirstLetter } from "../../../utils";
 const INITIAL_VALUES = {
   firstName: "",
   lastName: "",
@@ -65,11 +70,12 @@ const SignUpPage = () => {
   const onSubmit = () => {
     if (!agreePrivacy) {
       showErrorToast(strings.requiredPrivacyAccept);
+      return;
     }
 
     const newUser = {
-      firstName: values.firstName,
-      lastName: values.lastName,
+      firstName: capitalizeOnlyFirstLetter(values.firstName),
+      lastName: capitalizeOnlyFirstLetter(values.lastName),
       email: values.email,
       password: values.password,
       confirmPassword: values.confirmPassword,
@@ -77,6 +83,17 @@ const SignUpPage = () => {
       agreePrivacy,
       plan: IPlan.FREE,
     };
+
+    if (!newUser.email.match(EMAIL_REGEX)) {
+      showErrorToast(strings.authErrors.invalidEmail);
+      return;
+    }
+
+    if (!newUser.password.match(PASSWORD_REGEX)) {
+      showErrorToast(strings.authErrors.passwordMustAttendRequirements);
+      return;
+    }
+
     dispatch(
       signUp(
         newUser,

@@ -174,7 +174,7 @@ const UserPage = () => {
       .then((result: AxiosResponse) => {
         if (page && page._id && result.data && result.data._id) {
           if (result.data._id !== page._id) {
-            setUrlFieldError(strings.urlAlreadyExists);
+            setUrlFieldError(strings.authErrors.urlAlreadyExists);
             setIsEdittingPageUrl(false);
           } else {
             savePage();

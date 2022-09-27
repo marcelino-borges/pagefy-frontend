@@ -14,6 +14,7 @@ import SignUpPage from "../modules/pages/sign-up";
 import "../utils/firebase-config";
 import { updatePage } from "./../store/user-pages/actions";
 import Home from "./../modules/pages/home";
+import Faq from "../modules/pages/faq";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const AppRoutes = () => {
         <Route path={routes.pages} element={<UserPages />} />
         <Route path={`${routes.page}/:id`} element={<UserPage />} />
         <Route path="/:url" element={<PageRenderer />} />
+        <Route path={routes.faq} element={<Faq />} />
         <Route path={routes.support} element={<Support />} />
         <Route
           path="*"

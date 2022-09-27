@@ -207,19 +207,28 @@ interface IDictionary {
   signIn2: string;
   accessAccount: string;
   passwordRequirements: string;
-  errorSignUp: string;
-  errorSignIn: string;
-  errorSignOut: string;
   requiredPrivacyAccept: string;
-  urlAlreadyExists: string;
-  userAlreadyExists: string;
   profile: string;
   signOut: string;
   noAccountYet: string;
   alreadyHaveAccount: string;
   couldntFindPage: string;
+  authErrors: {
+    urlAlreadyExists: string;
+    userAlreadyExists: string;
+    invalidCredentials: string;
+    userNotFound: string;
+    weakPassword: string;
+    invalidEmail: string;
+    passwordMustAttendRequirements: string;
+  };
+  generalErrors: {
+    unknownError: string;
+    errorSignUp: string;
+    errorSignIn: string;
+    errorSignOut: string;
+  };
   maximumFileSizeOf: string;
-  invalidCredentials: string;
   animations: IAnimations;
   recomended: string;
   createNowYour: string;
@@ -238,6 +247,11 @@ interface IDictionary {
   year: string;
   purchase: string;
   andWinAVipPlanFor: string;
+  faq: {
+    menu: string;
+    title: string;
+    description: string;
+  };
 }
 
 // Dictionaries
@@ -368,13 +382,25 @@ const en: IDictionary = {
   accessAccount: "Access your account",
   emailExample: "email@example.com",
   passwordRequirements:
-    "Password requirements: \n * Minimum 8 characters \n * At least 1 uppercase letter \n * At least 1 lowercase letter \n * At least 1 number \n * At least 1 special character",
-  errorSignUp: "Error creating your account.",
-  errorSignIn: "Error to sign in.",
-  errorSignOut: "Error to sign out.",
+    "Password requirements: \n * Minimum 8 characters \n * At least 1 lowercase letter \n * At least 1 number",
+
   requiredPrivacyAccept: "You must accept terms and privacy to continue.",
-  urlAlreadyExists: "URl already exists.",
-  userAlreadyExists: "User already exists, try another email.",
+  authErrors: {
+    urlAlreadyExists: "URl already exists.",
+    userAlreadyExists: "User already exists, try another email.",
+    invalidCredentials: "Invalid password.",
+    userNotFound: "User not found.",
+    weakPassword: "Weak password.",
+    invalidEmail: "Invalid email",
+    passwordMustAttendRequirements:
+      "Password must attend minimum requirements.",
+  },
+  generalErrors: {
+    errorSignUp: "Error creating your account.",
+    errorSignIn: "Error to sign in.",
+    errorSignOut: "Error to sign out.",
+    unknownError: "Unknown error.",
+  },
   profile: "Profile",
   signOut: "Sign Out",
   noAccountYet: "I have no account",
@@ -383,7 +409,6 @@ const en: IDictionary = {
   maximumFileSizeOf: "Maximum allowed size of the file is",
   viewPage: "View page",
   duplicate: "Duplicate",
-  invalidCredentials: "Invalid credentials",
   animations: {
     bounce: "Bounce",
     bounceIn: "Bounce In",
@@ -512,6 +537,11 @@ const en: IDictionary = {
   year: "year",
   purchase: "Purchase",
   andWinAVipPlanFor: "and win a VIP plan for",
+  faq: {
+    menu: "FAQ",
+    title: "Frequent Questions",
+    description: "Find here the most common questions people ask.",
+  },
 };
 
 const pt: IDictionary = {
@@ -640,14 +670,26 @@ const pt: IDictionary = {
   signIn2: "Entrar",
   emailExample: "email@exemplo.com",
   passwordRequirements:
-    "Requisitos para a senha: \n * No mínimo 8 caracteres \n * Pelo menos 1 letra maiúscula \n * Pelo menos 1 letra minúscula \n * Pelo menos 1 número \n * Pelo menos 1 caractere especial",
-  errorSignUp: "Erro ao criar sua conta.",
-  errorSignIn: "Erro ao entrar.",
-  errorSignOut: "Erro ao sair.",
+    "Requisitos para a senha: \n * No mínimo 8 caracteres \n * Pelo menos 1 letra minúscula \n * Pelo menos 1 número",
+
   requiredPrivacyAccept:
     "Você precisa aceitar os termos de uso e as políticas de privacidade para continuar.",
-  urlAlreadyExists: "URL já existe.",
-  userAlreadyExists: "Usuário já existente, tente outro e-mail.",
+  authErrors: {
+    urlAlreadyExists: "URL já existe.",
+    userAlreadyExists: "Usuário já existente, tente outro e-mail.",
+    invalidCredentials: "Senha incorreta.",
+    userNotFound: "Usuário não localizado.",
+    weakPassword: "Senha fraca.",
+    invalidEmail: "E-mail inválido.",
+    passwordMustAttendRequirements:
+      "Senha precisa atender aos requisitos mínimos.",
+  },
+  generalErrors: {
+    errorSignUp: "Erro ao criar sua conta.",
+    errorSignIn: "Erro ao entrar.",
+    errorSignOut: "Erro ao sair.",
+    unknownError: "Error desconhecido.",
+  },
   profile: "Perfil",
   signOut: "Sair",
   noAccountYet: "Ainda não possuo conta",
@@ -656,7 +698,6 @@ const pt: IDictionary = {
   maximumFileSizeOf: "Tamanho máximo permitido do arquivo:",
   viewPage: "Visualizar página",
   duplicate: "Duplicar",
-  invalidCredentials: "Credenciais inválidas",
   animations: {
     bounce: "Pulo",
     bounceIn: "Pulo entrando",
@@ -785,6 +826,11 @@ const pt: IDictionary = {
   year: "ano",
   purchase: "Adquirir",
   andWinAVipPlanFor: "e ganhe um plano VIP por",
+  faq: {
+    menu: "FAQ",
+    title: "Perguntas Frequentes",
+    description: "Encontre aqui as perguntas mais comuns que as pessoas fazem.",
+  },
 };
 
 // Composed dictionaries

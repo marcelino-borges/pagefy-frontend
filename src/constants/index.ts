@@ -8,6 +8,8 @@ export const RENDERED_PAGE_COMPONENT_HEIGHT = 56;
 export const RENDERED_PAGE_COMPONENT_RADIUS = 6;
 export const RENDERED_PAGE_LAUNCH_COMPONENT_ROWS = 4;
 export const MAXIMUM_FILE_SIZE = 3;
+export const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z]).{8,}$/gm;
+export const EMAIL_REGEX = /^.+@.+\..+$/gm;
 
 export const COMPONENT_ANIMATIONS = [
   "bounce",

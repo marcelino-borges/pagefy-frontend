@@ -46,7 +46,8 @@ export const signIn =
         if (errorCode) {
           const translatedError = translateError(errorCode);
           if (onErrorCallback) onErrorCallback(translatedError);
-        } else if (onErrorCallback) onErrorCallback(strings.errorSignUp);
+        } else if (onErrorCallback)
+          onErrorCallback(strings.generalErrors.errorSignUp);
       });
   };
 
@@ -105,7 +106,8 @@ export const signUp =
         if (errorCode) {
           const translatedError = translateError(errorCode);
           if (onErrorCallback) onErrorCallback(translatedError);
-        } else if (onErrorCallback) onErrorCallback(strings.errorSignUp);
+        } else if (onErrorCallback)
+          onErrorCallback(strings.generalErrors.errorSignUp);
       });
   };
 
@@ -139,7 +141,8 @@ export const signOut =
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
           if (onErrorCallback) onErrorCallback(translatedError);
-        } else if (onErrorCallback) onErrorCallback(strings.errorSignOut);
+        } else if (onErrorCallback)
+          onErrorCallback(strings.generalErrors.errorSignOut);
       });
   };
 

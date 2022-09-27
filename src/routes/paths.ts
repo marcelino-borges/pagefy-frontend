@@ -6,6 +6,7 @@ const routes = {
   page: "/dashboard/page",
   profile: "/dashboard/profile",
   support: "/public/support",
+  faq: "/public/faq",
   notFound: "/public/404",
 };
 
