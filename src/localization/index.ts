@@ -251,6 +251,7 @@ interface IDictionary {
     menu: string;
     title: string;
     description: string;
+    stillNeedHelp: string;
   };
 }
 
@@ -541,6 +542,7 @@ const en: IDictionary = {
     menu: "FAQ",
     title: "Frequent Questions",
     description: "Find here the most common questions people ask.",
+    stillNeedHelp: "Do you still need help?",
   },
 };
 
@@ -830,6 +832,7 @@ const pt: IDictionary = {
     menu: "FAQ",
     title: "Perguntas Frequentes",
     description: "Encontre aqui as perguntas mais comuns que as pessoas fazem.",
+    stillNeedHelp: "Ainda precisa de ajuda?",
   },
 };
 

@@ -60,11 +60,6 @@ const Header = () => {
           </Grid>
           <Grid item padding={2}>
             <HeaderLinkDesktop to={routes.faq}>
-              {strings.faq.menu}
-            </HeaderLinkDesktop>
-          </Grid>
-          <Grid item padding={2}>
-            <HeaderLinkDesktop to={routes.support}>
               {strings.support}
             </HeaderLinkDesktop>
           </Grid>
@@ -130,14 +125,6 @@ const Header = () => {
               item
               alignItems="center"
               onClick={() => onClickLinkCallback(routes.faq)}
-            >
-              {strings.faq.menu}
-            </MobileMenuGridItem>
-
-            <MobileMenuGridItem
-              item
-              alignItems="center"
-              onClick={() => onClickLinkCallback(routes.support)}
             >
               {strings.support}
             </MobileMenuGridItem>

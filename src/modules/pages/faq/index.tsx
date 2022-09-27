@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import strings from "../../../localization";
+import routes from "../../../routes/paths";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 import Accordion from "../../components/accordion";
 import Header from "../../components/header";
@@ -71,6 +73,10 @@ const Faq = () => {
             content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
             id="acc5"
           />
+          <div style={{ marginTop: "50px" }}>
+            {`${strings.faq.stillNeedHelp} `}
+            <Link to={routes.support}>{strings.clickHere}</Link>
+          </div>
         </DashboardContent>
       </div>
     </>
