@@ -8,7 +8,7 @@ import DashboardContent from "../../components/site-content";
 
 const Faq = () => {
   const [expandedAccordion, setExpandedAccordion] = useState<string | false>(
-    "panel1"
+    false
   );
 
   const handleChange =
