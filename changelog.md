@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Improvement in UI feedback for firebase errors
 - Added email and password validation regex in the forms
 - Updated LOGO
+- When user clicks on header menu SUPPORT, he navigates 1st to FAQ, then support
 
 ### [1.0.2] - 2022-09-25
 
