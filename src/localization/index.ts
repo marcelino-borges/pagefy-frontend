@@ -171,7 +171,10 @@ interface IDictionary {
   pageUrl: string;
   pageUrlExample: string;
   requiredField: string;
-  pageUrlBadFormat: string;
+  createPageError: {
+    pageUrlBadFormat: string;
+    cannotContainWhiteSpaces: string;
+  };
   launchMessageLabel: string;
   launchMessageExample: string;
   launchComponentInstructions: string;
@@ -346,8 +349,11 @@ const en: IDictionary = {
   pageUrl: "Page URL",
   requiredField: "Required field",
   pageUrlExample: "/unique-name-of-your-page",
-  pageUrlBadFormat:
-    "Badly formatted URL. It must have more than 3 characters and it's allowed only letters and hyphens, like this: /my-page",
+  createPageError: {
+    pageUrlBadFormat:
+      "Badly formatted URL. It must have more than 3 characters and it's allowed only letters and hyphens, like this: /my-page",
+    cannotContainWhiteSpaces: "Cannot contain white spaces",
+  },
   launchMessageLabel: "Message",
   launchMessageExample: "for the innauguration of our shop!",
   launchComponentInstructions:
@@ -637,8 +643,11 @@ const pt: IDictionary = {
   pageUrl: "URL da página",
   requiredField: "Campo obrigatório",
   pageUrlExample: "/nome-unico-da-sua-pagina",
-  pageUrlBadFormat:
-    "URL mal formatada. Necessário conter mais de 3 caracteres e só é permitido letras (sem acento) e hífens, como no exemplo: /minha-pagina",
+  createPageError: {
+    pageUrlBadFormat:
+      "URL mal formatada. Necessário conter mais de 3 caracteres e só é permitido letras (sem acento) e hífens, como no exemplo: /minha-pagina",
+    cannotContainWhiteSpaces: "Não pode haver espaços em branco.",
+  },
   launchMessageLabel: "Mensagem",
   launchMessageExample: "para a inauguração da nossa loja",
   launchComponentInstructions:

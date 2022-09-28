@@ -220,6 +220,23 @@ const PageRenderer = ({ pageToRender }: IProps) => {
               <IconsComponent isRenderer iconsList={bottomComponents} />
             )}
           </Grid>
+          <Grid container item justifyContent="center">
+            <Link to={routes.root}>
+              <Grid
+                item
+                mt="150px"
+                bgcolor="#ffffff80"
+                p="8px"
+                borderRadius="8px"
+              >
+                <img
+                  src={Logos.LogoHorizontalLightBGPNG}
+                  alt="Socialbio.me"
+                  width="150px"
+                />
+              </Grid>
+            </Link>
+          </Grid>
         </Grid>
       )}
     </PageRendererContent>

@@ -20,6 +20,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Fix: when rendered page/bio was loading, the website showed that the page wasn't public
 - Fix: links not working in the rendered page
+- Feature: Socialbio logo in the footer of the rendered page
+- Fix: Create page dialog doesn't allow url with white spaces anymore
 
 ### [1.1.1] - 2022-09-28
 

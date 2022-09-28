@@ -50,23 +50,29 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
     setErrorPageUrlField(undefined);
     let hasErrors = false;
 
+    //Page name validation
     if (pageName.length < 1) {
       hasErrors = true;
       setErrorPageNameField(strings.requiredField);
     }
+
+    //Page URL validation
     if (pageUrl.length < 1) {
       hasErrors = true;
       setErrorPageUrlField(strings.requiredField);
     } else if (!pageUrl.match("^[/]?[a-z-]{3,}[a-z]$")) {
       hasErrors = true;
-      setErrorPageUrlField(strings.pageUrlBadFormat);
+      setErrorPageUrlField(strings.createPageError.pageUrlBadFormat);
+    } else if (pageUrl.includes(" ")) {
+      hasErrors = true;
+      setErrorPageUrlField(strings.createPageError.cannotContainWhiteSpaces);
     }
 
     if (hasErrors) {
       return;
     }
 
-    let url = pageUrl;
+    let url = pageUrl.trim();
 
     if (url[0] === "/") {
       url = pageUrl.slice(1, pageUrl.length);
