@@ -4,10 +4,14 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import { PRIMARY_COLOR } from "./../../../styles/colors";
+import MuiAccordionDetails, {
+  AccordionDetailsProps,
+} from "@mui/material/AccordionDetails";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "./../../../styles/colors";
 
-const getBorderRadius = (position: "first" | "middle" | "last") => {
+type IAccordionPosition = "first" | "middle" | "last";
+
+const getTitleBorderRadius = (position: IAccordionPosition) => {
   if (position === "first") {
     return "8px 8px 0px 0px";
   } else if (position === "middle") {
@@ -17,13 +21,31 @@ const getBorderRadius = (position: "first" | "middle" | "last") => {
   }
 };
 
+const getContentBorderRadius = (position: IAccordionPosition) => {
+  if (position === "last") {
+    return "0px 0px 8px 8px";
+  } else {
+    return "0px";
+  }
+};
+
+const getLinearGradient = (alpha: number) =>
+  `linear-gradient(to right, ${PRIMARY_COLOR + alpha}, ${
+    SECONDARY_COLOR + alpha
+  })`;
+
 export const CustomAccordion = styled(
-  (props: AccordionProps & { position: "first" | "middle" | "last" }) => (
+  (props: AccordionProps & { position: IAccordionPosition }) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
   )
-)(({ position }) => ({
+)(({ position, expanded }) => ({
   border: `1px solid ${PRIMARY_COLOR}`,
-  borderRadius: getBorderRadius(position),
+  borderBottom: "15px",
+  borderRadius: getTitleBorderRadius(position),
+  backgroundImage: expanded ? getLinearGradient(80) : "",
+  "&:hover": {
+    backgroundImage: getLinearGradient(30),
+  },
   "&:last-child": {
     borderBottom: `${
       position === "last" ? "1px" : "0px"
@@ -49,10 +71,14 @@ export const CustomAccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }));
 
-export const CustomAccordionDetails = styled(MuiAccordionDetails)(
-  ({ theme }) => ({
-    padding: theme.spacing(2),
-    borderTop: `1px solid ${PRIMARY_COLOR}`,
-    backgroundColor: "#f0f0f0",
-  })
-);
+export const CustomAccordionDetails = styled(
+  (props: AccordionDetailsProps & { position: IAccordionPosition }) => (
+    <MuiAccordionDetails {...props} />
+  )
+)(({ theme, position }) => ({
+  borderRadius: getContentBorderRadius(position),
+  padding: theme.spacing(2),
+  borderTop: `1px solid ${PRIMARY_COLOR}`,
+  backgroundColor: "#ffffff",
+  color: "#000",
+}));

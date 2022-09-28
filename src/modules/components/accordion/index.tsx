@@ -39,7 +39,7 @@ const Accordion = ({
         >
           <Typography>{title}</Typography>
         </CustomAccordionSummary>
-        <CustomAccordionDetails>
+        <CustomAccordionDetails position={position}>
           <Typography>{content}</Typography>
         </CustomAccordionDetails>
       </CustomAccordion>
