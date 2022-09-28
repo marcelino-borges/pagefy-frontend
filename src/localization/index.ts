@@ -254,6 +254,7 @@ interface IDictionary {
     description: string;
     stillNeedHelp: string;
   };
+  createNowYourPage: string;
 }
 
 // Dictionaries
@@ -546,6 +547,7 @@ const en: IDictionary = {
     description: "Find here the most common questions people ask.",
     stillNeedHelp: "Do you still need help?",
   },
+  createNowYourPage: "Create now your page!",
 };
 
 const pt: IDictionary = {
@@ -837,6 +839,7 @@ const pt: IDictionary = {
     description: "Encontre aqui as perguntas mais comuns que as pessoas fazem.",
     stillNeedHelp: "Ainda precisa de ajuda?",
   },
+  createNowYourPage: "Faça agora sua bio!",
 };
 
 // Composed dictionaries

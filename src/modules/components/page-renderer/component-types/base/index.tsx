@@ -8,6 +8,8 @@ import {
   RENDERED_PAGE_COMPONENT_RADIUS,
 } from "../../../../../constants";
 import { Root } from "./style";
+import CustomTooltip from "../../../tooltip";
+import { openExternalLink } from "../../../../../utils";
 
 interface IProps {
   layout: IComponentLayout;
@@ -24,14 +26,10 @@ const BaseComponentType = ({
   children,
   url,
   animation,
+  onClick,
   ...rest
 }: IProps) => {
-  const openUrl = () => {
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = null;
-  };
-
-  return (
+  const MainComponent = () => (
     <Root
       container
       item
@@ -40,11 +38,14 @@ const BaseComponentType = ({
       duration={animation?.duration}
       delay={animation?.startDelay}
       infinite={animation?.infinite}
+      onClick={() => {
+        if (url) openExternalLink(url, window);
+        onClick();
+      }}
     >
       <Grid
         container
         item
-        onClick={openUrl}
         style={{
           minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
           borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
@@ -55,6 +56,14 @@ const BaseComponentType = ({
         {children}
       </Grid>
     </Root>
+  );
+
+  return url ? (
+    <CustomTooltip title={url}>
+      <MainComponent />
+    </CustomTooltip>
+  ) : (
+    <MainComponent />
   );
 };
 

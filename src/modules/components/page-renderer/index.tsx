@@ -23,6 +23,8 @@ import strings from "../../../localization";
 import LaunchComponent from "./component-types/launch/index";
 import Logos from "./../../../assets/img/logos";
 import routes from "./../../../routes/paths";
+import LoadingSpinner from "../loading-spinner";
+import { PRIMARY_COLOR } from "./../../../styles/colors";
 
 interface IProps {
   pageToRender?: IUserPage;
@@ -144,7 +146,8 @@ const PageRenderer = ({ pageToRender }: IProps) => {
 
   return (
     <PageRendererContent>
-      {!page && (
+      {renderedPageState.loading && <LoadingSpinner color={PRIMARY_COLOR} />}
+      {!renderedPageState.loading && !page && (
         <Grid container p="12px">
           <Grid container justifyContent="center">
             <Link to={routes.root}>
@@ -166,12 +169,12 @@ const PageRenderer = ({ pageToRender }: IProps) => {
           </Grid>
           <Grid container justifyContent="center" pt="50px">
             <Grid container justifyContent="center">
-              <Link to={routes.root}>Faça agora a sua bio!</Link>
+              <Link to={routes.root}>{strings.createNowYourPage}</Link>
             </Grid>
           </Grid>
         </Grid>
       )}
-      {page && page.isPublic && (
+      {!renderedPageState.loading && page && page.isPublic && (
         <Grid container>
           <Grid container item justifyContent="center">
             <PagePicture backgroundImage={page.pageImageUrl} />

@@ -6,6 +6,7 @@ import { Icon } from "@iconify/react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
+import { openExternalLink } from "../../../../../utils";
 
 interface IProps {
   iconsList: IUserComponent[];
@@ -43,6 +44,8 @@ const IconsComponent = ({
             <CustomTooltip title={iconComponent.url} key={iconComponent._id}>
               <IconOverlaySpan
                 onClick={() => {
+                  if (iconComponent.url)
+                    openExternalLink(iconComponent.url, window);
                   if (
                     isRenderer !== undefined &&
                     isRenderer !== false &&

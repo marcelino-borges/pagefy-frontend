@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.1.2] - 2022-09-28
+
+- Fix: when rendered page/bio was loading, the website showed that the page wasn't public
+- Fix: links not working in the rendered page
+
 ### [1.1.1] - 2022-09-28
 
 - Fix: infinite loading

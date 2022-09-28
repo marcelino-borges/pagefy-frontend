@@ -96,3 +96,34 @@ export const capitalizeOnlyFirstLetter = (original: string): string => {
 export const removeCssUrlWrapper = (original: string): string => {
   return original.replace("url(", "").replace(")", "");
 };
+
+/**
+ * Checks if the URL has "http://" or "https://" and, if negative, returns the URL with "https://"
+ * @param {string} url - URL you want to fix
+ * @returns {string} URL securely with "http://" or "https://"
+ */
+export const fixUrlWithHttp = (url: string): string => {
+  const HTTPS = "https://";
+  const HTTP = "http://";
+
+  if (url.includes(HTTPS) || url.includes(HTTP)) {
+    return url;
+  }
+  return HTTPS + url;
+};
+
+/**
+ * @param {string} url - URL you want to fix
+ * @param {any} window - DOM window
+ */
+export const openExternalLink = (url: string, window: any) => {
+  if (!url) return;
+
+  const newWindow = window.open(
+    fixUrlWithHttp(url),
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+  if (newWindow) newWindow.opener = null;
+};

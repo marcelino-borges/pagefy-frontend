@@ -11,6 +11,17 @@ export const Root = styled(Grid)`
   z-index: 100000;
 `;
 
-export const CircularProgressIcon = styled(CircularProgress)`
-  color: white;
-`;
+interface ICircularProgressIconProps {
+  color?: string;
+  size: number;
+}
+
+export const CircularProgressIcon = styled(
+  ({ color, ...rest }: ICircularProgressIconProps) => (
+    <CircularProgress {...rest} />
+  )
+)(
+  ({ color = "white" }) => `
+  color: ${color};
+`
+);
