@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import { useEffect } from "react";
-import { GLOBAL_LIGHT_BG } from "../../../styles/colors";
+import { GLOBAL_LIGHT_BG } from "../../../../styles/colors";
 import { Root } from "./style";
 
-const DashboardContent = ({ children, ...rest }: any) => {
+const FullWidthContent = ({ children, ...rest }: any) => {
   useEffect(() => {
     document.body.style.backgroundColor = GLOBAL_LIGHT_BG;
   }, []);
@@ -17,4 +17,4 @@ const DashboardContent = ({ children, ...rest }: any) => {
   );
 };
 
-export default DashboardContent;
+export default FullWidthContent;

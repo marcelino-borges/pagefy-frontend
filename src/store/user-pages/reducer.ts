@@ -24,7 +24,6 @@ const pagesReducer = (
      * ERRORS
      */
     case UserPagesActionTypes.CREATE_PAGE_ERROR:
-    case UserPagesActionTypes.UPDATE_PAGE_ERROR:
     case UserPagesActionTypes.DELETE_PAGE_ERROR:
     case UserPagesActionTypes.UPDATE_USER_PAGE_URL_ERROR:
     case UserPagesActionTypes.UPDATE_USER_PAGE_NAME_ERROR:
@@ -35,6 +34,12 @@ const pagesReducer = (
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case UserPagesActionTypes.UPDATE_PAGE_ERROR:
+      return {
+        ...state,
+        pageBeingSaved: undefined,
       };
 
     case UserPagesActionTypes.UPDATE_PAGE_LOADING:
@@ -147,6 +152,7 @@ const pagesReducer = (
       return {
         ...state,
         pages: [...updatedPagesList],
+        pageBeingSaved: undefined,
         loading: false,
         error: undefined,
       };

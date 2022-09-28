@@ -6,6 +6,7 @@ import { IAppResult, UserStorageFolder } from "../shared/types";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getAllUserPages } from "./../user-pages/actions";
 import { getFirebaseToken } from "../../utils/firebase-config";
+import { TOKEN_AUTH_ERROR } from "./../../constants/index";
 
 export const getUser =
   (
@@ -15,19 +16,31 @@ export const getUser =
     onErrorCallback: any = null
   ) =>
   async (dispatch: any) => {
-    dispatch(getUserLoading());
     let validToken;
 
     if (!token) {
       validToken = await getFirebaseToken();
 
       if (!validToken) {
-        if (onErrorCallback) onErrorCallback();
+        const error: IAppResult = {
+          message: TOKEN_AUTH_ERROR,
+          errorDetails: TOKEN_AUTH_ERROR,
+          statusCode: 0,
+        };
+        dispatch(getUserError(error));
+
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        }
+
         return;
       }
     } else {
       validToken = token;
     }
+
+    dispatch(getUserLoading());
 
     UserService.getUser(email, validToken)
       .then((res: AxiosResponse) => {
@@ -45,7 +58,7 @@ export const getUser =
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
           if (onErrorCallback) onErrorCallback(translatedError);
-        } else if (onErrorCallback) onErrorCallback();
+        }
       });
   };
 

@@ -1,7 +1,6 @@
 import { Grid, useMediaQuery } from "@mui/material";
 import images from "../../../assets/img";
 import Header from "../../components/header";
-import DashboardContent from "./../../components/site-content/index";
 import RecomendedCard from "./../../components/feature-card/index";
 import strings from "../../../localization";
 import Section1 from "./../../components/section1/index";
@@ -13,6 +12,7 @@ import { setPurchaseValue } from "../../../store/purchase/actions";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect } from "react";
 import { clearLoading } from "../../../store/shared/actions";
+import FullWidthContent from "../../components/site-content/full-width";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <DashboardContent
+      <FullWidthContent
         style={{
           backgroundColor: "white",
           paddingLeft: "0px",
@@ -234,7 +234,7 @@ const Home = () => {
             </Grid>
           </Section1>
         </Grid>
-      </DashboardContent>
+      </FullWidthContent>
     </>
   );
 };

@@ -12,6 +12,7 @@ import { clearUserState, getUserSuccess } from "../user/actions";
 import { clearPageManagementState } from "../page-management/actions";
 import { clearUserPagesState } from "../user-pages/actions";
 import { FirebaseError } from "firebase/app";
+import { clearStorage } from "../../utils/storage";
 
 export const signIn =
   (
@@ -30,14 +31,14 @@ export const signIn =
           return;
         }
 
-        dispatch(
-          signInSuccess({
-            accessToken: token,
-            uid: user.user.uid,
-          })
-        );
+        const auth: IUserAuth = {
+          accessToken: token,
+          uid: user.user.uid,
+        };
 
-        if (onSuccessCallback) onSuccessCallback(token);
+        dispatch(signInSuccess(auth));
+
+        if (onSuccessCallback) onSuccessCallback(token, auth);
       })
       .catch((e: FirebaseError) => {
         const errorCode: string = e.code;
@@ -127,6 +128,7 @@ const signUpError = (error: any) => ({
 export const signOut =
   (onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any) => {
+    clearStorage();
     dispatch(clearAllStates());
     dispatch(signOutLoading());
     AuthService.signOut()

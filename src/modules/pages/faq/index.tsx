@@ -6,7 +6,7 @@ import { PRIMARY_COLOR } from "../../../styles/colors";
 import Accordion from "../../components/accordion";
 import Header from "../../components/header";
 import PageTitle from "../../components/page-title";
-import DashboardContent from "../../components/site-content";
+import ThinWidthContent from "../../components/site-content/thin-width";
 
 const Faq = () => {
   const [expandedAccordion, setExpandedAccordion] = useState<string | false>(
@@ -22,7 +22,7 @@ const Faq = () => {
     <>
       <Header />
       <div style={{ marginTop: "20px" }}>
-        <DashboardContent>
+        <ThinWidthContent>
           <PageTitle
             increasingSize
             title={strings.faq.menu}
@@ -77,7 +77,7 @@ const Faq = () => {
             {`${strings.faq.stillNeedHelp} `}
             <Link to={routes.support}>{strings.clickHere}</Link>
           </div>
-        </DashboardContent>
+        </ThinWidthContent>
       </div>
     </>
   );

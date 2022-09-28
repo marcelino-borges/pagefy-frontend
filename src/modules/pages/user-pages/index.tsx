@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid } from "@mui/material";
 import { IApplicationState } from "../../../store";
 import Header from "../../components/header";
-import DashboardContent from "../../components/site-content";
+import ThinWidthContent from "../../components/site-content/thin-width";
 import PageCard from "./page-card/index";
 import CreatePageDialog from "./dialog-create-page/index";
 import strings from "../../../localization";
@@ -44,7 +44,7 @@ const UserPages = () => {
           setShowCreatePageDialog(false);
         }}
       />
-      <DashboardContent container direction="column">
+      <ThinWidthContent container direction="column">
         <Grid
           container
           justifyContent="center"
@@ -65,7 +65,7 @@ const UserPages = () => {
               return <PageCard page={page} key={page._id} />;
             })}
         </Grid>
-      </DashboardContent>
+      </ThinWidthContent>
     </>
   );
 };

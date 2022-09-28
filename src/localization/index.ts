@@ -221,6 +221,7 @@ interface IDictionary {
     weakPassword: string;
     invalidEmail: string;
     passwordMustAttendRequirements: string;
+    invalidToken: string;
   };
   generalErrors: {
     unknownError: string;
@@ -395,6 +396,7 @@ const en: IDictionary = {
     invalidEmail: "Invalid email",
     passwordMustAttendRequirements:
       "Password must attend minimum requirements.",
+    invalidToken: "Authentication error. Try to sign in again.",
   },
   generalErrors: {
     errorSignUp: "Error creating your account.",
@@ -685,6 +687,7 @@ const pt: IDictionary = {
     invalidEmail: "E-mail inválido.",
     passwordMustAttendRequirements:
       "Senha precisa atender aos requisitos mínimos.",
+    invalidToken: "Erro de autenticação. Tente entrar novamente.",
   },
   generalErrors: {
     errorSignUp: "Erro ao criar sua conta.",

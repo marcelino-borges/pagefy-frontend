@@ -8,6 +8,7 @@ const apiErrors: any = {
   "auth/user-not-found": strings.authErrors.userNotFound,
   "auth/invalid-email": strings.authErrors.invalidEmail,
   "auth/weak-password": strings.authErrors.weakPassword,
+  "auth/invalid-token": strings.authErrors.invalidToken,
 };
 
 export const translateError = (errorMsg: string) => {

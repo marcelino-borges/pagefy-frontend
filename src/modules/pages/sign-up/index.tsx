@@ -15,7 +15,7 @@ import {
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header/index";
-import DashboardContent from "../../components/site-content";
+import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { PrimaryColoredText } from "./style";
@@ -31,8 +31,10 @@ import { showErrorToast } from "./../../../utils/toast/index";
 import routes from "./../../../routes/paths";
 import { IPlan, IUser } from "../../../store/user/types";
 import { uploadImage } from "../../../services/files";
-import { updateUser } from "./../../../store/user/actions";
+import { getUser, updateUser } from "./../../../store/user/actions";
 import { capitalizeOnlyFirstLetter } from "../../../utils";
+import { setStorage } from "../../../utils/storage";
+import { IUserAuth } from "../../../store/auth/types";
 const INITIAL_VALUES = {
   firstName: "",
   lastName: "",
@@ -119,9 +121,19 @@ const SignUpPage = () => {
             }
           }
           dispatch(
-            signIn({ email: values.email, password: values.password }, () => {
-              navigate(routes.pages);
-            })
+            signIn(
+              { email: values.email, password: values.password },
+              (_: string, auth: IUserAuth) => {
+                setStorage("auth", JSON.stringify(auth));
+                dispatch(
+                  getUser(user.email, token, (user: IUser) => {
+                    setStorage("user", JSON.stringify(user));
+                    navigate(routes.pages);
+                  })
+                );
+                navigate(routes.pages);
+              }
+            )
           );
         },
         (errorTranslated: any) => {
@@ -152,7 +164,7 @@ const SignUpPage = () => {
           setOpenUploadDialog(false);
         }}
       />
-      <DashboardContent>
+      <ThinWidthContent>
         <h1 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.createYourAccount}
         </h1>
@@ -348,7 +360,7 @@ const SignUpPage = () => {
             </Grid>
           </Grid>
         </form>
-      </DashboardContent>
+      </ThinWidthContent>
     </>
   );
 };

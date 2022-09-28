@@ -18,7 +18,7 @@ import { IUserComponent, IUserPage } from "../../../store/user-pages/types";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../store/index";
 import routes from "./../../../routes/paths";
-import DashboardContent from "../../components/site-content";
+import ThinWidthContent from "../../components/site-content/thin-width";
 import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
   PageToolbar,
@@ -60,13 +60,14 @@ import PrivateRouteChecker from "./../../components/private-route-checker/index"
 import CustomTooltip from "../../components/tooltip";
 import ColorPicker from "./../../components/color-picker/index";
 import { getUser } from "../../../store/user/actions";
-import IconButtonTheme from "./../../components/icon-button-theme/index";
+import IconButton from "../../components/icon-button/index";
 import { getPageByUrl } from "../../../services/user-pages";
 import { AxiosResponse } from "axios";
 import { showErrorToast } from "./../../../utils/toast/index";
 import { clearLoading, setLoading } from "../../../store/shared/actions";
 import { deleteImage } from "../../../services/files";
 import { getFirebaseToken } from "../../../utils/firebase-config";
+import { LIGHT_GREY } from "../../../styles/colors";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -358,19 +359,28 @@ const UserPage = () => {
       >
         <CustomTooltip title={strings.toggleVisibility}>
           <Grid item>
-            <IconButtonTheme size="large" onClick={() => toggleIsPublic()}>
-              {page?.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
-            </IconButtonTheme>
+            <IconButton
+              size="large"
+              onClick={() => toggleIsPublic()}
+              hoverBackgroundColor={LIGHT_GREY}
+            >
+              {page?.isPublic ? (
+                <VisibilityIcon color="primary" />
+              ) : (
+                <VisibilityOffIcon />
+              )}
+            </IconButton>
           </Grid>
         </CustomTooltip>
 
         <CustomTooltip title={strings.backgroundColor}>
           <Grid item>
-            <IconButtonTheme
+            <IconButton
               size="large"
               onClick={() => {
                 setShowBackgroundColorPicker(!showBackgroundColorPicker);
               }}
+              hoverBackgroundColor={LIGHT_GREY}
             >
               <BackgroundColorIcon
                 bucketColor="rgba(0, 0, 0, 0.54)"
@@ -378,7 +388,7 @@ const UserPage = () => {
                   page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
                 }
               />
-            </IconButtonTheme>
+            </IconButton>
             {showBackgroundColorPicker && (
               <ColorPicker
                 color={page?.style?.backgroundColor || "white"}
@@ -390,7 +400,8 @@ const UserPage = () => {
 
         <CustomTooltip title={strings.fontColor}>
           <Grid item>
-            <IconButtonTheme
+            <IconButton
+              hoverBackgroundColor={LIGHT_GREY}
               size="large"
               onClick={() => {
                 setShowFontColorPicker(!showFontColorPicker);
@@ -400,7 +411,7 @@ const UserPage = () => {
                 bucketColor="rgba(0, 0, 0, 0.54)"
                 selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
               />
-            </IconButtonTheme>
+            </IconButton>
             {showFontColorPicker && (
               <ColorPicker
                 color={page?.style?.color || "white"}
@@ -412,14 +423,17 @@ const UserPage = () => {
 
         <CustomTooltip title={strings.uploadBackgroundImage}>
           <Grid item>
-            <IconButtonTheme
+            <IconButton
               size="large"
               onClick={() => {
                 setOpenChooseFileBGDialog(true);
               }}
+              hoverBackgroundColor={LIGHT_GREY}
             >
-              <ImageSearchIcon />
-            </IconButtonTheme>
+              <ImageSearchIcon
+                color={page?.style?.backgroundImage ? "primary" : "inherit"}
+              />
+            </IconButton>
             <ChooseFileDialog
               openChooseFileDialog={openChooseFileBGDialog}
               setOpenChooseFileDialog={setOpenChooseFileBGDialog}
@@ -440,14 +454,15 @@ const UserPage = () => {
 
         <CustomTooltip title={strings.remove}>
           <Grid item>
-            <IconButtonTheme
+            <IconButton
               size="large"
               onClick={() => {
                 setShowDeletePageConfirmation(true);
               }}
+              hoverBackgroundColor={LIGHT_GREY}
             >
               <DeleteIcon />
-            </IconButtonTheme>
+            </IconButton>
           </Grid>
         </CustomTooltip>
 
@@ -458,9 +473,13 @@ const UserPage = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <IconButtonTheme onClick={() => {}} size="large">
+              <IconButton
+                onClick={() => {}}
+                size="large"
+                hoverBackgroundColor={LIGHT_GREY}
+              >
                 <OpenInNewIcon />
-              </IconButtonTheme>
+              </IconButton>
             </Link>
           </Grid>
         </CustomTooltip>
@@ -589,7 +608,7 @@ const UserPage = () => {
                           );
                         })
                       ) : (
-                        <>{strings.addVideo}</>
+                        <>{strings.addLaunch}</>
                       )}
                     </ToolbarIconText>
                   </ToolbarButton>
@@ -696,7 +715,7 @@ const UserPage = () => {
     <>
       <PrivateRouteChecker />
       <Header />
-      <DashboardContent>
+      <ThinWidthContent>
         <DialogConfirmation
           open={openDeleteIconConfirmation}
           onClose={() => {
@@ -803,7 +822,7 @@ const UserPage = () => {
         {page && page.bottomComponents && page.bottomComponents.length > 0 && (
           <IconsComponent iconsList={page.bottomComponents} />
         )}
-      </DashboardContent>
+      </ThinWidthContent>
     </>
   );
 };

@@ -1,11 +1,11 @@
 import Header from "../../components/header";
-import DashboardContent from "../../components/site-content";
+import ThinWidthContent from "../../components/site-content/thin-width";
 
 const Support = () => {
   return (
     <>
       <Header />
-      <DashboardContent>Suporte</DashboardContent>
+      <ThinWidthContent>Support</ThinWidthContent>
     </>
   );
 };

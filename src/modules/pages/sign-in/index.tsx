@@ -13,14 +13,16 @@ import {
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header/index";
-import DashboardContent from "../../components/site-content";
+import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { signIn, signOut } from "../../../store/auth/actions";
 import routes from "../../../routes/paths";
-import { IUserCredentials } from "../../../store/auth/types";
+import { IUserAuth, IUserCredentials } from "../../../store/auth/types";
 import { showErrorToast } from "../../../utils/toast";
 import { getUser } from "../../../store/user/actions";
+import { IUser } from "../../../store/user/types";
+import { setStorage } from "../../../utils/storage";
 
 const INITIAL_VALUES = {
   email: "",
@@ -57,9 +59,11 @@ const SignInPage = () => {
     dispatch(
       signIn(
         credentials,
-        (token: string) => {
+        (token: string, auth: IUserAuth) => {
+          setStorage("auth", JSON.stringify(auth));
           dispatch(
-            getUser(credentials.email, token, () => {
+            getUser(credentials.email, token, (user: IUser) => {
+              setStorage("user", JSON.stringify(user));
               navigate(routes.pages);
             })
           );
@@ -74,7 +78,7 @@ const SignInPage = () => {
   return (
     <>
       <Header />
-      <DashboardContent>
+      <ThinWidthContent>
         <h2 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.accessAccount}
         </h2>
@@ -155,7 +159,7 @@ const SignInPage = () => {
             </Grid>
           </Grid>
         </form>
-      </DashboardContent>
+      </ThinWidthContent>
     </>
   );
 };

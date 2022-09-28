@@ -12,6 +12,7 @@ import {
   UserPagesActionTypes,
 } from "./types";
 import { IUser } from "../user/types";
+import { clearLoading } from "../shared/actions";
 
 export const getAllUserPages =
   (
@@ -131,20 +132,22 @@ export const updatePage =
     PagesService.updatePage(page, token)
       .then((res: AxiosResponse) => {
         dispatch(updatePageSuccess(res.data));
+        console.log("updatePage success");
 
         if (onSuccessCallback) onSuccessCallback();
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
         dispatch(updatePageError(error));
-
+        console.log("updatePage error");
         if (error && error.message) {
           const translatedError = translateError(error.message);
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
         }
-      });
+      })
+      .finally(() => dispatch(clearLoading()));
   };
 
 const updatePageLoading = () => ({

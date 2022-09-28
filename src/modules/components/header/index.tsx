@@ -153,7 +153,7 @@ const Header = () => {
             src={logos.LogoHorizontalLightBGPNG}
             style={{
               height: "auto",
-              width: isSmallerThan400 ? "125px" : "80%",
+              width: isSmallerThan400 ? "125px" : "70%",
               margin: "8px",
               maxHeight: "80px",
             }}

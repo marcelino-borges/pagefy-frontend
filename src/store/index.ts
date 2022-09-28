@@ -39,11 +39,16 @@ export interface IApplicationState {
   purchase: IPurchaseState;
 }
 
-let blacklistTransform = createTransform((inboundState: any, key: any) => {
+let statesTransform = createTransform((inboundState: any, key: any) => {
+  // state being persisted
   let state = { ...inboundState };
 
   if (state.loading !== undefined) {
     state.loading = false;
+  }
+
+  if (key === "userPages") {
+    state.pageBeingSaved = undefined;
   }
 
   return state;
@@ -53,7 +58,7 @@ const persistConfig = {
   key: "appState",
   storage: storage,
   blacklist: ["pageRendered"],
-  transforms: [blacklistTransform],
+  transforms: [statesTransform],
 };
 
 const rootReducer = combineReducers({

@@ -26,7 +26,7 @@ const UserLoggedIn = () => {
   const [openChooseFileBGDialog, setOpenChooseFileBGDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
 
-  const get2FirstNames = () => {
+  const getTwoFirstNames = () => {
     if (!userState.profile) return "";
 
     const hasntFirstName =
@@ -136,7 +136,7 @@ const UserLoggedIn = () => {
         pl={!isSmallerThanMD ? "12px" : "0px"}
         flexWrap="nowrap"
       >
-        <UserName>{get2FirstNames()}</UserName>
+        <UserName>{getTwoFirstNames()}</UserName>
         <Stack
           direction="row"
           alignItems="center"
