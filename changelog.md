@@ -16,6 +16,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.1.1] - 2022-09-28
+
+- Fix: infinite loading
+- Fix: new logic in the component of auth checker
+- Feature: new styling in the user-page bottom toolbar icons
+- Feature: New component for full width contents
+- Refactoring: Homepage full width.
+
 ### [1.1.0] - 2022-09-28
 
 - Implemented FAQ page with accordion skeleton
