@@ -21,6 +21,7 @@ import strings from "../../../localization";
 import { PrimaryColoredText } from "./style";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
 import {
+  ALLOW_SIGNUP,
   EMAIL_REGEX,
   IMAGE_EXTENSIONS,
   PASSWORD_REGEX,
@@ -36,6 +37,7 @@ import { capitalizeOnlyFirstLetter } from "../../../utils";
 import { setStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
 import { UserStorageFolder } from "../../../store/shared/types";
+
 const INITIAL_VALUES = {
   firstName: "",
   lastName: "",
@@ -142,6 +144,20 @@ const SignUpPage = () => {
       )
     );
   };
+
+  if (!ALLOW_SIGNUP) {
+    return (
+      <>
+        <Header />
+        <ThinWidthContent style={{ height: "100vh" }}>
+          <div style={{ textAlign: "center", margin: "auto" }}>
+            <div>{strings.sorry + ","}</div>
+            <div>{strings.generalErrors.signUpNotAllowed}</div>
+          </div>
+        </ThinWidthContent>
+      </>
+    );
+  }
 
   return (
     <>

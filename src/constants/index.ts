@@ -90,3 +90,7 @@ export const COMPONENT_ANIMATIONS = [
   "zoomOutRight",
   "zoomOutUp",
 ];
+
+export const ALLOW_SIGNUP = process.env.REACT_APP_ALLOW_SIGNUP
+  ? process.env.REACT_APP_ALLOW_SIGNUP === "true"
+  : false;

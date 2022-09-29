@@ -41,6 +41,7 @@ const ChooseFileDialog = ({
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
+    let hasError = false;
     if (file) {
       const actualSizeInMB = file.size / 1000000;
 
@@ -48,10 +49,11 @@ const ChooseFileDialog = ({
         showErrorToast(
           strings.maximumFileSizeOf + " " + MAXIMUM_FILE_SIZE + "MB"
         );
-        return;
+        hasError = true;
       }
     }
-    setChosenImage(file);
+
+    if (!hasError) setChosenImage(file);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

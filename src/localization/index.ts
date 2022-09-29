@@ -232,6 +232,7 @@ interface IDictionary {
     errorSignIn: string;
     errorSignOut: string;
     internalError: string;
+    signUpNotAllowed: string;
   };
   maximumFileSizeOf: string;
   animations: IAnimations;
@@ -260,6 +261,7 @@ interface IDictionary {
   };
   createNowYourPage: string;
   successUpdatePage: string;
+  sorry: string;
 }
 
 // Dictionaries
@@ -413,6 +415,7 @@ const en: IDictionary = {
     errorSignOut: "Error to sign out.",
     unknownError: "Unknown error.",
     internalError: "Internal error.",
+    signUpNotAllowed: "Socialbio isn't available to the public yet.",
   },
   profile: "Profile",
   signOut: "Sign Out",
@@ -558,6 +561,7 @@ const en: IDictionary = {
   },
   createNowYourPage: "Create now your page!",
   successUpdatePage: "Page updated successfully!",
+  sorry: "Sorry",
 };
 
 const pt: IDictionary = {
@@ -710,6 +714,7 @@ const pt: IDictionary = {
     errorSignOut: "Erro ao sair.",
     unknownError: "Error desconhecido.",
     internalError: "Erro interno.",
+    signUpNotAllowed: "Socialbio ainda não está disponível para o público.",
   },
   profile: "Perfil",
   signOut: "Sair",
@@ -855,6 +860,7 @@ const pt: IDictionary = {
   },
   createNowYourPage: "Faça agora sua bio!",
   successUpdatePage: "Página atualizada com sucesso!",
+  sorry: "Desculpe",
 };
 
 // Composed dictionaries
