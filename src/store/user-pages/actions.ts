@@ -13,6 +13,7 @@ import {
 } from "./types";
 import { IUser } from "../user/types";
 import { clearLoading } from "../shared/actions";
+import strings from "../../localization";
 
 export const getAllUserPages =
   (
@@ -116,8 +117,12 @@ const createUserPageError = (error: IAppResult) => ({
 export const updatePage =
   (
     page: IUserPage,
-    onSuccessCallback: any = null,
-    onErrorCallback: any = null
+    onSuccessCallback:
+      | ((updatedPageFromServer: IUserPage) => void)
+      | null = null,
+    onErrorCallback:
+      | ((translatedErrorMsg: string | undefined, rawException: any) => void)
+      | null = null
   ) =>
   async (dispatch: any) => {
     dispatch(updatePageLoading());
@@ -125,7 +130,8 @@ export const updatePage =
     const token = await getFirebaseToken();
 
     if (!token) {
-      if (onErrorCallback) onErrorCallback();
+      if (onErrorCallback)
+        onErrorCallback(strings.generalErrors.internalError, undefined);
       return;
     }
 
@@ -134,17 +140,17 @@ export const updatePage =
         const pageFromServer: IUserPage = res.data;
         dispatch(updatePageSuccess(pageFromServer));
 
-        if (onSuccessCallback) onSuccessCallback();
+        if (onSuccessCallback) onSuccessCallback(pageFromServer);
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
         dispatch(updatePageError(error));
-        console.log("updatePage error");
+
         if (error && error.message) {
           const translatedError = translateError(error.message);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback) onErrorCallback(translatedError, e);
         } else {
-          if (onErrorCallback) onErrorCallback();
+          if (onErrorCallback) onErrorCallback(undefined, e);
         }
       })
       .finally(() => dispatch(clearLoading()));
@@ -155,7 +161,7 @@ const updatePageLoading = () => ({
 });
 
 const updatePageSuccess = (updatedPage: IUserPage) => ({
-  payload: { page: updatedPage },
+  payload: updatedPage,
   type: UserPagesActionTypes.UPDATE_PAGE_SUCCESS,
 });
 

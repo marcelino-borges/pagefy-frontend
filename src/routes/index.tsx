@@ -15,6 +15,8 @@ import "../utils/firebase-config";
 import { updatePage } from "./../store/user-pages/actions";
 import Home from "./../modules/pages/home";
 import Faq from "../modules/pages/faq";
+import { showSuccessToast } from "../utils/toast";
+import { showErrorToast } from "./../utils/toast/index";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -39,7 +41,17 @@ const AppRoutes = () => {
 
   useEffect(() => {
     if (appState.userPages.pageBeingSaved) {
-      dispatch(updatePage(appState.userPages.pageBeingSaved));
+      dispatch(
+        updatePage(
+          appState.userPages.pageBeingSaved,
+          () => {
+            showSuccessToast(strings.successUpdatePage);
+          },
+          (translatedError: string | undefined, _: any) => {
+            if (translatedError) showErrorToast(translatedError);
+          }
+        )
+      );
     }
   }, [dispatch, appState.userPages.pageBeingSaved]);
 

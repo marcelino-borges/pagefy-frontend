@@ -138,7 +138,7 @@ const pagesReducer = (
 
     case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
       let updatedPagesList: IUserPage[] = state.pages ? [...state.pages] : [];
-      const { updatedPage } = action.payload;
+      const updatedPage: IUserPage = action.payload;
 
       if (updatedPagesList && updatedPagesList.length > 0) {
         updatedPagesList = updatedPagesList.map((page: IUserPage) => {

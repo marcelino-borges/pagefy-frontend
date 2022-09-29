@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix: Issue to remove or toggle visibility of a component
 - Refactoring: All uploaded images are set to be saved into a unique folder called "uploaded-images" into the user's storage bucket
 - Fix: Wrong translation of the component types
+- Fix: Error dealing with the return of the updatePage endpoint
 
 ### [1.1.2] - 2022-09-28
 

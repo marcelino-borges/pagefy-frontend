@@ -231,6 +231,7 @@ interface IDictionary {
     errorSignUp: string;
     errorSignIn: string;
     errorSignOut: string;
+    internalError: string;
   };
   maximumFileSizeOf: string;
   animations: IAnimations;
@@ -258,6 +259,7 @@ interface IDictionary {
     stillNeedHelp: string;
   };
   createNowYourPage: string;
+  successUpdatePage: string;
 }
 
 // Dictionaries
@@ -410,6 +412,7 @@ const en: IDictionary = {
     errorSignIn: "Error to sign in.",
     errorSignOut: "Error to sign out.",
     unknownError: "Unknown error.",
+    internalError: "Internal error.",
   },
   profile: "Profile",
   signOut: "Sign Out",
@@ -554,6 +557,7 @@ const en: IDictionary = {
     stillNeedHelp: "Do you still need help?",
   },
   createNowYourPage: "Create now your page!",
+  successUpdatePage: "Page updated successfully!",
 };
 
 const pt: IDictionary = {
@@ -705,6 +709,7 @@ const pt: IDictionary = {
     errorSignIn: "Erro ao entrar.",
     errorSignOut: "Erro ao sair.",
     unknownError: "Error desconhecido.",
+    internalError: "Erro interno.",
   },
   profile: "Perfil",
   signOut: "Sair",
@@ -849,6 +854,7 @@ const pt: IDictionary = {
     stillNeedHelp: "Ainda precisa de ajuda?",
   },
   createNowYourPage: "Faça agora sua bio!",
+  successUpdatePage: "Página atualizada com sucesso!",
 };
 
 // Composed dictionaries
