@@ -177,6 +177,7 @@ const DraggableUserComponent = ({
 
   const handleChangeBackgroundColorComplete = (color: any) => {
     if (component._id && pageId) {
+      console.log("a");
       dispatch(
         setComponentBackgroundColor(pageId, component._id, String(color.hex))
       );
@@ -577,7 +578,7 @@ const DraggableUserComponent = ({
             />
             <AnalyticsItem
               tooltipKey={strings.clicks}
-              tooltipValue={component.type.toString()}
+              tooltipValue={component.clicks}
               icon={<ClicksCountIcon />}
             />
             <AnalyticsItem
@@ -602,6 +603,7 @@ const DraggableUserComponent = ({
           minWidth: "50px",
         }}
       >
+        {/* BG Color */}
         <CustomTooltip
           disabled={!isHovering || showBackgroundColorPicker}
           disableInteractive
@@ -648,6 +650,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Font color picker */}
         <CustomTooltip
           disabled={!isHovering || showFontColorPicker}
           disableInteractive
@@ -694,6 +697,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Upload Image */}
         <CustomTooltip
           disabled={!isHovering}
           disableInteractive
@@ -725,6 +729,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Schedule visibility */}
         <CustomTooltip
           disabled={!isHovering}
           disableInteractive
@@ -751,6 +756,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Choose animation */}
         <CustomTooltip
           disabled={!isHovering}
           disableInteractive
@@ -777,6 +783,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Toggle Visibility */}
         <CustomTooltip
           disabled={!isHovering}
           disableInteractive
@@ -801,6 +808,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Duplicate component */}
         <CustomTooltip
           disabled={!isHovering}
           disableInteractive
@@ -829,6 +837,7 @@ const DraggableUserComponent = ({
           </ToolGridItem>
         </CustomTooltip>
 
+        {/* Remove component */}
         <CustomTooltip
           disabled={!isHovering}
           disableInteractive

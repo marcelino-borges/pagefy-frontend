@@ -140,8 +140,7 @@ export const setUserProfileImage =
     FilesService.uploadImage(
       user._id,
       image,
-      UserStorageFolder.PROFILE,
-      undefined,
+      UserStorageFolder.UPLOADED_IMAGES,
       token
     )
       .then((res: AxiosResponse) => {

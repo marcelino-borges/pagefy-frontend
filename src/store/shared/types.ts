@@ -19,6 +19,7 @@ export interface IAppResult {
 export enum UserStorageFolder {
   PROFILE = "profile",
   PAGES = "pages",
+  UPLOADED_IMAGES = "uploaded-images",
 }
 
 export interface ISharedState {

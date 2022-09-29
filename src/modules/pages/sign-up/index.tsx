@@ -35,6 +35,7 @@ import { getUser, updateUser } from "./../../../store/user/actions";
 import { capitalizeOnlyFirstLetter } from "../../../utils";
 import { setStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
+import { UserStorageFolder } from "../../../store/shared/types";
 const INITIAL_VALUES = {
   firstName: "",
   lastName: "",
@@ -105,8 +106,7 @@ const SignUpPage = () => {
               await uploadImage(
                 user._id,
                 chosenImage,
-                "profile",
-                undefined,
+                UserStorageFolder.UPLOADED_IMAGES,
                 token
               )
             ).data;

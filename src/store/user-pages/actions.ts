@@ -3,7 +3,7 @@ import * as PagesService from "../../services/user-pages";
 import * as FilesService from "../../services/files";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getFirebaseToken } from "../../utils/firebase-config";
-import { IAppResult } from "../shared/types";
+import { IAppResult, UserStorageFolder } from "../shared/types";
 import { IApplicationState } from "..";
 import {
   IComponentAnimation,
@@ -131,8 +131,8 @@ export const updatePage =
 
     PagesService.updatePage(page, token)
       .then((res: AxiosResponse) => {
-        dispatch(updatePageSuccess(res.data));
-        console.log("updatePage success");
+        const pageFromServer: IUserPage = res.data;
+        dispatch(updatePageSuccess(pageFromServer));
 
         if (onSuccessCallback) onSuccessCallback();
       })
@@ -154,8 +154,8 @@ const updatePageLoading = () => ({
   type: UserPagesActionTypes.UPDATE_PAGE_LOADING,
 });
 
-const updatePageSuccess = (page: IUserPage) => ({
-  payload: page,
+const updatePageSuccess = (updatedPage: IUserPage) => ({
+  payload: { page: updatedPage },
   type: UserPagesActionTypes.UPDATE_PAGE_SUCCESS,
 });
 
@@ -245,8 +245,9 @@ export const deleteMiddleComponentFromPage =
     onErrorCallback: any = null
   ) =>
   async (dispatch: any, getState: () => IApplicationState) => {
-    const user: IUser | undefined = getState().user.profile;
-    const pages: IUserPage[] | undefined = getState().userPages.pages;
+    const state: IApplicationState = getState();
+    const user: IUser | undefined = state.user.profile;
+    const pages: IUserPage[] | undefined = state.userPages.pages;
     const userId: string | undefined = user?._id;
     const token = await getFirebaseToken();
 
@@ -264,16 +265,14 @@ export const deleteMiddleComponentFromPage =
             if (component._id === componentId) {
               try {
                 if (component.mediaUrl && component.mediaUrl.length > 0)
-                  dispatch(deleteImage(component.mediaUrl, userId));
+                  deleteImage(component.mediaUrl, userId);
 
                 if (
                   component.style &&
                   component.style.backgroundImage &&
                   component.style.backgroundImage.length > 0
                 )
-                  dispatch(
-                    deleteImage(component.style.backgroundImage, userId)
-                  );
+                  deleteImage(component.style.backgroundImage, userId);
               } catch (e: any) {
                 console.log(
                   "Erro ao deletar imagens do componente. Detalhes: " +
@@ -352,14 +351,14 @@ export const deleteTopComponentFromPage =
           (component: IUserComponent) => {
             if (component._id === componentId) {
               if (component.mediaUrl && component.mediaUrl.length > 0)
-                dispatch(deleteImage(component.mediaUrl, userId));
+                deleteImage(component.mediaUrl, userId);
 
               if (
                 component.style &&
                 component.style.backgroundImage &&
                 component.style.backgroundImage.length > 0
               )
-                dispatch(deleteImage(component.style.backgroundImage, userId));
+                deleteImage(component.style.backgroundImage, userId);
               return false;
             }
             return true;
@@ -527,7 +526,12 @@ export const setPageImage =
       return;
     }
 
-    FilesService.uploadImage(page.userId, image, undefined, page._id, token)
+    FilesService.uploadImage(
+      page.userId,
+      image,
+      UserStorageFolder.UPLOADED_IMAGES,
+      token
+    )
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
         dispatch(setPageImageSuccess(imageUrl));
@@ -607,7 +611,12 @@ export const setPageBGImage =
       return;
     }
 
-    FilesService.uploadImage(page.userId, image, undefined, page._id, token)
+    FilesService.uploadImage(
+      page.userId,
+      image,
+      UserStorageFolder.UPLOADED_IMAGES,
+      token
+    )
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
         dispatch(setPageBGImageSuccess(imageUrl));
@@ -660,7 +669,12 @@ export const setComponentImage =
       return;
     }
 
-    FilesService.uploadImage(userId, image, undefined, pageId, token)
+    FilesService.uploadImage(
+      userId,
+      image,
+      UserStorageFolder.UPLOADED_IMAGES,
+      token
+    )
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
         dispatch(setComponentImageSuccess(pageId, componentId, imageUrl));

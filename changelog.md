@@ -16,6 +16,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.1.3] - 2022-09-29
+
+- Fix: Draggable card (component into an user page) showing the wrong value for the clicks analytics tooltip
+- Fix: When user added a new component the wrong object was being saved into the page's local state (without the component ID)
+- Fix: Issue to remove or toggle visibility of a component
+- Refactoring: All uploaded images are set to be saved into a unique folder called "uploaded-images" into the user's storage bucket
+- Fix: Wrong translation of the component types
+
 ### [1.1.2] - 2022-09-28
 
 - Fix: when rendered page/bio was loading, the website showed that the page wasn't public

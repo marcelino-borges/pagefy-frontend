@@ -7,15 +7,14 @@ const api = axios.create({
 export const uploadImage = async (
   userId: string,
   image: File,
-  userFolderName: string | undefined,
-  pageId: string | undefined,
+  userFolderName: string,
   token: string
 ): Promise<AxiosResponse<any>> => {
   const form = new FormData();
   form.append("userId", userId);
   form.append("image", image);
-  if (userFolderName) form.append("userFolderName", userFolderName);
-  if (pageId) form.append("pageId", pageId);
+  form.append("userFolderName", userFolderName);
+
   return api.post(`/files`, form, {
     headers: {
       "Content-Type": "multipart/form-data",

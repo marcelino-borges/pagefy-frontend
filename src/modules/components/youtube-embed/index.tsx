@@ -19,7 +19,6 @@ const YoutubeEmbed = ({ embedId, width, height, allowFullScreen }: IProps) => (
       width={width ? width.replaceAll("px", "") + "px" : "853"}
       height={height ? height.replaceAll("px", "") + "px" : "480"}
       src={`https://www.youtube.com/embed/${embedId}`}
-      frameBorder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen={allowFullScreen || allowFullScreen !== undefined}
       title="Embedded youtube"

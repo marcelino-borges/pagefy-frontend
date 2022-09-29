@@ -1,7 +1,7 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 import { LIGHTER_GREY, LIGHT_GREY } from "../../../../styles/colors";
-import { PRIMARY_COLOR } from "./../../../../styles/colors";
+import { PRIMARY_COLOR } from "../../../../styles/colors";
 
 export const IconsResult = styled((props: any) => <Grid {...props} />)`
   font-size: 64px;

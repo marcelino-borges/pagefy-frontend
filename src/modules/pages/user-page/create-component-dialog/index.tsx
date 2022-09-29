@@ -41,11 +41,11 @@ import {
   LIGHT_GREY,
   PRIMARY_COLOR,
   TRANSPARENT,
-} from "./../../../../styles/colors";
+} from "../../../../styles/colors";
 import CustomTooltip from "../../../components/tooltip";
 
-import FontColorIcon from "./../../../../assets/icons/custom-icons/font-color";
-import BackgroundColorIcon from "./../../../../assets/icons/custom-icons/background-color";
+import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
+import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import ChooseFileDialog from "../../../components/dialog-file-upload";
 import { IMAGE_EXTENSIONS } from "../../../../constants";
 import {
@@ -53,15 +53,16 @@ import {
   IComponentAnimation,
   IUserComponent,
 } from "../../../../store/user-pages/types";
-import { showErrorToast } from "./../../../../utils/toast/index";
+import { showErrorToast } from "../../../../utils/toast/index";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import DialogChooseAnimation from "./../../../components/dialog-choose-animation/index";
+import DialogChooseAnimation from "../../../components/dialog-choose-animation/index";
 import DialogVisibleDate from "../../../components/dialog-visible-date";
-import ColorPicker from "./../../../components/color-picker/index";
+import ColorPicker from "../../../components/color-picker/index";
 import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { uploadImage } from "../../../../services/files";
 import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { IApplicationState } from "../../../../store";
+import { UserStorageFolder } from "../../../../store/shared/types";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -169,8 +170,7 @@ const ComponentDialog = ({
           await uploadImage(
             userState._id,
             chosenImage,
-            "profile",
-            undefined,
+            UserStorageFolder.UPLOADED_IMAGES,
             token
           )
         ).data;
@@ -196,6 +196,7 @@ const ComponentDialog = ({
         visibleDate: visibleDateTime,
         animation,
       };
+
       if (pageId) {
         dispatch(addMiddleComponentInPage(newComponent, pageId));
       }
@@ -568,64 +569,69 @@ const ComponentDialog = ({
               )}
 
               {/* Font Color */}
-              <Grid item>
-                <CustomTooltip
-                  disableInteractive
-                  leaveDelay={0.1}
-                  title={strings.fontColor}
-                  placement="bottom"
-                >
-                  <Grid item>
-                    <IconButton
-                      onClick={() => {
-                        setShowFontColorPicker(!showFontColorPicker);
-                      }}
-                    >
-                      <FontColorIcon
-                        bucketColor={LIGHT_GREY}
-                        selectedColor={fontColor}
-                      />
-                    </IconButton>
-                    {showFontColorPicker && (
-                      <ColorPicker
-                        color={fontColor}
-                        onChangeComplete={handleChangeFontColorComplete}
-                      />
-                    )}
-                  </Grid>
-                </CustomTooltip>
-              </Grid>
+              {selectedType !== ComponentType.Image && (
+                <Grid item>
+                  <CustomTooltip
+                    disableInteractive
+                    leaveDelay={0.1}
+                    title={strings.fontColor}
+                    placement="bottom"
+                  >
+                    <Grid item>
+                      <IconButton
+                        onClick={() => {
+                          setShowFontColorPicker(!showFontColorPicker);
+                        }}
+                      >
+                        <FontColorIcon
+                          bucketColor={LIGHT_GREY}
+                          selectedColor={fontColor}
+                        />
+                      </IconButton>
+                      {showFontColorPicker && (
+                        <ColorPicker
+                          color={fontColor}
+                          onChangeComplete={handleChangeFontColorComplete}
+                        />
+                      )}
+                    </Grid>
+                  </CustomTooltip>
+                </Grid>
+              )}
 
               {/* Background Color */}
-              <Grid item>
-                <CustomTooltip
-                  disableInteractive
-                  leaveDelay={0.1}
-                  title={strings.backgroundColor}
-                  placement="bottom"
-                >
-                  <Grid item>
-                    <IconButton
-                      onClick={() => {
-                        setShowBackgroundColorPicker(
-                          !showBackgroundColorPicker
-                        );
-                      }}
-                    >
-                      <BackgroundColorIcon
-                        bucketColor={LIGHT_GREY}
-                        selectedColor={backgroundColor}
-                      />
-                    </IconButton>
-                    {showBackgroundColorPicker && (
-                      <ColorPicker
-                        color={backgroundColor}
-                        onChangeComplete={handleChangeBackgroundColorComplete}
-                      />
-                    )}
-                  </Grid>
-                </CustomTooltip>
-              </Grid>
+
+              {selectedType !== ComponentType.Image && (
+                <Grid item>
+                  <CustomTooltip
+                    disableInteractive
+                    leaveDelay={0.1}
+                    title={strings.backgroundColor}
+                    placement="bottom"
+                  >
+                    <Grid item>
+                      <IconButton
+                        onClick={() => {
+                          setShowBackgroundColorPicker(
+                            !showBackgroundColorPicker
+                          );
+                        }}
+                      >
+                        <BackgroundColorIcon
+                          bucketColor={LIGHT_GREY}
+                          selectedColor={backgroundColor}
+                        />
+                      </IconButton>
+                      {showBackgroundColorPicker && (
+                        <ColorPicker
+                          color={backgroundColor}
+                          onChangeComplete={handleChangeBackgroundColorComplete}
+                        />
+                      )}
+                    </Grid>
+                  </CustomTooltip>
+                </Grid>
+              )}
 
               {/* Visibility */}
               <Grid item>

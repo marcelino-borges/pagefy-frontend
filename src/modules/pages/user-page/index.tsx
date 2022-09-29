@@ -47,7 +47,7 @@ import {
 import DraggableUserComponent from "./draggable-component";
 import { v4 as uuidv4 } from "uuid";
 import IconsDialog from "./icons-dialog";
-import ComponentDialog from "./component-dialog";
+import ComponentDialog from "./create-component-dialog";
 import VideoDialog from "./video-dialog/index";
 import Header from "./../../components/header/index";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
@@ -255,7 +255,7 @@ const UserPage = () => {
 
     if (page.pageImageUrl && page.pageImageUrl.length > 0) {
       dispatch(setLoading());
-      await deleteImage(page.pageImageUrl, page.userId, token);
+      deleteImage(page.pageImageUrl, page.userId, token);
     }
 
     dispatch(
@@ -299,14 +299,14 @@ const UserPage = () => {
     if (
       page.style &&
       page.style.backgroundImage &&
-      page.style.backgroundImage.length > 0
+      page.style.backgroundImage?.length > 0
     ) {
       const urlToDelete = page.style.backgroundImage
         .replace("url", "")
         .replaceAll("(", "")
         .replaceAll(")", "");
       dispatch(setLoading());
-      await deleteImage(urlToDelete, page.userId, token);
+      deleteImage(urlToDelete, page.userId, token);
     }
     dispatch(
       setPageBGImage(

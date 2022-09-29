@@ -103,6 +103,7 @@ const TextImageComponent = ({ component, pageId }: IProps) => {
           <Grid container style={{ width: "100%", height: "100%" }}>
             <Grid
               container
+              item
               xs={6}
               style={{
                 backgroundImage: `url(${component.mediaUrl})`,

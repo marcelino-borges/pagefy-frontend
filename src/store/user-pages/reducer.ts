@@ -40,6 +40,7 @@ const pagesReducer = (
       return {
         ...state,
         pageBeingSaved: undefined,
+        loading: false,
       };
 
     case UserPagesActionTypes.UPDATE_PAGE_LOADING:
@@ -137,12 +138,13 @@ const pagesReducer = (
 
     case UserPagesActionTypes.UPDATE_PAGE_SUCCESS: {
       let updatedPagesList: IUserPage[] = state.pages ? [...state.pages] : [];
+      const { updatedPage } = action.payload;
 
       if (updatedPagesList && updatedPagesList.length > 0) {
         updatedPagesList = updatedPagesList.map((page: IUserPage) => {
-          if (page._id === action.payload._id) {
+          if (page._id === updatedPage._id) {
             return {
-              ...page,
+              ...updatedPage,
             };
           }
           return page;
