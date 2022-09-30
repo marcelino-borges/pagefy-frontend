@@ -68,6 +68,7 @@ import { clearLoading, setLoading } from "../../../store/shared/actions";
 import { deleteImage } from "../../../services/files";
 import { getFirebaseToken } from "../../../utils/firebase-config";
 import { LIGHT_GREY } from "../../../styles/colors";
+import PreviewPageDialog from "./preview-dialog/index";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -99,6 +100,7 @@ const UserPage = () => {
   const [openDeleteIconConfirmation, setOpenDeleteIconConfirmation] =
     useState(false);
   const [idIconToDelete, setIdIconToDelete] = useState<string | undefined>();
+  const [openPreviewDialog, setOpenPreviewDialog] = useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -468,19 +470,31 @@ const UserPage = () => {
 
         <CustomTooltip title={strings.viewPage}>
           <Grid item>
-            <Link
-              to={"/" + page?.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            {page?.isPublic ? (
+              <Link
+                to={"/" + page?.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IconButton
+                  onClick={() => {}}
+                  size="large"
+                  hoverBackgroundColor={LIGHT_GREY}
+                >
+                  <OpenInNewIcon />
+                </IconButton>
+              </Link>
+            ) : (
               <IconButton
-                onClick={() => {}}
+                onClick={() => {
+                  setOpenPreviewDialog(true);
+                }}
                 size="large"
                 hoverBackgroundColor={LIGHT_GREY}
               >
                 <OpenInNewIcon />
               </IconButton>
-            </Link>
+            )}
           </Grid>
         </CustomTooltip>
       </ToolbarBottomToolsStyled>
@@ -792,6 +806,15 @@ const UserPage = () => {
           handleClose={handleCloseLaunchDialog}
           pageId={page?._id}
         />
+        {page && (
+          <PreviewPageDialog
+            page={page}
+            open={openPreviewDialog}
+            onClose={() => {
+              setOpenPreviewDialog(false);
+            }}
+          />
+        )}
         <ToolBar />
         <ToolbarBottomTools />
         {page && page.topComponents && page.topComponents.length > 0 && (

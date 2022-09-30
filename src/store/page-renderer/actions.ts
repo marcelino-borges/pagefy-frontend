@@ -51,8 +51,7 @@ export const getRendererPageByUrl =
 
     UserPagesService.getRendererPageByUrl(url)
       .then((res: AxiosResponse) => {
-        dispatch(setPageBeingRendered(res.data));
-        if (onSuccessCallback) onSuccessCallback();
+        if (onSuccessCallback) onSuccessCallback(res.data);
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;

@@ -262,6 +262,7 @@ interface IDictionary {
   createNowYourPage: string;
   successUpdatePage: string;
   sorry: string;
+  pagePreview: string;
 }
 
 // Dictionaries
@@ -562,6 +563,7 @@ const en: IDictionary = {
   createNowYourPage: "Create now your page!",
   successUpdatePage: "Page updated successfully!",
   sorry: "Sorry",
+  pagePreview: "Page Preview",
 };
 
 const pt: IDictionary = {
@@ -861,6 +863,7 @@ const pt: IDictionary = {
   createNowYourPage: "Faça agora sua bio!",
   successUpdatePage: "Página atualizada com sucesso!",
   sorry: "Desculpe",
+  pagePreview: "Pré-visualização da página",
 };
 
 // Composed dictionaries

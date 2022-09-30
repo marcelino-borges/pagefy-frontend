@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.2.0] - 2022-09-30
+
+- Feature: Added page preview into the page editor, for the case of the page not being public. When the page is public, a new tab opens the final user page view, otherwise a dialog is open showing the page preview.
+
 ### [1.1.3] - 2022-09-29
 
 - Fix: Draggable card (component into an user page) showing the wrong value for the clicks analytics tooltip

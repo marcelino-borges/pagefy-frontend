@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearPageBeingRendered,
   getRendererPageByUrl,
   setPageBeingRendered,
 } from "../../../store/page-renderer/actions";
@@ -28,9 +29,10 @@ import { PRIMARY_COLOR } from "./../../../styles/colors";
 
 interface IProps {
   pageToRender?: IUserPage;
+  isPagePreview?: boolean;
 }
 
-const PageRenderer = ({ pageToRender }: IProps) => {
+const PageRenderer = ({ pageToRender, isPagePreview }: IProps) => {
   const dispatch = useDispatch();
   let { url } = useParams();
 
@@ -47,12 +49,20 @@ const PageRenderer = ({ pageToRender }: IProps) => {
     if (pageToRender) {
       dispatch(setPageBeingRendered(pageToRender));
     } else if (url) {
-      dispatch(getRendererPageByUrl(url));
+      dispatch(
+        getRendererPageByUrl(url, (pageFound: any) => {
+          if (pageFound) dispatch(setPageBeingRendered(pageFound));
+        })
+      );
     }
   }, [dispatch, pageToRender, url]);
 
   useEffect(() => {
-    if (!page && renderedPageState.page && renderedPageState.page.isPublic) {
+    if (
+      !page &&
+      renderedPageState.page &&
+      (renderedPageState.page.isPublic || isPagePreview)
+    ) {
       setPage(renderedPageState.page);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,8 +92,9 @@ const PageRenderer = ({ pageToRender }: IProps) => {
       document.documentElement.style.backgroundColor = "unset";
       document.documentElement.style.backgroundImage = "unset";
       document.documentElement.style.backgroundAttachment = "unset";
+      dispatch(clearPageBeingRendered());
     };
-  }, [page, page?.topComponents]);
+  }, [dispatch, page, page?.topComponents]);
 
   useEffect(() => {
     if (page && page.middleComponents && page.middleComponents.length > 0) {
@@ -147,34 +158,36 @@ const PageRenderer = ({ pageToRender }: IProps) => {
   return (
     <PageRendererContent>
       {renderedPageState.loading && <LoadingSpinner color={PRIMARY_COLOR} />}
-      {!renderedPageState.loading && !page && (
-        <Grid container p="12px">
-          <Grid container justifyContent="center">
-            <Link to={routes.root}>
-              <img
-                src={Logos.LogoVerticalLightBGPNG}
-                style={{ width: "100%", maxWidth: "300px" }}
-                alt="Logo Social Bio"
-              />
-            </Link>
-          </Grid>
-          <Grid
-            container
-            item
-            justifyContent="center"
-            textAlign="center"
-            pt="200px"
-          >
-            {strings.warningPrivatePage}
-          </Grid>
-          <Grid container justifyContent="center" pt="50px">
+      {!isPagePreview &&
+        !renderedPageState.loading &&
+        (!page || !page.isPublic) && (
+          <Grid container p="12px">
             <Grid container justifyContent="center">
-              <Link to={routes.root}>{strings.createNowYourPage}</Link>
+              <Link to={routes.root}>
+                <img
+                  src={Logos.LogoVerticalLightBGPNG}
+                  style={{ width: "100%", maxWidth: "300px" }}
+                  alt="Logo Social Bio"
+                />
+              </Link>
+            </Grid>
+            <Grid
+              container
+              item
+              justifyContent="center"
+              textAlign="center"
+              pt="200px"
+            >
+              {strings.warningPrivatePage}
+            </Grid>
+            <Grid container justifyContent="center" pt="50px">
+              <Grid container justifyContent="center">
+                <Link to={routes.root}>{strings.createNowYourPage}</Link>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      )}
-      {!renderedPageState.loading && page && page.isPublic && (
+        )}
+      {!renderedPageState.loading && page && (page.isPublic || isPagePreview) && (
         <Grid container>
           <Grid container item justifyContent="center">
             <PagePicture backgroundImage={page.pageImageUrl} />
