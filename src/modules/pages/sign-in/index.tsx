@@ -23,6 +23,10 @@ import { showErrorToast } from "../../../utils/toast";
 import { getUser } from "../../../store/user/actions";
 import { IUser } from "../../../store/user/types";
 import { setStorage } from "../../../utils/storage";
+import {
+  runAfterValidateRecaptcha,
+  setRecaptchaScript,
+} from "../../../utils/recaptcha-v3";
 
 const INITIAL_VALUES = {
   email: "",
@@ -41,6 +45,7 @@ const SignInPage = () => {
 
   useEffect(() => {
     dispatch(signOut());
+    setRecaptchaScript(document);
   }, [dispatch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,28 +56,30 @@ const SignInPage = () => {
   };
 
   const onSubmit = () => {
-    const credentials: IUserCredentials = {
-      email: values.email,
-      password: values.password,
-    };
+    runAfterValidateRecaptcha(window, () => {
+      const credentials: IUserCredentials = {
+        email: values.email,
+        password: values.password,
+      };
 
-    dispatch(
-      signIn(
-        credentials,
-        (token: string, auth: IUserAuth) => {
-          setStorage("auth", JSON.stringify(auth));
-          dispatch(
-            getUser(credentials.email, token, (user: IUser) => {
-              setStorage("user", JSON.stringify(user));
-              navigate(routes.pages);
-            })
-          );
-        },
-        (errorTranslated: any) => {
-          showErrorToast(errorTranslated);
-        }
-      )
-    );
+      dispatch(
+        signIn(
+          credentials,
+          (token: string, auth: IUserAuth) => {
+            setStorage("auth", JSON.stringify(auth));
+            dispatch(
+              getUser(credentials.email, token, (user: IUser) => {
+                setStorage("user", JSON.stringify(user));
+                navigate(routes.pages);
+              })
+            );
+          },
+          (errorTranslated: any) => {
+            showErrorToast(errorTranslated);
+          }
+        )
+      );
+    });
   };
 
   return (

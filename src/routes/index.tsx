@@ -27,7 +27,8 @@ const AppRoutes = () => {
       (appState.user.loading === true ||
         appState.auth.loading === true ||
         appState.userPages.loading === true ||
-        appState.shared.loading === true) &&
+        appState.shared.loading === true ||
+        appState.support.loading === true) &&
       !appState.pageRendered.page;
 
     setIsLoading(isAppLoading);
@@ -37,6 +38,7 @@ const AppRoutes = () => {
     appState.userPages,
     appState.shared,
     appState.pageRendered.page,
+    appState.support,
   ]);
 
   useEffect(() => {

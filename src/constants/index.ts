@@ -7,7 +7,7 @@ export const YOUTUBE_EMBED_URL_IDENTIFIER = "/embed/";
 export const RENDERED_PAGE_COMPONENT_HEIGHT = 56;
 export const RENDERED_PAGE_COMPONENT_RADIUS = 6;
 export const RENDERED_PAGE_LAUNCH_COMPONENT_ROWS = 4;
-export const MAXIMUM_FILE_SIZE = 3;
+export const MAXIMUM_FILE_SIZE = 3; //In MB
 export const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z]).{8,}$/gm;
 export const EMAIL_REGEX = /^.+@.+\..+$/gm;
 export const TOKEN_AUTH_ERROR = "auth/invalid-token";
@@ -91,6 +91,6 @@ export const COMPONENT_ANIMATIONS = [
   "zoomOutUp",
 ];
 
-export const ALLOW_SIGNUP = process.env.REACT_APP_ALLOW_SIGNUP
-  ? process.env.REACT_APP_ALLOW_SIGNUP === "true"
-  : false;
+export const ALLOW_SIGNUP = process.env.REACT_APP_ALLOW_SIGNUP === "true";
+
+export const RECAPTCHA_SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;

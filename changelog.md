@@ -16,6 +16,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.3.1] - 2022-10-02
+
+- Fix: ReCAPTCHA feature
+- Support feedback after sending message
+
+### [1.3.0] - 2022-10-02
+
+- Feature: Implemented ReCAPTCHA
+- Send support message/email
+
 ### [1.2.0] - 2022-09-30
 
 - Feature: Added page preview into the page editor, for the case of the page not being public. When the page is public, a new tab opens the final user page view, otherwise a dialog is open showing the page preview.

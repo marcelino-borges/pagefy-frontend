@@ -90,6 +90,7 @@ interface IDictionary {
   theme: string;
   statistics: string;
   support: string;
+  supportDescription: string;
   pageNotFound: string;
   views: string;
   image: string;
@@ -194,6 +195,7 @@ interface IDictionary {
   animationInstruction: string;
   noAnimation: string;
   repeatInfinitely: string;
+  name: string;
   firstName: string;
   lastName: string;
   password: string;
@@ -263,6 +265,12 @@ interface IDictionary {
   successUpdatePage: string;
   sorry: string;
   pagePreview: string;
+  message: string;
+  errorSendingSupportContact: string;
+  successSendingSupportContact: string;
+  errorRecaptchaValidation: string;
+  goToHomePage: string;
+  goToPages: string;
 }
 
 // Dictionaries
@@ -273,6 +281,8 @@ const en: IDictionary = {
   theme: "Theme",
   statistics: "Statistics",
   support: "Support",
+  supportDescription:
+    "Contact us and our team will get in touch as soon as possible.",
   pageNotFound: "There's nothing here!",
   views: "Views",
   image: "Image",
@@ -381,6 +391,7 @@ const en: IDictionary = {
   repeatInfinitely: "Repeat infinitely",
   firstName: "First name",
   lastName: "Last name",
+  name: "Name",
   password: "Password",
   confirmPassword: "Confirm Password",
   email: "Email",
@@ -564,6 +575,13 @@ const en: IDictionary = {
   successUpdatePage: "Page updated successfully!",
   sorry: "Sorry",
   pagePreview: "Page Preview",
+  message: "Message",
+  errorSendingSupportContact: "Error sending email to support.",
+  successSendingSupportContact: "Message sent successfully!",
+  errorRecaptchaValidation:
+    "Are you really a human? Error to validate your action.",
+  goToHomePage: "Go to Homepage",
+  goToPages: "Go to my Pages",
 };
 
 const pt: IDictionary = {
@@ -572,6 +590,8 @@ const pt: IDictionary = {
   theme: "Tema",
   statistics: "Estatísticas",
   support: "Suporte",
+  supportDescription:
+    "Entre em contato e nossa equipe irá responder o mais breve possível.",
   pageNotFound: "Nada por aqui!",
   views: "Visualizações",
   image: "Imagem",
@@ -680,6 +700,7 @@ const pt: IDictionary = {
   repeatInfinitely: "Repetir infinitamente",
   firstName: "Primeiro nome",
   lastName: "Sobrenome",
+  name: "Nome",
   password: "Senha",
   confirmPassword: "Confirmar Senha",
   email: "E-mail",
@@ -864,6 +885,12 @@ const pt: IDictionary = {
   successUpdatePage: "Página atualizada com sucesso!",
   sorry: "Desculpe",
   pagePreview: "Pré-visualização da página",
+  message: "Mensagem",
+  errorSendingSupportContact: "Erro enviando email para o suporte.",
+  successSendingSupportContact: "Mensagem enviada com sucesso!",
+  errorRecaptchaValidation: "Você é um humano mesmo? Erro ao validar sua ação.",
+  goToHomePage: "Ir para Página Inicial",
+  goToPages: "Ir para minhas Páginas",
 };
 
 // Composed dictionaries

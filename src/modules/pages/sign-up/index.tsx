@@ -37,6 +37,7 @@ import { capitalizeOnlyFirstLetter } from "../../../utils";
 import { setStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
 import { UserStorageFolder } from "../../../store/shared/types";
+import { runAfterValidateRecaptcha } from "../../../utils/recaptcha-v3";
 
 const INITIAL_VALUES = {
   firstName: "",
@@ -73,76 +74,78 @@ const SignUpPage = () => {
   };
 
   const onSubmit = () => {
-    if (!agreePrivacy) {
-      showErrorToast(strings.requiredPrivacyAccept);
-      return;
-    }
+    runAfterValidateRecaptcha(window, () => {
+      if (!agreePrivacy) {
+        showErrorToast(strings.requiredPrivacyAccept);
+        return;
+      }
 
-    const newUser = {
-      firstName: capitalizeOnlyFirstLetter(values.firstName),
-      lastName: capitalizeOnlyFirstLetter(values.lastName),
-      email: values.email,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-      receiveCommunications,
-      agreePrivacy,
-      plan: IPlan.FREE,
-    };
+      const newUser = {
+        firstName: capitalizeOnlyFirstLetter(values.firstName),
+        lastName: capitalizeOnlyFirstLetter(values.lastName),
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+        receiveCommunications,
+        agreePrivacy,
+        plan: IPlan.FREE,
+      };
 
-    if (!newUser.email.match(EMAIL_REGEX)) {
-      showErrorToast(strings.authErrors.invalidEmail);
-      return;
-    }
+      if (!newUser.email.match(EMAIL_REGEX)) {
+        showErrorToast(strings.authErrors.invalidEmail);
+        return;
+      }
 
-    if (!newUser.password.match(PASSWORD_REGEX)) {
-      showErrorToast(strings.authErrors.passwordMustAttendRequirements);
-      return;
-    }
+      if (!newUser.password.match(PASSWORD_REGEX)) {
+        showErrorToast(strings.authErrors.passwordMustAttendRequirements);
+        return;
+      }
 
-    dispatch(
-      signUp(
-        newUser,
-        async (user: IUser, token: string) => {
-          if (user._id && chosenImage) {
-            const imageUrl: string = (
-              await uploadImage(
-                user._id,
-                chosenImage,
-                UserStorageFolder.UPLOADED_IMAGES,
-                token
-              )
-            ).data;
+      dispatch(
+        signUp(
+          newUser,
+          async (user: IUser, token: string) => {
+            if (user._id && chosenImage) {
+              const imageUrl: string = (
+                await uploadImage(
+                  user._id,
+                  chosenImage,
+                  UserStorageFolder.UPLOADED_IMAGES,
+                  token
+                )
+              ).data;
 
-            if (imageUrl && imageUrl.length > 0) {
-              dispatch(
-                updateUser({
-                  ...newUser,
-                  profileImageUrl: imageUrl,
-                })
-              );
-            }
-          }
-          dispatch(
-            signIn(
-              { email: values.email, password: values.password },
-              (_: string, auth: IUserAuth) => {
-                setStorage("auth", JSON.stringify(auth));
+              if (imageUrl && imageUrl.length > 0) {
                 dispatch(
-                  getUser(user.email, token, (user: IUser) => {
-                    setStorage("user", JSON.stringify(user));
-                    navigate(routes.pages);
+                  updateUser({
+                    ...newUser,
+                    profileImageUrl: imageUrl,
                   })
                 );
-                navigate(routes.pages);
               }
-            )
-          );
-        },
-        (errorTranslated: any) => {
-          showErrorToast(errorTranslated);
-        }
-      )
-    );
+            }
+            dispatch(
+              signIn(
+                { email: values.email, password: values.password },
+                (_: string, auth: IUserAuth) => {
+                  setStorage("auth", JSON.stringify(auth));
+                  dispatch(
+                    getUser(user.email, token, (user: IUser) => {
+                      setStorage("user", JSON.stringify(user));
+                      navigate(routes.pages);
+                    })
+                  );
+                  navigate(routes.pages);
+                }
+              )
+            );
+          },
+          (errorTranslated: any) => {
+            showErrorToast(errorTranslated);
+          }
+        )
+      );
+    });
   };
 
   if (!ALLOW_SIGNUP) {
