@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.7.0] - 2022-10-03
+
+- Feature: Terms of Use and Privacy Policies pages
+
 ### [1.6.0] - 2022-10-03
 
 - Feature: plan enablements for the functionalities
