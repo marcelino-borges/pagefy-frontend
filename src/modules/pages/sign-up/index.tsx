@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -18,7 +18,6 @@ import Header from "../../components/header/index";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import { PrimaryColoredText } from "./style";
 import ChooseFileDialog from "./../../components/dialog-file-upload/index";
 import {
   ALLOW_SIGNUP,
@@ -26,18 +25,23 @@ import {
   IMAGE_EXTENSIONS,
   PASSWORD_REGEX,
 } from "../../../constants";
-import ProfileEditablePicture from "../../components/profile-editable-picture";
+import ProfileEditableAvatar from "../../components/profile-editable-avatar";
 import { signIn, signOut, signUp } from "../../../store/auth/actions";
 import { showErrorToast } from "./../../../utils/toast/index";
 import routes from "./../../../routes/paths";
-import { IPlan, IUser } from "../../../store/user/types";
+import { PlansTypes, IUser } from "../../../store/user/types";
 import { uploadImage } from "../../../services/files";
 import { getUser, updateUser } from "./../../../store/user/actions";
 import { capitalizeOnlyFirstLetter } from "../../../utils";
 import { setStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
 import { UserStorageFolder } from "../../../store/shared/types";
-import { runAfterValidateRecaptcha } from "../../../utils/recaptcha-v3";
+import {
+  runAfterValidateRecaptcha,
+  setRecaptchaScript,
+} from "../../../utils/recaptcha-v3";
+import InternalLink from "../../components/internal-link";
+import Footer from "../../components/footer";
 
 const INITIAL_VALUES = {
   firstName: "",
@@ -64,6 +68,7 @@ const SignUpPage = () => {
 
   useEffect(() => {
     dispatch(signOut());
+    setRecaptchaScript(document);
   }, [dispatch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +93,7 @@ const SignUpPage = () => {
         confirmPassword: values.confirmPassword,
         receiveCommunications,
         agreePrivacy,
-        plan: IPlan.FREE,
+        plan: PlansTypes.FREE,
       };
 
       if (!newUser.email.match(EMAIL_REGEX)) {
@@ -190,7 +195,7 @@ const SignUpPage = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container pb="24px">
             <Grid container justifyContent="center" alignItems="center">
-              <ProfileEditablePicture
+              <ProfileEditableAvatar
                 imageUrl={profileImageTemporaryUrl}
                 onClick={() => setOpenUploadDialog(true)}
                 height="100px"
@@ -344,13 +349,11 @@ const SignUpPage = () => {
                 label={
                   <>
                     {strings.agreeWith}{" "}
-                    <PrimaryColoredText>
-                      {strings.termsOfUse}
-                    </PrimaryColoredText>{" "}
+                    <InternalLink to="#">{strings.termsOfUse}</InternalLink>{" "}
                     {strings.and}{" "}
-                    <PrimaryColoredText>
-                      {strings.privacyPolicy}
-                    </PrimaryColoredText>
+                    <InternalLink to="#">
+                      {strings.privacyPolicies}
+                    </InternalLink>
                   </>
                 }
                 control={
@@ -375,11 +378,14 @@ const SignUpPage = () => {
               </Button>
             </Grid>
             <Grid container item justifyContent="center" fontSize="0.9em">
-              <Link to={routes.signIn}>{strings.alreadyHaveAccount}</Link>
+              <InternalLink to={routes.signIn}>
+                {strings.alreadyHaveAccount}
+              </InternalLink>
             </Grid>
           </Grid>
         </form>
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

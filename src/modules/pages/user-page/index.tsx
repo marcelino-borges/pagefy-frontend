@@ -48,27 +48,28 @@ import DraggableUserComponent from "./draggable-component";
 import { v4 as uuidv4 } from "uuid";
 import IconsDialog from "./icons-dialog";
 import ComponentDialog from "./create-component-dialog";
-import VideoDialog from "./video-dialog/index";
-import Header from "./../../components/header/index";
-import ChooseFileDialog from "./../../components/dialog-file-upload/index";
+import VideoDialog from "./video-dialog";
+import Header from "./../../components/header";
+import ChooseFileDialog from "./../../components/dialog-file-upload";
 import { IMAGE_EXTENSIONS } from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
-import DialogConfirmation from "./../../components/dialog-confirmation/index";
+import DialogConfirmation from "./../../components/dialog-confirmation";
 import LaunchDialog from "./launch-dialog";
-import ProfileEditablePicture from "../../components/profile-editable-picture";
-import PrivateRouteChecker from "./../../components/private-route-checker/index";
+import ProfileEditableAvatar from "../../components/profile-editable-avatar";
+import PrivateRouteChecker from "./../../components/private-route-checker";
 import CustomTooltip from "../../components/tooltip";
-import ColorPicker from "./../../components/color-picker/index";
+import ColorPicker from "./../../components/color-picker";
 import { getUser } from "../../../store/user/actions";
-import IconButton from "../../components/icon-button/index";
+import IconButton from "../../components/icon-button";
 import { getPageByUrl } from "../../../services/user-pages";
 import { AxiosResponse } from "axios";
-import { showErrorToast } from "./../../../utils/toast/index";
+import { showErrorToast } from "./../../../utils/toast";
 import { clearLoading, setLoading } from "../../../store/shared/actions";
 import { deleteImage } from "../../../services/files";
 import { getFirebaseToken } from "../../../utils/firebase-config";
 import { LIGHT_GREY } from "../../../styles/colors";
-import PreviewPageDialog from "./preview-dialog/index";
+import PreviewPageDialog from "./preview-dialog";
+import Footer from "./../../components/footer";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -519,7 +520,7 @@ const UserPage = () => {
           <Grid item>
             <Grid container justifyContent="center" alignItems="center">
               {page && (
-                <ProfileEditablePicture
+                <ProfileEditableAvatar
                   text={page.name}
                   imageUrl={page.pageImageUrl}
                   onClick={() => setOpenChooseFilePageDialog(true)}
@@ -846,6 +847,7 @@ const UserPage = () => {
           <IconsComponent iconsList={page.bottomComponents} />
         )}
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

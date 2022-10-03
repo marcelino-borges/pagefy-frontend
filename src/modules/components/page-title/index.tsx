@@ -1,3 +1,4 @@
+import { PRIMARY_COLOR } from "../../../styles/colors";
 import { TitleSection } from "./style";
 
 interface IPageTitleProps {
@@ -18,7 +19,7 @@ const PageTitle = ({
   baseSize = 1,
   sizeGrowth = 0.5,
   increasingSize,
-  colors,
+  colors = [PRIMARY_COLOR, "#000", "#000"],
   marginTop = "0px",
 }: IPageTitleProps) => {
   const textsColors = colors?.length === 3 ? colors : ["#000", "#000", "#000"];

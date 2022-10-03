@@ -17,6 +17,7 @@ import Home from "./../modules/pages/home";
 import Faq from "../modules/pages/faq";
 import { showSuccessToast } from "../utils/toast";
 import { showErrorToast } from "./../utils/toast/index";
+import Profile from "../modules/pages/profile/index";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ const AppRoutes = () => {
         <Route path="/:url" element={<PageRenderer />} />
         <Route path={routes.faq} element={<Faq />} />
         <Route path={routes.support} element={<Support />} />
+        <Route path={routes.profile} element={<Profile />} />
         <Route
           path="*"
           element={

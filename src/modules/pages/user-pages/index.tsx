@@ -11,6 +11,7 @@ import { IUserPage } from "../../../store/user-pages/types";
 import PrivateRouteChecker from "./../../components/private-route-checker/index";
 import { getUser } from "../../../store/user/actions";
 import { clearLoading } from "./../../../store/shared/actions";
+import Footer from "../../components/footer";
 
 const UserPages = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,12 @@ const UserPages = () => {
           setShowCreatePageDialog(false);
         }}
       />
-      <ThinWidthContent container direction="column">
+      <ThinWidthContent
+        container
+        direction="column"
+        minHeight="100vh"
+        justifyContent="start"
+      >
         <Grid
           container
           justifyContent="center"
@@ -66,6 +72,7 @@ const UserPages = () => {
             })}
         </Grid>
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

@@ -6,7 +6,7 @@ import {
   EditPenIcon,
   PageAvatar,
 } from "./style";
-import { MEDIUM_GREY } from "./../../../styles/colors";
+import { MEDIUM_GREY } from "../../../styles/colors";
 
 interface IProps {
   onClick: any;
@@ -19,15 +19,15 @@ interface IProps {
   noUserIconSize?: string | undefined;
 }
 
-const ProfileEditablePicture = ({
+const ProfileEditableAvatar = ({
   text,
   imageUrl,
   onClick,
   width,
   height,
   badgeBgSize,
-  badgeIconSize,
-  noUserIconSize,
+  badgeIconSize = "20px",
+  noUserIconSize = "48px",
 }: IProps) => {
   return (
     <Badge
@@ -36,9 +36,7 @@ const ProfileEditablePicture = ({
       onClick={onClick}
       badgeContent={
         <AvatarEditBadge size={badgeBgSize}>
-          <EditPenIcon
-            style={{ fontSize: badgeIconSize || "20px", color: "white" }}
-          />
+          <EditPenIcon style={{ fontSize: badgeIconSize, color: "white" }} />
         </AvatarEditBadge>
       }
     >
@@ -51,10 +49,7 @@ const ProfileEditablePicture = ({
         {text && text.length > 1 ? (
           <>{text.split(" ")[0][0]}</>
         ) : !imageUrl || imageUrl.length < 1 ? (
-          <PersonIcon
-            fontSize="inherit"
-            sx={{ fontSize: noUserIconSize || "48px" }}
-          />
+          <PersonIcon fontSize="inherit" sx={{ fontSize: noUserIconSize }} />
         ) : (
           <EditPenIcon style={{ fontSize: "20px", color: "white" }} />
         )}
@@ -64,4 +59,4 @@ const ProfileEditablePicture = ({
   );
 };
 
-export default ProfileEditablePicture;
+export default ProfileEditableAvatar;

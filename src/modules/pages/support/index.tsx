@@ -15,9 +15,10 @@ import {
 import { showErrorToast } from "./../../../utils/toast/index";
 import { SentUserContactResult } from "./../../../store/support/types";
 import { callRecaptcha, setRecaptchaScript } from "../../../utils/recaptcha-v3";
-import { Link } from "react-router-dom";
 import routes from "./../../../routes/paths";
 import { IApplicationState } from "./../../../store/index";
+import InternalLink from "../../components/internal-link";
+import Footer from "../../components/footer";
 
 const INITIAL_VALUES: IUserContact = {
   name: "",
@@ -80,7 +81,6 @@ const Support = () => {
           title={strings.support}
           subtitle={strings.supportDescription}
           increasingSize
-          colors={[PRIMARY_COLOR, "#000", "#000"]}
         />
         <Grid container>
           {hasAlreadySentEmail ? (
@@ -100,7 +100,9 @@ const Support = () => {
                   color={PRIMARY_COLOR}
                   fontWeight={600}
                 >
-                  <Link to={routes.root}>{strings.goToHomePage}</Link>{" "}
+                  <InternalLink to={routes.root}>
+                    {strings.goToHomePage}
+                  </InternalLink>{" "}
                 </Grid>
               ) : (
                 <Grid
@@ -109,7 +111,9 @@ const Support = () => {
                   color={PRIMARY_COLOR}
                   fontWeight={600}
                 >
-                  <Link to={routes.pages}>{strings.goToPages}</Link>
+                  <InternalLink to={routes.pages}>
+                    {strings.goToPages}
+                  </InternalLink>
                 </Grid>
               )}
             </Grid>
@@ -168,7 +172,7 @@ const Support = () => {
                   }}
                 />
               </Grid>
-              <Grid container mt="16px" justifyContent="center">
+              <Grid container mt="16px" justifyContent="center" pt="32px">
                 <Button variant="contained" type="submit">
                   {strings.send}
                 </Button>
@@ -177,6 +181,7 @@ const Support = () => {
           )}
         </Grid>
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

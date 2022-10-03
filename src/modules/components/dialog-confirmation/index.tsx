@@ -12,8 +12,8 @@ interface IProps {
   onClose: any;
   title: string;
   message: string;
-  onConfirmCallback?: any;
-  onRefuseCallback?: any;
+  onConfirmCallback?: () => void;
+  onRefuseCallback?: () => void;
   confirmText?: string;
   refuseText?: string;
 }

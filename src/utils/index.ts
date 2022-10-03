@@ -127,3 +127,9 @@ export const openExternalLink = (url: string, window: any) => {
 
   if (newWindow) newWindow.opener = null;
 };
+
+export const getRandomIntInRange = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};

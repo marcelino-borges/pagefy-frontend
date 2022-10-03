@@ -8,6 +8,9 @@ const routes = {
   support: "/public/support",
   faq: "/public/faq",
   notFound: "/public/404",
+  about: "/public/about",
+  privacy: "/public/privacy",
+  terms: "/public/terms",
 };
 
 export default routes;

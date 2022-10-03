@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import strings from "../../../localization";
 import routes from "../../../routes/paths";
-import { PRIMARY_COLOR } from "../../../styles/colors";
 import Accordion from "../../components/accordion";
+import Footer from "../../components/footer";
 import Header from "../../components/header";
+import InternalLink from "../../components/internal-link";
 import PageTitle from "../../components/page-title";
 import ThinWidthContent from "../../components/site-content/thin-width";
 
@@ -29,7 +29,6 @@ const Faq = () => {
             subtitle={strings.faq.title}
             description={strings.faq.description}
             sizeGrowth={0.5}
-            colors={[PRIMARY_COLOR, "#000", "#000"]}
             marginTop="30px"
           />
           <span style={{ marginTop: "40px" }} />
@@ -75,10 +74,11 @@ const Faq = () => {
           />
           <div style={{ marginTop: "50px" }}>
             {`${strings.faq.stillNeedHelp} `}
-            <Link to={routes.support}>{strings.clickHere}</Link>
+            <InternalLink to={routes.support}>{strings.clickHere}</InternalLink>
           </div>
         </ThinWidthContent>
       </div>
+      <Footer />
     </>
   );
 };

@@ -15,13 +15,15 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
-  plan: IPlan;
+  plan: PlansTypes;
+  receiveCommunications?: boolean;
+  agreePrivacy?: boolean;
 }
 
-export enum IPlan {
+export enum PlansTypes {
   FREE = 0,
-  P1 = 1,
-  P2 = 2,
+  VIP = 1,
+  PREMIUM = 2,
 }
 
 export interface IUserState {

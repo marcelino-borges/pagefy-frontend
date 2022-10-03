@@ -34,7 +34,6 @@ const RecomendedCard = ({
       height={height}
       maxWidth={maxWidth}
       maxHeight={maxHeight}
-      p="4px"
       color={DEEP_DARK_GREEN}
       pt={!recomendedText ? "24px" : "4px"}
       backgroundColor={!recomendedText ? "unset" : DEEP_DARK_GREEN}
@@ -45,15 +44,17 @@ const RecomendedCard = ({
         justifyContent="center"
         color="white"
         fontWeight="600"
-        pb="4px"
+        pb="5px"
       >
         {recomendedText || ""}
       </Grid>
       <CardInner
         container
         height={!recomendedText ? "calc(100% - 4px)" : "calc(100% - 24px)"}
+        border={!recomendedText ? "4px solid white" : ""}
         direction="column"
         wrap="nowrap"
+        borderBottom={recomendedText ? "6px solid white" : ""}
       >
         <Grid
           container

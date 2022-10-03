@@ -16,6 +16,16 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.5.0] - 2022-10-03
+
+- Feature: New homepage with new banners and layout
+- Feature: Profile page
+
+### [1.4.0] - 2022-10-02
+
+- Feature: Implemented ExternalLink and InternalLink components
+- Feature: Implemented Footer
+
 ### [1.3.1] - 2022-10-02
 
 - Fix: ReCAPTCHA feature

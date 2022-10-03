@@ -1,7 +1,7 @@
 import { Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../../store/index";
-import ProfileEditablePicture from "./../../profile-editable-picture";
+import ProfileEditableAvatar from "../../profile-editable-avatar";
 import { SubtitleLinks, SubtitleLinksNoUser, UserName } from "./style";
 import routes from "../../../../routes/paths";
 import strings from "../../../../localization";
@@ -118,7 +118,7 @@ const UserLoggedIn = () => {
         item
         justifyContent="center"
       >
-        <ProfileEditablePicture
+        <ProfileEditableAvatar
           imageUrl={userState.profile?.profileImageUrl}
           onClick={() => {
             setOpenChooseFileBGDialog(true);

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -27,6 +27,8 @@ import {
   runAfterValidateRecaptcha,
   setRecaptchaScript,
 } from "../../../utils/recaptcha-v3";
+import InternalLink from "../../components/internal-link";
+import Footer from "../../components/footer";
 
 const INITIAL_VALUES = {
   email: "",
@@ -91,7 +93,10 @@ const SignInPage = () => {
         </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Grid container maxWidth="400px">
             <Grid container>
@@ -162,11 +167,14 @@ const SignInPage = () => {
               fontSize="0.9em"
               pt="12px"
             >
-              <Link to={routes.signUp}>{strings.noAccountYet}</Link>
+              <InternalLink to={routes.signUp}>
+                {strings.noAccountYet}
+              </InternalLink>
             </Grid>
           </Grid>
         </form>
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

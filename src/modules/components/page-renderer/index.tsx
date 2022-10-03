@@ -26,6 +26,7 @@ import Logos from "./../../../assets/img/logos";
 import routes from "./../../../routes/paths";
 import LoadingSpinner from "../loading-spinner";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
+import InternalLink from "../internal-link";
 
 interface IProps {
   pageToRender?: IUserPage;
@@ -163,13 +164,13 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IProps) => {
         (!page || !page.isPublic) && (
           <Grid container p="12px">
             <Grid container justifyContent="center">
-              <Link to={routes.root}>
+              <InternalLink to={routes.root}>
                 <img
                   src={Logos.LogoVerticalLightBGPNG}
                   style={{ width: "100%", maxWidth: "300px" }}
                   alt="Logo Social Bio"
                 />
-              </Link>
+              </InternalLink>
             </Grid>
             <Grid
               container
@@ -182,7 +183,9 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IProps) => {
             </Grid>
             <Grid container justifyContent="center" pt="50px">
               <Grid container justifyContent="center">
-                <Link to={routes.root}>{strings.createNowYourPage}</Link>
+                <InternalLink to={routes.root}>
+                  {strings.createNowYourPage}
+                </InternalLink>
               </Grid>
             </Grid>
           </Grid>

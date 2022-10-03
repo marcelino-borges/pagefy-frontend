@@ -131,6 +131,7 @@ interface IDictionary {
   deleteComponentConfirmation: string;
   deleteIconConfirmation: string;
   deletePageConfirmation: string;
+  deleteUserConfirmation: string;
   yes: string;
   no: string;
   or: string;
@@ -202,8 +203,9 @@ interface IDictionary {
   confirmPassword: string;
   email: string;
   agreeWith: string;
-  privacyPolicy: string;
+  privacyPolicies: string;
   termsOfUse: string;
+  terms: string;
   wishesCommunications: string;
   register: string;
   createYourAccount: string;
@@ -214,6 +216,7 @@ interface IDictionary {
   passwordRequirements: string;
   requiredPrivacyAccept: string;
   profile: string;
+  profileSubtitle: string;
   signOut: string;
   noAccountYet: string;
   alreadyHaveAccount: string;
@@ -250,7 +253,7 @@ interface IDictionary {
   plan: string;
   freePlan: IPlanDetails;
   vipPlan: IPlanDetails;
-  premiumPlan: IPlanDetails;
+  platinumPlan: IPlanDetails;
   currency: string;
   year: string;
   purchase: string;
@@ -263,6 +266,8 @@ interface IDictionary {
   };
   createNowYourPage: string;
   successUpdatePage: string;
+  successUpdateUser: string;
+  errorUpdateUser: string;
   sorry: string;
   pagePreview: string;
   message: string;
@@ -271,6 +276,15 @@ interface IDictionary {
   errorRecaptchaValidation: string;
   goToHomePage: string;
   goToPages: string;
+  webiseCreatedBy: string;
+  allRightsReserved: string;
+  about: string;
+  company: string;
+  legal: string;
+  privacy: string;
+  deleteAccount: string;
+  deleteAccountSuccess: string;
+  deleteAccountError: string;
 }
 
 // Dictionaries
@@ -321,6 +335,7 @@ const en: IDictionary = {
   deleteComponentConfirmation: "Do you really wish to delete this component?",
   deleteIconConfirmation: "Do you really wish to delete this icon?",
   deletePageConfirmation: "Do you really want to delete this page?",
+  deleteUserConfirmation: "Do you really want to delete your account?",
   yes: "Yes",
   no: "No",
   or: "or",
@@ -396,9 +411,11 @@ const en: IDictionary = {
   confirmPassword: "Confirm Password",
   email: "Email",
   agreeWith: "Agree with",
-  termsOfUse: "Terms",
-  privacyPolicy: "Privacy Policies",
-  wishesCommunications: "Wish to receive news by email",
+  termsOfUse: "Terms of use",
+  terms: "Terms",
+  privacyPolicies: "Privacy Policies",
+  privacy: "Privacy",
+  wishesCommunications: "Wish to receive communcations by email",
   register: "Register",
   createYourAccount: "Create your account",
   signUp: "Sign Up",
@@ -430,6 +447,7 @@ const en: IDictionary = {
     signUpNotAllowed: "Socialbio isn't available to the public yet.",
   },
   profile: "Profile",
+  profileSubtitle: "Check and update your personal data here",
   signOut: "Sign Out",
   noAccountYet: "I have no account",
   alreadyHaveAccount: "I already have an account",
@@ -557,7 +575,7 @@ const en: IDictionary = {
       "No SocialBio logo",
     ],
   },
-  premiumPlan: {
+  platinumPlan: {
     name: "Platinum",
     benefits: ["Platinum support", "Unlimited pages by account"],
   },
@@ -573,6 +591,8 @@ const en: IDictionary = {
   },
   createNowYourPage: "Create now your page!",
   successUpdatePage: "Page updated successfully!",
+  successUpdateUser: "User updated successfully!",
+  errorUpdateUser: "Error updating user.",
   sorry: "Sorry",
   pagePreview: "Page Preview",
   message: "Message",
@@ -582,6 +602,14 @@ const en: IDictionary = {
     "Are you really a human? Error to validate your action.",
   goToHomePage: "Go to Homepage",
   goToPages: "Go to my Pages",
+  webiseCreatedBy: "Website created by",
+  allRightsReserved: "All rights reserved",
+  about: "About",
+  company: "Company",
+  legal: "Legal",
+  deleteAccount: "Delete account",
+  deleteAccountSuccess: "Account successfuly deleted.",
+  deleteAccountError: "Fail to delete the account.",
 };
 
 const pt: IDictionary = {
@@ -630,6 +658,7 @@ const pt: IDictionary = {
   deleteComponentConfirmation: "Deseja realmente apagar este componente?",
   deleteIconConfirmation: "Deseja realmente apagar este ícone?",
   deletePageConfirmation: "Deseja realmente apagar esta página?",
+  deleteUserConfirmation: "Deseja realmente apagar sua conta?",
   yes: "Sim",
   no: "Não",
   or: "ou",
@@ -706,8 +735,9 @@ const pt: IDictionary = {
   email: "E-mail",
   agreeWith: "Concordo com os",
   termsOfUse: "Termos de uso",
-  privacyPolicy: "Políticas de Privacidade",
-  wishesCommunications: "Desejo receber novidades por e-mail",
+  terms: "Termos",
+  privacyPolicies: "Políticas de Privacidade",
+  wishesCommunications: "Desejo receber comunicados por e-mail",
   register: "Cadastrar",
   createYourAccount: "Crie sua conta",
   signUp: "Cadastrar",
@@ -740,6 +770,7 @@ const pt: IDictionary = {
     signUpNotAllowed: "Socialbio ainda não está disponível para o público.",
   },
   profile: "Perfil",
+  profileSubtitle: "Verifique e atualize seus dados pessoais aqui",
   signOut: "Sair",
   noAccountYet: "Ainda não possuo conta",
   alreadyHaveAccount: "Já possuo uma conta",
@@ -867,7 +898,7 @@ const pt: IDictionary = {
       "Sem a logo do SocialBio",
     ],
   },
-  premiumPlan: {
+  platinumPlan: {
     name: "Platinum",
     benefits: ["Suporte platinum", "Páginas ilimitadas por conta"],
   },
@@ -883,6 +914,8 @@ const pt: IDictionary = {
   },
   createNowYourPage: "Faça agora sua bio!",
   successUpdatePage: "Página atualizada com sucesso!",
+  successUpdateUser: "Usuário atualizado com sucesso!",
+  errorUpdateUser: "Erro ao atualizar usuário.",
   sorry: "Desculpe",
   pagePreview: "Pré-visualização da página",
   message: "Mensagem",
@@ -891,6 +924,15 @@ const pt: IDictionary = {
   errorRecaptchaValidation: "Você é um humano mesmo? Erro ao validar sua ação.",
   goToHomePage: "Ir para Página Inicial",
   goToPages: "Ir para minhas Páginas",
+  webiseCreatedBy: "Site criado por",
+  allRightsReserved: "Todos os direiros reservados",
+  about: "Sobre",
+  company: "Empresa",
+  legal: "Legal",
+  privacy: "Privacidade",
+  deleteAccount: "Excluir conta",
+  deleteAccountSuccess: "Conta excluída com sucesso.",
+  deleteAccountError: "Não foi possível excluir a conta.",
 };
 
 // Composed dictionaries

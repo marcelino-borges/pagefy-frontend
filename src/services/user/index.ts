@@ -40,3 +40,15 @@ export const updateUser = async (
       Authorization: "Bearer " + token,
     },
   });
+
+export const deleteUser = async (
+  userId: string,
+  authId: string,
+  token: string
+): Promise<AxiosResponse<any>> =>
+  await api.delete(`/user?userId=${userId}&authId=${authId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
