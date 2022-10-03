@@ -72,7 +72,7 @@ const Home = () => {
         style={{
           paddingLeft: "0px",
           paddingRight: "0px",
-          transform: "translateY(-30px)",
+          transform: "translateY(-32px)",
           paddingTop: "0px",
           marginTop: isSmallerThan900 ? "8vw" : "150px",
           position: "relative",

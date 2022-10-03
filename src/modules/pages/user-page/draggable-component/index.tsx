@@ -76,6 +76,7 @@ import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { deleteImage } from "../../../../services/files";
 import { getLocalizedStringByComponentType } from "../../../../localization/utils";
+import { PlansTypes } from "../../../../store/user/types";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -576,11 +577,14 @@ const DraggableUserComponent = ({
               tooltipValue={component.layout.rows.toString()}
               icon={<RowsIcon />}
             />
-            <AnalyticsItem
-              tooltipKey={strings.clicks}
-              tooltipValue={component.clicks}
-              icon={<ClicksCountIcon />}
-            />
+
+            {userState?.plan !== PlansTypes.FREE && (
+              <AnalyticsItem
+                tooltipKey={strings.clicks}
+                tooltipValue={component.clicks}
+                icon={<ClicksCountIcon />}
+              />
+            )}
             <AnalyticsItem
               tooltipKey={strings.type}
               tooltipValue={getLocalizedStringByComponentType(component.type)}
@@ -742,12 +746,14 @@ const DraggableUserComponent = ({
               size="small"
               disabled={
                 component.type === ComponentType.Video ||
-                component.type === ComponentType.Launch
+                component.type === ComponentType.Launch ||
+                userState?.plan === PlansTypes.FREE
               }
               hoveringWhite
               transitionDuration="0.4s"
               isHoveringComponent={isHovering}
               onClick={() => {
+                if (userState?.plan === PlansTypes.FREE) return;
                 setOpenVisibleDateDialog(true);
               }}
             >
@@ -769,12 +775,14 @@ const DraggableUserComponent = ({
               size="small"
               disabled={
                 component.type === ComponentType.Video ||
-                component.type === ComponentType.Launch
+                component.type === ComponentType.Launch ||
+                userState?.plan === PlansTypes.FREE
               }
               hoveringWhite
               transitionDuration="0.4s"
               isHoveringComponent={isHovering}
               onClick={() => {
+                if (userState?.plan === PlansTypes.FREE) return;
                 setOpenChooseAnimationDialog(true);
               }}
             >

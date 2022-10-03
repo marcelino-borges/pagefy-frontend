@@ -23,7 +23,7 @@ export interface IUser {
 export enum PlansTypes {
   FREE = 0,
   VIP = 1,
-  PREMIUM = 2,
+  PLATINUM = 2,
 }
 
 export interface IUserState {

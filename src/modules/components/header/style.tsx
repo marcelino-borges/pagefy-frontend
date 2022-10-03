@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Close, Menu } from "@mui/icons-material";
 
 export const Parent = styled(Grid)`
-  border: 1px solid #e9e9e9;
+  border-bottom: 1px solid #e9e9e9;
   background-color: white;
   min-width: 320px;
   z-index: 1000;
@@ -14,7 +14,7 @@ export const Parent = styled(Grid)`
 
 export const HeaderLinkDesktop = styled(Link)`
   color: black;
-  padding-bottom: 50px; /* distance from text to underline when hover */
+  padding-bottom: 50.5px; /* distance from text to underline when hover */
   transition: all 0.2s ease-in-out;
   position: relative;
   height: 100%;

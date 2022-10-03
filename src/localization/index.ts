@@ -91,7 +91,9 @@ interface IDictionary {
   statistics: string;
   support: string;
   supportDescription: string;
+  toGetSupport: string;
   pageNotFound: string;
+  getInTouch: string;
   views: string;
   image: string;
   text: string;
@@ -250,6 +252,8 @@ interface IDictionary {
   dependOnNoneToReleaseCreativity: string;
   haveAccessToPremiumResources: string;
   differentiate: string;
+  getAPlanNow: string;
+  upgradeYourPlan: string;
   plan: string;
   freePlan: IPlanDetails;
   vipPlan: IPlanDetails;
@@ -285,6 +289,11 @@ interface IDictionary {
   deleteAccount: string;
   deleteAccountSuccess: string;
   deleteAccountError: string;
+  plansBlockings: {
+    yourPlanDoesntAllowCreateNewPage: string;
+    yourPlanDoesntAllowAnimation: string;
+    yourPlanDoesntAllowComponentScheduling: string;
+  };
 }
 
 // Dictionaries
@@ -297,7 +306,9 @@ const en: IDictionary = {
   support: "Support",
   supportDescription:
     "Contact us and our team will get in touch as soon as possible.",
+  toGetSupport: "to get our support.",
   pageNotFound: "There's nothing here!",
+  getInTouch: "Get in touch!",
   views: "Views",
   image: "Image",
   text: "Text",
@@ -544,6 +555,8 @@ const en: IDictionary = {
   haveAccessToPremiumResources:
     "Access premium resources with a low investment!",
   differentiate: "Differentiate from the others!",
+  getAPlanNow: "Get a plan now!",
+  upgradeYourPlan: "Upgrade your plan",
   plan: "Plan",
   freePlan: {
     name: "Free",
@@ -610,6 +623,13 @@ const en: IDictionary = {
   deleteAccount: "Delete account",
   deleteAccountSuccess: "Account successfuly deleted.",
   deleteAccountError: "Fail to delete the account.",
+  plansBlockings: {
+    yourPlanDoesntAllowCreateNewPage:
+      "Your plan doesn't allow creating a new page",
+    yourPlanDoesntAllowAnimation: "Your plan doesn't allow animation",
+    yourPlanDoesntAllowComponentScheduling:
+      "Your plan doesn't allow scheduling components",
+  },
 };
 
 const pt: IDictionary = {
@@ -620,7 +640,9 @@ const pt: IDictionary = {
   support: "Suporte",
   supportDescription:
     "Entre em contato e nossa equipe irá responder o mais breve possível.",
+  toGetSupport: "para ter acesso ao nosso suporte.",
   pageNotFound: "Nada por aqui!",
+  getInTouch: "Entre em contato!",
   views: "Visualizações",
   image: "Imagem",
   text: "Texto",
@@ -867,6 +889,8 @@ const pt: IDictionary = {
   haveAccessToPremiumResources:
     "Tenha acesso a recursos premium por um baixo investimento!",
   differentiate: "Diferencie-se dos outros!",
+  getAPlanNow: "Assine um plano agora!",
+  upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
   freePlan: {
     name: "Free",
@@ -933,6 +957,13 @@ const pt: IDictionary = {
   deleteAccount: "Excluir conta",
   deleteAccountSuccess: "Conta excluída com sucesso.",
   deleteAccountError: "Não foi possível excluir a conta.",
+  plansBlockings: {
+    yourPlanDoesntAllowCreateNewPage:
+      "Seu plano não permite criar uma nova página",
+    yourPlanDoesntAllowAnimation: "Seu plano não permite animações",
+    yourPlanDoesntAllowComponentScheduling:
+      "Seu plano não permite agendar componentes",
+  },
 };
 
 // Composed dictionaries

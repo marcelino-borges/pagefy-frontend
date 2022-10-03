@@ -2,6 +2,7 @@ export const PRIMARY_COLOR = "#65C29B";
 export const SECONDARY_COLOR = "#3CB6D6";
 export const COMPLEMENTARY_COLOR = "#162B47";
 export const GLOBAL_LIGHT_BG = "#F7F9FC";
+export const UPPER_MEDIUM_GREY = "#999999";
 export const MEDIUM_GREY = "#b9b9b9";
 export const LIGHT_GREY = "#C6C6C6";
 export const LIGHTER_GREY = "#e2e2e2";

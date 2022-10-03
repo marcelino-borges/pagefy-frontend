@@ -2,100 +2,96 @@ import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import strings from "../../../localization";
 import { FooterRoot } from "./style";
 import routes from "./../../../routes/paths";
-import { PRIMARY_COLOR } from "../../../styles/colors";
+import { PRIMARY_COLOR, UPPER_MEDIUM_GREY } from "../../../styles/colors";
 import ExternalLink from "../external-link";
 import InternalLink from "./../internal-link/index";
+import { MIN_WEBSITE_WIDTH } from "../../../constants";
 
 const Footer = () => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const SectionTitle = ({ title }: any) => (
+    <Grid item fontSize="1.5em" pb="16px" color={UPPER_MEDIUM_GREY}>
+      <strong>{title}</strong>
+    </Grid>
+  );
+
   return (
-    <>
-      <FooterRoot>
-        <Grid container direction="column">
+    <FooterRoot>
+      <Grid container direction="column" p="32px 16px" bgcolor="white">
+        <Grid
+          container
+          direction={isSmallerThanSM ? "column" : "row"}
+          gap={isSmallerThanSM ? "16px" : "0px"}
+        >
           <Grid
             container
-            direction={isSmallerThanSM ? "column" : "row"}
-            gap={isSmallerThanSM ? "16px" : "0px"}
+            item
+            direction="column"
+            xs={12}
+            md={4}
+            alignItems="center"
+            gap="8px"
           >
-            <Grid
-              container
-              item
-              direction="column"
-              xs={12}
-              md={4}
-              alignItems="center"
-              gap="8px"
-            >
-              <Grid item fontSize="1.5em" pb="16px">
-                <strong>{strings.company}</strong>
-              </Grid>
-              <Grid item>
-                <InternalLink to={routes.about}>{strings.about}</InternalLink>
-              </Grid>
-              <Grid item>
-                <a href="https://instagram.com">Instagram</a>
-              </Grid>
-              <Grid item>
-                <InternalLink to={routes.signIn}>
-                  {strings.signIn2}
-                </InternalLink>
-              </Grid>
-              <Grid item>
-                <InternalLink to={routes.signUp}>{strings.signUp}</InternalLink>
-              </Grid>
+            <SectionTitle title={strings.company} />
+            <Grid item>
+              <InternalLink to={routes.about}>{strings.about}</InternalLink>
             </Grid>
-            <Grid
-              container
-              item
-              direction="column"
-              xs={12}
-              md={4}
-              alignItems="center"
-              gap="8px"
-            >
-              <Grid item fontSize="1.5em" pb="16px">
-                <strong>{strings.support}</strong>
-              </Grid>
-              <Grid item>
-                <InternalLink to={routes.faq}>FAQ</InternalLink>
-              </Grid>
-              <Grid item>
-                <InternalLink to={routes.support}>
-                  {strings.support}
-                </InternalLink>
-              </Grid>
+            <Grid item>
+              <a href="https://instagram.com">Instagram</a>
             </Grid>
-            <Grid
-              container
-              item
-              direction="column"
-              xs={12}
-              md={4}
-              alignItems="center"
-              gap="8px"
-            >
-              <Grid item fontSize="1.5em" pb="16px">
-                <strong>{strings.legal}</strong>
-              </Grid>
-              <Grid item>
-                <InternalLink to="#">{strings.privacy}</InternalLink>
-              </Grid>
-              <Grid item>
-                <InternalLink to="#">{strings.terms}</InternalLink>
-              </Grid>
+            <Grid item>
+              <InternalLink to={routes.signIn}>{strings.signIn2}</InternalLink>
+            </Grid>
+            <Grid item>
+              <InternalLink to={routes.signUp}>{strings.signUp}</InternalLink>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            direction="column"
+            xs={12}
+            md={4}
+            alignItems="center"
+            gap="8px"
+          >
+            <SectionTitle title={strings.support} />
+            <Grid item>
+              <InternalLink to={routes.faq}>FAQ</InternalLink>
+            </Grid>
+            <Grid item>
+              <InternalLink to={routes.support}>{strings.support}</InternalLink>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            direction="column"
+            xs={12}
+            md={4}
+            alignItems="center"
+            gap="8px"
+          >
+            <SectionTitle title={strings.legal} />
+            <Grid item>
+              <InternalLink to="#">{strings.privacy}</InternalLink>
+            </Grid>
+            <Grid item>
+              <InternalLink to="#">{strings.terms}</InternalLink>
             </Grid>
           </Grid>
         </Grid>
-      </FooterRoot>
+      </Grid>
       <Grid
         container
         direction="row"
-        pt="16px"
+        p="16px"
         justifyContent="center"
         bgcolor={PRIMARY_COLOR}
-        height="50px"
+        minHeight="50px"
+        minWidth={MIN_WEBSITE_WIDTH}
       >
         {`${strings.webiseCreatedBy}`}&nbsp;
         <ExternalLink
@@ -108,7 +104,7 @@ const Footer = () => {
         &nbsp;
         {`©. ${strings.allRightsReserved} ®.`}
       </Grid>
-    </>
+    </FooterRoot>
   );
 };
 

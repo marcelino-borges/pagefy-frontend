@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import strings from "../../../localization";
 import routes from "../../../routes/paths";
+import { IApplicationState } from "../../../store";
+import { IUser, PlansTypes } from "../../../store/user/types";
 import Accordion from "../../components/accordion";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
@@ -13,10 +16,51 @@ const Faq = () => {
     false
   );
 
+  const profileState: IUser | undefined = useSelector(
+    (state: IApplicationState) => state.user.profile
+  );
+
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpandedAccordion(newExpanded ? panel : false);
     };
+
+  const showSupportByPlanType = () => {
+    if (!profileState) {
+      return (
+        <>
+          <InternalLink to={routes.signIn}>{strings.signIn}</InternalLink>
+          &nbsp;
+          {strings.toGetSupport}
+        </>
+      );
+    } else if (profileState?.plan === PlansTypes.FREE) {
+      return (
+        <>
+          <InternalLink to={routes.root}>{strings.getAPlanNow}</InternalLink>
+          &nbsp;
+          {`${strings.toGetSupport}`}
+        </>
+      );
+    } else if (profileState?.plan === PlansTypes.VIP) {
+      return (
+        <>
+          <InternalLink to={routes.root}>
+            {strings.upgradeYourPlan}
+          </InternalLink>
+          &nbsp;
+          {`${strings.toGetSupport}`}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {`${strings.faq.stillNeedHelp}`}&nbsp;
+          <InternalLink to={routes.support}>{strings.getInTouch}</InternalLink>
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -72,10 +116,7 @@ const Faq = () => {
             content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
             id="acc5"
           />
-          <div style={{ marginTop: "50px" }}>
-            {`${strings.faq.stillNeedHelp} `}
-            <InternalLink to={routes.support}>{strings.clickHere}</InternalLink>
-          </div>
+          <div style={{ marginTop: "50px" }}>{showSupportByPlanType()}</div>
         </ThinWidthContent>
       </div>
       <Footer />

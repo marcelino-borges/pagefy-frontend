@@ -11,6 +11,8 @@ export const MAXIMUM_FILE_SIZE = 3; //In MB
 export const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z]).{8,}$/gm;
 export const EMAIL_REGEX = /^.+@.+\..+$/gm;
 export const TOKEN_AUTH_ERROR = "auth/invalid-token";
+export const MIN_WEBSITE_WIDTH = "275px";
+export const FOOTER_HEIGHT = "100px";
 
 export const COMPONENT_ANIMATIONS = [
   "bounce",

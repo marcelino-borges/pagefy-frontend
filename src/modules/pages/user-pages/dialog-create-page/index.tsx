@@ -16,6 +16,7 @@ import { createPage } from "../../../../store/user-pages/actions";
 import { IApplicationState } from "./../../../../store/index";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../../routes/paths";
+import { canCreatePage } from "../../../../utils/plan-enablements";
 
 interface IProps {
   open: boolean;
@@ -26,8 +27,11 @@ interface IProps {
 const CreatePageDialog = ({ open, onClose, title }: IProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userId = useSelector(
-    (state: IApplicationState) => state.user.profile?._id
+  const userProfile = useSelector(
+    (state: IApplicationState) => state.user.profile
+  );
+  const userPagesLength = useSelector(
+    (state: IApplicationState) => state.userPages.pages.length
   );
 
   const [errorPageNameField, setErrorPageNameField] = useState<string>();
@@ -45,7 +49,9 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
   };
 
   const onSubmit = () => {
-    if (!userId) return;
+    if (!canCreatePage(userProfile, userPagesLength) || !userProfile?._id)
+      return;
+    if (!userProfile) return;
     setErrorPageNameField(undefined);
     setErrorPageUrlField(undefined);
     let hasErrors = false;
@@ -80,7 +86,7 @@ const CreatePageDialog = ({ open, onClose, title }: IProps) => {
 
     const newPage: IUserPage = {
       name: pageName,
-      userId,
+      userId: userProfile._id,
       url,
       isPublic: false,
       views: 0,

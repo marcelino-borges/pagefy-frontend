@@ -38,6 +38,7 @@ const ExternalLink = ({
       onMouseLeave={() => {
         setIsHovering(false);
       }}
+      target="_blank"
       href={to}
       style={{
         color: !isHovering ? color : hoverColor,
@@ -46,6 +47,7 @@ const ExternalLink = ({
         height: h || height,
         textDecoration: isHovering && hoverUnderline ? "underline" : "none",
       }}
+      rel="noreferrer"
     >
       {children}
     </a>

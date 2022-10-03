@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid, useMediaQuery } from "@mui/material";
 import { IUserPage } from "../../../../store/user-pages/types";
 import TransparentTextField from "../../../components/transparent-textfield";
@@ -28,6 +28,8 @@ import routes from "../../../../routes/paths";
 import DialogConfirmation from "./../../../components/dialog-confirmation/index";
 import images from "./../../../../assets/img/index";
 import { showErrorToast } from "../../../../utils/toast";
+import { IApplicationState } from "./../../../../store/index";
+import { PlansTypes } from "../../../../store/user/types";
 
 interface IPageCardProps {
   page: IUserPage;
@@ -38,6 +40,9 @@ const URL_MAX_LENGTH = 10;
 const PageCard = ({ page }: IPageCardProps) => {
   const dispatch = useDispatch();
   const isSmallerThan600 = useMediaQuery("(max-width: 600px)");
+  const userState = useSelector(
+    (state: IApplicationState) => state.user.profile
+  );
   const navigate = useNavigate();
   const [isEditting, setIsEditting] = useState(false);
   const [isUrlLong, setIsUrlLong] = useState(false);
@@ -175,11 +180,13 @@ const PageCard = ({ page }: IPageCardProps) => {
               <PageDataKey>URL: </PageDataKey>/
               {stringShortener(page.url, URL_MAX_LENGTH)}
             </Grid>
-            <Grid container item wrap="nowrap">
-              <ViewsIcon />
-              <PageDataKey>{strings.views}: </PageDataKey>
-              {page.views}
-            </Grid>
+            {userState?.plan !== PlansTypes.FREE && (
+              <Grid container item wrap="nowrap">
+                <ViewsIcon />
+                <PageDataKey>{strings.views}: </PageDataKey>
+                {page.views}
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </CardContent>

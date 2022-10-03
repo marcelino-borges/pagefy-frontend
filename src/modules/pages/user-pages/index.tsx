@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Button, Grid } from "@mui/material";
 import { IApplicationState } from "../../../store";
 import Header from "../../components/header";
@@ -9,30 +9,26 @@ import CreatePageDialog from "./dialog-create-page/index";
 import strings from "../../../localization";
 import { IUserPage } from "../../../store/user-pages/types";
 import PrivateRouteChecker from "./../../components/private-route-checker/index";
-import { getUser } from "../../../store/user/actions";
-import { clearLoading } from "./../../../store/shared/actions";
 import Footer from "../../components/footer";
+import { IUser } from "../../../store/user/types";
+import { canCreatePage } from "../../../utils/plan-enablements";
+import CustomTooltip from "../../components/tooltip";
+import { showErrorToast } from "./../../../utils/toast/index";
 
 const UserPages = () => {
-  const dispatch = useDispatch();
-
   const userPagesState = useSelector(
     (state: IApplicationState) => state.userPages
   );
 
   const [showCreatePageDialog, setShowCreatePageDialog] = useState(false);
 
-  const userEmailState = useSelector(
-    (state: IApplicationState) => state.user.profile?.email
+  const profileState: IUser | undefined = useSelector(
+    (state: IApplicationState) => state.user.profile
   );
 
-  useEffect(() => {
-    if (userEmailState) dispatch(getUser(userEmailState, null));
-
-    return () => {
-      dispatch(clearLoading());
-    };
-  }, [dispatch, userEmailState]);
+  const pagesState: IUserPage[] | undefined = useSelector(
+    (state: IApplicationState) => state.userPages.pages
+  );
 
   return (
     <>
@@ -48,7 +44,7 @@ const UserPages = () => {
       <ThinWidthContent
         container
         direction="column"
-        minHeight="100vh"
+        minHeight="70vh"
         justifyContent="start"
       >
         <Grid
@@ -56,14 +52,29 @@ const UserPages = () => {
           justifyContent="center"
           style={{ padding: "16px 0px 24px 0px" }}
         >
-          <Button
-            onClick={() => {
-              setShowCreatePageDialog(true);
-            }}
+          <CustomTooltip
+            title={
+              canCreatePage(profileState, pagesState.length)
+                ? strings.createPage
+                : strings.plansBlockings.yourPlanDoesntAllowCreateNewPage
+            }
           >
-            Criar página
-          </Button>
+            <Button
+              onClick={() => {
+                if (!canCreatePage(profileState, pagesState.length)) {
+                  showErrorToast(
+                    strings.plansBlockings.yourPlanDoesntAllowCreateNewPage
+                  );
+                  return;
+                }
+                setShowCreatePageDialog(true);
+              }}
+            >
+              {strings.createPage}
+            </Button>
+          </CustomTooltip>
         </Grid>
+
         <Grid container>
           {userPagesState.pages &&
             userPagesState.pages.length > 0 &&

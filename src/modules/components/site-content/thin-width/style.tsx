@@ -1,7 +1,9 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
+import { FOOTER_HEIGHT } from "../../../../constants";
 
 export const Root = styled(Grid)`
+  min-height: calc(100vh - ${FOOTER_HEIGHT});
   max-width: var(--max-site-width);
   padding: 150px 32px 32px 32px;
 

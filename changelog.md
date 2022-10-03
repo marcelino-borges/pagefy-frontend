@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.6.0] - 2022-10-03
+
+- Feature: plan enablements for the functionalities
+
 ### [1.5.0] - 2022-10-03
 
 - Feature: New homepage with new banners and layout

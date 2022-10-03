@@ -63,6 +63,7 @@ import { uploadImage } from "../../../../services/files";
 import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { IApplicationState } from "../../../../store";
 import { UserStorageFolder } from "../../../../store/shared/types";
+import { PlansTypes } from "../../../../store/user/types";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -666,11 +667,17 @@ const ComponentDialog = ({
                 <CustomTooltip
                   disableInteractive
                   leaveDelay={0.1}
-                  title={strings.scheduleComponentVisibleDate}
+                  title={
+                    userState?.plan === PlansTypes.FREE
+                      ? strings.plansBlockings
+                          .yourPlanDoesntAllowComponentScheduling
+                      : strings.scheduleComponentVisibleDate
+                  }
                   placement="bottom"
                 >
                   <Grid item>
                     <IconButton
+                      disabled={userState?.plan === PlansTypes.FREE}
                       onClick={() => {
                         setShowVisibleDateDialog(true);
                       }}
@@ -686,12 +693,18 @@ const ComponentDialog = ({
                 <CustomTooltip
                   disableInteractive
                   leaveDelay={0.1}
-                  title={strings.chooseAnimation}
+                  title={
+                    userState?.plan === PlansTypes.FREE
+                      ? strings.plansBlockings.yourPlanDoesntAllowAnimation
+                      : strings.chooseAnimation
+                  }
                   placement="bottom"
                 >
                   <Grid item>
                     <IconButton
+                      disabled={userState?.plan === PlansTypes.FREE}
                       onClick={() => {
+                        if (userState?.plan === PlansTypes.FREE) return;
                         setShowAnimationDialog(true);
                       }}
                     >
