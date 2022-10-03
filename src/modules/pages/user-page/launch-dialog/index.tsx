@@ -78,7 +78,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
     const newComponent: IUserComponent = {
       text: message,
-      url,
+      url: url.toLowerCase(),
       style: undefined,
       visible: true,
       clicks: 0,

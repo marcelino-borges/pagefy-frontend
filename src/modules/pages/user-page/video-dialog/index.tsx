@@ -74,7 +74,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
     const newComponent: IUserComponent = {
       text: undefined,
-      url: videoUrl,
+      url: videoUrl.toLowerCase(),
       style: undefined,
       visible: true,
       clicks: 0,
@@ -83,7 +83,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         columns: 2,
       },
       type: ComponentType.Video,
-      mediaUrl: videoUrl,
+      mediaUrl: videoUrl.toLowerCase(),
       iconDetails: undefined,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
