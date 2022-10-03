@@ -22,7 +22,7 @@ import { IUserAuth, IUserCredentials } from "../../../store/auth/types";
 import { showErrorToast } from "../../../utils/toast";
 import { getUser } from "../../../store/user/actions";
 import { IUser } from "../../../store/user/types";
-import { setStorage } from "../../../utils/storage";
+import { setSessionStorage } from "../../../utils/storage";
 import {
   runAfterValidateRecaptcha,
   setRecaptchaScript,
@@ -68,10 +68,10 @@ const SignInPage = () => {
         signIn(
           credentials,
           (token: string, auth: IUserAuth) => {
-            setStorage("auth", JSON.stringify(auth));
+            setSessionStorage("auth", JSON.stringify(auth));
             dispatch(
               getUser(credentials.email, token, (user: IUser) => {
-                setStorage("user", JSON.stringify(user));
+                setSessionStorage("user", JSON.stringify(user));
                 navigate(routes.pages);
               })
             );

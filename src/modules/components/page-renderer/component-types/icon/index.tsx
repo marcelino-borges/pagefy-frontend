@@ -22,6 +22,7 @@ const IconsComponent = ({
   isRenderer,
 }: IProps) => {
   const dispatch = useDispatch();
+
   return (
     <Grid
       container
@@ -41,26 +42,26 @@ const IconsComponent = ({
             new Date(iconComponent.visibleDate) >= new Date())
         ) {
           return (
-            <CustomTooltip title={iconComponent.url} key={iconComponent._id}>
+            <CustomTooltip title={iconComponent.url} key={uuidv4()}>
               <IconOverlaySpan
                 onClick={() => {
-                  if (iconComponent.url)
-                    openExternalLink(iconComponent.url, window);
+                  if (onClickIcon) onClickIcon(iconComponent);
                   if (
                     isRenderer !== undefined &&
                     isRenderer !== false &&
                     pageId &&
                     iconComponent._id
-                  )
+                  ) {
+                    if (iconComponent.url)
+                      openExternalLink(iconComponent.url, window);
+
                     dispatch(
                       incrementComponentClicks(pageId, iconComponent._id)
                     );
+                  }
                 }}
               >
                 <Icon
-                  onClick={() => {
-                    if (onClickIcon) onClickIcon(iconComponent);
-                  }}
                   icon={iconComponent.iconDetails.icon}
                   style={{
                     fontSize: "46px",

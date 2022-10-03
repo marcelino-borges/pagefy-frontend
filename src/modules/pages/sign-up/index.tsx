@@ -33,7 +33,7 @@ import { PlansTypes, IUser } from "../../../store/user/types";
 import { uploadImage } from "../../../services/files";
 import { getUser, updateUser } from "./../../../store/user/actions";
 import { capitalizeOnlyFirstLetter } from "../../../utils";
-import { setStorage } from "../../../utils/storage";
+import { setSessionStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
 import { UserStorageFolder } from "../../../store/shared/types";
 import {
@@ -133,10 +133,10 @@ const SignUpPage = () => {
               signIn(
                 { email: values.email, password: values.password },
                 (_: string, auth: IUserAuth) => {
-                  setStorage("auth", JSON.stringify(auth));
+                  setSessionStorage("auth", JSON.stringify(auth));
                   dispatch(
                     getUser(user.email, token, (user: IUser) => {
-                      setStorage("user", JSON.stringify(user));
+                      setSessionStorage("user", JSON.stringify(user));
                       navigate(routes.pages);
                     })
                   );
@@ -349,9 +349,11 @@ const SignUpPage = () => {
                 label={
                   <>
                     {strings.agreeWith}{" "}
-                    <InternalLink to="#">{strings.termsOfUse}</InternalLink>{" "}
+                    <InternalLink to={routes.terms}>
+                      {strings.termsOfUse}
+                    </InternalLink>{" "}
                     {strings.and}{" "}
-                    <InternalLink to="#">
+                    <InternalLink to={routes.privacy}>
                       {strings.privacyPolicies}
                     </InternalLink>
                   </>

@@ -206,8 +206,14 @@ interface IDictionary {
   email: string;
   agreeWith: string;
   privacyPolicies: string;
+  privacyPoliciesSubtitle: string;
+  cookies: string;
+  cookiesPolicies: string;
+  cookiesPoliciesSubtitle: string;
+  cookiesConsent: string;
   termsOfUse: string;
   terms: string;
+  termsOfUseSubtitle: string;
   wishesCommunications: string;
   register: string;
   createYourAccount: string;
@@ -294,11 +300,13 @@ interface IDictionary {
     yourPlanDoesntAllowAnimation: string;
     yourPlanDoesntAllowComponentScheduling: string;
   };
+  ok: string;
 }
 
 // Dictionaries
 
 const en: IDictionary = {
+  ok: "OK",
   home: "Home",
   pages: "Pages",
   theme: "Theme",
@@ -308,7 +316,7 @@ const en: IDictionary = {
     "Contact us and our team will get in touch as soon as possible.",
   toGetSupport: "to get our support.",
   pageNotFound: "There's nothing here!",
-  getInTouch: "Get in touch!",
+  getInTouch: "Get in touch",
   views: "Views",
   image: "Image",
   text: "Text",
@@ -424,8 +432,15 @@ const en: IDictionary = {
   agreeWith: "Agree with",
   termsOfUse: "Terms of use",
   terms: "Terms",
+  termsOfUseSubtitle: "Understand our termos of use",
   privacyPolicies: "Privacy Policies",
+  privacyPoliciesSubtitle: "Understand our privacy policies",
   privacy: "Privacy",
+  cookies: "Cookies",
+  cookiesPolicies: "Cookies Policies",
+  cookiesPoliciesSubtitle: " Understand our Cookies Policies",
+  cookiesConsent:
+    "We use Cookies and other technologies belonging to us and third parties to enable our website to function correctly and securely, and to personalize its content. We also use Cookies to analyze user browsing and adjust advertising to the user’s tastes and preferences.",
   wishesCommunications: "Wish to receive communcations by email",
   register: "Register",
   createYourAccount: "Create your account",
@@ -633,6 +648,7 @@ const en: IDictionary = {
 };
 
 const pt: IDictionary = {
+  ok: "OK",
   home: "Início",
   pages: "Páginas",
   theme: "Tema",
@@ -758,7 +774,14 @@ const pt: IDictionary = {
   agreeWith: "Concordo com os",
   termsOfUse: "Termos de uso",
   terms: "Termos",
+  termsOfUseSubtitle: "Entenda nossos termos de uso",
   privacyPolicies: "Políticas de Privacidade",
+  privacyPoliciesSubtitle: "Entenda nossas políticas de privacidade",
+  cookies: "Cookies",
+  cookiesPolicies: "Políticas de Cookies",
+  cookiesPoliciesSubtitle: "Entenda nossas políticas de Cookies",
+  cookiesConsent:
+    "Nós usamos cookies, armazenamento local, de sessão e outras tecnologias pertecentes a nós ou a terceiros para permitir o pleno, seguro e correto funcionamento do nosso site, bem como para personalizar o conteúdo para sua experiência. Também utilizamos tudo isso para analisar o comportamento do usuário e ajustar anúncios e direcionar conteúdos de acordo com os gostos e as preferências do usuário.",
   wishesCommunications: "Desejo receber comunicados por e-mail",
   register: "Cadastrar",
   createYourAccount: "Crie sua conta",

@@ -16,6 +16,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.0] - 2022-10-03
+
+- Feature: GDPR consent popup and cookies page
+- Feature: create icon dialog now allows "tel:xxxx" and "mailto:xxxx@xxx.xxx"
+- Fix: editor icon click doesn't open link anymore
+
 ### [1.7.0] - 2022-10-03
 
 - Feature: Terms of Use and Privacy Policies pages

@@ -19,6 +19,7 @@ import routes from "./../../../routes/paths";
 import { IApplicationState } from "./../../../store/index";
 import InternalLink from "../../components/internal-link";
 import Footer from "../../components/footer";
+import PrivateRouteChecker from "../../components/private-route-checker";
 
 const INITIAL_VALUES: IUserContact = {
   name: "",
@@ -75,6 +76,7 @@ const Support = () => {
 
   return (
     <>
+      <PrivateRouteChecker />
       <Header />
       <ThinWidthContent>
         <PageTitle

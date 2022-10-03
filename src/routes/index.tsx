@@ -18,10 +18,17 @@ import Faq from "../modules/pages/faq";
 import { showSuccessToast } from "../utils/toast";
 import { showErrorToast } from "./../utils/toast/index";
 import Profile from "../modules/pages/profile/index";
+import PrivacyPage from "./../modules/pages/privacy/index";
+import TermsPage from "./../modules/pages/terms/index";
+import CoockiesPoliciesPage from "../modules/pages/cookies-policies";
+import GDPRPopup from "../modules/components/gdpr-popup";
+import { getStorage, setStorage } from "./../utils/storage/index";
+import { GDPR_CONSENT_STORAGE_KEY } from "../constants";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
   const appState = useSelector((state: IApplicationState) => state);
+  const [openCookiesConsent, setOpenCookiesConsent] = useState(false);
 
   useEffect(() => {
     const isAppLoading =
@@ -58,10 +65,26 @@ const AppRoutes = () => {
     }
   }, [dispatch, appState.userPages.pageBeingSaved]);
 
+  useEffect(() => {
+    const hasConsentedGDPR = getStorage(GDPR_CONSENT_STORAGE_KEY);
+
+    if (!hasConsentedGDPR) {
+      setOpenCookiesConsent(true);
+    }
+  }, []);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
     <BrowserRouter>
+      {openCookiesConsent && (
+        <GDPRPopup
+          onConsentCallback={() => {
+            setOpenCookiesConsent(false);
+            setStorage(GDPR_CONSENT_STORAGE_KEY, "true");
+          }}
+        />
+      )}
       {isLoading && <LoadingSpinner />}
       <Routes>
         <Route path={routes.root} element={<Home />} />
@@ -73,6 +96,9 @@ const AppRoutes = () => {
         <Route path={routes.faq} element={<Faq />} />
         <Route path={routes.support} element={<Support />} />
         <Route path={routes.profile} element={<Profile />} />
+        <Route path={routes.privacy} element={<PrivacyPage />} />
+        <Route path={routes.terms} element={<TermsPage />} />
+        <Route path={routes.cookies} element={<CoockiesPoliciesPage />} />
         <Route
           path="*"
           element={

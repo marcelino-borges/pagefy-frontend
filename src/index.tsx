@@ -11,8 +11,8 @@ import store from "./store";
 import theme from "./theme";
 import "./styles/global-style.css";
 import "react-toastify/dist/ReactToastify.css";
-import strings from "./localization/index";
-import LoadingSpinner from "./modules/components/loading-spinner/index";
+import strings from "./localization";
+import LoadingSpinner from "./modules/components/loading-spinner";
 
 let persistor = persistStore(store);
 

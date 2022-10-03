@@ -22,7 +22,7 @@ import {
   ColorPickerOverlay,
 } from "./styles";
 import { useForm } from "react-hook-form";
-import { isUrlValid } from "../../../../utils/validators/url";
+import { isMailtoUrlValid, isUrlValid } from "../../../../utils/validators/url";
 import {
   ComponentType,
   IIconDetails,
@@ -36,6 +36,7 @@ import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
 import { Icon } from "@iconify/react";
 import ColorPicker from "./../../../components/color-picker/index";
 import { v4 as uuidv4 } from "uuid";
+import { isTelUrlValid } from "./../../../../utils/validators/url";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -151,7 +152,10 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const onAddIcon = () => {
     setIsUrlInvalid(false);
 
-    if (!isUrlValid(url) || url.length < 1) {
+    if (
+      !url.length ||
+      (!isUrlValid(url) && !isMailtoUrlValid(url) && !isTelUrlValid(url))
+    ) {
       setIsUrlInvalid(true);
       return;
     }
@@ -318,7 +322,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     helperText={isUrlInvalid ? strings.invalidUrl : ""}
                     autoFocus
                     required
-                    placeholder={strings.webSiteExample}
+                    placeholder={'URL or "mailto:" or "tel:"'}
                     type="text"
                     fullWidth
                     variant="outlined"
