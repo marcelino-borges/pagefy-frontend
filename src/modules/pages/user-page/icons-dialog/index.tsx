@@ -22,7 +22,13 @@ import {
   ColorPickerOverlay,
 } from "./styles";
 import { useForm } from "react-hook-form";
-import { isMailtoUrlValid, isUrlValid } from "../../../../utils/validators/url";
+import {
+  isCalltoUrlValid,
+  isFaxUrlValid,
+  isMailtoUrlValid,
+  isSmsUrlValid,
+  isUrlValid,
+} from "../../../../utils/validators/url";
 import {
   ComponentType,
   IIconDetails,
@@ -154,7 +160,12 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
     if (
       !url.length ||
-      (!isUrlValid(url) && !isMailtoUrlValid(url) && !isTelUrlValid(url))
+      (!isUrlValid(url) &&
+        !isMailtoUrlValid(url) &&
+        !isTelUrlValid(url) &&
+        !isSmsUrlValid(url) &&
+        !isCalltoUrlValid(url) &&
+        !isFaxUrlValid(url))
     ) {
       setIsUrlInvalid(true);
       return;

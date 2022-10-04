@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 import { openExternalLink } from "../../../../../utils";
+import { includesAnyInString } from "./../../../../../utils/index";
 
 interface IProps {
   iconsList: IUserComponent[];
@@ -22,6 +23,8 @@ const IconsComponent = ({
   isRenderer,
 }: IProps) => {
   const dispatch = useDispatch();
+
+  const isRendererPage = isRenderer !== undefined && isRenderer !== false;
 
   return (
     <Grid
@@ -44,21 +47,24 @@ const IconsComponent = ({
           return (
             <CustomTooltip title={iconComponent.url} key={uuidv4()}>
               <IconOverlaySpan
+                href={isRendererPage ? iconComponent.url : ""}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => {
-                  console.log("1");
                   if (onClickIcon) onClickIcon(iconComponent);
                   if (
-                    isRenderer !== undefined &&
-                    isRenderer !== false &&
-                    pageId &&
-                    iconComponent._id
+                    iconComponent.url &&
+                    includesAnyInString(iconComponent.url, [
+                      "mailto:",
+                      "tel:",
+                      "sms:",
+                      "callto:",
+                      "fax:",
+                    ])
                   ) {
-                    console.log("2");
-                    if (iconComponent.url) {
-                      console.log("3");
-                      openExternalLink(iconComponent.url, window);
-                    }
-
+                    openExternalLink(iconComponent.url, window);
+                  }
+                  if (isRendererPage && pageId && iconComponent._id) {
                     dispatch(
                       incrementComponentClicks(pageId, iconComponent._id)
                     );

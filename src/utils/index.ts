@@ -133,3 +133,13 @@ export const getRandomIntInRange = (min: number, max: number) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export const includesAnyInString = (
+  originalString: string,
+  wordsToFind: string[]
+): boolean => {
+  for (let word in wordsToFind) {
+    if (originalString.includes(word)) return true;
+  }
+  return false;
+};

@@ -16,9 +16,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.2] - 2022-10-04
+
+- Fix: Icon link on renderer and editor, for URI (mailto etc) or URL
+
 ### [1.8.1] - 2022-10-04
 
 - Fix: click on icon opening external link on page renderer
+- Fix: Icon url not accepting Maps link
 
 ### [1.8.0] - 2022-10-03
 
