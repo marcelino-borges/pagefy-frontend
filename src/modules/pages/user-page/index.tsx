@@ -755,12 +755,12 @@ const UserPage = () => {
               )
             );
           }}
-          title={strings.deleteIcon}
-          message={strings.deleteIconConfirmation}
+          title={strings.removeIcon}
+          message={strings.removeIconConfirmation}
         />
         <DialogConfirmation
           open={showDeletePageConfirmation}
-          title={strings.deletePage}
+          title={strings.removePage}
           onClose={() => {
             setShowDeletePageConfirmation(false);
           }}
@@ -770,7 +770,7 @@ const UserPage = () => {
               navigate(routes.pages);
             }
           }}
-          message={strings.deletePageConfirmation}
+          message={strings.removePageConfirmation}
         />
         <ChooseFileDialog
           openChooseFileDialog={openChooseFilePageDialog}

@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### [1.8.2] - 2022-10-04
 
 - Fix: Icon link on renderer and editor, for URI (mailto etc) or URL
+- Feature: Ability to remove animation after duplicating a component
 
 ### [1.8.1] - 2022-10-04
 

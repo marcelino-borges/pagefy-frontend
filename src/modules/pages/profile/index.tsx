@@ -97,7 +97,7 @@ const Profile = () => {
         open={openDeleteConfirmationDialog}
         onClose={() => setOpenDeleteConfirmationDialog(false)}
         title={strings.deleteAccount}
-        message={strings.deleteUserConfirmation}
+        message={strings.removeUserConfirmation}
         onConfirmCallback={deleteUserFromFirebaseAndMongo}
         onRefuseCallback={() => {
           setOpenDeleteConfirmationDialog(false);

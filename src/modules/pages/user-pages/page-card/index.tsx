@@ -92,8 +92,8 @@ const PageCard = ({ page }: IPageCardProps) => {
               })
             );
         }}
-        title={strings.deletePage}
-        message={strings.deletePageConfirmation}
+        title={strings.removePage}
+        message={strings.removePageConfirmation}
       />
       <CardOverlay onClick={loadPage} />
       <PageImage

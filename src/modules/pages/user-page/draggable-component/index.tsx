@@ -77,6 +77,8 @@ import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { deleteImage } from "../../../../services/files";
 import { getLocalizedStringByComponentType } from "../../../../localization/utils";
 import { PlansTypes } from "../../../../store/user/types";
+import { showSuccessToast } from "../../../../utils/toast";
+import { showErrorToast } from "./../../../../utils/toast/index";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -164,7 +166,18 @@ const DraggableUserComponent = ({
     setIsDeleted(true);
     setTimeout(() => {
       if (!component._id || !pageId) return;
-      dispatch(deleteMiddleComponentFromPage(component._id, pageId));
+      dispatch(
+        deleteMiddleComponentFromPage(
+          component._id,
+          pageId,
+          () => {
+            showSuccessToast(strings.successRemoveComponent);
+          },
+          () => {
+            showErrorToast(strings.errorRemoveComponent);
+          }
+        )
+      );
       setTimeout(() => {
         setIsDeleted(false);
       }, 250);
@@ -205,8 +218,8 @@ const DraggableUserComponent = ({
         onConfirmCallback={() => {
           deleteComponent();
         }}
-        title={strings.deleteIcon}
-        message={strings.deleteComponentConfirmation}
+        title={strings.removeIcon}
+        message={strings.removeComponentConfirmation}
       />
     );
   };

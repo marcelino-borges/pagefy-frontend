@@ -68,16 +68,19 @@ const DialogChooseAnimation = ({
   const submitAnimation = () => {
     clearErrors();
 
-    if (!selectedAnimation || selectedAnimation === "") {
+    if (
+      !existingAnimation &&
+      (!selectedAnimation || selectedAnimation === "")
+    ) {
       setErrorAnimationField(strings.requiredField);
       return;
     }
 
     saveAnimation({
       name: selectedAnimation,
-      duration,
-      startDelay,
-      infinite: isInfinite,
+      duration: selectedAnimation === "" ? 0 : duration,
+      startDelay: selectedAnimation === "" ? 0 : startDelay,
+      infinite: selectedAnimation === "" ? false : isInfinite,
     });
     clearStates();
     onClose();

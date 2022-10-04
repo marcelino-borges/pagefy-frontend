@@ -119,9 +119,9 @@ interface IDictionary {
   addIcon: string;
   addVideo: string;
   addLaunch: string;
-  deleteIcon: string;
-  deleteComponent: string;
-  deletePage: string;
+  removeIcon: string;
+  removeComponent: string;
+  removePage: string;
   iconName: string;
   back: string;
   cancel: string;
@@ -130,10 +130,10 @@ interface IDictionary {
   url: string;
   invalidUrl: string;
   colorPicker: string;
-  deleteComponentConfirmation: string;
-  deleteIconConfirmation: string;
-  deletePageConfirmation: string;
-  deleteUserConfirmation: string;
+  removeComponentConfirmation: string;
+  removeIconConfirmation: string;
+  removePageConfirmation: string;
+  removeUserConfirmation: string;
   yes: string;
   no: string;
   or: string;
@@ -276,6 +276,9 @@ interface IDictionary {
   };
   createNowYourPage: string;
   successUpdatePage: string;
+  errorUpdatePage: string;
+  successRemoveComponent: string;
+  errorRemoveComponent: string;
   successUpdateUser: string;
   errorUpdateUser: string;
   sorry: string;
@@ -340,9 +343,9 @@ const en: IDictionary = {
   addIcon: "Add Icon",
   addVideo: "Add Video",
   addLaunch: "Add Launch",
-  deleteIcon: "Delete Icon",
-  deleteComponent: "Delete Component",
-  deletePage: "Delete Page",
+  removeIcon: "Remove Icon",
+  removeComponent: "Remove Component",
+  removePage: "Remove Page",
   iconName: "Icon name",
   back: "Back",
   cancel: "Cancel",
@@ -351,10 +354,10 @@ const en: IDictionary = {
   url: "URL",
   invalidUrl: "Invalid URL",
   colorPicker: "Pick a color",
-  deleteComponentConfirmation: "Do you really wish to delete this component?",
-  deleteIconConfirmation: "Do you really wish to delete this icon?",
-  deletePageConfirmation: "Do you really want to delete this page?",
-  deleteUserConfirmation: "Do you really want to delete your account?",
+  removeComponentConfirmation: "Do you really wish to remove this component?",
+  removeIconConfirmation: "Do you really wish to remove this icon?",
+  removePageConfirmation: "Do you really want to remove this page?",
+  removeUserConfirmation: "Do you really want to remove your account?",
   yes: "Yes",
   no: "No",
   or: "or",
@@ -619,7 +622,10 @@ const en: IDictionary = {
   },
   createNowYourPage: "Create now your page!",
   successUpdatePage: "Page updated successfully!",
+  errorUpdatePage: "Failed to update page.",
   successUpdateUser: "User updated successfully!",
+  successRemoveComponent: "Componente removido com sucesso!",
+  errorRemoveComponent: "Falha ao remover componente.",
   errorUpdateUser: "Error updating user.",
   sorry: "Sorry",
   pagePreview: "Page Preview",
@@ -682,9 +688,9 @@ const pt: IDictionary = {
   addIcon: "Adicionar Ícone",
   addVideo: "Adicionar Vídeo",
   addLaunch: "Adicionar Lançamento",
-  deleteIcon: "Remover Ícone",
-  deleteComponent: "Remover Componente",
-  deletePage: "Remover Página",
+  removeIcon: "Remover Ícone",
+  removeComponent: "Remover Componente",
+  removePage: "Remover Página",
   iconName: "Nome do ícone",
   back: "Voltar",
   cancel: "Cancelar",
@@ -693,10 +699,10 @@ const pt: IDictionary = {
   url: "URL",
   invalidUrl: "URL inválida",
   colorPicker: "Escolha outra cor",
-  deleteComponentConfirmation: "Deseja realmente apagar este componente?",
-  deleteIconConfirmation: "Deseja realmente apagar este ícone?",
-  deletePageConfirmation: "Deseja realmente apagar esta página?",
-  deleteUserConfirmation: "Deseja realmente apagar sua conta?",
+  removeComponentConfirmation: "Deseja realmente remover este componente?",
+  removeIconConfirmation: "Deseja realmente remover este ícone?",
+  removePageConfirmation: "Deseja realmente remover esta página?",
+  removeUserConfirmation: "Deseja realmente excluir sua conta?",
   yes: "Sim",
   no: "Não",
   or: "ou",
@@ -961,6 +967,9 @@ const pt: IDictionary = {
   },
   createNowYourPage: "Faça agora sua bio!",
   successUpdatePage: "Página atualizada com sucesso!",
+  errorUpdatePage: "Falha ao atualizar a página.",
+  successRemoveComponent: "Componente removido com sucesso!",
+  errorRemoveComponent: "Falha ao remover componente.",
   successUpdateUser: "Usuário atualizado com sucesso!",
   errorUpdateUser: "Erro ao atualizar usuário.",
   sorry: "Desculpe",
