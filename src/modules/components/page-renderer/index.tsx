@@ -207,7 +207,11 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IProps) => {
 
           {/* TOP COMPONENTS */}
           {topComponents && topComponents.length > 0 && (
-            <IconsComponent isRenderer iconsList={topComponents} />
+            <IconsComponent
+              pageId={page._id}
+              isRenderer
+              iconsList={topComponents}
+            />
           )}
 
           {/* MIDDLE COMPONENTS */}

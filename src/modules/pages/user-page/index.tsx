@@ -821,6 +821,7 @@ const UserPage = () => {
         {page && page.topComponents && page.topComponents.length > 0 && (
           <IconsComponent
             iconsList={page.topComponents}
+            pageId={page._id}
             onClickIcon={(iconComponent: IUserComponent) => {
               if (iconComponent._id) setIdIconToDelete(iconComponent._id);
               setOpenDeleteIconConfirmation(true);

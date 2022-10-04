@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.1] - 2022-10-04
+
+- Fix: click on icon opening external link on page renderer
+
 ### [1.8.0] - 2022-10-03
 
 - Feature: GDPR consent popup and cookies page

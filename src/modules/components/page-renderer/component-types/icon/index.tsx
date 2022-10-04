@@ -45,6 +45,7 @@ const IconsComponent = ({
             <CustomTooltip title={iconComponent.url} key={uuidv4()}>
               <IconOverlaySpan
                 onClick={() => {
+                  console.log("1");
                   if (onClickIcon) onClickIcon(iconComponent);
                   if (
                     isRenderer !== undefined &&
@@ -52,8 +53,11 @@ const IconsComponent = ({
                     pageId &&
                     iconComponent._id
                   ) {
-                    if (iconComponent.url)
+                    console.log("2");
+                    if (iconComponent.url) {
+                      console.log("3");
                       openExternalLink(iconComponent.url, window);
+                    }
 
                     dispatch(
                       incrementComponentClicks(pageId, iconComponent._id)
