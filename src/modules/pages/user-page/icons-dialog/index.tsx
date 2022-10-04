@@ -175,7 +175,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
     const newComponent: IUserComponent = {
       text: undefined,
-      url: url.toLowerCase(),
+      url: url,
       style: {
         color: colorSelected,
       },

@@ -180,7 +180,7 @@ const ComponentDialog = ({
 
       const newComponent: IUserComponent = {
         text: selectedType !== ComponentType.Image ? text : undefined,
-        url: url.toLowerCase(),
+        url: url,
         style: {
           backgroundColor,
           color: fontColor,
@@ -192,7 +192,7 @@ const ComponentDialog = ({
           columns: selectedColumnsCount,
         },
         type: selectedType,
-        mediaUrl: urlMedia?.toLowerCase(),
+        mediaUrl: urlMedia,
         iconDetails: undefined,
         visibleDate: visibleDateTime,
         animation,

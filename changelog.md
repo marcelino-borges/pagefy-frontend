@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.3] - 2022-10-04
+
+- Fix: youtube video in page renderer. Remvoed toLowerCase() from urls when saving
+
 ### [1.8.2] - 2022-10-04
 
 - Fix: Icon link on renderer and editor, for URI (mailto etc) or URL
