@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
-import { openExternalLink } from "../../../../../utils";
 import { includesAnyInString } from "./../../../../../utils/index";
 
 interface IProps {
@@ -47,24 +46,25 @@ const IconsComponent = ({
           return (
             <CustomTooltip title={iconComponent.url} key={uuidv4()}>
               <IconOverlaySpan
+                isRendererPage={isRendererPage}
                 href={isRendererPage ? iconComponent.url : ""}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
                   if (onClickIcon) onClickIcon(iconComponent);
-                  if (
-                    iconComponent.url &&
-                    includesAnyInString(iconComponent.url, [
-                      "mailto:",
-                      "tel:",
-                      "sms:",
-                      "callto:",
-                      "fax:",
-                    ])
-                  ) {
-                    openExternalLink(iconComponent.url, window);
-                  }
                   if (isRendererPage && pageId && iconComponent._id) {
+                    if (
+                      iconComponent.url &&
+                      includesAnyInString(iconComponent.url, [
+                        "mailto:",
+                        "tel:",
+                        "sms:",
+                        "callto:",
+                        "fax:",
+                      ])
+                    ) {
+                      //openExternalLink(iconComponent.url, window);
+                    }
                     dispatch(
                       incrementComponentClicks(pageId, iconComponent._id)
                     );
@@ -87,7 +87,7 @@ const IconsComponent = ({
             </CustomTooltip>
           );
         }
-        return <span key={iconComponent._id}></span>;
+        return <></>;
       })}
     </Grid>
   );
