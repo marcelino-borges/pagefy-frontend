@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 import { includesAnyInString } from "./../../../../../utils/index";
 
-interface IProps {
+interface IIconsComponentProps {
   iconsList: IUserComponent[];
   onClickIcon?: (iconComponent: IUserComponent) => void;
   pageId?: string | undefined;
@@ -20,7 +20,7 @@ const IconsComponent = ({
   onClickIcon,
   pageId,
   isRenderer,
-}: IProps) => {
+}: IIconsComponentProps) => {
   const dispatch = useDispatch();
 
   const isRendererPage = isRenderer !== undefined && isRenderer !== false;

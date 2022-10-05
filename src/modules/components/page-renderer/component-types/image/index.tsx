@@ -7,12 +7,12 @@ import {
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
-interface IProps {
+interface IImageComponentProps {
   component: IUserComponent;
   pageId?: string | undefined;
 }
 
-const ImageComponent = ({ component, pageId }: IProps) => {
+const ImageComponent = ({ component, pageId }: IImageComponentProps) => {
   return (
     <BaseComponentType
       layout={component.layout}

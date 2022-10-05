@@ -7,12 +7,12 @@ import YoutubeEmbed from "../../../youtube-embed";
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
-interface IProps {
+interface IVideoComponentProps {
   component: IUserComponent;
   pageId?: string | undefined;
 }
 
-const VideoComponent = ({ component, pageId }: IProps) => {
+const VideoComponent = ({ component, pageId }: IVideoComponentProps) => {
   const isSmallerThan500 = useMediaQuery("(max-width: 499px)");
 
   const [widthMultiplier, setWidthMultiplier] = useState<number>(0);

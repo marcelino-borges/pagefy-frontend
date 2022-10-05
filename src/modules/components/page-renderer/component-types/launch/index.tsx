@@ -14,12 +14,12 @@ import {
 } from "./style";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
-interface IProps {
+interface ILaunchComponentProps {
   component: IUserComponent;
   pageId?: string | undefined;
 }
 
-const LaunchComponent = ({ component, pageId }: IProps) => {
+const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (!completed) {
       return (

@@ -16,7 +16,7 @@ const TextImageComponent = ({ component, pageId }: IProps) => {
       if (rows === 1) {
         // 1C x 1R
         return (
-          <Grid container style={{ width: "100%", height: "100%" }}>
+          <Grid container style={{ width: "100%" }}>
             <Grid
               container
               item
@@ -42,11 +42,7 @@ const TextImageComponent = ({ component, pageId }: IProps) => {
       } else {
         // 1C x 2R
         return (
-          <Grid
-            container
-            direction="column"
-            style={{ width: "100%", height: "100%" }}
-          >
+          <Grid container direction="column" style={{ width: "100%" }}>
             <Grid
               container
               style={{
@@ -74,7 +70,7 @@ const TextImageComponent = ({ component, pageId }: IProps) => {
       // 2C x 1R
       if (rows === 1) {
         return (
-          <Grid container style={{ width: "100%", height: "100%" }}>
+          <Grid container style={{ width: "100%" }}>
             <Grid
               container
               item
@@ -100,7 +96,7 @@ const TextImageComponent = ({ component, pageId }: IProps) => {
       } else {
         // 2C x 2R
         return (
-          <Grid container style={{ width: "100%", height: "100%" }}>
+          <Grid container style={{ width: "100%" }}>
             <Grid
               container
               item

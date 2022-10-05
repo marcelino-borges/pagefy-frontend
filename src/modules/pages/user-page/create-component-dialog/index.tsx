@@ -177,10 +177,10 @@ const ComponentDialog = ({
         ).data;
         dispatch(clearLoading());
       }
-
+ 
       const newComponent: IUserComponent = {
         text: selectedType !== ComponentType.Image ? text : undefined,
-        url: url,
+        url,
         style: {
           backgroundColor,
           color: fontColor,

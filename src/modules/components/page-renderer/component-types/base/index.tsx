@@ -43,18 +43,25 @@ const BaseComponentType = ({
         onClick();
       }}
     >
-      <Grid
-        container
-        item
-        style={{
-          minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
-          borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
-          ...style,
-        }}
-        {...rest}
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ width: "100%", height: "100%" }}
       >
-        {children}
-      </Grid>
+        <Grid
+          container
+          item
+          style={{
+            minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
+            borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
+            ...style,
+          }}
+          {...rest}
+        >
+          {children}
+        </Grid>
+      </a>
     </Root>
   );
 

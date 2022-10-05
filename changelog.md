@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.4] - 2022-10-04
+
+- Fix: All components now can have tel, mailto etc. URLs
+
 ### [1.8.3] - 2022-10-04
 
 - Fix: youtube video in page renderer. Remvoed toLowerCase() from urls when saving
