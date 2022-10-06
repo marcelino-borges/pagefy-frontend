@@ -27,7 +27,12 @@ import routes from "./../../../routes/paths";
 import LoadingSpinner from "../loading-spinner";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 import InternalLink from "../internal-link";
-import { createOpenGraphTags } from "../../../utils/open-graph";
+import {
+  createOpenGraphTags,
+  getOpenGraphTags,
+} from "../../../utils/open-graph";
+import { Helmet } from "react-helmet";
+import { APP_ENVIROMENT } from "../../../constants";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -162,109 +167,145 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
   };
 
   return (
-    <PageRendererContent>
-      {renderedPageState.loading && <LoadingSpinner color={PRIMARY_COLOR} />}
-      {!isPagePreview &&
-        !renderedPageState.loading &&
-        (!page || !page.isPublic) && (
-          <Grid container p="12px">
-            <Grid container justifyContent="center">
-              <InternalLink to={routes.root}>
-                <img
-                  src={Logos.LogoVerticalLightBGPNG}
-                  style={{ width: "100%", maxWidth: "300px" }}
-                  alt="Logo Social Bio"
-                />
-              </InternalLink>
-            </Grid>
-            <Grid
-              container
-              item
-              justifyContent="center"
-              textAlign="center"
-              pt="200px"
-            >
-              {strings.warningPrivatePage}
-            </Grid>
-            <Grid container justifyContent="center" pt="50px">
+    <>
+      <Helmet>
+        {pageToRender &&
+          getOpenGraphTags(pageToRender, document).map(
+            (tag: React.ReactElement) => tag
+          )}
+        <title>{pageToRender?.name || ""}</title>
+        <meta property="og:title" content={pageToRender?.name || ""} />
+        <meta
+          property="og:url"
+          content={(() => {
+            let urlNormalized = "";
+
+            if (pageToRender?.url[0] !== "/")
+              urlNormalized = "/" + pageToRender?.url || "";
+            else urlNormalized = pageToRender?.url || "";
+
+            return (
+              (APP_ENVIROMENT === "PROD"
+                ? "https://socialbio.me"
+                : "https://socialbio-frontend-dev.me") + urlNormalized
+            );
+          })()}
+        />
+        <meta property="og:image" content={pageToRender?.pageImageUrl || ""} />
+        <meta property="og:image:alt" content={pageToRender?.name || ""} />
+        <meta
+          property="og:image:type"
+          content="image/jpeg, image/png, image/jpg, image/gif, image/webp"
+        />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="1024" />
+      </Helmet>
+      <PageRendererContent>
+        {renderedPageState.loading && <LoadingSpinner color={PRIMARY_COLOR} />}
+        {!isPagePreview &&
+          !renderedPageState.loading &&
+          (!page || !page.isPublic) && (
+            <Grid container p="12px">
               <Grid container justifyContent="center">
                 <InternalLink to={routes.root}>
-                  {strings.createNowYourPage}
+                  <img
+                    src={Logos.LogoVerticalLightBGPNG}
+                    style={{ width: "100%", maxWidth: "300px" }}
+                    alt="Logo Social Bio"
+                  />
                 </InternalLink>
               </Grid>
-            </Grid>
-          </Grid>
-        )}
-      {!renderedPageState.loading && page && (page.isPublic || isPagePreview) && (
-        <Grid container>
-          <Grid container item justifyContent="center">
-            <PagePicture backgroundImage={page.pageImageUrl} />
-          </Grid>
-          <Grid
-            container
-            item
-            justifyContent="center"
-            pb="24px"
-            color={page.style?.color || "black"}
-          >
-            <PageName>{page.name}</PageName>
-          </Grid>
-
-          {/* TOP COMPONENTS */}
-          {topComponents && topComponents.length > 0 && (
-            <IconsComponent
-              pageId={page._id}
-              isRenderer
-              iconsList={topComponents}
-            />
-          )}
-
-          {/* MIDDLE COMPONENTS */}
-          <Grid container item>
-            {middleComponents && middleComponents.length > 0 && (
-              <>
-                {middleComponents &&
-                  middleComponents.length > 0 &&
-                  middleComponents.map((comp: IUserComponent) => {
-                    if (
-                      comp.visible &&
-                      (!comp.visibleDate ||
-                        new Date(comp.visibleDate) >= new Date())
-                    ) {
-                      return renderComponentByType(comp);
-                    }
-                    return null;
-                  })}
-              </>
-            )}
-          </Grid>
-
-          {/* BOTTOM COMPONENTS */}
-          <Grid container item>
-            {bottomComponents && bottomComponents.length > 0 && (
-              <IconsComponent isRenderer iconsList={bottomComponents} />
-            )}
-          </Grid>
-          <Grid container item justifyContent="center">
-            <Link to={routes.root}>
               <Grid
+                container
                 item
-                mt="150px"
-                bgcolor="#ffffff80"
-                p="8px"
-                borderRadius="8px"
+                justifyContent="center"
+                textAlign="center"
+                pt="200px"
               >
-                <img
-                  src={Logos.LogoHorizontalLightBGPNG}
-                  alt="Socialbio.me"
-                  width="150px"
-                />
+                {strings.warningPrivatePage}
               </Grid>
-            </Link>
-          </Grid>
-        </Grid>
-      )}
-    </PageRendererContent>
+              <Grid container justifyContent="center" pt="50px">
+                <Grid container justifyContent="center">
+                  <InternalLink to={routes.root}>
+                    {strings.createNowYourPage}
+                  </InternalLink>
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
+        {!renderedPageState.loading &&
+          page &&
+          (page.isPublic || isPagePreview) && (
+            <Grid container>
+              <Grid container item justifyContent="center">
+                <PagePicture backgroundImage={page.pageImageUrl} />
+              </Grid>
+              <Grid
+                container
+                item
+                justifyContent="center"
+                pb="24px"
+                color={page.style?.color || "black"}
+              >
+                <PageName>{page.name}</PageName>
+              </Grid>
+
+              {/* TOP COMPONENTS */}
+              {topComponents && topComponents.length > 0 && (
+                <IconsComponent
+                  pageId={page._id}
+                  isRenderer
+                  iconsList={topComponents}
+                />
+              )}
+
+              {/* MIDDLE COMPONENTS */}
+              <Grid container item>
+                {middleComponents && middleComponents.length > 0 && (
+                  <>
+                    {middleComponents &&
+                      middleComponents.length > 0 &&
+                      middleComponents.map((comp: IUserComponent) => {
+                        if (
+                          comp.visible &&
+                          (!comp.visibleDate ||
+                            new Date(comp.visibleDate) >= new Date())
+                        ) {
+                          return renderComponentByType(comp);
+                        }
+                        return null;
+                      })}
+                  </>
+                )}
+              </Grid>
+
+              {/* BOTTOM COMPONENTS */}
+              <Grid container item>
+                {bottomComponents && bottomComponents.length > 0 && (
+                  <IconsComponent isRenderer iconsList={bottomComponents} />
+                )}
+              </Grid>
+              <Grid container item justifyContent="center">
+                <Link to={routes.root}>
+                  <Grid
+                    item
+                    mt="150px"
+                    bgcolor="#ffffff80"
+                    p="8px"
+                    borderRadius="8px"
+                  >
+                    <img
+                      src={Logos.LogoHorizontalLightBGPNG}
+                      alt="Socialbio.me"
+                      width="150px"
+                    />
+                  </Grid>
+                </Link>
+              </Grid>
+            </Grid>
+          )}
+      </PageRendererContent>
+    </>
   );
 };
 

@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.6] - 2022-10-06
+
+- Fix: Added Helmet to PageRenderer to test open graph tags
+
 ### [1.8.5] - 2022-10-06
 
 - Feature: Open Graph implementation in page renderer
