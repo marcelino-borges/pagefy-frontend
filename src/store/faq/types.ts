@@ -1,4 +1,4 @@
 export interface IFaq {
   question: string;
-  answer: string;
+  answer: any;
 }

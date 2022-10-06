@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  clearPageBeingRendered,
   getRendererPageByUrl,
   setPageBeingRendered,
 } from "../../../store/page-renderer/actions";
@@ -27,10 +26,6 @@ import routes from "./../../../routes/paths";
 import LoadingSpinner from "../loading-spinner";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 import InternalLink from "../internal-link";
-import {
-  createOpenGraphTags,
-  getOpenGraphTags,
-} from "../../../utils/open-graph";
 import { Helmet } from "react-helmet";
 import { APP_ENVIROMENT } from "../../../constants";
 
@@ -163,7 +158,6 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
   };
 
   const CustomHelmet = ({ pageTitle, url, imageUrl }: any) => {
-    console.log("oiiiieee");
     return (
       <Helmet>
         <title>{pageTitle}</title>
@@ -185,10 +179,11 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
         />
         <meta property="og:image" content={imageUrl || ""} />
         <meta property="og:image:alt" content={pageTitle} />
-        <meta
-          property="og:image:type"
-          content="image/jpeg, image/png, image/jpg, image/gif, image/webp"
-        />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:type" content="image/jpg" />
+        <meta property="og:image:type" content="image/gif" />
+        <meta property="og:image:type" content="image/webp" />
         <meta property="og:image:width" content="1024" />
         <meta property="og:image:height" content="1024" />
       </Helmet>

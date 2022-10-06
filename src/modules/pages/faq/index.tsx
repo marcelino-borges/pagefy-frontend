@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import strings from "../../../localization";
 import routes from "../../../routes/paths";
 import { IApplicationState } from "../../../store";
+import { faqsPT, faqsEN } from "../../../store/faq/temp";
 import { IUser, PlansTypes } from "../../../store/user/types";
 import Accordion from "../../components/accordion";
 import Footer from "../../components/footer";
@@ -10,6 +11,7 @@ import Header from "../../components/header";
 import InternalLink from "../../components/internal-link";
 import PageTitle from "../../components/page-title";
 import ThinWidthContent from "../../components/site-content/thin-width";
+import { IFaq } from "./../../../store/faq/types";
 
 const Faq = () => {
   const [expandedAccordion, setExpandedAccordion] = useState<string | false>(
@@ -62,6 +64,17 @@ const Faq = () => {
     }
   };
 
+  const getLocalizedFaq = () => {
+    switch (strings.getLanguage()) {
+      case "pt":
+        return faqsPT;
+      case "en":
+        return faqsEN;
+      default:
+        return faqsEN;
+    }
+  };
+
   return (
     <>
       <Header />
@@ -76,46 +89,22 @@ const Faq = () => {
             marginTop="30px"
           />
           <span style={{ marginTop: "40px" }} />
-          <Accordion
-            position="first"
-            expanded={expandedAccordion === "acc1"}
-            onChange={handleChange("acc1")}
-            title="Como criar minha conta?"
-            content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
-            id="acc1"
-          />
-          <Accordion
-            position="middle"
-            expanded={expandedAccordion === "acc2"}
-            onChange={handleChange("acc2")}
-            title="Como criar minha página?"
-            content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
-            id="acc2"
-          />
-          <Accordion
-            position="middle"
-            expanded={expandedAccordion === "acc3"}
-            onChange={handleChange("acc3")}
-            title="Como criar meu componente?"
-            content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
-            id="acc3"
-          />
-          <Accordion
-            position="middle"
-            expanded={expandedAccordion === "acc4"}
-            onChange={handleChange("acc4")}
-            title="Como criar um componente de 2 colunas?"
-            content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
-            id="acc4"
-          />
-          <Accordion
-            position="last"
-            expanded={expandedAccordion === "acc5"}
-            onChange={handleChange("acc5")}
-            title="Como criar um componente de 2 linhas?"
-            content="Blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla blablabla"
-            id="acc5"
-          />
+          {getLocalizedFaq().map((faq: IFaq, index: number) => (
+            <Accordion
+              position={
+                index === 0
+                  ? "first"
+                  : index === faqsPT.length - 1
+                  ? "last"
+                  : "middle"
+              }
+              expanded={expandedAccordion === faq.question}
+              onChange={handleChange(faq.question)}
+              title={faq.question}
+              content={faq.answer}
+              id={faq.question}
+            />
+          ))}
           <div style={{ marginTop: "50px" }}>{showSupportByPlanType()}</div>
         </ThinWidthContent>
       </div>

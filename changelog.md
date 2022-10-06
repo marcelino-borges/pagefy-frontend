@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.7] - 2022-10-07
+
+- Feature: Localized definitive Faqs
+
 ### [1.8.6] - 2022-10-06
 
 - Fix: Added Helmet to PageRenderer to test open graph tags
