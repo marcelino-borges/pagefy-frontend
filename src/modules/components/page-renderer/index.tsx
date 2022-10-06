@@ -27,13 +27,14 @@ import routes from "./../../../routes/paths";
 import LoadingSpinner from "../loading-spinner";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 import InternalLink from "../internal-link";
+import { createOpenGraphTags } from "../../../utils/open-graph";
 
-interface IProps {
+interface IPageRendererProps {
   pageToRender?: IUserPage;
   isPagePreview?: boolean;
 }
 
-const PageRenderer = ({ pageToRender, isPagePreview }: IProps) => {
+const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
   const dispatch = useDispatch();
   let { url } = useParams();
 
@@ -49,6 +50,9 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IProps) => {
   useEffect(() => {
     if (pageToRender) {
       dispatch(setPageBeingRendered(pageToRender));
+      document.title = pageToRender.name;
+
+      createOpenGraphTags(pageToRender, document);
     } else if (url) {
       dispatch(
         getRendererPageByUrl(url, (pageFound: any) => {

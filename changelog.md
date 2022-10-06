@@ -16,7 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
-### [1.8.4] - 2022-10-04
+### [1.8.5] - 2022-10-06
+
+- Feature: Open Graph implementation in page renderer
+
+### [1.8.4] - 2022-10-06
 
 - Fix: All components now can have tel, mailto etc. URLs
 
