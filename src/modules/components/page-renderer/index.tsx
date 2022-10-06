@@ -85,9 +85,10 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
       }
 
       if (page.style && page.style.backgroundImage) {
+        document.documentElement.style.height = "100vh";
         document.documentElement.style.backgroundImage =
           page.style.backgroundImage;
-        document.documentElement.style.backgroundSize = "cover";
+        document.documentElement.style.backgroundSize = "100% 100%";
         document.documentElement.style.backgroundPosition = "center";
         document.documentElement.style.backgroundAttachment = "fixed";
       }
