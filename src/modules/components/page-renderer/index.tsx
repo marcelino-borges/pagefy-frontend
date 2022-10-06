@@ -55,9 +55,6 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
   useEffect(() => {
     if (pageToRender) {
       dispatch(setPageBeingRendered(pageToRender));
-      document.title = pageToRender.name;
-
-      createOpenGraphTags(pageToRender, document);
     } else if (url) {
       dispatch(
         getRendererPageByUrl(url, (pageFound: any) => {
@@ -103,7 +100,6 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
       document.documentElement.style.backgroundColor = "unset";
       document.documentElement.style.backgroundImage = "unset";
       document.documentElement.style.backgroundAttachment = "unset";
-      dispatch(clearPageBeingRendered());
     };
   }, [dispatch, page, page?.topComponents]);
 
@@ -166,23 +162,19 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
     }
   };
 
-  return (
-    <>
+  const CustomHelmet = ({ pageTitle, url, imageUrl }: any) => {
+    console.log("oiiiieee");
+    return (
       <Helmet>
-        {pageToRender &&
-          getOpenGraphTags(pageToRender, document).map(
-            (tag: React.ReactElement) => tag
-          )}
-        <title>{pageToRender?.name || ""}</title>
-        <meta property="og:title" content={pageToRender?.name || ""} />
+        <title>{pageTitle}</title>
+        <meta property="og:title" content={pageTitle} />
         <meta
           property="og:url"
           content={(() => {
             let urlNormalized = "";
 
-            if (pageToRender?.url[0] !== "/")
-              urlNormalized = "/" + pageToRender?.url || "";
-            else urlNormalized = pageToRender?.url || "";
+            if (url[0] !== "/") urlNormalized = "/" + url;
+            else urlNormalized = url;
 
             return (
               (APP_ENVIROMENT === "PROD"
@@ -191,8 +183,8 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             );
           })()}
         />
-        <meta property="og:image" content={pageToRender?.pageImageUrl || ""} />
-        <meta property="og:image:alt" content={pageToRender?.name || ""} />
+        <meta property="og:image" content={imageUrl || ""} />
+        <meta property="og:image:alt" content={pageTitle} />
         <meta
           property="og:image:type"
           content="image/jpeg, image/png, image/jpg, image/gif, image/webp"
@@ -200,6 +192,18 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
         <meta property="og:image:width" content="1024" />
         <meta property="og:image:height" content="1024" />
       </Helmet>
+    );
+  };
+
+  return (
+    <>
+      {page && (
+        <CustomHelmet
+          pageTitle={page?.name}
+          url={page?.url}
+          imageUrl={page?.pageImageUrl}
+        />
+      )}
       <PageRendererContent>
         {renderedPageState.loading && <LoadingSpinner color={PRIMARY_COLOR} />}
         {!isPagePreview &&
