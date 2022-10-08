@@ -1,6 +1,14 @@
 import { Grid } from "@mui/material";
-import { CardInner, CardRoot } from "./style.";
+import {
+  CardInner,
+  CardRoot,
+  FeaturedOverlayArrow,
+  FeaturedOverlayContainer,
+  FeaturedOverlayText,
+} from "./style.";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
+import strings from "../../../localization";
+import customIcons from "./../../../assets/icons/custom-icons/index";
 
 interface IProps {
   overTitle: string;
@@ -12,6 +20,14 @@ interface IProps {
 const FeaturedCard = ({ overTitle, title, isFeatured, children }: IProps) => {
   return (
     <CardRoot isFeatured={isFeatured !== undefined}>
+      {isFeatured !== undefined && (
+        <FeaturedOverlayContainer>
+          <FeaturedOverlayText>{strings.recomended}</FeaturedOverlayText>
+          <div>
+            <FeaturedOverlayArrow src={customIcons.arrowIcon} />
+          </div>
+        </FeaturedOverlayContainer>
+      )}
       <CardInner>
         <Grid
           container

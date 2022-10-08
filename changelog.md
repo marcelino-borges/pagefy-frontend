@@ -16,7 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
-### [1.10.0] - 2022-10-08
+### [1.11.0] - 2022-10-08
+
+- Feature: Added a red arrow upon the featured card
+
+### [1.10.1] - 2022-10-08
 
 - Fix: Testimonials wrapping and title in the homepage
 
