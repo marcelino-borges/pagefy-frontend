@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.10.0] - 2022-10-08
+
+- Feature: Homepage testimonials
+
 ### [1.9.0] - 2022-10-08
 
 - Fix: Homepage layout

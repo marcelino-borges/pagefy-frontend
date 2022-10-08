@@ -22,8 +22,10 @@ import {
   PromoDuration,
   SignupButton,
   SignUpSection,
+  TestimonialsSection,
 } from "./style";
 import { clearBackgroundImage, setBackgroundImage } from "./utils";
+import UserTestimonialCard from "../../components/user-testimonial-card";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -202,6 +204,41 @@ const Home = () => {
             <SignupButton to={routes.signUp}>{strings.clickHere}</SignupButton>
           </Grid>
         </SignUpSection>
+        <TestimonialsSection>
+          <UserTestimonialCard
+            userPictureUrl={
+              "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20220929221415251.jpg"
+            }
+            testimonial={
+              "Desde que comecei a utilizar a Socialbio minha vida mudou completamente, pois consegui dar um pontapé da minha visibilidade na internet."
+            }
+            userName={"Marcelino Borges"}
+            userProfession={"Engenheiro"}
+            userCompany={"Kneat Solutions"}
+          />
+          <UserTestimonialCard
+            userPictureUrl={
+              "https://firebasestorage.googleapis.com/v0/b/socialbio-41362.appspot.com/o/users%2F6334a75bc4f9bf00556bb03f%2Fuploaded-images%2F6334a75bc4f9bf00556bb03f_20220930100913209.jpg?alt=media&token=63c4725d-72f0-45b8-a678-f3c95148bada"
+            }
+            testimonial={
+              "A Socialbio fez a diferença para meus clientes. Agora posso criar bios de forma muito mais fácil e ágil!"
+            }
+            userName={"Neto Torres"}
+            userProfession={"Designer"}
+            userCompany={"Agency Midias"}
+          />
+          <UserTestimonialCard
+            userPictureUrl={
+              "https://firebasestorage.googleapis.com/v0/b/socialbio-41362.appspot.com/o/test%2Fluana_perfil.png?alt=media&token=6cdbf1d2-b880-4114-bc93-685404dc3a9c"
+            }
+            testimonial={
+              "Agora tenho uma ferramenta fácil de usar, que resolve meus problemas sem eu precisar sofrer"
+            }
+            userName={"Luana Borges"}
+            userProfession={"Avogada"}
+            userCompany={"LN Advocacia"}
+          />
+        </TestimonialsSection>
       </FullWidthContent>
       <Footer />
     </>

@@ -5,6 +5,7 @@ export const CardRoot = styled(({ isFeatured, ...props }: any) => (
   <div {...props} />
 ))(
   ({ isFeatured }) => `
+  position: relative;
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis 0;

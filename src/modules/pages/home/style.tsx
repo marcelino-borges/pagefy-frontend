@@ -125,3 +125,16 @@ export const SignupButton = styled(({ children, ...props }: any) => (
   }
 `
 );
+
+export const TestimonialsSection = styled(({ children, ...props }: any) => (
+  <Grid {...props}>{children}</Grid>
+))(
+  () => `
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding: 100px 32px;
+  gap: 32px;
+  background-color: ${GLOBAL_LIGHT_BG};
+`
+);
