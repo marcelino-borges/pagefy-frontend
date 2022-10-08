@@ -12,7 +12,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import strings from "../../../localization";
 import { Check as CheckIcon, Delete as DeleteIcon } from "@mui/icons-material";
-import { MAXIMUM_FILE_SIZE } from "../../../constants";
+import { APP_ENVIROMENT, MAXIMUM_FILE_SIZE } from "../../../constants";
 import { showErrorToast } from "../../../utils/toast/index";
 import { ACESSIBILITY_GREEN, MEDIUM_GREY } from "../../../styles/colors";
 import UserGallery from "../gallery-user";
@@ -96,11 +96,13 @@ const UploadImageDialog = ({
       <DialogTitle>{strings.chooseImage}</DialogTitle>
       <DialogContent>
         <>
-          <UserGallery
-            onClickImage={(imageUrl: string) => {
-              if (submitDialog) submitDialog(imageUrl);
-            }}
-          />
+          {APP_ENVIROMENT === "DEV" && (
+            <UserGallery
+              onClickImage={(imageUrl: string) => {
+                if (submitDialog) submitDialog(imageUrl);
+              }}
+            />
+          )}
           <Text>{strings.orUploadANewFile}</Text>
           {!chosenImage ? (
             <Dropzone container {...getRootProps()}>
