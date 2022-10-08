@@ -17,13 +17,17 @@ import strings from "../../../localization";
 import { DialogInstructions } from "./styles";
 import moment from "moment";
 
-interface IProps {
+interface IDialogVisibleDateProps {
   open: boolean;
   onClose: () => void;
   setDateTime: (dateTime: string) => void;
 }
 
-const DialogVisibleDate = ({ open, onClose, setDateTime }: IProps) => {
+const DialogVisibleDate = ({
+  open,
+  onClose,
+  setDateTime,
+}: IDialogVisibleDateProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallerThanXM = useMediaQuery(theme.breakpoints.down("xm"));

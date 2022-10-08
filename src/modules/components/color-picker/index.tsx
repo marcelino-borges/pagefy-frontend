@@ -3,12 +3,15 @@ import SketchPicker from "react-color/lib/components/sketch/Sketch";
 import strings from "../../../localization";
 import { ColorPickerSpan, Group, SubmitButton } from "./styles";
 
-interface IProps {
+interface IColorPickerProps {
   color: any;
   onChangeComplete: any;
 }
 
-const ColorPicker = ({ color: originalColor, onChangeComplete }: IProps) => {
+const ColorPicker = ({
+  color: originalColor,
+  onChangeComplete,
+}: IColorPickerProps) => {
   const [currentColor, setCurrentColor] = useState();
 
   const escFunction = useCallback((event: any) => {

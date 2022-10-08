@@ -139,6 +139,7 @@ interface IDictionary {
   or: string;
   and: string;
   chooseFile: string;
+  chooseImage: string;
   dragAndDropYourImage: string;
   dropYourImageHere: string;
   clickToSearchIt: string;
@@ -308,6 +309,9 @@ interface IDictionary {
   somethingWentWrong: string;
   testimonialsTitle: string;
   testimonialsSubtitle: string;
+  yourGallery: string;
+  fromYourGallery: string;
+  orUploadANewFile: string;
 }
 
 // Dictionaries
@@ -367,6 +371,7 @@ const en: IDictionary = {
   or: "or",
   and: "and",
   chooseFile: "Choose a file",
+  chooseImage: "Choose an image",
   dragAndDropYourImage: "Drag and drop your image here",
   dropYourImageHere: "Drop your image here",
   clickToSearchIt: "Click to search",
@@ -659,6 +664,9 @@ const en: IDictionary = {
   somethingWentWrong: "Oh no! Something went wrong!",
   testimonialsTitle: "Testimonials",
   testimonialsSubtitle: "Check out what people are talking about us",
+  yourGallery: "Your gallery",
+  fromYourGallery: "From your gallery",
+  orUploadANewFile: "Or upload a new image",
 };
 
 const pt: IDictionary = {
@@ -716,6 +724,7 @@ const pt: IDictionary = {
   or: "ou",
   and: "e",
   chooseFile: "Escolha um arquivo",
+  chooseImage: "Escolha uma imagem",
   dragAndDropYourImage: "Arraste e solte sua imagem aqui",
   dropYourImageHere: "Solte sua imagem aqui...",
   clickToSearchIt: "Clique para procurar",
@@ -1008,6 +1017,9 @@ const pt: IDictionary = {
   somethingWentWrong: "Ops! Algo deu errado!",
   testimonialsTitle: "O que falam",
   testimonialsSubtitle: "Alguns feedbacks que recebemos sobre nosso serviço",
+  yourGallery: "Sua galeria",
+  fromYourGallery: "Da sua galeria",
+  orUploadANewFile: "Ou envie uma nova imagem",
 };
 
 // Composed dictionaries

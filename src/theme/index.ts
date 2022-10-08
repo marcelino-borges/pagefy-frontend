@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from "@mui/material";
+import { createTheme, responsiveFontSizes, ThemeOptions } from "@mui/material";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "../styles/colors";
 
 declare module "@mui/material/styles" {
@@ -9,7 +9,16 @@ declare module "@mui/material/styles" {
 
 const defaultTheme = createTheme();
 
-const theme: ThemeOptions = {
+let themeOptions: ThemeOptions = {
+  typography: {
+    fontFamily: [
+      '"Montserrat"',
+      "Roboto",
+      "Helvetica",
+      "Arial",
+      "sans-serif",
+    ].join(","),
+  },
   breakpoints: {
     values: {
       ...defaultTheme.breakpoints.values,
@@ -47,4 +56,6 @@ const theme: ThemeOptions = {
   },
 };
 
-export default createTheme(theme);
+let theme = responsiveFontSizes(createTheme(themeOptions));
+
+export default theme;

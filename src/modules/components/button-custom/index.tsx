@@ -1,6 +1,6 @@
 import { CustomLink } from "./style.";
 
-interface IProps {
+interface ICustomButtonProps {
   to?: any;
   onClick?: () => void;
   bgColor?: string;
@@ -28,7 +28,7 @@ const CustomButton = ({
   height,
   children,
   ...rest
-}: IProps) => {
+}: ICustomButtonProps) => {
   return (
     <CustomLink
       bgColor={bgColor}

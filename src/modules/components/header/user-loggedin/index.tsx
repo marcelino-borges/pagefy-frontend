@@ -8,11 +8,14 @@ import strings from "../../../../localization";
 import { signOut } from "./../../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
 import { LIGHTER_GREY } from "../../../../styles/colors";
-import ChooseFileDialog from "../../dialog-file-upload";
+import UploadImageDialog from "../../dialog-upload-image";
 import { useState } from "react";
 import { IMAGE_EXTENSIONS } from "../../../../constants";
 import { deleteImage } from "../../../../services/files";
-import { setUserProfileImage } from "../../../../store/user/actions";
+import {
+  setUserProfileImage,
+  uploadAndSetUserProfileImage,
+} from "../../../../store/user/actions";
 import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { clearLoading, setLoading } from "./../../../../store/shared/actions";
 import SignInRegisterButtons from "../../signin-register-buttons";
@@ -114,16 +117,21 @@ const UserLoggedIn = () => {
           </SubtitleLinks>
         </Stack>
       </Stack>
-      <ChooseFileDialog
+      <UploadImageDialog
         openChooseFileDialog={openChooseFileBGDialog}
         setOpenChooseFileDialog={setOpenChooseFileBGDialog}
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={async () => {
+        submitDialog={async (imageUrl?: string) => {
           const token = await getFirebaseToken();
-          if (!chosenImage || !token || !userState.profile) return;
+          if ((!imageUrl && !chosenImage) || !token || !userState.profile)
+            return;
+          const clearLoadingFromState = () => {
+            dispatch(clearLoading());
+          };
 
+          // Delete previous image before uploading another one
           if (
             userState.profile &&
             userState.profile._id &&
@@ -142,21 +150,28 @@ const UserLoggedIn = () => {
             }
           }
 
-          dispatch(
-            setUserProfileImage(
-              chosenImage,
-              userState.profile,
-              () => {
-                dispatch(clearLoading());
-              },
-              () => {
-                dispatch(clearLoading());
-              }
-            )
-          );
+          if (imageUrl) {
+            dispatch(
+              setUserProfileImage(
+                imageUrl,
+                userState.profile,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          } else if (chosenImage) {
+            dispatch(
+              uploadAndSetUserProfileImage(
+                chosenImage,
+                userState.profile,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
 
-          setChosenImage(undefined);
-          setOpenChooseFileBGDialog(false);
+            setChosenImage(undefined);
+            setOpenChooseFileBGDialog(false);
+          }
         }}
         cancelDialog={() => {
           setChosenImage(undefined);

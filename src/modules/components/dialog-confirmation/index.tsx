@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import strings from "../../../localization";
 
-interface IProps {
+interface IDialogConfirmationProps {
   open: boolean;
   onClose: any;
   title: string;
@@ -27,7 +27,7 @@ const DialogConfirmation = ({
   message,
   confirmText,
   refuseText,
-}: IProps) => (
+}: IDialogConfirmationProps) => (
   <Dialog
     open={open}
     onClose={onClose}

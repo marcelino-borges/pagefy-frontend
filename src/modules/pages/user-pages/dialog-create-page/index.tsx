@@ -18,13 +18,13 @@ import { useNavigate } from "react-router-dom";
 import routes from "../../../../routes/paths";
 import { canCreatePage } from "../../../../utils/plan-enablements";
 
-interface IProps {
+interface ICreatePageDialogProps {
   open: boolean;
   onClose: any;
   title: string;
 }
 
-const CreatePageDialog = ({ open, onClose, title }: IProps) => {
+const CreatePageDialog = ({ open, onClose, title }: ICreatePageDialogProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userProfile = useSelector(

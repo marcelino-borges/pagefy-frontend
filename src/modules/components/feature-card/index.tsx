@@ -10,14 +10,19 @@ import { PRIMARY_COLOR } from "./../../../styles/colors";
 import strings from "../../../localization";
 import customIcons from "./../../../assets/icons/custom-icons/index";
 
-interface IProps {
+interface IFeaturedCardProps {
   overTitle: string;
   title: string;
   children?: any;
   isFeatured?: boolean;
 }
 
-const FeaturedCard = ({ overTitle, title, isFeatured, children }: IProps) => {
+const FeaturedCard = ({
+  overTitle,
+  title,
+  isFeatured,
+  children,
+}: IFeaturedCardProps) => {
   return (
     <CardRoot isFeatured={isFeatured !== undefined}>
       {isFeatured !== undefined && (

@@ -18,7 +18,7 @@ import Header from "../../components/header/index";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import ChooseFileDialog from "./../../components/dialog-file-upload/index";
+import UploadImageDialog from "../../components/dialog-upload-image/index";
 import {
   ALLOW_SIGNUP,
   EMAIL_REGEX,
@@ -63,6 +63,7 @@ const SignUpPage = () => {
   const [showingPassword, setShowingPassword] = useState(false);
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [chosenImage, setChosenImage] = useState<File>();
+  const [existingImageUrl, setExistingImageUrl] = useState<string>();
   const [profileImageTemporaryUrl, setProfileImageTemporaryUrl] =
     useState<any>(undefined);
 
@@ -94,6 +95,7 @@ const SignUpPage = () => {
         receiveCommunications,
         agreePrivacy,
         plan: PlansTypes.FREE,
+        profileImageUrl: existingImageUrl,
       };
 
       if (!newUser.email.match(EMAIL_REGEX)) {
@@ -110,23 +112,25 @@ const SignUpPage = () => {
         signUp(
           newUser,
           async (user: IUser, token: string) => {
-            if (user._id && chosenImage) {
-              const imageUrl: string = (
-                await uploadImage(
-                  user._id,
-                  chosenImage,
-                  UserStorageFolder.UPLOADED_IMAGES,
-                  token
-                )
-              ).data;
+            if (user._id) {
+              if (!existingImageUrl && chosenImage) {
+                const imageUrl: string = (
+                  await uploadImage(
+                    user._id,
+                    chosenImage,
+                    UserStorageFolder.UPLOADED_IMAGES,
+                    token
+                  )
+                ).data;
 
-              if (imageUrl && imageUrl.length > 0) {
-                dispatch(
-                  updateUser({
-                    ...newUser,
-                    profileImageUrl: imageUrl,
-                  })
-                );
+                if (imageUrl.length > 0) {
+                  dispatch(
+                    updateUser({
+                      ...newUser,
+                      profileImageUrl: imageUrl,
+                    })
+                  );
+                }
               }
             }
             dispatch(
@@ -170,17 +174,19 @@ const SignUpPage = () => {
   return (
     <>
       <Header />
-      <ChooseFileDialog
+      <UploadImageDialog
         openChooseFileDialog={openUploadDialog}
         setOpenChooseFileDialog={setOpenUploadDialog}
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={() => {
-          if (!chosenImage) {
-            return;
+        submitDialog={(imageUrl?: string) => {
+          if (imageUrl) {
+            setProfileImageTemporaryUrl(imageUrl);
+            setExistingImageUrl(imageUrl);
+          } else if (chosenImage) {
+            setProfileImageTemporaryUrl(URL.createObjectURL(chosenImage));
           }
-          setProfileImageTemporaryUrl(URL.createObjectURL(chosenImage));
           setOpenUploadDialog(false);
         }}
         cancelDialog={() => {

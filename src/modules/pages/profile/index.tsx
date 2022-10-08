@@ -19,7 +19,7 @@ import strings from "../../../localization";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import PageTitle from "../../components/page-title";
 import ProfileEditableAvatar from "../../components/profile-editable-avatar";
-import ChooseFileDialog from "../../components/dialog-file-upload";
+import UploadImageDialog from "../../components/dialog-upload-image";
 import { IMAGE_EXTENSIONS } from "../../../constants";
 import InternalLink from "./../../components/internal-link/index";
 import routes from "./../../../routes/paths";
@@ -30,7 +30,14 @@ import DialogConfirmation from "../../components/dialog-confirmation";
 import { showErrorToast } from "./../../../utils/toast/index";
 import { signOut } from "../../../store/auth/actions";
 import { ACESSIBILITY_RED } from "../../../styles/colors";
-import { updateUser } from "../../../store/user/actions";
+import {
+  setUserProfileImage,
+  updateUser,
+  uploadAndSetUserProfileImage,
+} from "../../../store/user/actions";
+import { clearLoading, setLoading } from "../../../store/shared/actions";
+import { getFirebaseToken } from "../../../utils/firebase-config";
+import { deleteImage } from "../../../services/files";
 
 const INITIAL_STATE: IUser = {
   firstName: "",
@@ -44,7 +51,7 @@ const INITIAL_STATE: IUser = {
 const Profile = () => {
   const dispatch = useDispatch();
 
-  const userState: IUser | undefined = useSelector(
+  const userProfile: IUser | undefined = useSelector(
     (state: IApplicationState) => state.user.profile
   );
 
@@ -61,13 +68,13 @@ const Profile = () => {
   const [chosenImage, setChosenImage] = useState<File>();
 
   useEffect(() => {
-    if (userState) {
-      setValues(userState);
-      setProfileImageTemporaryUrl(userState.profileImageUrl);
+    if (userProfile) {
+      setValues(userProfile);
+      setProfileImageTemporaryUrl(userProfile.profileImageUrl);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userState]);
+  }, [userProfile]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -77,8 +84,8 @@ const Profile = () => {
   };
 
   const deleteUserFromFirebaseAndMongo = () => {
-    if (userState && userState._id && userState.authId && token) {
-      deleteUser(userState._id, userState.authId, token)
+    if (userProfile && userProfile._id && userProfile.authId && token) {
+      deleteUser(userProfile._id, userProfile.authId, token)
         .then(() => {
           showSuccessToast(strings.deleteAccountSuccess);
           dispatch(signOut());
@@ -103,17 +110,59 @@ const Profile = () => {
           setOpenDeleteConfirmationDialog(false);
         }}
       />
-      <ChooseFileDialog
+      <UploadImageDialog
         openChooseFileDialog={openUploadDialog}
         setOpenChooseFileDialog={setOpenUploadDialog}
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={() => {
-          if (!chosenImage) {
-            return;
+        submitDialog={async (imageUrl?: string) => {
+          const token = await getFirebaseToken();
+          if ((!imageUrl && !chosenImage) || !token || !userProfile) return;
+          const clearLoadingFromState = () => {
+            dispatch(clearLoading());
+          };
+
+          // Delete previous image before uploading another one
+          if (
+            userProfile &&
+            userProfile._id &&
+            userProfile.profileImageUrl &&
+            userProfile.profileImageUrl.length > 0
+          ) {
+            dispatch(setLoading());
+            try {
+              await deleteImage(
+                userProfile.profileImageUrl,
+                userProfile._id,
+                token
+              );
+            } catch (e: any) {
+              console.log("Failed to delete image. Details: ", e.message);
+            }
           }
-          setProfileImageTemporaryUrl(URL.createObjectURL(chosenImage));
+
+          if (imageUrl) {
+            dispatch(
+              setUserProfileImage(
+                imageUrl,
+                userProfile,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+            return;
+          } else if (chosenImage) {
+            dispatch(
+              uploadAndSetUserProfileImage(
+                chosenImage,
+                userProfile,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          }
+          setChosenImage(undefined);
           setOpenUploadDialog(false);
         }}
         cancelDialog={() => {

@@ -38,11 +38,12 @@ import {
   setPageBackgroundColor,
   setPageBGImage,
   setPageFontColor,
-  setPageImage,
+  uploadAndSetPageImage,
   togglePageIsPublic,
   updatePage,
   updateUserPageName,
   updateUserPageUrl,
+  setPageImage,
 } from "../../../store/user-pages/actions";
 import DraggableUserComponent from "./draggable-component";
 import { v4 as uuidv4 } from "uuid";
@@ -50,7 +51,7 @@ import IconsDialog from "./icons-dialog";
 import ComponentDialog from "./create-component-dialog";
 import VideoDialog from "./video-dialog";
 import Header from "./../../components/header";
-import ChooseFileDialog from "./../../components/dialog-file-upload";
+import UploadImageDialog from "../../components/dialog-upload-image";
 import { IMAGE_EXTENSIONS } from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation";
@@ -77,6 +78,7 @@ const BREAK_POINT_TOOLBAR_TEXT = 12;
 const UserPage = () => {
   const dispatch = useDispatch();
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
+  const isSmallerThan370 = useMediaQuery("(max-width:370px)");
 
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
@@ -252,52 +254,56 @@ const UserPage = () => {
     dispatch(togglePageIsPublic(page._id));
   };
 
-  const savePageImage = async () => {
+  const savePageImage = async (imageUrl?: string) => {
     const token = await getFirebaseToken();
-    if (!chosenImage || !token || !page || !page._id) return;
+    if ((!imageUrl && !chosenImage) || !token || !page || !page._id) return;
 
     if (page.pageImageUrl && page.pageImageUrl.length > 0) {
       dispatch(setLoading());
       deleteImage(page.pageImageUrl, page.userId, token);
     }
 
-    dispatch(
-      setPageImage(
-        chosenImage,
-        page,
-        (url: string) => {
-          const pageToSave: IUserPage = {
-            ...page,
-            pageImageUrl: url,
-          };
-          dispatch(
-            updatePage(
-              pageToSave,
-              () => {
-                dispatch(clearLoading());
-                setPage({
-                  ...page,
-                  pageImageUrl: pageToSave.pageImageUrl,
-                });
-              },
-              () => {
-                dispatch(clearLoading());
-              }
-            )
-          );
-        },
-        (errorTranslated: string) => {
-          showErrorToast(errorTranslated);
-          dispatch(clearLoading());
-        }
-      )
-    );
+    const successCallback = (url: string) => {
+      const pageToSave: IUserPage = {
+        ...page,
+        pageImageUrl: url,
+      };
+      dispatch(
+        updatePage(
+          pageToSave,
+          () => {
+            dispatch(clearLoading());
+            setPage({
+              ...page,
+              pageImageUrl: pageToSave.pageImageUrl,
+            });
+          },
+          () => {
+            dispatch(clearLoading());
+          }
+        )
+      );
+    };
+
+    const errorCallback = (errorTranslated: string) => {
+      showErrorToast(errorTranslated);
+      dispatch(clearLoading());
+    };
+
+    if (imageUrl) {
+      dispatch(setPageImage(imageUrl, successCallback, errorCallback));
+    } else if (chosenImage) {
+      dispatch(
+        uploadAndSetPageImage(chosenImage, page, successCallback, errorCallback)
+      );
+    }
+
     setChosenImage(undefined);
   };
 
-  const savePageBGImage = async () => {
+  const savePageBGImage = async (imageUrl?: string) => {
     const token = await getFirebaseToken();
-    if (!chosenImage || !token || !page || !page._id) return;
+    if ((!imageUrl && !chosenImage) || !token || !page || !page._id) return;
 
     if (
       page.style &&
@@ -311,43 +317,48 @@ const UserPage = () => {
       dispatch(setLoading());
       deleteImage(urlToDelete, page.userId, token);
     }
-    dispatch(
-      setPageBGImage(
-        chosenImage,
-        page,
-        (url: string) => {
-          const pageToSave: IUserPage = {
-            ...page,
-            style: {
-              ...page.style,
-              backgroundImage: `url(${url})`,
-            },
-          };
-          dispatch(
-            updatePage(
-              pageToSave,
-              () => {
-                dispatch(clearLoading());
-                setPage({
-                  ...page,
-                  style: {
-                    ...page.style,
-                    backgroundImage: `url(${url})`,
-                  },
-                });
-              },
-              () => {
-                dispatch(clearLoading());
-              }
-            )
-          );
+
+    const successCallback = (url: string) => {
+      const pageToSave: IUserPage = {
+        ...page,
+        style: {
+          ...page.style,
+          backgroundImage: `url(${url})`,
         },
-        (errorTranslated: string) => {
-          dispatch(clearLoading());
-          showErrorToast(errorTranslated);
-        }
-      )
-    );
+      };
+      dispatch(
+        updatePage(
+          pageToSave,
+          () => {
+            dispatch(clearLoading());
+            setPage({
+              ...page,
+              style: {
+                ...page.style,
+                backgroundImage: `url(${url})`,
+              },
+            });
+          },
+          () => {
+            dispatch(clearLoading());
+          }
+        )
+      );
+    };
+
+    const errorCallback = (errorTranslated: string) => {
+      dispatch(clearLoading());
+      showErrorToast(errorTranslated);
+    };
+
+    if (imageUrl) {
+      dispatch(setPageImage(imageUrl, successCallback, errorCallback));
+    } else if (chosenImage) {
+      dispatch(
+        setPageBGImage(chosenImage, page, successCallback, errorCallback)
+      );
+    }
+
     setChosenImage(undefined);
   };
 
@@ -437,14 +448,14 @@ const UserPage = () => {
                 color={page?.style?.backgroundImage ? "primary" : "inherit"}
               />
             </IconButton>
-            <ChooseFileDialog
+            <UploadImageDialog
               openChooseFileDialog={openChooseFileBGDialog}
               setOpenChooseFileDialog={setOpenChooseFileBGDialog}
               chosenImage={chosenImage}
               setChosenImage={setChosenImage}
               acceptedFiles={IMAGE_EXTENSIONS}
-              submitDialog={async () => {
-                savePageBGImage();
+              submitDialog={async (imageUrl?: string) => {
+                savePageBGImage(imageUrl);
                 setOpenChooseFileBGDialog(false);
               }}
               cancelDialog={() => {
@@ -542,21 +553,23 @@ const UserPage = () => {
                   <ToolbarButton onClick={handleOpenComponentDialog}>
                     <CreateComponentIcon />
 
-                    <ToolbarIconText>
-                      {BREAK_TOOLBAR_TEXT &&
-                      strings.addLink.length > BREAK_POINT_TOOLBAR_TEXT &&
-                      strings.addLink.split(" ").length > 1 ? (
-                        strings.addLink.split(" ").map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                      ) : (
-                        <>{strings.addLink}</>
-                      )}
-                    </ToolbarIconText>
+                    {!isSmallerThan370 && (
+                      <ToolbarIconText>
+                        {BREAK_TOOLBAR_TEXT &&
+                        strings.addLink.length > BREAK_POINT_TOOLBAR_TEXT &&
+                        strings.addLink.split(" ").length > 1 ? (
+                          strings.addLink.split(" ").map((word: string) => {
+                            return (
+                              <span key={uuidv4()}>
+                                {word} <br />
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <>{strings.addLink}</>
+                        )}
+                      </ToolbarIconText>
+                    )}
                   </ToolbarButton>
                 </Grid>
               </Grid>
@@ -565,21 +578,24 @@ const UserPage = () => {
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenIconsDialog}>
                     <InsertIconIcon />
-                    <ToolbarIconText>
-                      {BREAK_TOOLBAR_TEXT &&
-                      strings.addIcon.length > BREAK_POINT_TOOLBAR_TEXT &&
-                      strings.addIcon.split(" ").length > 1 ? (
-                        strings.addIcon.split(" ").map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                      ) : (
-                        <>{strings.addIcon}</>
-                      )}
-                    </ToolbarIconText>
+
+                    {!isSmallerThan370 && (
+                      <ToolbarIconText>
+                        {BREAK_TOOLBAR_TEXT &&
+                        strings.addIcon.length > BREAK_POINT_TOOLBAR_TEXT &&
+                        strings.addIcon.split(" ").length > 1 ? (
+                          strings.addIcon.split(" ").map((word: string) => {
+                            return (
+                              <span key={uuidv4()}>
+                                {word} <br />
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <>{strings.addIcon}</>
+                        )}
+                      </ToolbarIconText>
+                    )}
                   </ToolbarButton>
                 </Grid>
               </Grid>
@@ -588,21 +604,24 @@ const UserPage = () => {
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenVideoDialog}>
                     <YouTubeIcon />
-                    <ToolbarIconText>
-                      {BREAK_TOOLBAR_TEXT &&
-                      strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
-                      strings.addVideo.split(" ").length > 1 ? (
-                        strings.addVideo.split(" ").map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                      ) : (
-                        <>{strings.addVideo}</>
-                      )}
-                    </ToolbarIconText>
+
+                    {!isSmallerThan370 && (
+                      <ToolbarIconText>
+                        {BREAK_TOOLBAR_TEXT &&
+                        strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
+                        strings.addVideo.split(" ").length > 1 ? (
+                          strings.addVideo.split(" ").map((word: string) => {
+                            return (
+                              <span key={uuidv4()}>
+                                {word} <br />
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <>{strings.addVideo}</>
+                        )}
+                      </ToolbarIconText>
+                    )}
                   </ToolbarButton>
                 </Grid>
               </Grid>
@@ -611,21 +630,24 @@ const UserPage = () => {
                 <Grid container item direction="column" alignItems="center">
                   <ToolbarButton onClick={handleOpenLaunchDialog}>
                     <LaunchIcon />
-                    <ToolbarIconText>
-                      {BREAK_TOOLBAR_TEXT &&
-                      strings.addLaunch.length > BREAK_POINT_TOOLBAR_TEXT &&
-                      strings.addLaunch.split(" ").length > 1 ? (
-                        strings.addLaunch.split(" ").map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                      ) : (
-                        <>{strings.addLaunch}</>
-                      )}
-                    </ToolbarIconText>
+
+                    {!isSmallerThan370 && (
+                      <ToolbarIconText>
+                        {BREAK_TOOLBAR_TEXT &&
+                        strings.addLaunch.length > BREAK_POINT_TOOLBAR_TEXT &&
+                        strings.addLaunch.split(" ").length > 1 ? (
+                          strings.addLaunch.split(" ").map((word: string) => {
+                            return (
+                              <span key={uuidv4()}>
+                                {word} <br />
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <>{strings.addLaunch}</>
+                        )}
+                      </ToolbarIconText>
+                    )}
                   </ToolbarButton>
                 </Grid>
               </Grid>
@@ -752,14 +774,14 @@ const UserPage = () => {
           }}
           message={strings.removePageConfirmation}
         />
-        <ChooseFileDialog
+        <UploadImageDialog
           openChooseFileDialog={openChooseFilePageDialog}
           setOpenChooseFileDialog={setOpenChooseFilePageDialog}
           chosenImage={chosenImage}
           setChosenImage={setChosenImage}
           acceptedFiles={IMAGE_EXTENSIONS}
-          submitDialog={async () => {
-            savePageImage();
+          submitDialog={async (imageUrl?: string) => {
+            savePageImage(imageUrl);
             setOpenChooseFilePageDialog(false);
           }}
           cancelDialog={() => {

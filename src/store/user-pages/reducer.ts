@@ -755,7 +755,7 @@ const pagesReducer = (
               if (component._id === componentId) {
                 const updatedComponent: IUserComponent = {
                   ...component,
-                  mediaUrl: `url(${url})`,
+                  mediaUrl: url,
                 };
                 return updatedComponent;
               }

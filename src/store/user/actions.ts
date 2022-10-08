@@ -124,6 +124,37 @@ export const clearUserState = () => ({
 
 export const setUserProfileImage =
   (
+    imageUrl: string,
+    user: IUser,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    const token = await getFirebaseToken();
+
+    if (!token || !user._id) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    dispatch(
+      updateUser(
+        {
+          ...user,
+          profileImageUrl: imageUrl,
+        },
+        () => {
+          if (onSuccessCallback) onSuccessCallback();
+        },
+        () => {
+          if (onErrorCallback) onErrorCallback();
+        }
+      )
+    );
+  };
+
+export const uploadAndSetUserProfileImage =
+  (
     image: File,
     user: IUser,
     onSuccessCallback: any = null,

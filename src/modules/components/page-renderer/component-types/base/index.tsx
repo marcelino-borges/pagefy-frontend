@@ -11,7 +11,7 @@ import { Root } from "./style";
 import CustomTooltip from "../../../tooltip";
 import { openExternalLink } from "../../../../../utils";
 
-interface IProps {
+interface IBaseComponentTypeProps {
   layout: IComponentLayout;
   style: any;
   children: any;
@@ -28,7 +28,7 @@ const BaseComponentType = ({
   animation,
   onClick,
   ...rest
-}: IProps) => {
+}: IBaseComponentTypeProps) => {
   const MainComponent = () => (
     <Root
       container

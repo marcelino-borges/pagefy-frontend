@@ -50,11 +50,12 @@ import {
   setComponentAnimation,
   setComponentBackgroundColor,
   setComponentFontColor,
-  setComponentImage,
+  uploadAndSetComponentImage,
   setComponentLabel,
   setComponentUrl,
   setComponentVisibleDate,
   toggleComponentVisibility,
+  setComponentImage,
 } from "../../../../store/user-pages/actions";
 import {
   ComponentType,
@@ -63,7 +64,7 @@ import {
 } from "../../../../store/user-pages/types";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
-import ChooseFileDialog from "../../../components/dialog-file-upload";
+import UploadImageDialog from "../../../components/dialog-upload-image";
 import { IMAGE_EXTENSIONS } from "../../../../constants";
 import DialogConfirmation from "../../../components/dialog-confirmation";
 import YoutubeEmbed from "../../../components/youtube-embed";
@@ -240,16 +241,17 @@ const DraggableUserComponent = ({
       {isDeleted && <DeleteContainer />}
 
       <DeleteComponentConfirmationDialog />
-      <ChooseFileDialog
+      <UploadImageDialog
         openChooseFileDialog={openChooseFileDialog}
         setOpenChooseFileDialog={setOpenChooseFileDialog}
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={async () => {
+        submitDialog={async (imageUrl?: string) => {
           const token = await getFirebaseToken();
+
           if (
-            chosenImage === undefined ||
+            (!imageUrl && chosenImage === undefined) ||
             token === undefined ||
             userState === undefined ||
             userState._id === undefined ||
@@ -258,6 +260,7 @@ const DraggableUserComponent = ({
           ) {
             return;
           }
+
           if (
             component.style &&
             component.style.backgroundImage &&
@@ -271,20 +274,33 @@ const DraggableUserComponent = ({
             dispatch(setLoading());
             await deleteImage(urlToDelete, userState._id, token);
           }
-          dispatch(
-            setComponentImage(
-              chosenImage,
-              component._id,
-              pageId,
-              userState._id,
-              () => {
-                dispatch(clearLoading());
-              },
-              () => {
-                dispatch(clearLoading());
-              }
-            )
-          );
+
+          const clearLoadingFromState = () => {
+            dispatch(clearLoading());
+          };
+
+          if (imageUrl) {
+            dispatch(
+              setComponentImage(
+                imageUrl,
+                component._id,
+                pageId,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          } else if (chosenImage) {
+            dispatch(
+              uploadAndSetComponentImage(
+                chosenImage,
+                component._id,
+                pageId,
+                userState._id,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          }
 
           setOpenChooseFileDialog(false);
           setChosenImage(undefined);

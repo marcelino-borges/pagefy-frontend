@@ -22,7 +22,7 @@ import { PRIMARY_COLOR } from "../../../styles/colors";
 import { COMPONENT_ANIMATIONS } from "../../../constants";
 import { AnimatedSquare } from "./styles";
 
-interface IProps {
+interface IDialogChooseAnimationProps {
   open: boolean;
   onClose: () => void;
   saveAnimation: (animation: IComponentAnimation) => void;
@@ -34,7 +34,7 @@ const DialogChooseAnimation = ({
   onClose,
   saveAnimation,
   existingAnimation,
-}: IProps) => {
+}: IDialogChooseAnimationProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 

@@ -1,6 +1,6 @@
 import { TransparentTextFieldStyled } from "./style";
 
-interface IProps {
+interface ITransparentTextFieldProps {
   register?: any;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => any;
   value?: string;
@@ -31,7 +31,7 @@ const TransparentTextField = ({
   error,
   helperText,
   ...rest
-}: IProps) => {
+}: ITransparentTextFieldProps) => {
   return (
     <TransparentTextFieldStyled
       autoFocus={autoFocus !== undefined}

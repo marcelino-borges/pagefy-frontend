@@ -517,6 +517,26 @@ export const setPageToBeSaved = (page: IUserPage) => ({
 
 export const setPageImage =
   (
+    imageUrl: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(setPageImageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+    dispatch(setPageImageSuccess(imageUrl));
+
+    if (onSuccessCallback) onSuccessCallback(imageUrl);
+  };
+
+export const uploadAndSetPageImage =
+  (
     image: File,
     page: IUserPage,
     onSuccessCallback: any = null,
@@ -657,6 +677,29 @@ export const setPageBGImageError = (error: IAppResult) => ({
 });
 
 export const setComponentImage =
+  (
+    imageUrl: string,
+    componentId: string,
+    pageId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(setComponentImageLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    dispatch(setComponentImageSuccess(pageId, componentId, imageUrl));
+
+    if (onSuccessCallback) onSuccessCallback(imageUrl);
+  };
+
+export const uploadAndSetComponentImage =
   (
     image: File,
     componentId: string,

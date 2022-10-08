@@ -1,13 +1,18 @@
 import { ResponsiveVideo } from "./style";
 
-interface IProps {
+interface IYoutubeEmbedProps {
   embedId: string;
   width?: string;
   height?: string;
   allowFullScreen?: boolean | undefined;
 }
 
-const YoutubeEmbed = ({ embedId, width, height, allowFullScreen }: IProps) => (
+const YoutubeEmbed = ({
+  embedId,
+  width,
+  height,
+  allowFullScreen,
+}: IYoutubeEmbedProps) => (
   <ResponsiveVideo
     style={{
       paddingBottom: !width && !height ? "56.25%" : "unset",

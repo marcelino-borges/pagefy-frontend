@@ -3,12 +3,12 @@ import { incrementComponentClicks } from "../../../../../store/page-renderer/act
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import BaseComponentType from "../base";
 
-interface IProps {
+interface ITextComponentProps {
   component: IUserComponent;
   pageId?: string | undefined;
 }
 
-const TextComponent = ({ component, pageId }: IProps) => {
+const TextComponent = ({ component, pageId }: ITextComponentProps) => {
   return (
     <BaseComponentType
       url={component.url}

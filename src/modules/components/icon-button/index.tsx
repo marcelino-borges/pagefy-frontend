@@ -1,7 +1,7 @@
 import { PRIMARY_COLOR } from "../../../styles/colors";
 import { IconButtonCustom } from "./style";
 
-interface IProps {
+interface IIconButtonProps {
   size: any;
   onClick: any;
   children: any;
@@ -23,7 +23,7 @@ const IconButton = ({
   color,
   hoverBackgroundColor,
   children,
-}: IProps) => {
+}: IIconButtonProps) => {
   return (
     <IconButtonCustom
       size={size}

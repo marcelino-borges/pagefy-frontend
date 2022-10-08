@@ -46,7 +46,7 @@ import CustomTooltip from "../../../components/tooltip";
 
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
-import ChooseFileDialog from "../../../components/dialog-file-upload";
+import UploadImageDialog from "../../../components/dialog-upload-image";
 import { IMAGE_EXTENSIONS } from "../../../../constants";
 import {
   ComponentType,
@@ -111,6 +111,7 @@ const ComponentDialog = ({
     useState<boolean>(false);
   const [showUploadDialog, setShowUploadDialog] = useState<boolean>(false);
   const [chosenImage, setChosenImage] = useState<File>();
+  const [existingImage, setExistingImage] = useState<string>();
   const [showVisibleDateDialog, setShowVisibleDateDialog] =
     useState<boolean>(false);
   const [visibleDateTime, setVisibleDateTime] = useState<string>();
@@ -165,19 +166,23 @@ const ComponentDialog = ({
       const token = await getFirebaseToken();
       let urlMedia: string | undefined = undefined;
 
-      if (token && chosenImage && userState && userState._id) {
-        dispatch(setLoading());
-        urlMedia = (
-          await uploadImage(
-            userState._id,
-            chosenImage,
-            UserStorageFolder.UPLOADED_IMAGES,
-            token
-          )
-        ).data;
-        dispatch(clearLoading());
+      if (token && userState && userState._id) {
+        if (existingImage) {
+          urlMedia = existingImage;
+        } else if (chosenImage) {
+          dispatch(setLoading());
+          urlMedia = (
+            await uploadImage(
+              userState._id,
+              chosenImage,
+              UserStorageFolder.UPLOADED_IMAGES,
+              token
+            )
+          ).data;
+          dispatch(clearLoading());
+        }
       }
- 
+
       const newComponent: IUserComponent = {
         text: selectedType !== ComponentType.Image ? text : undefined,
         url,
@@ -240,7 +245,7 @@ const ComponentDialog = ({
       isValid = false;
     }
 
-    if (selectedType !== ComponentType.Text && !chosenImage) {
+    if (selectedType !== ComponentType.Text && !existingImage && !chosenImage) {
       showErrorToast(strings.imageInComponentRequired);
       isValid = false;
     }
@@ -452,13 +457,14 @@ const ComponentDialog = ({
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
-          <ChooseFileDialog
+          <UploadImageDialog
             openChooseFileDialog={showUploadDialog}
             setOpenChooseFileDialog={setShowUploadDialog}
             chosenImage={chosenImage}
             setChosenImage={setChosenImage}
             acceptedFiles={IMAGE_EXTENSIONS}
-            submitDialog={() => {
+            submitDialog={(imageUrl?: string) => {
+              setExistingImage(imageUrl);
               setShowUploadDialog(false);
             }}
             cancelDialog={() => {

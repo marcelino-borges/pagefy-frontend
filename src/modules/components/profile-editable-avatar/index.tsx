@@ -8,7 +8,7 @@ import {
 } from "./style";
 import { MEDIUM_GREY } from "../../../styles/colors";
 
-interface IProps {
+interface IProfileEditableAvatarProps {
   onClick: any;
   text?: string | undefined;
   imageUrl?: string | undefined;
@@ -28,7 +28,7 @@ const ProfileEditableAvatar = ({
   badgeBgSize,
   badgeIconSize = "20px",
   noUserIconSize = "48px",
-}: IProps) => {
+}: IProfileEditableAvatarProps) => {
   return (
     <Badge
       overlap="circular"

@@ -25,10 +25,14 @@ export const Dropzone = styled(({ ...rest }: any) => <Grid {...rest} />)`
   outline: none;
   transition: border 0.24s ease-in-out, color 0.24s ease-in-out;
   cursor: pointer;
-  height: 100%;
 
   &:hover {
     color: var(--theme-primary);
     border-color: var(--theme-primary);
   }
+`;
+
+export const Text = styled("div")`
+  font-size: 18px;
+  margin-bottom: 16px;
 `;

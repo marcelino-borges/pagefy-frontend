@@ -4,13 +4,16 @@ import { RENDERED_PAGE_COMPONENT_RADIUS } from "../../../../../constants";
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
-interface IProps {
+interface ITextImageComponentProps {
   component: IUserComponent;
   pageId?: string | undefined;
 }
 
-const TextImageComponent = ({ component, pageId }: IProps) => {
-  const Content = ({ component }: IProps) => {
+const TextImageComponent = ({
+  component,
+  pageId,
+}: ITextImageComponentProps) => {
+  const Content = ({ component }: ITextImageComponentProps) => {
     const { rows, columns } = component.layout;
     if (columns === 1) {
       if (rows === 1) {
