@@ -13,6 +13,7 @@ interface IUserTestimonialCardProps {
   userName: string;
   userProfession: string;
   userCompany: string;
+  [x: string]: any;
 }
 
 const UserTestimonialCard = ({
@@ -21,9 +22,10 @@ const UserTestimonialCard = ({
   userName,
   userProfession,
   userCompany,
+  ...rest
 }: IUserTestimonialCardProps) => {
   return (
-    <Root>
+    <Root {...rest}>
       <UserPicture userImage={userPictureUrl} />
       <Testimonial>{testimonial}</Testimonial>
       <UserName>{userName}</UserName>

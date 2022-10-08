@@ -306,6 +306,8 @@ interface IDictionary {
   };
   ok: string;
   somethingWentWrong: string;
+  testimonialsTitle: string;
+  testimonialsSubtitle: string;
 }
 
 // Dictionaries
@@ -655,6 +657,8 @@ const en: IDictionary = {
       "Your plan doesn't allow scheduling components",
   },
   somethingWentWrong: "Oh no! Something went wrong!",
+  testimonialsTitle: "Testimonials",
+  testimonialsSubtitle: "Check out what people are talking about us",
 };
 
 const pt: IDictionary = {
@@ -1002,6 +1006,8 @@ const pt: IDictionary = {
       "Seu plano não permite agendar componentes",
   },
   somethingWentWrong: "Ops! Algo deu errado!",
+  testimonialsTitle: "O que falam",
+  testimonialsSubtitle: "Alguns feedbacks que recebemos sobre nosso serviço",
 };
 
 // Composed dictionaries

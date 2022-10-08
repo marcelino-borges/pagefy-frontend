@@ -18,6 +18,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### [1.10.0] - 2022-10-08
 
+- Fix: Testimonials wrapping and title in the homepage
+
+### [1.10.0] - 2022-10-08
+
 - Feature: Homepage testimonials
 
 ### [1.9.0] - 2022-10-08

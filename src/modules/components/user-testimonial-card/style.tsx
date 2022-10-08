@@ -17,6 +17,16 @@ export const Root = styled(({ children, ...rest }: any) => (
   text-align: center;
   line-height: 1.5em;
   max-width: 321px;
+  margin-bottom: 64px;
+
+  @media (min-width: 901px) {
+    width: calc(33% - 96px);
+  }
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
+
 `
 );
 

@@ -136,5 +136,7 @@ export const TestimonialsSection = styled(({ children, ...props }: any) => (
   padding: 100px 32px;
   gap: 32px;
   background-color: ${GLOBAL_LIGHT_BG};
+  flex-wrap: wrap;
+  width: 100%;
 `
 );

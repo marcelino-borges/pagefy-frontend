@@ -10,6 +10,15 @@ interface IPageTitleProps {
   sizeGrowth?: number;
   colors?: string[];
   marginTop?: string;
+  textAlign?:
+    | "start"
+    | "end"
+    | "left"
+    | "right"
+    | "center"
+    | "justify"
+    | "match-parent"
+    | undefined;
 }
 
 const PageTitle = ({
@@ -21,6 +30,7 @@ const PageTitle = ({
   increasingSize,
   colors = [PRIMARY_COLOR, "#000", "#000"],
   marginTop = "0px",
+  textAlign,
 }: IPageTitleProps) => {
   const textsColors = colors?.length === 3 ? colors : ["#000", "#000", "#000"];
 
@@ -32,6 +42,7 @@ const PageTitle = ({
           fontWeight: 800,
           color: textsColors[0],
           marginTop,
+          textAlign,
         }}
       >
         {title}
@@ -44,6 +55,7 @@ const PageTitle = ({
               : baseSize - 2 * sizeGrowth + "em",
             fontWeight: 800,
             color: textsColors[1],
+            textAlign,
           }}
         >
           {subtitle}
@@ -56,6 +68,7 @@ const PageTitle = ({
               ? baseSize + 2 * sizeGrowth + "em"
               : baseSize - 2 * sizeGrowth + "em",
             color: textsColors[2],
+            textAlign,
           }}
         >
           {description}
