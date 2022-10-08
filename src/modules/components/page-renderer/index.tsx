@@ -85,13 +85,20 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
         document.documentElement.style.height = "100vh";
         document.documentElement.style.backgroundImage =
           page.style.backgroundImage;
-        document.documentElement.style.backgroundSize = "auto 100%";
         document.documentElement.style.backgroundPosition = "center";
         document.documentElement.style.backgroundAttachment = "fixed";
+
+        console.log("window.innerWidth: " + window.innerWidth);
+        if (window.innerWidth < 600) {
+          document.documentElement.style.backgroundSize = "auto 100%";
+        } else {
+          document.documentElement.style.backgroundSize = "cover";
+        }
       }
     }
 
     return () => {
+      document.documentElement.style.backgroundPosition = "unset";
       document.documentElement.style.backgroundColor = "unset";
       document.documentElement.style.backgroundImage = "unset";
       document.documentElement.style.backgroundAttachment = "unset";

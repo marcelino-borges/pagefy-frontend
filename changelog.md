@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.12.0] - 2022-10-09
+
+- Feature: Gallery implemented
+- Fix: BG size behaving differently for mobile and desktop on page renderer
+
 ### [1.11.0] - 2022-10-08
 
 - Feature: Added a red arrow upon the featured card
