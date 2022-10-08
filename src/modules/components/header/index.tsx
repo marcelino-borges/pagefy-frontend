@@ -46,29 +46,30 @@ const Header = () => {
 
   const DesktopHeader = () => {
     return (
-      <>
-        <Grid container item md={4} justifyContent="center">
-          <Grid item padding={2}>
-            <HeaderLinkDesktop to={routes.root}>
-              {strings.home}
-            </HeaderLinkDesktop>
-          </Grid>
-          <Grid item padding={2}>
-            <HeaderLinkDesktop to={routes.pages}>
-              {strings.pages}
-            </HeaderLinkDesktop>
-          </Grid>
-          <Grid item padding={2}>
-            <HeaderLinkDesktop to={routes.faq}>
-              {strings.support}
-            </HeaderLinkDesktop>
-          </Grid>
+      <Grid
+        container
+        item
+        md={8}
+        justifyContent="flex-end"
+        direction="row"
+        pr="32px"
+        wrap="nowrap"
+      >
+        <Grid item padding={2}>
+          <HeaderLinkDesktop to={routes.root}>{strings.home}</HeaderLinkDesktop>
         </Grid>
-
-        <Grid container item md={4} justifyContent="center" padding={3}>
-          <UserLoggedIn />
+        <Grid item padding={2}>
+          <HeaderLinkDesktop to={routes.pages}>
+            {strings.pages}
+          </HeaderLinkDesktop>
         </Grid>
-      </>
+        <Grid item padding={2}>
+          <HeaderLinkDesktop to={routes.faq}>
+            {strings.support}
+          </HeaderLinkDesktop>
+        </Grid>
+        <UserLoggedIn />
+      </Grid>
     );
   };
 

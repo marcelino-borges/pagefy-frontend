@@ -649,16 +649,6 @@ const UserPage = () => {
                 }}
                 InputProps={{
                   style: { width: "100%" },
-                  // endAdornment: (
-                  //   <InputAdornment position="end">
-                  //     <IconButton
-                  //       onClick={() => onSubmitPageNameForm()}
-                  //       edge="end"
-                  //     >
-                  //       <SaveIcon fontSize="medium" color="disabled" />
-                  //     </IconButton>
-                  //   </InputAdornment>
-                  // ),
                 }}
               />
             </form>
@@ -688,16 +678,6 @@ const UserPage = () => {
                 fontSize="1.2em"
                 InputProps={{
                   style: { width: "100%" },
-                  // endAdornment: (
-                  //   <InputAdornment position="end">
-                  //     <IconButton
-                  //       onClick={() => onSubmitPageUrlForm()}
-                  //       edge="end"
-                  //     >
-                  //       <SaveIcon fontSize="medium" color="disabled" />
-                  //     </IconButton>
-                  //   </InputAdornment>
-                  // ),
                 }}
                 fontWeight="300"
                 textAlign="center"

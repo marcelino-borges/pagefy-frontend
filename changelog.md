@@ -16,6 +16,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.9.0] - 2022-10-08
+
+- Fix: Homepage layout
+- Fix: Page editor - icon tooltip
+- Feature: New signin and register buttons on the header
+- Fix: layouts adjustments
+
 ### [1.8.7] - 2022-10-07
 
 - Feature: Localized definitive Faqs

@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
-import { includesAnyInString } from "./../../../../../utils/index";
 
 interface IIconsComponentProps {
   iconsList: IUserComponent[];
@@ -33,7 +32,6 @@ const IconsComponent = ({
         marginBottom: "24px",
       }}
       justifyContent="center"
-      key={uuidv4()}
     >
       {iconsList.map((iconComponent: IUserComponent) => {
         if (
@@ -44,33 +42,19 @@ const IconsComponent = ({
             new Date(iconComponent.visibleDate) >= new Date())
         ) {
           return (
-            <CustomTooltip title={iconComponent.url} key={uuidv4()}>
-              <IconOverlaySpan
-                isRendererPage={isRendererPage}
-                href={isRendererPage ? iconComponent.url : ""}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  if (onClickIcon) onClickIcon(iconComponent);
-                  if (isRendererPage && pageId && iconComponent._id) {
-                    if (
-                      iconComponent.url &&
-                      includesAnyInString(iconComponent.url, [
-                        "mailto:",
-                        "tel:",
-                        "sms:",
-                        "callto:",
-                        "fax:",
-                      ])
-                    ) {
-                      //openExternalLink(iconComponent.url, window);
-                    }
-                    dispatch(
-                      incrementComponentClicks(pageId, iconComponent._id)
-                    );
-                  }
-                }}
-              >
+            <IconOverlaySpan
+              isRendererPage={isRendererPage}
+              href={isRendererPage ? iconComponent.url : ""}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                if (onClickIcon) onClickIcon(iconComponent);
+                if (isRendererPage && pageId && iconComponent._id) {
+                  dispatch(incrementComponentClicks(pageId, iconComponent._id));
+                }
+              }}
+            >
+              <CustomTooltip title={iconComponent.url} key={uuidv4()}>
                 <Icon
                   icon={iconComponent.iconDetails.icon}
                   style={{
@@ -83,8 +67,8 @@ const IconsComponent = ({
                         : iconComponent.style?.color || "black",
                   }}
                 />
-              </IconOverlaySpan>
-            </CustomTooltip>
+              </CustomTooltip>
+            </IconOverlaySpan>
           );
         }
         return <></>;

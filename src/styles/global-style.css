@@ -3,6 +3,7 @@
   --secondary: #3CB6D6;
   --complementary: #162B47;
   --global-light-bg: #F7F9FC;
+  --min-site-width: 275px;
   --max-site-width: 900px;
   --max-site-width-page-renderer: 750px;
 }
@@ -154,6 +155,7 @@ body {
   letter-spacing: .02em;
   font-weight: 300;
   font-size: 1em;
+  min-width: var(--min-site-width);
 }
 
 #root {

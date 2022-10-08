@@ -129,7 +129,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                 inputFormat="DD/MM/yyyy"
                 value={moment(launchDate)}
                 onChange={handleLaunchDate}
-                renderInput={(params) => (
+                renderInput={(params: any) => (
                   <TextField
                     error={!!dateTimeFieldError}
                     helperText={dateTimeFieldError || ""}

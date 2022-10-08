@@ -2,7 +2,7 @@ import { Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../../store/index";
 import ProfileEditableAvatar from "../../profile-editable-avatar";
-import { SubtitleLinks, SubtitleLinksNoUser, UserName } from "./style";
+import { SubtitleLinks, UserName } from "./style";
 import routes from "../../../../routes/paths";
 import strings from "../../../../localization";
 import { signOut } from "./../../../../store/auth/actions";
@@ -15,6 +15,7 @@ import { deleteImage } from "../../../../services/files";
 import { setUserProfileImage } from "../../../../store/user/actions";
 import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { clearLoading, setLoading } from "./../../../../store/shared/actions";
+import SignInRegisterButtons from "../../signin-register-buttons";
 
 const UserLoggedIn = () => {
   const dispatch = useDispatch();
@@ -61,58 +62,10 @@ const UserLoggedIn = () => {
       item
       direction={isSmallerThanMD ? "column" : "row"}
       justifyContent="flex-end"
-      pr={!isSmallerThanMD ? "32px" : "0px"}
       wrap="nowrap"
+      width="unset"
+      ml="16px"
     >
-      <ChooseFileDialog
-        openChooseFileDialog={openChooseFileBGDialog}
-        setOpenChooseFileDialog={setOpenChooseFileBGDialog}
-        chosenImage={chosenImage}
-        setChosenImage={setChosenImage}
-        acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={async () => {
-          const token = await getFirebaseToken();
-          if (!chosenImage || !token || !userState.profile) return;
-
-          if (
-            userState.profile &&
-            userState.profile._id &&
-            userState.profile.profileImageUrl &&
-            userState.profile.profileImageUrl.length > 0
-          ) {
-            dispatch(setLoading());
-            try {
-              await deleteImage(
-                userState.profile.profileImageUrl,
-                userState.profile._id,
-                token
-              );
-            } catch (e: any) {
-              console.log("Erro ao deletar imagem. Detalhes: ", e.message);
-            }
-          }
-
-          dispatch(
-            setUserProfileImage(
-              chosenImage,
-              userState.profile,
-              () => {
-                dispatch(clearLoading());
-              },
-              () => {
-                dispatch(clearLoading());
-              }
-            )
-          );
-
-          setChosenImage(undefined);
-          setOpenChooseFileBGDialog(false);
-        }}
-        cancelDialog={() => {
-          setChosenImage(undefined);
-          setOpenChooseFileBGDialog(false);
-        }}
-      />
       <Grid
         container={!!isSmallerThanMD ? true : undefined}
         item
@@ -161,19 +114,58 @@ const UserLoggedIn = () => {
           </SubtitleLinks>
         </Stack>
       </Stack>
+      <ChooseFileDialog
+        openChooseFileDialog={openChooseFileBGDialog}
+        setOpenChooseFileDialog={setOpenChooseFileBGDialog}
+        chosenImage={chosenImage}
+        setChosenImage={setChosenImage}
+        acceptedFiles={IMAGE_EXTENSIONS}
+        submitDialog={async () => {
+          const token = await getFirebaseToken();
+          if (!chosenImage || !token || !userState.profile) return;
+
+          if (
+            userState.profile &&
+            userState.profile._id &&
+            userState.profile.profileImageUrl &&
+            userState.profile.profileImageUrl.length > 0
+          ) {
+            dispatch(setLoading());
+            try {
+              await deleteImage(
+                userState.profile.profileImageUrl,
+                userState.profile._id,
+                token
+              );
+            } catch (e: any) {
+              console.log("Failed to delete image. Details: ", e.message);
+            }
+          }
+
+          dispatch(
+            setUserProfileImage(
+              chosenImage,
+              userState.profile,
+              () => {
+                dispatch(clearLoading());
+              },
+              () => {
+                dispatch(clearLoading());
+              }
+            )
+          );
+
+          setChosenImage(undefined);
+          setOpenChooseFileBGDialog(false);
+        }}
+        cancelDialog={() => {
+          setChosenImage(undefined);
+          setOpenChooseFileBGDialog(false);
+        }}
+      />
     </Grid>
   ) : (
-    <Stack direction="row" pl="12px" alignItems="center">
-      <SubtitleLinksNoUser to={routes.signIn}>
-        {strings.signIn2}
-      </SubtitleLinksNoUser>
-      <Grid item px="8px" color={LIGHTER_GREY}>
-        |
-      </Grid>
-      <SubtitleLinksNoUser to={routes.signUp}>
-        {strings.signUp}
-      </SubtitleLinksNoUser>
-    </Stack>
+    <SignInRegisterButtons />
   );
 };
 

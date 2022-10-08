@@ -32,6 +32,18 @@ const theme: ThemeOptions = {
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "19px",
+          minWidth: "120px",
+          padding: "8px 16px",
+          textTransform: "unset",
+          fontSize: "0.9em",
+          boxShadow: "none",
+        },
+      },
+    },
   },
 };
 

@@ -216,6 +216,7 @@ interface IDictionary {
   termsOfUseSubtitle: string;
   wishesCommunications: string;
   register: string;
+  registerImperative: string;
   createYourAccount: string;
   signUp: string;
   signIn: string;
@@ -304,6 +305,7 @@ interface IDictionary {
     yourPlanDoesntAllowComponentScheduling: string;
   };
   ok: string;
+  somethingWentWrong: string;
 }
 
 // Dictionaries
@@ -446,6 +448,7 @@ const en: IDictionary = {
     "We use Cookies and other technologies belonging to us and third parties to enable our website to function correctly and securely, and to personalize its content. We also use Cookies to analyze user browsing and adjust advertising to the user’s tastes and preferences.",
   wishesCommunications: "Wish to receive communcations by email",
   register: "Register",
+  registerImperative: "Register",
   createYourAccount: "Create your account",
   signUp: "Sign Up",
   signIn: "Sign In",
@@ -651,6 +654,7 @@ const en: IDictionary = {
     yourPlanDoesntAllowComponentScheduling:
       "Your plan doesn't allow scheduling components",
   },
+  somethingWentWrong: "Oh no! Something went wrong!",
 };
 
 const pt: IDictionary = {
@@ -790,6 +794,7 @@ const pt: IDictionary = {
     "Nós usamos cookies, armazenamento local, de sessão e outras tecnologias pertecentes a nós ou a terceiros para permitir o pleno, seguro e correto funcionamento do nosso site, bem como para personalizar o conteúdo para sua experiência. Também utilizamos tudo isso para analisar o comportamento do usuário e ajustar anúncios e direcionar conteúdos de acordo com os gostos e as preferências do usuário.",
   wishesCommunications: "Desejo receber comunicados por e-mail",
   register: "Cadastrar",
+  registerImperative: "Cadastre-se",
   createYourAccount: "Crie sua conta",
   signUp: "Cadastrar",
   accessAccount: "Acesse sua conta",
@@ -996,6 +1001,7 @@ const pt: IDictionary = {
     yourPlanDoesntAllowComponentScheduling:
       "Seu plano não permite agendar componentes",
   },
+  somethingWentWrong: "Ops! Algo deu errado!",
 };
 
 // Composed dictionaries

@@ -54,6 +54,7 @@ export const DrawerMenu = styled(SwipeableDrawer)`
   color: var(--primary);
   padding: 32px 16px 32px 16px;
   position: relative;
+  z-index: 200000;
 
   .MuiPaper-root.MuiDrawer-paper {
     width: 50%;

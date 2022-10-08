@@ -7,6 +7,9 @@ interface ITooltipProps {
   disableInteractive?: boolean;
   placement?: any;
   disabled?: boolean;
+  key?: string;
+  // All other props
+  [x: string]: any;
 }
 
 const CustomTooltip = ({
@@ -16,9 +19,13 @@ const CustomTooltip = ({
   placement,
   children,
   disabled = false,
+  key,
+  ...rest
 }: ITooltipProps) => {
   return (
     <Tooltip
+      {...rest}
+      key={key}
       disableFocusListener={disabled}
       disableTouchListener={disabled}
       disableHoverListener={disabled}

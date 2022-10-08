@@ -103,7 +103,7 @@ const DialogVisibleDate = ({ open, onClose, setDateTime }: IProps) => {
                   inputFormat="DD/MM/yyyy"
                   value={moment(visibleDate)}
                   onChange={handleVisibleDate}
-                  renderInput={(params) => (
+                  renderInput={(params: any) => (
                     <TextField
                       style={{
                         width: "100%",
@@ -118,7 +118,7 @@ const DialogVisibleDate = ({ open, onClose, setDateTime }: IProps) => {
                   inputFormat="DD/MM/yyyy"
                   value={moment(visibleDate)}
                   onChange={handleVisibleDate}
-                  renderInput={(params) => (
+                  renderInput={(params: any) => (
                     <TextField
                       style={{
                         width: "100%",

@@ -1,6 +1,6 @@
 import { Grid, useMediaQuery } from "@mui/material";
 import Header from "../../components/header";
-import RecomendedCard from "./../../components/feature-card/index";
+import FeaturedCard from "./../../components/feature-card/index";
 import strings from "../../../localization";
 import CustomButton from "../../components/button-custom/index";
 import routes from "./../../../routes/paths";
@@ -12,8 +12,18 @@ import { clearLoading } from "../../../store/shared/actions";
 import FullWidthContent from "../../components/site-content/full-width";
 import homeImages, { IHomepageBanner } from "../../../assets/img/home/home";
 import { getRandomIntInRange } from "../../../utils";
-import { DEEP_DARK_GREEN, PRIMARY_COLOR } from "./../../../styles/colors";
+import { GLOBAL_LIGHT_BG, PRIMARY_COLOR } from "./../../../styles/colors";
 import Footer from "../../components/footer";
+import {
+  BannerContainer,
+  BannerOverlay,
+  CreateYourBio,
+  FeaturedCardsContainer,
+  PromoDuration,
+  SignupButton,
+  SignUpSection,
+} from "./style";
+import { clearBackgroundImage, setBackgroundImage } from "./utils";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -33,31 +43,16 @@ const Home = () => {
     return banners[sortedIndex];
   }, [isSmallerThan600]);
 
-  const setBackgroundImage = () => {
-    document.body.style.backgroundImage = `url(${homeImages.bgImage})`;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
-    document.body.style.backgroundAttachment = "fixed";
-  };
-
-  const clearBackgroundImage = () => {
-    document.body.style.backgroundImage = `unset`;
-    document.body.style.backgroundSize = "unset";
-    document.body.style.backgroundPosition = "unset";
-    document.body.style.backgroundAttachment = "unset";
-  };
-
   useEffect(() => {
-    setBackgroundImage();
+    setBackgroundImage(document, homeImages.bgImage);
 
     return () => {
-      clearBackgroundImage();
+      clearBackgroundImage(document);
     };
   }, []);
 
   useEffect(() => {
     dispatch(clearLoading());
-    setBackgroundImage();
   }, [dispatch]);
 
   useEffect(() => {
@@ -68,62 +63,36 @@ const Home = () => {
   return (
     <>
       <Header />
+      <div
+        style={{
+          height: isSmallerThan900 ? "3vh" : "108px",
+          width: "200%",
+          backgroundColor: GLOBAL_LIGHT_BG,
+        }}
+      ></div>
       <FullWidthContent
         style={{
           paddingLeft: "0px",
           paddingRight: "0px",
-          transform: "translateY(-32px)",
           paddingTop: "0px",
-          marginTop: isSmallerThan900 ? "8vw" : "150px",
-          position: "relative",
         }}
       >
         {/* BANNER */}
         <Grid container bgcolor="white">
-          <span style={{ position: "relative" }}>
-            <img
-              src={banner?.path}
-              style={{
-                width: "100%",
-                height: "auto",
-                zIndex: -1,
-              }}
-              alt="Banner desktop"
-            />
-            <Grid
-              container
-              style={{
-                position: "absolute",
-                top: !isSmallerThan600 ? 0 : "unset",
-                bottom: isSmallerThan600 ? 0 : "unset",
-                zIndex: 100,
-                fontWeight: 600,
-                color: "white",
-                textShadow: "2px 2px 2px black",
-                padding: "7% 32px",
-                height: "70%",
-              }}
-              fontSize={
-                isSmallerThan400 ? "0.8em" : isSmallerThan600 ? "1.2em" : "2em"
-              }
-              direction="column"
-              justifyContent={isSmallerThan600 ? "center" : "flex-start"}
-              wrap="nowrap"
-            >
+          <BannerContainer imageUrl={banner.path}>
+            <BannerOverlay>
               <Grid container fontSize="1.5em">
                 {strings.createNowYour}
               </Grid>
               <Grid container alignItems="baseline">
-                <Grid item fontSize="1.5em" color={PRIMARY_COLOR} pr="4px">
+                <Grid fontSize="1.5em" color={PRIMARY_COLOR} pr="4px">
                   {strings.bio.toUpperCase()}
                 </Grid>
-                <Grid item>{strings.forYourSocialMedia}</Grid>
+                <Grid>{strings.forYourSocialMedia}</Grid>
               </Grid>
               <Grid container alignItems="baseline">
-                <Grid item pr="4px">
-                  {strings.or}
-                </Grid>
-                <Grid item fontSize="1.5em" color={PRIMARY_COLOR}>
+                <Grid pr="4px">{strings.or}</Grid>
+                <Grid fontSize="1.5em" color={PRIMARY_COLOR}>
                   {strings.landingPage.toUpperCase()}
                 </Grid>
               </Grid>
@@ -135,22 +104,13 @@ const Home = () => {
                 <br />
                 {strings.differentiate}
               </Grid>
-            </Grid>
-          </span>
+            </BannerOverlay>
+          </BannerContainer>
         </Grid>
 
         {/* FEATURED CARDS */}
-        <Grid
-          container
-          direction={isSmallerThan600 ? "column" : "row"}
-          style={{
-            transform: "translateY(-31px)",
-          }}
-          zIndex={100}
-        >
-          <RecomendedCard
-            item
-            sm={!isSmallerThan600 ? 4 : undefined}
+        <FeaturedCardsContainer>
+          <FeaturedCard
             overTitle={strings.plan}
             title={strings.freePlan.name.toUpperCase()}
           >
@@ -164,11 +124,9 @@ const Home = () => {
             <Grid container justifyContent="center">
               <CustomButton to={routes.signUp}>{strings.signUp}</CustomButton>
             </Grid>
-          </RecomendedCard>
-          <RecomendedCard
-            item
-            sm={!isSmallerThan600 ? 4 : undefined}
-            recomendedText={strings.recomended}
+          </FeaturedCard>
+          <FeaturedCard
+            isFeatured
             overTitle={strings.plan}
             title={strings.vipPlan.name.toUpperCase()}
           >
@@ -195,10 +153,8 @@ const Home = () => {
                 {strings.currency} 149.90/{strings.year}
               </i>
             </Grid>
-          </RecomendedCard>
-          <RecomendedCard
-            item
-            sm={!isSmallerThan600 ? 4 : undefined}
+          </FeaturedCard>
+          <FeaturedCard
             overTitle={strings.plan}
             title={strings.platinumPlan.name.toUpperCase()}
           >
@@ -228,65 +184,24 @@ const Home = () => {
                 {strings.currency} 249.90/{strings.year}
               </i>
             </Grid>
-          </RecomendedCard>
-        </Grid>
+          </FeaturedCard>
+        </FeaturedCardsContainer>
 
         {/* LAST SECTION */}
-        <Grid container direction={isSmallerThan600 ? "column" : "row"}>
-          <Grid container alignItems="center" minHeight="500px">
-            <Grid
-              item
-              xs={12}
-              sm={!isSmallerThan600 ? 6 : undefined}
-              textAlign={isSmallerThan600 ? "center" : "end"}
-              pr="8px"
-              color="black"
-              fontWeight={600}
-            >
-              <span
-                style={{
-                  fontSize: "2em",
-                  lineHeight: "2",
-                }}
-              >
-                {strings.createNowYour} {strings.bio}
-                <br />
-                {strings.or} {strings.landingPage}
-                <br />
-                {strings.andWinAVipPlanFor}
-                <br />
-              </span>
-              <span
-                style={{
-                  fontSize: "3.5em",
-                  fontWeight: "600",
-                  color: "white",
-                  textShadow:
-                    "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
-                }}
-              >
-                30 {strings.days}
-              </span>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={!isSmallerThan600 ? 6 : undefined}
-              textAlign="center"
-            >
-              <CustomButton
-                to={routes.signUp}
-                bgColor={PRIMARY_COLOR}
-                fontColor={"white"}
-                hoverFontColor={"white"}
-                hoverBgColor={DEEP_DARK_GREEN}
-                w="150px"
-              >
-                {strings.signUp}
-              </CustomButton>
-            </Grid>
+        <SignUpSection container direction="column">
+          <CreateYourBio item>
+            {strings.createNowYour} {strings.bio}
+            <br />
+            {strings.or} {strings.landingPage}
+            <br />
+            {strings.andWinAVipPlanFor}
+            <br />
+          </CreateYourBio>
+          <PromoDuration item>30 {strings.days}</PromoDuration>
+          <Grid container justifyContent="center">
+            <SignupButton to={routes.signUp}>{strings.clickHere}</SignupButton>
           </Grid>
-        </Grid>
+        </SignUpSection>
       </FullWidthContent>
       <Footer />
     </>

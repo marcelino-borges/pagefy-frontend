@@ -1,61 +1,18 @@
 import { Grid } from "@mui/material";
-import { DEEP_DARK_GREEN } from "../../../styles/colors";
 import { CardInner, CardRoot } from "./style.";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 
 interface IProps {
   overTitle: string;
   title: string;
-  recomendedText?: string;
-  width?: string;
-  height?: string;
-  maxWidth?: string;
-  maxHeight?: string;
-  minHeight?: string;
   children?: any;
-  [x: string]: any;
+  isFeatured?: boolean;
 }
 
-const RecomendedCard = ({
-  overTitle,
-  title,
-  recomendedText,
-  width,
-  height,
-  maxWidth,
-  maxHeight,
-  minHeight,
-  children,
-  ...rest
-}: IProps) => {
+const FeaturedCard = ({ overTitle, title, isFeatured, children }: IProps) => {
   return (
-    <CardRoot
-      width={width}
-      height={height}
-      maxWidth={maxWidth}
-      maxHeight={maxHeight}
-      color={DEEP_DARK_GREEN}
-      pt={!recomendedText ? "24px" : "4px"}
-      backgroundColor={!recomendedText ? "unset" : DEEP_DARK_GREEN}
-      {...rest}
-    >
-      <Grid
-        container
-        justifyContent="center"
-        color="white"
-        fontWeight="600"
-        pb="5px"
-      >
-        {recomendedText || ""}
-      </Grid>
-      <CardInner
-        container
-        height={!recomendedText ? "calc(100% - 4px)" : "calc(100% - 24px)"}
-        border={!recomendedText ? "4px solid white" : ""}
-        direction="column"
-        wrap="nowrap"
-        borderBottom={recomendedText ? "6px solid white" : ""}
-      >
+    <CardRoot isFeatured={isFeatured !== undefined}>
+      <CardInner>
         <Grid
           container
           justifyContent="center"
@@ -84,4 +41,4 @@ const RecomendedCard = ({
   );
 };
 
-export default RecomendedCard;
+export default FeaturedCard;

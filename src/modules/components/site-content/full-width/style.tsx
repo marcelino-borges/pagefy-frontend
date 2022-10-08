@@ -4,7 +4,7 @@ import { FOOTER_HEIGHT } from "../../../../constants";
 
 export const Root = styled(Grid)`
   min-height: calc(100vh - ${FOOTER_HEIGHT});
-  padding: 150px 32px 32px 32px;
+  padding: 150px 32px 0px 32px;
 
   @media (max-width: 900px) {
     padding: 13vw 24px 24px 24px;
