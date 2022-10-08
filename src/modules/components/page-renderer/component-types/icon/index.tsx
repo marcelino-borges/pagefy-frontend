@@ -53,8 +53,9 @@ const IconsComponent = ({
                   dispatch(incrementComponentClicks(pageId, iconComponent._id));
                 }
               }}
+              key={uuidv4()}
             >
-              <CustomTooltip title={iconComponent.url} key={uuidv4()}>
+              <CustomTooltip title={iconComponent.url}>
                 <Icon
                   icon={iconComponent.iconDetails.icon}
                   style={{
