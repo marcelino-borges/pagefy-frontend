@@ -2,6 +2,7 @@ import strings from "../../../localization";
 import {
   ArrowBackIcon,
   ArrowForwardIcon,
+  DeleteIcon,
   Image,
   ImageOverlay,
   ImagesContainer,
@@ -13,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IImageDetails } from "./../../../store/files/types";
 import {
+  deleteImage,
   getAllBackgroundsTemplates,
   getAllButtonsTemplates,
   getAllPagesImagesTemplates,
@@ -21,10 +23,11 @@ import {
 } from "../../../services/files";
 import { AxiosResponse } from "axios";
 import LoadingSpinner from "../loading-spinner";
-import { PRIMARY_COLOR } from "./../../../styles/colors";
+import { LIGHTER_GREY, PRIMARY_COLOR } from "./../../../styles/colors";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
 import { GalleryContext } from "../../../constants";
+import { showErrorToast, showSuccessToast } from "../../../utils/toast";
 
 const SCROLL_STEP = 200;
 const SCROLL_DELAY = 200;
@@ -35,12 +38,21 @@ interface IUserGalleryProps {
   context?: GalleryContext[];
 }
 
+interface IGalleryListDivider {
+  width?: string;
+  height?: string;
+  bgColor?: string;
+  marginX?: string;
+}
+
 const UserGallery = ({
   onClickImage,
-  title = strings.fromYourGallery,
+  title = strings.fromYourGalleryOrTemplates,
   context,
 }: IUserGalleryProps) => {
-  const [images, setImages] = useState<IImageDetails[]>([]);
+  const [images, setImages] = useState<(IImageDetails | IGalleryListDivider)[]>(
+    []
+  );
   const [isLoadingImages, setIsLoadingImages] = useState(false);
   const [scrollBackIntervalId, setScrollBackIntervalId] = useState(0);
   const [scrollForwardIntervalId, setScrollForwardIntervalId] = useState(0);
@@ -55,8 +67,19 @@ const UserGallery = ({
 
   const galleryRef = useRef<HTMLDivElement>(null);
 
-  const addImages = (newImages: IImageDetails[]) => {
-    setImages([...images, ...newImages]);
+  const addImages = (newImages: (IImageDetails | IGalleryListDivider)[]) => {
+    if (newImages.length > 0) {
+      setImages((currentState: any) => {
+        if (currentState.length > 0) {
+          return [
+            ...currentState,
+            { bgColor: LIGHTER_GREY, width: "2px", marginX: "16px" },
+            ...newImages,
+          ];
+        }
+        return [...currentState, ...newImages];
+      });
+    }
   };
 
   const getUserImages = async () => {
@@ -99,7 +122,24 @@ const UserGallery = ({
     });
   };
 
+  const deleteImageFromStorage = async (originalUrl: string) => {
+    if (!userId || !accessToken) return;
+
+    setIsLoadingImages(true);
+    deleteImage(originalUrl, userId, accessToken)
+      .then(() => {
+        showSuccessToast(strings.fileHandling.fileDeletedSuccessfully);
+      })
+      .catch(() => {
+        showErrorToast(strings.fileHandling.errorToDeleteFile);
+      })
+      .finally(() => {
+        setIsLoadingImages(false);
+      });
+  };
+
   useEffect(() => {
+    setImages([]);
     setIsLoadingImages(true);
 
     if (!accessToken || !userId) {
@@ -111,20 +151,19 @@ const UserGallery = ({
 
     if (context) {
       context.forEach((ctx: GalleryContext) => {
-        if (ctx === GalleryContext.BACKGROUND) {
-          getBackgroundsTemplates();
-        }
-
-        if (ctx === GalleryContext.BUTTONS) {
-          getButtonsTemplates();
-        }
-
-        if (ctx === GalleryContext.PAGE_IMAGE) {
-          getPageImagesTemplates();
-        }
-
-        if (ctx === GalleryContext.USER_PROFILE) {
-          getUserProfileTemplates();
+        switch (ctx) {
+          case GalleryContext.BACKGROUND:
+            getBackgroundsTemplates();
+            break;
+          case GalleryContext.BUTTONS:
+            getButtonsTemplates();
+            break;
+          case GalleryContext.PAGE_IMAGE:
+            getPageImagesTemplates();
+            break;
+          case GalleryContext.USER_PROFILE:
+            getUserProfileTemplates();
+            break;
         }
       });
     }
@@ -220,15 +259,27 @@ const UserGallery = ({
           </NoImagesOrLoading>
         )}
         {!isLoadingImages &&
-          images.map((image: IImageDetails) => (
+          images.map((image: IImageDetails | IGalleryListDivider) => (
             <Image
               key={uuidv4()}
-              style={{ backgroundImage: `url(${image.thumbnail})` }}
-              onClick={() => {
-                if (onClickImage) onClickImage(image.original);
-              }}
+              backgroundImage={(image as IImageDetails)?.thumbnail}
+              width={(image as IGalleryListDivider)?.width}
+              bgColor={(image as IGalleryListDivider)?.bgColor}
+              marginX={(image as IGalleryListDivider)?.marginX}
+              isSystemOwned={(image as IImageDetails)?.isSystemOwned}
             >
-              <ImageOverlay />
+              <ImageOverlay
+                onClick={() => {
+                  if (onClickImage && (image as IImageDetails)?.original)
+                    onClickImage((image as IImageDetails)?.original);
+                }}
+              />{" "}
+              <DeleteIcon
+                onClick={() => {
+                  if (!(image as IImageDetails)?.isSystemOwned)
+                    deleteImageFromStorage((image as IImageDetails)?.original);
+                }}
+              />
             </Image>
           ))}
       </ImagesContainer>

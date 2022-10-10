@@ -138,12 +138,16 @@ interface IDictionary {
   no: string;
   or: string;
   and: string;
-  chooseFile: string;
-  chooseImage: string;
-  dragAndDropYourImage: string;
-  dropYourImageHere: string;
+  fileHandling: {
+    chooseFile: string;
+    chooseImage: string;
+    fileReadyToUpload: string;
+    fileDeletedSuccessfully: string;
+    errorToDeleteFile: string;
+    dragAndDropYourImage: string;
+    dropYourImageHere: string;
+  };
   clickToSearchIt: string;
-  fileReadyToUpload: string;
   next: string;
   webSiteExample: string;
   emailExample: string;
@@ -310,8 +314,9 @@ interface IDictionary {
   testimonialsTitle: string;
   testimonialsSubtitle: string;
   yourGallery: string;
-  fromYourGallery: string;
+  fromYourGalleryOrTemplates: string;
   orUploadANewFile: string;
+  orFromYourDevice: string;
 }
 
 // Dictionaries
@@ -370,12 +375,16 @@ const en: IDictionary = {
   no: "No",
   or: "or",
   and: "and",
-  chooseFile: "Choose a file",
-  chooseImage: "Choose an image",
-  dragAndDropYourImage: "Drag and drop your image here",
-  dropYourImageHere: "Drop your image here",
+  fileHandling: {
+    chooseFile: "Choose a file",
+    chooseImage: "Choose an image",
+    dragAndDropYourImage: "Drag and drop your image here",
+    dropYourImageHere: "Drop your image here",
+    fileReadyToUpload: "File ready to upload",
+    fileDeletedSuccessfully: "File deleted successfully",
+    errorToDeleteFile: "Failed to delete the file.",
+  },
   clickToSearchIt: "Click to search",
-  fileReadyToUpload: "File ready to upload",
   next: "Next",
   webSiteExample: "https://www.mywebsite.com",
   send: "Send",
@@ -665,8 +674,9 @@ const en: IDictionary = {
   testimonialsTitle: "Testimonials",
   testimonialsSubtitle: "Check out what people are talking about us",
   yourGallery: "Your gallery",
-  fromYourGallery: "From your gallery",
+  fromYourGalleryOrTemplates: "From your gallery or our templates",
   orUploadANewFile: "Or upload a new image",
+  orFromYourDevice: "Or from your device",
 };
 
 const pt: IDictionary = {
@@ -723,12 +733,16 @@ const pt: IDictionary = {
   no: "Não",
   or: "ou",
   and: "e",
-  chooseFile: "Escolha um arquivo",
-  chooseImage: "Escolha uma imagem",
-  dragAndDropYourImage: "Arraste e solte sua imagem aqui",
-  dropYourImageHere: "Solte sua imagem aqui...",
+  fileHandling: {
+    chooseFile: "Escolha um arquivo",
+    chooseImage: "Escolha uma imagem",
+    dragAndDropYourImage: "Arraste e solte sua imagem aqui",
+    dropYourImageHere: "Solte sua imagem aqui...",
+    fileReadyToUpload: "Arquivo pronto para enviar",
+    fileDeletedSuccessfully: "Arquivo apagada com sucesso.",
+    errorToDeleteFile: "Não foi possível apgar o arquivo.",
+  },
   clickToSearchIt: "Clique para procurar",
-  fileReadyToUpload: "Arquivo pronto para enviar",
   next: "Avançar",
   webSiteExample: "https://www.meusite.com",
   send: "Enviar",
@@ -1018,8 +1032,9 @@ const pt: IDictionary = {
   testimonialsTitle: "O que falam",
   testimonialsSubtitle: "Alguns feedbacks que recebemos sobre nosso serviço",
   yourGallery: "Sua galeria",
-  fromYourGallery: "Da sua galeria",
+  fromYourGalleryOrTemplates: "Da sua galeria ou dos nossos templates",
   orUploadANewFile: "Ou envie uma nova imagem",
+  orFromYourDevice: "Ou do seu dispositivo",
 };
 
 // Composed dictionaries

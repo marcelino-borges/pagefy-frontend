@@ -12,11 +12,7 @@ import {
 import { useDropzone } from "react-dropzone";
 import strings from "../../../localization";
 import { Check as CheckIcon, Delete as DeleteIcon } from "@mui/icons-material";
-import {
-  APP_ENVIROMENT,
-  GalleryContext,
-  MAXIMUM_FILE_SIZE,
-} from "../../../constants";
+import { GalleryContext, MAXIMUM_FILE_SIZE } from "../../../constants";
 import { showErrorToast } from "../../../utils/toast/index";
 import { ACESSIBILITY_GREEN, MEDIUM_GREY } from "../../../styles/colors";
 import UserGallery from "../gallery-user";
@@ -70,11 +66,11 @@ const UploadImageDialog = ({
   });
 
   const showDropzoneText = () => {
-    if (isDragActive) return <p>{strings.dropYourImageHere}</p>;
+    if (isDragActive) return <p>{strings.fileHandling.dropYourImageHere}</p>;
     else
       return (
         <p>
-          {strings.dragAndDropYourImage}
+          {strings.fileHandling.dragAndDropYourImage}
           <br />
           {strings.or}
           <br />
@@ -99,22 +95,17 @@ const UploadImageDialog = ({
       maxWidth="md"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.chooseImage}</DialogTitle>
+      <DialogTitle>{strings.fileHandling.chooseImage}</DialogTitle>
       <DialogContent>
         <>
-          {APP_ENVIROMENT === "DEV" && (
-            <UserGallery
-              onClickImage={(imageUrl: string) => {
-                if (submitDialog) submitDialog(imageUrl);
-              }}
-              context={context}
-            />
-          )}
-          {APP_ENVIROMENT === "DEV" ? (
-            <Text>{strings.orUploadANewFile}</Text>
-          ) : (
-            <Text>{strings.uploadImage}</Text>
-          )}
+          <UserGallery
+            onClickImage={(imageUrl: string) => {
+              if (submitDialog) submitDialog(imageUrl);
+            }}
+            context={context}
+          />
+          <Text>{strings.orFromYourDevice}</Text>
+
           {!chosenImage ? (
             <Dropzone container {...getRootProps()}>
               <input {...getInputProps()} />
@@ -151,7 +142,7 @@ const UploadImageDialog = ({
                           marginRight: "4px",
                         }}
                       />
-                      {strings.fileReadyToUpload}
+                      {strings.fileHandling.fileReadyToUpload}
                     </Grid>
                     <Grid
                       item

@@ -36,9 +36,14 @@ export const PageAvatar = styled(({ width, height, ...rest }: any) => (
   &:hover .MuiAvatar-root {
     display: flex;
   }
+
+  &:hover div {
+    display: flex;
+    background-color: ${PRIMARY_COLOR};
+  }
 `;
 
-export const AvatarOverlay = styled(({ ...rest }: any) => <Avatar {...rest} />)`
+export const AvatarOverlay = styled(({ ...rest }: any) => <div {...rest} />)`
   font-size: 2em;
   border-radius: 50%;
   position: absolute;
