@@ -139,7 +139,7 @@ export const includesAnyInString = (
   wordsToFind: string[]
 ): boolean => {
   for (let word in wordsToFind) {
-    if (originalString.includes(word)) return true;
+    if (originalString.includes(wordsToFind[word])) return true;
   }
   return false;
 };

@@ -70,6 +70,10 @@ export interface IUserPage {
   topComponents?: IUserComponent[];
   middleComponents?: IUserComponent[];
   bottomComponents?: IUserComponent[];
+  customScripts?: {
+    header?: string;
+    endBody?: string;
+  };
 }
 
 export interface IUserComponent {
@@ -111,6 +115,7 @@ export interface IComponentStyle {
   backgroundSize?: string;
   backgroundPosition?: string;
   color?: string;
+  borderRadius?: string;
 }
 
 export const enum ComponentType {

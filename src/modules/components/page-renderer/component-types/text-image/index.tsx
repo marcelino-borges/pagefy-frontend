@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
-import { RENDERED_PAGE_COMPONENT_RADIUS } from "../../../../../constants";
+import { DEFAULT_COMPONENT_RADIUS } from "../../../../../constants";
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
@@ -28,7 +28,7 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px 0px 0px ${RENDERED_PAGE_COMPONENT_RADIUS}px`,
+                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px 0px 0px ${DEFAULT_COMPONENT_RADIUS}px`,
               }}
             ></Grid>
             <Grid
@@ -52,7 +52,7 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px ${RENDERED_PAGE_COMPONENT_RADIUS}px 0px 0px`,
+                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px ${DEFAULT_COMPONENT_RADIUS}px 0px 0px`,
                 height: "50%",
               }}
             ></Grid>
@@ -82,7 +82,7 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px 0px 0px ${RENDERED_PAGE_COMPONENT_RADIUS}px`,
+                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px 0px 0px ${DEFAULT_COMPONENT_RADIUS}px`,
               }}
             ></Grid>
             <Grid
@@ -108,7 +108,7 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px 0px 0px ${RENDERED_PAGE_COMPONENT_RADIUS}px`,
+                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px 0px 0px ${DEFAULT_COMPONENT_RADIUS}px`,
               }}
             ></Grid>
             <Grid container xs={6} justifyContent="center" alignItems="center">

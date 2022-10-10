@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import quoteSVG from "../../../assets/img/quote-grey.svg";
 import {
   SECONDARY_COLOR,
-  SECONDARY_COLOR_DARKER,
+  SECONDARY_COLOR_DARK,
 } from "./../../../styles/colors";
 
 export const Root = styled(({ children, ...rest }: any) => (
@@ -67,7 +67,7 @@ export const UserProfession = styled(({ children, ...rest }: any) => (
 ))(
   () => `
   font-weight: 600;
-  color: ${SECONDARY_COLOR_DARKER};
+  color: ${SECONDARY_COLOR_DARK};
 `
 );
 
@@ -76,6 +76,6 @@ export const UserCompany = styled(({ children, ...rest }: any) => (
 ))(
   () => `
   font-weight: 600;
-  color: ${SECONDARY_COLOR_DARKER};
+  color: ${SECONDARY_COLOR_DARK};
 `
 );

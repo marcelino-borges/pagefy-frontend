@@ -88,7 +88,6 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
         document.documentElement.style.backgroundPosition = "center";
         document.documentElement.style.backgroundAttachment = "fixed";
 
-        console.log("window.innerWidth: " + window.innerWidth);
         if (window.innerWidth < 600) {
           document.documentElement.style.backgroundSize = "auto 100%";
         } else {
@@ -164,6 +163,17 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
     }
   };
 
+  useEffect(() => {
+    if (page && page.customScripts?.header) {
+      try {
+        // eslint-disable-next-line no-eval
+        eval(page?.customScripts?.header);
+      } catch (e: any) {
+        console.error("CUSTOM SCRIPT:", e.message);
+      }
+    }
+  }, [page]);
+
   const CustomHelmet = ({ pageTitle, url, imageUrl }: any) => {
     return (
       <Helmet>
@@ -193,6 +203,15 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
         <meta property="og:image:type" content="image/webp" />
         <meta property="og:image:width" content="1024" />
         <meta property="og:image:height" content="1024" />
+        <script>
+          {(function run() {
+            if (!pageToRender?.customScripts?.header) return;
+            // eslint-disable-next-line no-new-func
+            return Function(
+              '"use strict";' + pageToRender?.customScripts?.header
+            )();
+          })()}
+        </script>
       </Helmet>
     );
   };

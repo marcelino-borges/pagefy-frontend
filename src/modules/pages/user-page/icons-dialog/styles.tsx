@@ -7,9 +7,13 @@ export const IconsSearchResultsArea = styled(
     <Grid {...rest} />
   )
 )`
-  min-height: 200px;
+  height: 50vh;
   overflow-y: auto;
   padding: 12px 0px;
+
+  @media (max-width: 600px) {
+    height: 100%;
+  }
 `;
 
 export const IconsResult = styled(

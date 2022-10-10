@@ -5,7 +5,7 @@ import {
 } from "../../../../../store/user-pages/types";
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
-  RENDERED_PAGE_COMPONENT_RADIUS,
+  DEFAULT_COMPONENT_RADIUS,
 } from "../../../../../constants";
 import { Root } from "./style";
 import CustomTooltip from "../../../tooltip";
@@ -53,9 +53,9 @@ const BaseComponentType = ({
           container
           item
           style={{
-            minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
-            borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
             ...style,
+            minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
+            borderRadius: style.borderRadius || `${DEFAULT_COMPONENT_RADIUS}px`,
           }}
           {...rest}
         >

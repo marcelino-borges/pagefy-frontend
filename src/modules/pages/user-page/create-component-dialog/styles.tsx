@@ -2,6 +2,7 @@ import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
 import { LIGHTER_GREY, LIGHT_GREY } from "../../../../styles/colors";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
+import { MEDIUM_GREY } from "./../../../../styles/colors";
 
 export const IconsResult = styled((props: any) => <Grid {...props} />)`
   font-size: 64px;
@@ -21,14 +22,17 @@ export const SectionHeader = styled((props: any) => <Grid {...props} />)`
 `;
 
 export const ComponentDetailsButton = styled(
-  ({ isSelected, size, fontSize, ...rest }: any) => <div {...rest} />
-)`
+  ({ isSelected, size, fontSize, borderRadius, ...rest }: any) => (
+    <div {...rest} />
+  )
+)(
+  ({ isSelected, size, fontSize, borderRadius }) => `
   padding: 8px;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: ${borderRadius !== undefined ? borderRadius : 8}px;
   color: grey;
-  width: ${(props) => props.size || "100px"};
-  height: ${(props) => props.size || "100px"};
+  width: ${size || "100px"};
+  height: ${size || "100px"};
   background-color: ${LIGHTER_GREY};
   display: flex;
   justify-content: center;
@@ -39,18 +43,30 @@ export const ComponentDetailsButton = styled(
     margin: 12px 0px;
   }
 
-  ${(props) =>
-    !props.isSelected
+  &:hover {
+    background-color: ${LIGHT_GREY};
+    color: white;
+  }
+
+  &:active {
+    background-color: ${MEDIUM_GREY};
+    color: white;
+  }
+
+  ${
+    !isSelected
       ? ""
       : `
     color: white;
     background-color: ${PRIMARY_COLOR};
-  `}
+  `
+  }
 
   svg {
-    font-size: ${(props) => props.fontSize || "64px"};
+    font-size: ${fontSize || "64px"};
   }
-`;
+`
+);
 
 export const LayoutPickerContainer = styled(
   ({ mt, mb, ml, mr, ...rest }: any) => <Grid {...rest} />

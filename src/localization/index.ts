@@ -317,6 +317,14 @@ interface IDictionary {
   fromYourGalleryOrTemplates: string;
   orUploadANewFile: string;
   orFromYourDevice: string;
+  componentBorderRadius: string;
+  customScripts: {
+    insertCustomScript: string;
+    headerScript: string;
+    endBodyScript: string;
+    customScriptDescription: string;
+    scriptNotValidated: string;
+  };
 }
 
 // Dictionaries
@@ -677,6 +685,15 @@ const en: IDictionary = {
   fromYourGalleryOrTemplates: "From your gallery or our templates",
   orUploadANewFile: "Or upload a new image",
   orFromYourDevice: "Or from your device",
+  componentBorderRadius: "Border Radius",
+  customScripts: {
+    insertCustomScript: "Insert a custom script",
+    customScriptDescription:
+      "Use these fields if you're an advanced user, to run custom Javascript code in your bio.",
+    headerScript: "Script for the Header",
+    endBodyScript: "Script after body",
+    scriptNotValidated: "Script didn't pass our validation.",
+  },
 };
 
 const pt: IDictionary = {
@@ -1035,6 +1052,15 @@ const pt: IDictionary = {
   fromYourGalleryOrTemplates: "Da sua galeria ou dos nossos templates",
   orUploadANewFile: "Ou envie uma nova imagem",
   orFromYourDevice: "Ou do seu dispositivo",
+  componentBorderRadius: "Arredondamento das Bordas",
+  customScripts: {
+    insertCustomScript: "Insira um código personalizado",
+    customScriptDescription:
+      "Use esses campos se você for um usuário avançado, para rodar código Javascript personalizado na sua bio.",
+    headerScript: "Script para o Header",
+    endBodyScript: "Script para o final do body",
+    scriptNotValidated: "Script não pôde ser validado",
+  },
 };
 
 // Composed dictionaries

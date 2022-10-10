@@ -4,7 +4,7 @@ import {
   ArrowForwardIosRounded,
   Delete,
 } from "@mui/icons-material";
-import { PRIMARY_COLOR, PRIMARY_COLOR_DARKER } from "./../../../styles/colors";
+import { PRIMARY_COLOR, PRIMARY_COLOR_DARK } from "./../../../styles/colors";
 
 const HEIGHT = 150;
 const BASIC_ARROW = `
@@ -23,7 +23,7 @@ const BASIC_ARROW = `
   }
 
   &:active {
-    background-color: ${PRIMARY_COLOR_DARKER}90;
+    background-color: ${PRIMARY_COLOR_DARK}90;
     color: white;
   }
 `;

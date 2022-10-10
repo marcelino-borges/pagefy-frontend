@@ -1,7 +1,7 @@
 export const PRIMARY_COLOR = "#65C29B";
-export const PRIMARY_COLOR_DARKER = "#50a380";
+export const PRIMARY_COLOR_DARK = "#50a380";
 export const SECONDARY_COLOR = "#3CB6D6";
-export const SECONDARY_COLOR_DARKER = "#196c82";
+export const SECONDARY_COLOR_DARK = "#196c82";
 export const COMPLEMENTARY_COLOR = "#162B47";
 export const GLOBAL_LIGHT_BG = "#F7F9FC";
 export const UPPER_MEDIUM_GREY = "#999999";

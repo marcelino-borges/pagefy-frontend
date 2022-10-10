@@ -11,6 +11,7 @@ import {
   Delete as DeleteIcon,
   RocketLaunch as LaunchIcon,
   OpenInNew as OpenInNewIcon,
+  Code,
 } from "@mui/icons-material";
 import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
@@ -64,13 +65,14 @@ import { getUser } from "../../../store/user/actions";
 import IconButton from "../../components/icon-button";
 import { getPageByUrl } from "../../../services/user-pages";
 import { AxiosResponse } from "axios";
-import { showErrorToast } from "./../../../utils/toast";
+import { showErrorToast, showSuccessToast } from "./../../../utils/toast";
 import { clearLoading, setLoading } from "../../../store/shared/actions";
 import { deleteImage } from "../../../services/files";
 import { getFirebaseToken } from "../../../utils/firebase-config";
 import { LIGHT_GREY } from "../../../styles/colors";
 import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
+import CustomScriptDialog from "./custom-script-dialog";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -104,6 +106,8 @@ const UserPage = () => {
     useState(false);
   const [idIconToDelete, setIdIconToDelete] = useState<string | undefined>();
   const [openPreviewDialog, setOpenPreviewDialog] = useState<boolean>(false);
+  const [openCustomScriptDialog, setOpenCustomScriptDialog] =
+    useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -193,6 +197,31 @@ const UserPage = () => {
       .finally(() => {
         setIsEdittingPageUrl(false);
       });
+  };
+
+  const onSubmitPageScripts = (
+    headerScriptFromDialog: string | undefined,
+    endBodyScriptFromDialog: string | undefined
+  ) => {
+    if (
+      !page ||
+      !page._id ||
+      (headerScriptFromDialog === undefined &&
+        endBodyScriptFromDialog === undefined)
+    )
+      return;
+    const updatedPage: IUserPage = {
+      ...page,
+      customScripts: {
+        header: headerScriptFromDialog || "",
+        endBody: endBodyScriptFromDialog || "",
+      },
+    };
+    dispatch(
+      updatePage(updatedPage, () => {
+        showSuccessToast(strings.successUpdatePage);
+      })
+    );
   };
 
   const handleOpenIconsDialog = () => {
@@ -397,7 +426,9 @@ const UserPage = () => {
               hoverBackgroundColor={LIGHT_GREY}
             >
               <BackgroundColorIcon
-                bucketColor="rgba(0, 0, 0, 0.54)"
+                bucketColor={
+                  page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
+                }
                 selectedColor={
                   page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
                 }
@@ -422,7 +453,7 @@ const UserPage = () => {
               }}
             >
               <FontColorIcon
-                bucketColor="rgba(0, 0, 0, 0.54)"
+                bucketColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
                 selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
               />
             </IconButton>
@@ -463,6 +494,42 @@ const UserPage = () => {
                 setChosenImage(undefined);
                 setOpenChooseFileBGDialog(false);
               }}
+            />
+          </Grid>
+        </CustomTooltip>
+
+        <CustomTooltip title={strings.customScripts.insertCustomScript}>
+          <Grid item>
+            <IconButton
+              size="large"
+              onClick={() => {
+                setOpenCustomScriptDialog(true);
+              }}
+              hoverBackgroundColor={LIGHT_GREY}
+            >
+              <Code
+                color={
+                  page?.customScripts?.endBody?.length ||
+                  page?.customScripts?.header?.length
+                    ? "primary"
+                    : "inherit"
+                }
+              />
+            </IconButton>
+            <CustomScriptDialog
+              existingHeaderScript={page?.customScripts?.header}
+              existingEndBodyScript={page?.customScripts?.endBody}
+              handleClose={(
+                headerScriptFromDialog: string | undefined,
+                endBodyScriptFromDialog: string | undefined
+              ) => {
+                onSubmitPageScripts(
+                  headerScriptFromDialog,
+                  endBodyScriptFromDialog
+                );
+                setOpenCustomScriptDialog(false);
+              }}
+              open={openCustomScriptDialog}
             />
           </Grid>
         </CustomTooltip>

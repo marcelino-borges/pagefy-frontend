@@ -16,9 +16,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.14.0] - 2022-10-10
+
+- Feature: user can insert javascript code in the page, to be executed in the page load/mount
+- Feature: Custom scrollbar
+
+### [1.13.0] - 2022-10-10
+
+- Feature: Implemented feature to allow component till 8 rows
+- Feature: Implmented feature to allow user to pick a border radius among pre-defined options
+
 ### [1.12.1] - 2022-10-09
 
 - Fix: Gallery fix on loading/adding new images
+-
 
 ### [1.12.0] - 2022-10-09
 

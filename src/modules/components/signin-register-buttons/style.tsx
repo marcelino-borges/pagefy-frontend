@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
   PRIMARY_COLOR,
-  PRIMARY_COLOR_DARKER,
+  PRIMARY_COLOR_DARK,
   SECONDARY_COLOR,
 } from "../../../styles/colors";
 
@@ -37,6 +37,6 @@ export const SignUpButton = styled(Link)`
 
   &:hover {
     color: white;
-    background-color: ${PRIMARY_COLOR_DARKER};
+    background-color: ${PRIMARY_COLOR_DARK};
   }
 `;

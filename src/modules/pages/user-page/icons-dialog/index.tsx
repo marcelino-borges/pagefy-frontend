@@ -58,7 +58,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     useForm();
   const { handleSubmit: handleSubmitUrl, register: registerUrl } = useForm();
 
-  const [resultsList, setResultsList] = useState<IIconifyIcon[]>([]);
+  const [resultsList, setResultsList] = useState<IIconifyIcon[]>(icons);
   const [showLoading, setShowLoading] = useState<boolean>(false);
   const [isSearchInvalid, setIsSearchInvalid] = useState<boolean>(false);
   const [isUrlInvalid, setIsUrlInvalid] = useState<boolean>(false);
@@ -93,13 +93,13 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     setShowLoading(false);
   };
 
-  const onSubmitSearch = () => {
+  const validateAndSearchOnSubmit = () => {
     if (search === lastSearch) {
       return;
     }
 
     if (search.length < 1) {
-      setResultsList([]);
+      clearStates();
       return;
     }
 
@@ -109,14 +109,14 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     }
 
     setShowLoading(true);
-    setResultsList([]);
+    setResultsList(icons);
     searchIcon(search);
     setIconSelected(undefined);
     setColorSelected("black");
   };
 
   const clearStates = () => {
-    setResultsList([]);
+    setResultsList(icons);
     setLastSearch(undefined);
     setIsSearchInvalid(false);
     setIconSelected(undefined);
@@ -211,7 +211,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     >
       <DialogTitle>{strings.addIcon}</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleSubmitSearch(onSubmitSearch)}>
+        <form onSubmit={handleSubmitSearch(validateAndSearchOnSubmit)}>
           <TextField
             {...registerSearch("search")}
             error={isSearchInvalid}
@@ -220,7 +220,6 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
             label={strings.iconName}
             type="text"
             fullWidth
-            required
             variant="outlined"
             style={{ marginTop: "16px", minWidth: "191px" }}
             onChange={(e: any) => {

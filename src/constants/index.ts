@@ -5,7 +5,6 @@ export const YOUTUBE_SHORT_URL_IDENTIFIER = "youtu.be/";
 export const YOUTUBE_FULL_URL_IDENTIFIER = "watch?v=";
 export const YOUTUBE_EMBED_URL_IDENTIFIER = "/embed/";
 export const RENDERED_PAGE_COMPONENT_HEIGHT = 56;
-export const RENDERED_PAGE_COMPONENT_RADIUS = 6;
 export const RENDERED_PAGE_LAUNCH_COMPONENT_ROWS = 4;
 export const MAXIMUM_FILE_SIZE = 3; //In MB
 export const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z]).{8,}$/m;
@@ -120,3 +119,14 @@ export enum GalleryContext {
   PAGE_IMAGE,
   BUTTONS,
 }
+
+export const COMPONENT_MAX_ROWS = 8;
+export const COMPONENT_MAX_COLUMNS = 2;
+export enum ComponentBorderRadius {
+  SQUARE = 0,
+  SMOOTH_ROUNDED = 10,
+  NORMAL_ROUNDED = 16,
+  HARD_ROUNDED = 20,
+  ROUNDED = 30,
+}
+export const DEFAULT_COMPONENT_RADIUS = ComponentBorderRadius.SMOOTH_ROUNDED;

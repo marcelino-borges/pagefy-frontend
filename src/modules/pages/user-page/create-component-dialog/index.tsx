@@ -24,6 +24,7 @@ import {
   VisibilityOff as VisibilityOffIcon,
   Timer as TimerIcon,
   AutoFixHigh as ChooseAnimationIcon,
+  Circle,
 } from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
@@ -47,7 +48,13 @@ import CustomTooltip from "../../../components/tooltip";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import UploadImageDialog from "../../../components/dialog-upload-image";
-import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
+import {
+  ComponentBorderRadius,
+  COMPONENT_MAX_COLUMNS,
+  COMPONENT_MAX_ROWS,
+  GalleryContext,
+  IMAGE_EXTENSIONS,
+} from "../../../../constants";
 import {
   ComponentType,
   IComponentAnimation,
@@ -87,10 +94,13 @@ const ComponentDialog = ({
   const { handleSubmit, register } = useForm();
 
   const [selectedType, setSelectedType] = useState<ComponentType>(
-    ComponentType.Video
+    ComponentType.Text
   );
-  const [selectedColumnsCount, setSelectedColumnsCount] = useState<number>(4);
-  const [selectedRowsCount, setSelectedRowsCount] = useState<number>(4);
+  const [selectedColumnsCount, setSelectedColumnsCount] = useState<number>(1);
+  const [selectedRowsCount, setSelectedRowsCount] = useState<number>(1);
+  const [selectedBorder, setSelectedBorder] = useState<ComponentBorderRadius>(
+    ComponentBorderRadius.SQUARE
+  );
 
   const [typeError, setTypeError] = useState<string>();
   const [columnsError, setColumnsError] = useState<string>();
@@ -126,9 +136,10 @@ const ComponentDialog = ({
 
   const clearStates = () => {
     // Step 1 buttons
-    setSelectedType(ComponentType.Video);
-    setSelectedColumnsCount(4);
-    setSelectedRowsCount(4);
+    setSelectedType(ComponentType.Text);
+    setSelectedColumnsCount(1);
+    setSelectedRowsCount(1);
+    setSelectedBorder(ComponentBorderRadius.SQUARE);
     setShowStep2(false);
     setStep(0);
     setFontColor(TRANSPARENT);
@@ -158,6 +169,7 @@ const ComponentDialog = ({
         return;
       }
 
+      console.log("selectedBorder.toString()", selectedBorder.toString());
       handleGoToStep(1, 350);
     } else if (step === 1) {
       if (!isStep2Valid()) {
@@ -189,6 +201,7 @@ const ComponentDialog = ({
         style: {
           backgroundColor,
           color: fontColor,
+          borderRadius: selectedBorder.toString() + "px",
         },
         visible: isVisible,
         clicks: 0,
@@ -219,12 +232,15 @@ const ComponentDialog = ({
       isValid = false;
     }
 
-    if (selectedColumnsCount === 4) {
+    if (
+      selectedColumnsCount < 1 ||
+      selectedColumnsCount > COMPONENT_MAX_COLUMNS
+    ) {
       setColumnsError("Selecione a quantidade de colunas");
       isValid = false;
     }
 
-    if (selectedRowsCount === 4) {
+    if (selectedRowsCount > COMPONENT_MAX_ROWS || selectedRowsCount < 1) {
       setRowsError("Selecione a quantidade de linhas");
       isValid = false;
     }
@@ -320,7 +336,7 @@ const ComponentDialog = ({
           <Grid container direction="column">
             <Section
               title={strings.type}
-              icon={<CategoryIcon />}
+              icon={<CategoryIcon sx={{ transform: "translateY(-4px)" }} />}
               error={typeError}
             />
 
@@ -370,78 +386,98 @@ const ComponentDialog = ({
 
             {/* Columns selector */}
             <Grid container width="100%" pt="24px">
-              <Section
-                title={strings.columns}
-                icon={<ColumnsIcon />}
-                error={columnsError}
-              />
-              <LayoutPickerContainer container item direction="column">
-                <Grid container item wrap="nowrap">
-                  <Grid item>
-                    <ComponentDetailsButton
-                      size="60px"
-                      fontSize="27px"
-                      isSelected={selectedColumnsCount === 1}
-                      onClick={() => {
-                        setSelectedColumnsCount(1);
-                      }}
-                    >
-                      1
-                    </ComponentDetailsButton>
-                  </Grid>
+              <Grid item width="100%" xs={6}>
+                <Section
+                  title={`${strings.columns} (1 - ${COMPONENT_MAX_COLUMNS})`}
+                  icon={<ColumnsIcon sx={{ transform: "translateY(-4px)" }} />}
+                  error={columnsError}
+                />
+                <LayoutPickerContainer container item direction="column">
+                  <TextField
+                    sx={{ mb: "8px" }}
+                    type="number"
+                    value={selectedColumnsCount}
+                    onChange={(event: any) => {
+                      const value: number = Number(event.target.value);
 
-                  <Grid item pl="24px">
-                    <ComponentDetailsButton
-                      size="60px"
-                      fontSize="27px"
-                      isSelected={selectedColumnsCount === 2}
-                      onClick={() => {
-                        setSelectedColumnsCount(2);
-                      }}
-                    >
-                      2
-                    </ComponentDetailsButton>
-                  </Grid>
-                </Grid>
-              </LayoutPickerContainer>
+                      if (value > COMPONENT_MAX_COLUMNS) {
+                        setSelectedColumnsCount(COMPONENT_MAX_COLUMNS);
+                      } else if (value < 1) {
+                        setSelectedColumnsCount(1);
+                      } else {
+                        setSelectedColumnsCount(event.target.value);
+                      }
+                    }}
+                    InputProps={{
+                      inputProps: { min: 1, max: COMPONENT_MAX_COLUMNS },
+                    }}
+                  />
+                </LayoutPickerContainer>
+              </Grid>
+
+              {/* Rows selector */}
+              <Grid item xs={6}>
+                <Section
+                  title={`${strings.rows} (1 - ${COMPONENT_MAX_ROWS})`}
+                  icon={<RowsIcon sx={{ transform: "translateY(-4px)" }} />}
+                  error={rowsError}
+                />
+                <LayoutPickerContainer container item direction="column">
+                  <TextField
+                    sx={{ mb: "8px" }}
+                    type="number"
+                    value={selectedRowsCount}
+                    onChange={(event: any) => {
+                      const value: number = Number(event.target.value);
+
+                      if (value > COMPONENT_MAX_ROWS) {
+                        setSelectedRowsCount(COMPONENT_MAX_ROWS);
+                      } else if (value < 1) {
+                        setSelectedRowsCount(1);
+                      } else {
+                        setSelectedRowsCount(event.target.value);
+                      }
+                    }}
+                    InputProps={{
+                      inputProps: { min: 1, max: COMPONENT_MAX_ROWS },
+                    }}
+                  />
+                </LayoutPickerContainer>
+              </Grid>
             </Grid>
 
-            {/* Rows selector */}
-            <Grid container pt="24px">
+            {/* Border Radius */}
+            <Grid container width="100%" pt="24px">
               <Section
-                title={strings.rows}
-                icon={<RowsIcon />}
-                error={rowsError}
+                title={strings.componentBorderRadius}
+                icon={
+                  <Circle
+                    sx={{ width: "16px", transform: "translateY(-4px)" }}
+                  />
+                }
+                error={columnsError}
               />
-              <LayoutPickerContainer container item direction="column">
-                <Grid container item wrap="nowrap">
-                  <Grid item>
-                    <ComponentDetailsButton
-                      size="60px"
-                      fontSize="27px"
-                      isSelected={selectedRowsCount === 1}
-                      onClick={() => {
-                        setSelectedRowsCount(1);
-                      }}
-                    >
-                      1
-                    </ComponentDetailsButton>
-                  </Grid>
-
-                  <Grid item pl="24px">
-                    <ComponentDetailsButton
-                      size="60px"
-                      fontSize="27px"
-                      isSelected={selectedRowsCount === 2}
-                      onClick={() => {
-                        setSelectedRowsCount(2);
-                      }}
-                    >
-                      2
-                    </ComponentDetailsButton>
-                  </Grid>
-                </Grid>
-              </LayoutPickerContainer>
+              {Object.values(ComponentBorderRadius)
+                .filter((v) => !isNaN(Number(v)))
+                .map(
+                  (radius: string | ComponentBorderRadius, index: number) => {
+                    return (
+                      <Grid item pl={index === 0 ? "" : "24px"}>
+                        <ComponentDetailsButton
+                          size="60px"
+                          fontSize="27px"
+                          isSelected={selectedBorder === radius}
+                          borderRadius={radius}
+                          onClick={() => {
+                            setSelectedBorder(radius as ComponentBorderRadius);
+                          }}
+                        >
+                          {radius}
+                        </ComponentDetailsButton>
+                      </Grid>
+                    );
+                  }
+                )}
             </Grid>
           </Grid>
         </DialogContent>

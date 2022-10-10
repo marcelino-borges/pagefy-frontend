@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
-  RENDERED_PAGE_COMPONENT_RADIUS,
+  DEFAULT_COMPONENT_RADIUS,
 } from "../../../../../constants";
 import BaseComponentType from "../base";
 import strings from "../../../../../localization";
@@ -129,7 +129,7 @@ const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
           backgroundImage: `url(${component.mediaUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          borderRadius: `${RENDERED_PAGE_COMPONENT_RADIUS}px`,
+          borderRadius: `${DEFAULT_COMPONENT_RADIUS}px`,
           minHeight: component.layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
           padding: "16px",
         }}
