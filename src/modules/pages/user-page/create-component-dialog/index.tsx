@@ -47,7 +47,7 @@ import CustomTooltip from "../../../components/tooltip";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import UploadImageDialog from "../../../components/dialog-upload-image";
-import { IMAGE_EXTENSIONS } from "../../../../constants";
+import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
 import {
   ComponentType,
   IComponentAnimation,
@@ -458,6 +458,7 @@ const ComponentDialog = ({
           }}
         >
           <UploadImageDialog
+            context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
             openChooseFileDialog={showUploadDialog}
             setOpenChooseFileDialog={setShowUploadDialog}
             chosenImage={chosenImage}

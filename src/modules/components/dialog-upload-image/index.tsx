@@ -12,7 +12,11 @@ import {
 import { useDropzone } from "react-dropzone";
 import strings from "../../../localization";
 import { Check as CheckIcon, Delete as DeleteIcon } from "@mui/icons-material";
-import { APP_ENVIROMENT, MAXIMUM_FILE_SIZE } from "../../../constants";
+import {
+  APP_ENVIROMENT,
+  GalleryContext,
+  MAXIMUM_FILE_SIZE,
+} from "../../../constants";
 import { showErrorToast } from "../../../utils/toast/index";
 import { ACESSIBILITY_GREEN, MEDIUM_GREY } from "../../../styles/colors";
 import UserGallery from "../gallery-user";
@@ -26,6 +30,7 @@ interface IUploadImageDialogProps {
   acceptedFiles?: string;
   submitDialog?: (imageUrl?: string) => void;
   cancelDialog?: any;
+  context?: GalleryContext[];
 }
 
 const UploadImageDialog = ({
@@ -36,6 +41,7 @@ const UploadImageDialog = ({
   acceptedFiles,
   submitDialog,
   cancelDialog,
+  context,
 }: IUploadImageDialogProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -101,9 +107,14 @@ const UploadImageDialog = ({
               onClickImage={(imageUrl: string) => {
                 if (submitDialog) submitDialog(imageUrl);
               }}
+              context={context}
             />
           )}
-          <Text>{strings.orUploadANewFile}</Text>
+          {APP_ENVIROMENT === "DEV" ? (
+            <Text>{strings.orUploadANewFile}</Text>
+          ) : (
+            <Text>{strings.uploadImage}</Text>
+          )}
           {!chosenImage ? (
             <Dropzone container {...getRootProps()}>
               <input {...getInputProps()} />

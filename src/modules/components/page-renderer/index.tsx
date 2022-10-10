@@ -207,7 +207,9 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
         />
       )}
       <PageRendererContent>
-        {renderedPageState.loading && <LoadingSpinner color={PRIMARY_COLOR} />}
+        {renderedPageState.loading && (
+          <LoadingSpinner isFullPage color={PRIMARY_COLOR} />
+        )}
         {!isPagePreview &&
           !renderedPageState.loading &&
           (!page || !page.isPublic) && (

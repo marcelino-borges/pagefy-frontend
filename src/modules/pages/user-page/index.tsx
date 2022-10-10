@@ -52,7 +52,7 @@ import ComponentDialog from "./create-component-dialog";
 import VideoDialog from "./video-dialog";
 import Header from "./../../components/header";
 import UploadImageDialog from "../../components/dialog-upload-image";
-import { IMAGE_EXTENSIONS } from "../../../constants";
+import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation";
 import LaunchDialog from "./launch-dialog";
@@ -449,6 +449,7 @@ const UserPage = () => {
               />
             </IconButton>
             <UploadImageDialog
+              context={[GalleryContext.BACKGROUND]}
               openChooseFileDialog={openChooseFileBGDialog}
               setOpenChooseFileDialog={setOpenChooseFileBGDialog}
               chosenImage={chosenImage}
@@ -775,6 +776,7 @@ const UserPage = () => {
           message={strings.removePageConfirmation}
         />
         <UploadImageDialog
+          context={[GalleryContext.PAGE_IMAGE]}
           openChooseFileDialog={openChooseFilePageDialog}
           setOpenChooseFileDialog={setOpenChooseFilePageDialog}
           chosenImage={chosenImage}

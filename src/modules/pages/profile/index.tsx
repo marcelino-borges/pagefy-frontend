@@ -20,7 +20,7 @@ import PrivateRouteChecker from "../../components/private-route-checker";
 import PageTitle from "../../components/page-title";
 import ProfileEditableAvatar from "../../components/profile-editable-avatar";
 import UploadImageDialog from "../../components/dialog-upload-image";
-import { IMAGE_EXTENSIONS } from "../../../constants";
+import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
 import InternalLink from "./../../components/internal-link/index";
 import routes from "./../../../routes/paths";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -111,6 +111,7 @@ const Profile = () => {
         }}
       />
       <UploadImageDialog
+        context={[GalleryContext.USER_PROFILE]}
         openChooseFileDialog={openUploadDialog}
         setOpenChooseFileDialog={setOpenUploadDialog}
         chosenImage={chosenImage}

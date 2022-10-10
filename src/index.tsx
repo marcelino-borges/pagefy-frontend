@@ -21,7 +21,10 @@ ReactDOM.render(
   <React.StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
-        <PersistGate loading={<LoadingSpinner />} persistor={persistor}>
+        <PersistGate
+          loading={<LoadingSpinner isFullPage />}
+          persistor={persistor}
+        >
           <ThemeProvider theme={theme}>
             <LocalizationProvider
               dateAdapter={DateAdapter}

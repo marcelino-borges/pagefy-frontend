@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { IImageDetails } from "../../store/files/types";
 
 const api = axios.create({
   baseURL: `${process.env.REACT_APP_REGISTRATION_ENDPOINT}`,
@@ -36,5 +37,56 @@ export const deleteImage = async (
     data: {
       url,
       userId,
+    },
+  });
+
+export const getAllUserImages = async (
+  userId: string,
+  token: string
+): Promise<AxiosResponse<IImageDetails | null>> =>
+  await api.get(`/files/user/${userId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+export const getAllButtonsTemplates = async (
+  token: string
+): Promise<AxiosResponse<IImageDetails | null>> =>
+  await api.get("/files/templates/buttons", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+export const getAllBackgroundsTemplates = async (
+  token: string
+): Promise<AxiosResponse<IImageDetails | null>> =>
+  await api.get("/files/templates/backgrounds", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+export const getAllPagesImagesTemplates = async (
+  token: string
+): Promise<AxiosResponse<IImageDetails | null>> =>
+  await api.get("/files/templates/pages-imgs", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  });
+
+export const getAllUserProfileTemplates = async (
+  token: string
+): Promise<AxiosResponse<IImageDetails | null>> =>
+  await api.get("/files/templates/user-profile", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
     },
   });

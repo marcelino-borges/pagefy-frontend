@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { LIGHTER_GREY } from "../../../../styles/colors";
 import UploadImageDialog from "../../dialog-upload-image";
 import { useState } from "react";
-import { IMAGE_EXTENSIONS } from "../../../../constants";
+import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
 import { deleteImage } from "../../../../services/files";
 import {
   setUserProfileImage,
@@ -123,6 +123,7 @@ const UserLoggedIn = () => {
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
+        context={[GalleryContext.USER_PROFILE]}
         submitDialog={async (imageUrl?: string) => {
           const token = await getFirebaseToken();
           if ((!imageUrl && !chosenImage) || !token || !userState.profile)

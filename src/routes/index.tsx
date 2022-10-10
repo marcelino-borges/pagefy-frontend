@@ -85,7 +85,7 @@ const AppRoutes = () => {
           }}
         />
       )}
-      {isLoading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner isFullPage />}
       <Routes>
         <Route path={routes.root} element={<Home />} />
         <Route path={routes.signIn} element={<SignInPage />} />

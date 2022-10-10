@@ -3,7 +3,7 @@ import {
   ArrowBackIosNewRounded,
   ArrowForwardIosRounded,
 } from "@mui/icons-material";
-import { PRIMARY_COLOR } from "./../../../styles/colors";
+import { PRIMARY_COLOR, PRIMARY_COLOR_DARKER } from "./../../../styles/colors";
 
 const HEIGHT = 150;
 const BASIC_ARROW = `
@@ -12,17 +12,17 @@ const BASIC_ARROW = `
   z-index: 5;
   bottom: 2;
   background-color: #ffffff70;
-  color: white;
+  color: black;
   height: ${HEIGHT}px;
   width: 22px;
 
   &:hover {
-    background-color: #ffffff90;
+    background-color: ${PRIMARY_COLOR}90;
     color: black;
   }
 
   &:active {
-    background-color: ${PRIMARY_COLOR}90;
+    background-color: ${PRIMARY_COLOR_DARKER}90;
     color: white;
   }
 `;
@@ -50,11 +50,14 @@ export const Image = styled("div")`
   position: relative;
   width: ${HEIGHT}px;
   height: ${HEIGHT}px;
-  background-size: cover;
   flex: 1 0 auto;
   z-index: 0;
   cursor: pointer;
   border-radius: 5px;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: center;
 
   &:hover {
     div {
@@ -88,4 +91,8 @@ export const ArrowBackIcon = styled(ArrowBackIosNewRounded)`
 export const ArrowForwardIcon = styled(ArrowForwardIosRounded)`
   ${BASIC_ARROW}
   right: 0;
+`;
+
+export const NoImagesOrLoading = styled("div")`
+  padding-top: 30px;
 `;

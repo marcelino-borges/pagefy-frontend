@@ -65,7 +65,7 @@ import {
 import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
 import UploadImageDialog from "../../../components/dialog-upload-image";
-import { IMAGE_EXTENSIONS } from "../../../../constants";
+import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
 import DialogConfirmation from "../../../components/dialog-confirmation";
 import YoutubeEmbed from "../../../components/youtube-embed";
 import { getYoutubeIdFromUrl } from "./../../../../utils/index";
@@ -242,6 +242,7 @@ const DraggableUserComponent = ({
 
       <DeleteComponentConfirmationDialog />
       <UploadImageDialog
+        context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
         openChooseFileDialog={openChooseFileDialog}
         setOpenChooseFileDialog={setOpenChooseFileDialog}
         chosenImage={chosenImage}
