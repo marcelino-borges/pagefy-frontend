@@ -180,13 +180,14 @@ const PageCard = ({ page }: IPageCardProps) => {
               <PageDataKey>URL: </PageDataKey>/
               {stringShortener(page.url, URL_MAX_LENGTH)}
             </Grid>
-            {userState?.plan !== PlansTypes.FREE && (
-              <Grid container item wrap="nowrap">
-                <ViewsIcon />
-                <PageDataKey>{strings.views}: </PageDataKey>
-                {page.views}
-              </Grid>
-            )}
+
+            <Grid container item wrap="nowrap">
+              <ViewsIcon />
+              <PageDataKey>{strings.views}: </PageDataKey>
+              {userState?.plan === PlansTypes.PLATINUM
+                ? page.views
+                : strings.upgradeYourPlan}
+            </Grid>
           </Grid>
         </Grid>
       </CardContent>
