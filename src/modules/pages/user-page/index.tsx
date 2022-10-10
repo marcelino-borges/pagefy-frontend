@@ -73,6 +73,7 @@ import { LIGHT_GREY } from "../../../styles/colors";
 import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./custom-script-dialog";
+import { PlansTypes } from "../../../store/user/types";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -118,15 +119,15 @@ const UserPage = () => {
     (state: IApplicationState) => state.userPages
   );
 
-  const userEmailState = useSelector(
-    (state: IApplicationState) => state.user.profile?.email
+  const userProfile = useSelector(
+    (state: IApplicationState) => state.user.profile
   );
 
   const listContainer = useRef(null);
 
   useEffect(() => {
-    if (userEmailState) dispatch(getUser(userEmailState, null));
-  }, [dispatch, userEmailState]);
+    if (userProfile?.email) dispatch(getUser(userProfile.email, null));
+  }, [dispatch, userProfile?.email]);
 
   useEffect(() => {
     if (
@@ -498,10 +499,17 @@ const UserPage = () => {
           </Grid>
         </CustomTooltip>
 
-        <CustomTooltip title={strings.customScripts.insertCustomScript}>
+        <CustomTooltip
+          title={
+            userProfile?.plan === PlansTypes.PLATINUM
+              ? strings.customScripts.insertCustomScript
+              : strings.upgradeYourPlan
+          }
+        >
           <Grid item>
             <IconButton
               size="large"
+              disabled={userProfile?.plan !== PlansTypes.PLATINUM}
               onClick={() => {
                 setOpenCustomScriptDialog(true);
               }}

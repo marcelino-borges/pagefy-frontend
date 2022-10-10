@@ -226,32 +226,13 @@ const Profile = () => {
                 value={values.email}
               />
             </Grid>
-            <Grid item>
-              <FormControl fullWidth>
-                <Select
-                  displayEmpty
-                  variant="outlined"
-                  onChange={(e: any) => {
-                    setValues({
-                      ...values,
-                      plan: e.target.value,
-                    });
-                  }}
-                  value={values.plan}
-                  sx={{ minWidth: "100px" }}
-                >
-                  <MenuItem selected={values.plan === 0} value={0}>
-                    <em>{strings.freePlan.name}</em>
-                  </MenuItem>
-                  <MenuItem selected={values.plan === 1} value={1}>
-                    <em>{strings.vipPlan.name}</em>
-                  </MenuItem>
-                  <MenuItem selected={values.plan === 2} value={2}>
-                    <em>{strings.platinumPlan.name}</em>
-                  </MenuItem>
-                </Select>
-                <FormHelperText>{""}</FormHelperText>
-              </FormControl>
+            <Grid item pt="16px" pb="8px">
+              <span>{`${strings.yourPlanIs}: `}</span>
+              <span>
+                <strong>
+                  <i>{Object.values(PlansTypes)[values.plan]}</i>
+                </strong>
+              </span>
             </Grid>
             <Grid container item direction="row" justifyContent="space-between">
               <FormControlLabel

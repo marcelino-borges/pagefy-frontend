@@ -265,6 +265,7 @@ interface IDictionary {
   haveAccessToPremiumResources: string;
   differentiate: string;
   getAPlanNow: string;
+  yourPlanIs: string;
   upgradeYourPlan: string;
   plan: string;
   freePlan: IPlanDetails;
@@ -601,6 +602,7 @@ const en: IDictionary = {
     "Access premium resources with a low investment!",
   differentiate: "Differentiate from the others!",
   getAPlanNow: "Get a plan now!",
+  yourPlanIs: "Your plan is",
   upgradeYourPlan: "Upgrade your plan",
   plan: "Plan",
   freePlan: {
@@ -968,6 +970,7 @@ const pt: IDictionary = {
     "Tenha acesso a recursos premium por um baixo investimento!",
   differentiate: "Diferencie-se dos outros!",
   getAPlanNow: "Assine um plano agora!",
+  yourPlanIs: "Seu plano é",
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
   freePlan: {

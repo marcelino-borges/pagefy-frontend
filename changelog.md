@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.14.1] - 2022-10-10
+
+- Fix: Custom script disabled in the page editor for non-Platinum user
+- Fix: Profile cannot change plano anymore
+
 ### [1.14.0] - 2022-10-10
 
 - Feature: user can insert javascript code in the page, to be executed in the page load/mount

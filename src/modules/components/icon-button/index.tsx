@@ -15,6 +15,7 @@ interface IIconButtonProps {
     | "success"
     | "warning";
   hoverBackgroundColor?: string;
+  disabled?: boolean;
 }
 
 const IconButton = ({
@@ -23,9 +24,11 @@ const IconButton = ({
   color,
   hoverBackgroundColor,
   children,
+  disabled,
 }: IIconButtonProps) => {
   return (
     <IconButtonCustom
+      disabled={disabled}
       size={size}
       onClick={onClick}
       color={color || "default"}

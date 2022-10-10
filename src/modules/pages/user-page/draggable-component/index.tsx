@@ -608,13 +608,15 @@ const DraggableUserComponent = ({
               icon={<RowsIcon />}
             />
 
-            {userState?.plan !== PlansTypes.FREE && (
-              <AnalyticsItem
-                tooltipKey={strings.clicks}
-                tooltipValue={component.clicks}
-                icon={<ClicksCountIcon />}
-              />
-            )}
+            <AnalyticsItem
+              tooltipKey={strings.clicks}
+              tooltipValue={
+                userState?.plan !== PlansTypes.FREE
+                  ? component.clicks
+                  : strings.upgradeYourPlan
+              }
+              icon={<ClicksCountIcon />}
+            />
             <AnalyticsItem
               tooltipKey={strings.type}
               tooltipValue={getLocalizedStringByComponentType(component.type)}
