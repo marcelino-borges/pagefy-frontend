@@ -10,7 +10,7 @@ import {
   Visibility as ShowPasswordIcon,
   VisibilityOff as HidePasswordIcon,
 } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import Header from "../../components/header/index";
 import ThinWidthContent from "../../components/site-content/thin-width";
@@ -29,6 +29,7 @@ import {
 } from "../../../utils/recaptcha-v3";
 import InternalLink from "../../components/internal-link";
 import Footer from "../../components/footer";
+import { IApplicationState } from "../../../store";
 
 const INITIAL_VALUES = {
   email: "",
@@ -41,6 +42,9 @@ const SignInPage = () => {
   const { handleSubmit } = useForm();
 
   let navigate = useNavigate();
+  const purchaseState = useSelector(
+    (state: IApplicationState) => state.purchase
+  );
 
   const [values, setValues] = useState(INITIAL_VALUES);
   const [showingPassword, setShowingPassword] = useState(false);
@@ -55,6 +59,12 @@ const SignInPage = () => {
       ...values,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const loadDashboardOrPurchase = () => {
+    let destination = routes.pages;
+    if (purchaseState.plan !== undefined) destination = routes.purchasePlan;
+    navigate(destination);
   };
 
   const onSubmit = () => {
@@ -72,7 +82,7 @@ const SignInPage = () => {
             dispatch(
               getUser(credentials.email, token, (user: IUser) => {
                 setSessionStorage("user", JSON.stringify(user));
-                navigate(routes.pages);
+                loadDashboardOrPurchase();
               })
             );
           },

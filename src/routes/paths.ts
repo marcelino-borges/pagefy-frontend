@@ -5,6 +5,7 @@ const routes = {
   pages: "/dashboard/pages",
   page: "/dashboard/page",
   profile: "/dashboard/profile",
+  purchasePlan: "/dashboard/purchase-plan",
   support: "/support",
   faq: "/public/faq",
   notFound: "/public/404",

@@ -31,6 +31,7 @@ const CustomButton = ({
 }: ICustomButtonProps) => {
   return (
     <CustomLink
+      {...rest}
       bgColor={bgColor}
       fontColor={fontColor}
       hoverBgColor={hoverBgColor}
@@ -41,7 +42,6 @@ const CustomButton = ({
       height={height}
       to={to}
       onClick={onClick}
-      {...rest}
     >
       {children}
     </CustomLink>

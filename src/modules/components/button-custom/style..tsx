@@ -33,6 +33,7 @@ export const CustomLink = styled(
   cursor: pointer;
   width: ${w || width || ""};
   height: ${h || height || ""};
+  text-align: center;
 
   &:hover {
     background-color: ${hoverBgColor || PRIMARY_COLOR};

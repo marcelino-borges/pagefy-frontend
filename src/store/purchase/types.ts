@@ -1,9 +1,12 @@
+import { PlansTypes } from "../user/types";
+
 export enum PurchaseTypes {
-  SET_VALUE = "@purchase/SET_VALUE",
+  SET_PLAN_TYPE_TO_SUBSCRIBE = "@purchase/SET_VALUE",
+  CLEAR_STATE = "@purchase/CLEAR_STATE",
 }
 
 export interface IPurchaseState {
   loading: boolean;
   error?: any;
-  value?: number;
+  plan?: PlansTypes;
 }

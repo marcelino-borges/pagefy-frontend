@@ -24,6 +24,7 @@ import CoockiesPoliciesPage from "../modules/pages/cookies-policies";
 import GDPRPopup from "../modules/components/gdpr-popup";
 import { getStorage, setStorage } from "./../utils/storage/index";
 import { GDPR_CONSENT_STORAGE_KEY } from "../constants";
+import PurchasePlanPage from "../modules/pages/purchase-plan";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -99,6 +100,7 @@ const AppRoutes = () => {
         <Route path={routes.privacy} element={<PrivacyPage />} />
         <Route path={routes.terms} element={<TermsPage />} />
         <Route path={routes.cookies} element={<CoockiesPoliciesPage />} />
+        <Route path={routes.purchasePlan} element={<PurchasePlanPage />} />
         <Route
           path="*"
           element={

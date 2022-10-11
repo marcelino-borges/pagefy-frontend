@@ -1,18 +1,24 @@
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { Grid, useMediaQuery } from "@mui/material";
 import Header from "../../components/header";
 import FeaturedCard from "./../../components/feature-card/index";
 import strings from "../../../localization";
 import CustomButton from "../../components/button-custom/index";
 import routes from "./../../../routes/paths";
-import { useDispatch } from "react-redux";
-import { setPurchaseValue } from "../../../store/purchase/actions";
-import { v4 as uuidv4 } from "uuid";
-import { useCallback, useEffect, useState } from "react";
+import { setPlanTypeToSubscribe } from "../../../store/purchase/actions";
 import { clearLoading } from "../../../store/shared/actions";
 import FullWidthContent from "../../components/site-content/full-width";
 import homeImages, { IHomepageBanner } from "../../../assets/img/home/home";
 import { getRandomIntInRange } from "../../../utils";
-import { GLOBAL_LIGHT_BG, PRIMARY_COLOR } from "./../../../styles/colors";
+import {
+  GLOBAL_LIGHT_BG,
+  PRIMARY_COLOR,
+  SECONDARY_COLOR,
+  SECONDARY_COLOR_DARK,
+} from "./../../../styles/colors";
 import Footer from "../../components/footer";
 import {
   BannerContainer,
@@ -27,9 +33,15 @@ import {
 import { clearBackgroundImage, setBackgroundImage } from "./utils";
 import UserTestimonialCard from "../../components/user-testimonial-card";
 import PageTitle from "../../components/page-title";
+import { PlansTypes } from "../../../store/user/types";
+import { IApplicationState } from "../../../store";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userState = useSelector((state: IApplicationState) => state.user);
+
   const [banner, setBanner] = useState<IHomepageBanner>(
     homeImages.desktopBanners[0]
   );
@@ -62,6 +74,13 @@ const Home = () => {
     const sortedBanner = getRandomBanner();
     setBanner(sortedBanner);
   }, [getRandomBanner, isSmallerThan400, isSmallerThan600, isSmallerThan900]);
+
+  const loadSignUpOrPurchase = (planSelected: PlansTypes) => {
+    dispatch(setPlanTypeToSubscribe(planSelected));
+    let destination = routes.signUp;
+    if (userState.profile) destination = routes.purchasePlan;
+    navigate(destination);
+  };
 
   return (
     <>
@@ -111,7 +130,7 @@ const Home = () => {
           </BannerContainer>
         </Grid>
 
-        {/* FEATURED CARDS */}
+        {/* PLANS FEATURED CARDS */}
         <FeaturedCardsContainer>
           <FeaturedCard
             overTitle={strings.plan}
@@ -124,8 +143,19 @@ const Home = () => {
                 ))}
               </ul>
             </Grid>
-            <Grid container justifyContent="center">
-              <CustomButton to={routes.signUp}>{strings.signUp}</CustomButton>
+            <Grid container justifyContent="center" pt="32px">
+              <CustomButton
+                to={routes.signUp}
+                bgColor={SECONDARY_COLOR}
+                fontColor="white"
+                width="100%"
+                hoverBgColor={SECONDARY_COLOR_DARK}
+                onClick={() => {
+                  loadSignUpOrPurchase(PlansTypes.FREE);
+                }}
+              >
+                {strings.signUp}
+              </CustomButton>
             </Grid>
           </FeaturedCard>
           <FeaturedCard
@@ -139,14 +169,22 @@ const Home = () => {
                   <li key={uuidv4()}>{benefit}</li>
                 ))}
                 {strings.vipPlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()}>{benefit}</li>
+                  <li key={uuidv4()} style={{ color: PRIMARY_COLOR }}>
+                    {benefit}
+                  </li>
                 ))}
               </ul>
             </Grid>
-            <Grid container justifyContent="center">
+            <Grid container justifyContent="center" pt="32px">
               <CustomButton
                 to={routes.signUp}
-                onClick={() => dispatch(setPurchaseValue(149.9))}
+                onClick={() => {
+                  loadSignUpOrPurchase(PlansTypes.VIP);
+                }}
+                bgColor={SECONDARY_COLOR}
+                fontColor="white"
+                width="100%"
+                hoverBgColor={SECONDARY_COLOR_DARK}
               >
                 {strings.purchase}
               </CustomButton>
@@ -170,14 +208,22 @@ const Home = () => {
                   <li key={uuidv4()}>{benefit}</li>
                 ))}
                 {strings.platinumPlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()}>{benefit}</li>
+                  <li key={uuidv4()} style={{ color: PRIMARY_COLOR }}>
+                    {benefit}
+                  </li>
                 ))}
               </ul>
             </Grid>
-            <Grid container justifyContent="center">
+            <Grid container justifyContent="center" pt="32px">
               <CustomButton
                 to={routes.signUp}
-                onClick={() => dispatch(setPurchaseValue(249.9))}
+                onClick={() => {
+                  loadSignUpOrPurchase(PlansTypes.PLATINUM);
+                }}
+                bgColor={SECONDARY_COLOR}
+                fontColor="white"
+                width="100%"
+                hoverBgColor={SECONDARY_COLOR_DARK}
               >
                 {strings.purchase}
               </CustomButton>

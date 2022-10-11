@@ -130,3 +130,5 @@ export enum ComponentBorderRadius {
   ROUNDED = 30,
 }
 export const DEFAULT_COMPONENT_RADIUS = ComponentBorderRadius.SMOOTH_ROUNDED;
+
+export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || "";

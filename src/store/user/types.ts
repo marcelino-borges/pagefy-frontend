@@ -11,6 +11,7 @@ export enum UserActionTypes {
 export interface IUser {
   _id?: string;
   authId?: string;
+  paymentId?: string;
   profileImageUrl?: string;
   firstName: string;
   lastName: string;

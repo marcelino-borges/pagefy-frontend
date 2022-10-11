@@ -4,7 +4,7 @@ import { IPurchaseState, PurchaseTypes } from "./types";
 const initialState: IPurchaseState = {
   loading: false,
   error: undefined,
-  value: undefined,
+  plan: undefined,
 };
 
 const purchaseReducer = (
@@ -12,10 +12,15 @@ const purchaseReducer = (
   action: IAction
 ): IPurchaseState => {
   switch (action.type) {
-    case PurchaseTypes.SET_VALUE:
+    case PurchaseTypes.SET_PLAN_TYPE_TO_SUBSCRIBE:
       return {
         ...state,
-        value: action.payload,
+        plan: action.payload,
+      };
+
+    case PurchaseTypes.CLEAR_STATE:
+      return {
+        ...initialState,
       };
 
     default:
