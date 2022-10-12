@@ -1,30 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
 import { Grid, useMediaQuery } from "@mui/material";
 import Header from "../../components/header";
-import FeaturedCard from "./../../components/feature-card/index";
 import strings from "../../../localization";
-import CustomButton from "../../components/button-custom/index";
 import routes from "./../../../routes/paths";
-import { setPlanTypeToSubscribe } from "../../../store/purchase/actions";
 import { clearLoading } from "../../../store/shared/actions";
 import FullWidthContent from "../../components/site-content/full-width";
 import homeImages, { IHomepageBanner } from "../../../assets/img/home/home";
 import { getRandomIntInRange } from "../../../utils";
-import {
-  GLOBAL_LIGHT_BG,
-  PRIMARY_COLOR,
-  SECONDARY_COLOR,
-  SECONDARY_COLOR_DARK,
-} from "./../../../styles/colors";
+import { GLOBAL_LIGHT_BG, PRIMARY_COLOR } from "./../../../styles/colors";
 import Footer from "../../components/footer";
 import {
   BannerContainer,
   BannerOverlay,
   CreateYourBio,
-  FeaturedCardsContainer,
   PromoDuration,
   SignupButton,
   SignUpSection,
@@ -33,14 +22,10 @@ import {
 import { clearBackgroundImage, setBackgroundImage } from "./utils";
 import UserTestimonialCard from "../../components/user-testimonial-card";
 import TriplePageTitle from "../../components/page-title";
-import { PlansTypes } from "../../../store/user/types";
-import { IApplicationState } from "../../../store";
+import PlansCards from "../../components/plans-cards";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const userState = useSelector((state: IApplicationState) => state.user);
 
   const [banner, setBanner] = useState<IHomepageBanner>(
     homeImages.desktopBanners[0]
@@ -74,13 +59,6 @@ const Home = () => {
     const sortedBanner = getRandomBanner();
     setBanner(sortedBanner);
   }, [getRandomBanner, isSmallerThan400, isSmallerThan600, isSmallerThan900]);
-
-  const loadSignUpOrPurchase = (planSelected: PlansTypes) => {
-    dispatch(setPlanTypeToSubscribe(planSelected));
-    let destination = routes.signUp;
-    if (userState.profile) destination = routes.purchasePlan;
-    navigate(destination);
-  };
 
   return (
     <>
@@ -131,110 +109,7 @@ const Home = () => {
         </Grid>
 
         {/* PLANS FEATURED CARDS */}
-        <FeaturedCardsContainer>
-          <FeaturedCard
-            overTitle={strings.plan}
-            title={strings.freePlan.name.toUpperCase()}
-          >
-            <Grid container justifyContent="center">
-              <ul>
-                {strings.freePlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()}>{benefit}</li>
-                ))}
-              </ul>
-            </Grid>
-            <Grid container justifyContent="center" pt="32px">
-              <CustomButton
-                to={routes.signUp}
-                bgColor={SECONDARY_COLOR}
-                fontColor="white"
-                width="100%"
-                hoverBgColor={SECONDARY_COLOR_DARK}
-                onClick={() => {
-                  loadSignUpOrPurchase(PlansTypes.FREE);
-                }}
-              >
-                {strings.signUp}
-              </CustomButton>
-            </Grid>
-          </FeaturedCard>
-          <FeaturedCard
-            isFeatured
-            overTitle={strings.plan}
-            title={strings.vipPlan.name.toUpperCase()}
-          >
-            <Grid container justifyContent="center">
-              <ul>
-                {strings.freePlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()}>{benefit}</li>
-                ))}
-                {strings.vipPlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()} style={{ color: PRIMARY_COLOR }}>
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-            <Grid container justifyContent="center" pt="32px">
-              <CustomButton
-                to={routes.signUp}
-                onClick={() => {
-                  loadSignUpOrPurchase(PlansTypes.VIP);
-                }}
-                bgColor={SECONDARY_COLOR}
-                fontColor="white"
-                width="100%"
-                hoverBgColor={SECONDARY_COLOR_DARK}
-              >
-                {strings.purchase}
-              </CustomButton>
-            </Grid>
-            <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
-              <i>
-                {strings.currency} 149.90/{strings.year}
-              </i>
-            </Grid>
-          </FeaturedCard>
-          <FeaturedCard
-            overTitle={strings.plan}
-            title={strings.platinumPlan.name.toUpperCase()}
-          >
-            <Grid container justifyContent="center">
-              <ul>
-                {strings.freePlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()}>{benefit}</li>
-                ))}
-                {strings.vipPlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()}>{benefit}</li>
-                ))}
-                {strings.platinumPlan.benefits.map((benefit: string) => (
-                  <li key={uuidv4()} style={{ color: PRIMARY_COLOR }}>
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-            <Grid container justifyContent="center" pt="32px">
-              <CustomButton
-                to={routes.signUp}
-                onClick={() => {
-                  loadSignUpOrPurchase(PlansTypes.PLATINUM);
-                }}
-                bgColor={SECONDARY_COLOR}
-                fontColor="white"
-                width="100%"
-                hoverBgColor={SECONDARY_COLOR_DARK}
-              >
-                {strings.purchase}
-              </CustomButton>
-            </Grid>
-            <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
-              <i>
-                {strings.currency} 249.90/{strings.year}
-              </i>
-            </Grid>
-          </FeaturedCard>
-        </FeaturedCardsContainer>
+        <PlansCards />
 
         {/* LAST SECTION */}
         <SignUpSection container direction="column">
@@ -273,7 +148,7 @@ const Home = () => {
           <TestimonialsSection>
             <UserTestimonialCard
               userPictureUrl={
-                "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20220929221415251.jpg"
+                "https://firebasestorage.googleapis.com/v0/b/socialbio-41362.appspot.com/o/users%2F632a0e935b549e00541d0dca%2Fuploaded-images%2F632a0e935b549e00541d0dca_20220929224637090.jpg?alt=media&token=b62fc3f1-afd1-415b-b68a-08a784aef174"
               }
               testimonial={
                 "Desde que comecei a utilizar a Socialbio minha vida mudou completamente, pois consegui dar um pontapé da minha visibilidade na internet."

@@ -8,6 +8,7 @@ interface IPageTitleProps {
   sizeGrowth?: number;
   colors?: string[];
   marginTop?: string;
+  marginBottom?: string;
   sizes?: number[];
   textAlign?:
     | "start"
@@ -27,13 +28,18 @@ const TriplePageTitle = ({
   increasingSize,
   colors = [PRIMARY_COLOR, "#000", "#000"],
   marginTop = "0px",
-  textAlign,
+  marginBottom = "0px",
   sizes,
+  textAlign,
 }: IPageTitleProps) => {
   const textsColors = colors?.length === 3 ? colors : ["#000", "#000", "#000"];
 
   return (
-    <>
+    <div
+      style={{
+        marginBottom,
+      }}
+    >
       <TitleSection
         style={{
           fontSize: sizes ? sizes[0] + "em" : baseSize + "em",
@@ -76,7 +82,7 @@ const TriplePageTitle = ({
           {titles[2]}
         </TitleSection>
       )}
-    </>
+    </div>
   );
 };
 

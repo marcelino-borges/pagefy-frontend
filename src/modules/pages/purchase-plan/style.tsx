@@ -1,30 +1,31 @@
 import { Grid, styled } from "@mui/material";
-import { PRIMARY_COLOR } from "../../../styles/colors";
+import { ACESSIBILITY_RED, LIGHT_GREY } from "../../../styles/colors";
 import { SECONDARY_COLOR } from "./../../../styles/colors";
 
 export const RecurrencyContainer = styled(Grid)`
   display: flex;
+  justify-content: center;
   flex-wrap: nowrap;
-  margin-top: 32px;
+  margin-top: 16px;
   gap: 32px;
-
-  @media (max-width: 307px) {
-    flex-wrap: wrap;
-  }
+  flex-wrap: wrap;
 `;
 
-export const RecurrencyCard = styled("div")(
+export const RecurrencyCard = styled(
+  ({ isSelected, children, ...rest }: any) => <div {...rest}>{children}</div>
+)(
   ({ isSelected }: { isSelected: boolean }) => `
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: ${isSelected ? "white" : PRIMARY_COLOR};
-  background-color: ${isSelected ? PRIMARY_COLOR : "white"};
-  border: 1px solid ${PRIMARY_COLOR};
-  width: 50%;
+  color: ${isSelected ? "white" : SECONDARY_COLOR};
+  background-color: ${isSelected ? SECONDARY_COLOR : "white"};
+  border: 1px solid ${LIGHT_GREY};
+  width: 100%;
   height: calc((100vw - 100px) / 4);
-  min-width: 135px;
+  min-width: 125px;
+  max-width: 500px;
   max-height: 100px;
   min-height: 70px;
   border-radius: 10px;
@@ -33,16 +34,40 @@ export const RecurrencyCard = styled("div")(
   gap: 0px;
 
   &:hover {
-    background-color: ${PRIMARY_COLOR};
-    color: white;
-  }
-
-  @media (max-width: 307px) {
-    width: 100%;
+    background-color: ${isSelected ? SECONDARY_COLOR : "white"};
+    border: 1px solid ${SECONDARY_COLOR};
   }
 `
 );
 
-export const CardRow = styled("div")`
+export const CardColumn = styled("div")`
   width: 100%;
+`;
+
+export const RecurrencyErrorText = styled("div")`
+  margin-top: 32px;
+  width: 100%;
+  display: block;
+  color: ${ACESSIBILITY_RED};
+`;
+
+export const CheckoutContainer = styled("div")`
+  transition: transform linear 0.25s;
+`;
+
+export const PaymentElementContainer = styled("div")`
+  transform: translateX(3000px);
+  transition: transform linear 0.25s;
+`;
+
+export const SectionTitle = styled("div")`
+  font-weight: 800;
+  font-size: 1.3em;
+  margin-top: 50px;
+  margin-bottom: 16px;
+  text-align: center;
+`;
+
+export const CurrencyContainer = styled("div")`
+  text-align: center;
 `;

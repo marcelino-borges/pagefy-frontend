@@ -5,6 +5,7 @@ const initialState: IPurchaseState = {
   loading: false,
   error: undefined,
   plan: undefined,
+  subscriptionCreated: undefined,
 };
 
 const purchaseReducer = (
@@ -16,6 +17,29 @@ const purchaseReducer = (
       return {
         ...state,
         plan: action.payload,
+      };
+    case PurchaseTypes.CREATE_SUBSCRIPTION_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case PurchaseTypes.CREATE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        subscriptionCreated: action.payload,
+        loading: false,
+      };
+    case PurchaseTypes.CREATE_SUBSCRIPTION_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+
+    case PurchaseTypes.CLEAR_SUBSCRIPTION_CREATED:
+      return {
+        ...state,
+        subscriptionCreated: initialState.subscriptionCreated,
       };
 
     case PurchaseTypes.CLEAR_STATE:

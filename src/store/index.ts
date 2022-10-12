@@ -60,7 +60,7 @@ let statesTransform = createTransform((inboundState: any, key: any) => {
 const persistConfig = {
   key: "appState",
   storage: storage,
-  blacklist: ["pageRendered"],
+  blacklist: ["pageRendered", "purchase"],
   transforms: [statesTransform],
 };
 

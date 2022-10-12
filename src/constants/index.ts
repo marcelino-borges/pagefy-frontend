@@ -132,3 +132,35 @@ export enum ComponentBorderRadius {
 export const DEFAULT_COMPONENT_RADIUS = ComponentBorderRadius.SMOOTH_ROUNDED;
 
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || "";
+
+export const PRICES = {
+  // TODO: buscar de collection de configs do mongo
+  vip: {
+    eur: {
+      month: 990,
+      year: 9990,
+    },
+    usd: {
+      month: 990,
+      year: 9990,
+    },
+    brl: {
+      month: 1990,
+      year: 19990,
+    },
+  },
+  platinum: {
+    eur: {
+      month: 1990,
+      year: 19990,
+    },
+    usd: {
+      month: 1990,
+      year: 19990,
+    },
+    brl: {
+      month: 3990,
+      year: 39990,
+    },
+  },
+};

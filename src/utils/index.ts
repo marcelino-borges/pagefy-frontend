@@ -143,3 +143,12 @@ export const includesAnyInString = (
   }
   return false;
 };
+
+export const formatFloatingNumberFromInt = (int: number) => {
+  const asString: string = String(int);
+  return (
+    asString.slice(0, asString.length - 2) +
+    "," +
+    asString.slice(asString.length - 2, asString.length)
+  );
+};

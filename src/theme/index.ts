@@ -1,5 +1,9 @@
 import { createTheme, responsiveFontSizes, ThemeOptions } from "@mui/material";
-import { PRIMARY_COLOR, SECONDARY_COLOR } from "../styles/colors";
+import {
+  PRIMARY_COLOR,
+  PRIMARY_COLOR_DARK,
+  SECONDARY_COLOR,
+} from "../styles/colors";
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
@@ -50,6 +54,10 @@ let themeOptions: ThemeOptions = {
           textTransform: "unset",
           fontSize: "0.9em",
           boxShadow: "none",
+          "&:hover": {
+            color: "white",
+            backgroundColor: PRIMARY_COLOR_DARK,
+          },
         },
       },
     },
