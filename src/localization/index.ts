@@ -85,6 +85,12 @@ interface IPlanDetails {
 }
 
 interface IDictionary {
+  recurrency: {
+    monthly: string;
+    month: string;
+    yearly: string;
+    year: string;
+  };
   home: string;
   pages: string;
   theme: string;
@@ -197,6 +203,7 @@ interface IDictionary {
   launchPrefixText: string;
   chooseAnimation: string;
   selectAnOption: string;
+  selectACurrency: string;
   duration: string;
   startDelay: string;
   animation: string;
@@ -266,6 +273,8 @@ interface IDictionary {
   differentiate: string;
   getAPlanNow: string;
   yourPlanIs: string;
+  thePlanYouSelectedIs: string;
+  nowChooseTheRecurrency: string;
   upgradeYourPlan: string;
   plan: string;
   freePlan: IPlanDetails;
@@ -332,6 +341,12 @@ interface IDictionary {
 
 const en: IDictionary = {
   ok: "OK",
+  recurrency: {
+    monthly: "Monthly",
+    month: "Month",
+    yearly: "Yearly",
+    year: "Year",
+  },
   home: "Home",
   pages: "Pages",
   theme: "Theme",
@@ -447,6 +462,7 @@ const en: IDictionary = {
   launchPrefixText: "It's left",
   chooseAnimation: "Choose animation",
   selectAnOption: "Select an option",
+  selectACurrency: "Select a currency",
   duration: "Duration",
   startDelay: "Start delay",
   animation: "Animation",
@@ -603,6 +619,9 @@ const en: IDictionary = {
   differentiate: "Differentiate from the others!",
   getAPlanNow: "Get a plan now!",
   yourPlanIs: "Your plan is",
+  thePlanYouSelectedIs: "The plan you selected is",
+  nowChooseTheRecurrency:
+    "Now you only need to choose a recurrency (with or without the year discount)",
   upgradeYourPlan: "Upgrade your plan",
   plan: "Plan",
   freePlan: {
@@ -696,6 +715,12 @@ const en: IDictionary = {
 
 const pt: IDictionary = {
   ok: "OK",
+  recurrency: {
+    monthly: "Mensal",
+    month: "Mês",
+    yearly: "Anual",
+    year: "Ano",
+  },
   home: "Início",
   pages: "Páginas",
   theme: "Tema",
@@ -811,6 +836,7 @@ const pt: IDictionary = {
   launchPrefixText: "Restam",
   chooseAnimation: "Escolher animação",
   selectAnOption: "Selecione uma opção",
+  selectACurrency: "Selecione uma moeda",
   duration: "Duração",
   startDelay: "Atraso para iniciar",
   animation: "Animação",
@@ -967,6 +993,9 @@ const pt: IDictionary = {
   differentiate: "Diferencie-se dos outros!",
   getAPlanNow: "Assine um plano agora!",
   yourPlanIs: "Seu plano é",
+  thePlanYouSelectedIs: "O plano selecionado foi o",
+  nowChooseTheRecurrency:
+    "Agora falta apenas escolher uam recorrência (com ou sem desconto anual)",
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
   freePlan: {

@@ -9,7 +9,7 @@ import Accordion from "../../components/accordion";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import InternalLink from "../../components/internal-link";
-import PageTitle from "../../components/page-title";
+import TriplePageTitle from "../../components/page-title";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { IFaq } from "./../../../store/faq/types";
 
@@ -80,11 +80,13 @@ const Faq = () => {
       <Header />
       <div style={{ marginTop: "20px" }}>
         <ThinWidthContent>
-          <PageTitle
+          <TriplePageTitle
             increasingSize
-            title={strings.faq.menu}
-            subtitle={strings.faq.title}
-            description={strings.faq.description}
+            titles={[
+              strings.faq.menu,
+              strings.faq.title,
+              strings.faq.description,
+            ]}
             sizeGrowth={0.5}
             marginTop="30px"
           />

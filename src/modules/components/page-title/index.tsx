@@ -2,14 +2,13 @@ import { PRIMARY_COLOR } from "../../../styles/colors";
 import { TitleSection } from "./style";
 
 interface IPageTitleProps {
-  title: string;
-  subtitle?: string;
-  description?: string;
+  titles: string[];
   increasingSize?: boolean;
   baseSize?: number;
   sizeGrowth?: number;
   colors?: string[];
   marginTop?: string;
+  sizes?: number[];
   textAlign?:
     | "start"
     | "end"
@@ -21,16 +20,15 @@ interface IPageTitleProps {
     | undefined;
 }
 
-const PageTitle = ({
-  title,
-  subtitle,
-  description,
+const TriplePageTitle = ({
+  titles = ["", "", ""],
   baseSize = 1,
   sizeGrowth = 0.5,
   increasingSize,
   colors = [PRIMARY_COLOR, "#000", "#000"],
   marginTop = "0px",
   textAlign,
+  sizes,
 }: IPageTitleProps) => {
   const textsColors = colors?.length === 3 ? colors : ["#000", "#000", "#000"];
 
@@ -38,19 +36,21 @@ const PageTitle = ({
     <>
       <TitleSection
         style={{
-          fontSize: baseSize + "em",
+          fontSize: sizes ? sizes[0] + "em" : baseSize + "em",
           fontWeight: 800,
           color: textsColors[0],
           marginTop,
           textAlign,
         }}
       >
-        {title}
+        {titles[0]}
       </TitleSection>
-      {subtitle && (
+      {titles[1] && (
         <TitleSection
           style={{
-            fontSize: increasingSize
+            fontSize: sizes
+              ? sizes[1] + "em"
+              : increasingSize
               ? baseSize + 2 * sizeGrowth + "em"
               : baseSize - 2 * sizeGrowth + "em",
             fontWeight: 800,
@@ -58,24 +58,26 @@ const PageTitle = ({
             textAlign,
           }}
         >
-          {subtitle}
+          {titles[1]}
         </TitleSection>
       )}
-      {description && (
+      {titles[2] && (
         <TitleSection
           style={{
-            fontSize: increasingSize
+            fontSize: sizes
+              ? sizes[2] + "em"
+              : increasingSize
               ? baseSize + 2 * sizeGrowth + "em"
               : baseSize - 2 * sizeGrowth + "em",
             color: textsColors[2],
             textAlign,
           }}
         >
-          {description}
+          {titles[2]}
         </TitleSection>
       )}
     </>
   );
 };
 
-export default PageTitle;
+export default TriplePageTitle;

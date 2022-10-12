@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import strings from "../../../localization";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
-import PageTitle from "../../components/page-title";
+import TriplePageTitle from "../../components/page-title";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { getCookiesByLanguage } from "./utils";
 
@@ -11,9 +11,8 @@ const CoockiesPoliciesPage = () => {
     <>
       <Header />
       <ThinWidthContent>
-        <PageTitle
-          title={strings.cookiesPolicies}
-          subtitle={strings.cookiesPoliciesSubtitle}
+        <TriplePageTitle
+          titles={[strings.cookiesPolicies, strings.cookiesPoliciesSubtitle]}
           increasingSize
         />
         <Grid container direction="column">

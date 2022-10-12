@@ -32,7 +32,7 @@ import {
 } from "./style";
 import { clearBackgroundImage, setBackgroundImage } from "./utils";
 import UserTestimonialCard from "../../components/user-testimonial-card";
-import PageTitle from "../../components/page-title";
+import TriplePageTitle from "../../components/page-title";
 import { PlansTypes } from "../../../store/user/types";
 import { IApplicationState } from "../../../store";
 
@@ -259,9 +259,12 @@ const Home = () => {
           justifyContent="center"
         >
           <Grid container direction="column" alignItems="center">
-            <PageTitle
-              title={strings.testimonialsTitle}
-              subtitle={strings.testimonialsSubtitle}
+            <TriplePageTitle
+              titles={[
+                strings.testimonialsTitle,
+                strings.testimonialsSubtitle,
+                "",
+              ]}
               baseSize={2}
               colors={["#000", "grey", "#000"]}
               textAlign="center"

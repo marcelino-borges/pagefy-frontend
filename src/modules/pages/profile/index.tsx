@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { PlansTypes, IUser } from "../../../store/user/types";
 import strings from "../../../localization";
 import PrivateRouteChecker from "../../components/private-route-checker";
-import PageTitle from "../../components/page-title";
+import TriplePageTitle from "../../components/page-title";
 import ProfileEditableAvatar from "../../components/profile-editable-avatar";
 import UploadImageDialog from "../../components/dialog-upload-image";
 import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
@@ -168,9 +168,8 @@ const Profile = () => {
         }}
       />
       <ThinWidthContent>
-        <PageTitle
-          title={strings.profile}
-          subtitle={strings.profileSubtitle}
+        <TriplePageTitle
+          titles={[strings.profile, strings.profileSubtitle, ""]}
           increasingSize
         />
         <Grid container direction="column" justifyContent="center" mt="50px">

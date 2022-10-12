@@ -10,3 +10,5 @@ export interface IPurchaseState {
   error?: any;
   plan?: PlansTypes;
 }
+
+export declare type RecurrencyTypes = "month" | "year";

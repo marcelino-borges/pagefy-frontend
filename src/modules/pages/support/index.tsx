@@ -1,6 +1,6 @@
 import Header from "../../components/header";
 import ThinWidthContent from "../../components/site-content/thin-width";
-import PageTitle from "./../../components/page-title";
+import TriplePageTitle from "./../../components/page-title";
 import strings from "./../../../localization/index";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 import { Grid, TextField, Button } from "@mui/material";
@@ -79,9 +79,8 @@ const Support = () => {
       <PrivateRouteChecker />
       <Header />
       <ThinWidthContent>
-        <PageTitle
-          title={strings.support}
-          subtitle={strings.supportDescription}
+        <TriplePageTitle
+          titles={[strings.support, strings.supportDescription]}
           increasingSize
         />
         <Grid container>
