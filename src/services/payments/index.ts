@@ -5,6 +5,17 @@ const api = axios.create({
   baseURL: `${process.env.REACT_APP_PAYMENTS_ENDPOINT}`,
 });
 
+export const getPaymentIntent = async (
+  paymentIntentId: string,
+  token: string
+): Promise<AxiosResponse<any>> => {
+  return api.get(`/subscription/paymentintent/${paymentIntentId}`, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+};
+
 export const createSubscription = async (
   currency: string,
   recurrency: string,

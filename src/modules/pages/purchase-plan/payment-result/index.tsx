@@ -11,7 +11,6 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { Grid } from "@mui/material";
 import InternalLink from "../../../components/internal-link/index";
 import routes from "../../../../routes/paths";
-import { useStripe } from "@stripe/react-stripe-js";
 import { translateErrorMessage } from "../utils";
 import LoadingSpinner from "../../../components/loading-spinner";
 import { SECONDARY_COLOR } from "../../../../styles/colors";
@@ -19,35 +18,32 @@ import { SECONDARY_COLOR } from "../../../../styles/colors";
 const PaymentResult = () => {
   const dispatch = useDispatch();
 
-  const stripe = useStripe();
-
   const [resultStatus, setResulteStatus] = useState("");
 
+  const getPaymentIntent = async (paymentIntentId: string) => {
+    await getPaymentIntent(paymentIntentId).then((paymentIntent: any) => {
+      setResulteStatus(paymentIntent.status);
+    });
+  };
+
   useEffect(() => {
-    dispatch(clearPurchaseState());
+    return () => {
+      dispatch(clearPurchaseState());
+    };
   }, [dispatch]);
 
   useEffect(() => {
-    if (!stripe) {
-      return;
-    }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
+    const paymentIntentId = new URLSearchParams(window.location.search).get(
+      "payment_intent"
     );
 
-    if (!clientSecret) {
+    if (!paymentIntentId) {
       return;
     }
 
-    stripe
-      .retrievePaymentIntent(clientSecret)
-      .then(({ paymentIntent }: any) => {
-        if (paymentIntent.status) {
-          setResulteStatus(paymentIntent.status);
-        }
-      });
-  }, [stripe]);
+    getPaymentIntent(paymentIntentId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getIconByResultStatus = (resultStatus: string) => {
     switch (resultStatus) {
