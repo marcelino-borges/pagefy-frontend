@@ -89,7 +89,6 @@ const PaymentResult = () => {
 
   return (
     <>
-      <PrivateRouteChecker />
       <Header />
       <ThinWidthContent>
         {resultStatus ? (

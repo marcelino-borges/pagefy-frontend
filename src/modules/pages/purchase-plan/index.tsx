@@ -262,15 +262,6 @@ const PurchasePlanPage = () => {
             </Grid>
           </CheckoutContainer>
         )}
-        {isCreatingSubscription && (
-          <div
-            style={{
-              margin: "auto",
-            }}
-          >
-            <LoadingSpinner size={40} color={SECONDARY_COLOR} />
-          </div>
-        )}
         <PaymentElementContainer
           style={{ transform: showPaymentElement ? "translateX(0px)" : "" }}
         >
