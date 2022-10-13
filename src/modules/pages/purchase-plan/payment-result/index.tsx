@@ -14,16 +14,25 @@ import routes from "../../../../routes/paths";
 import { translateErrorMessage } from "../utils";
 import LoadingSpinner from "../../../components/loading-spinner";
 import { SECONDARY_COLOR } from "../../../../styles/colors";
+import { getPaymentIntent } from "../../../../services/payments";
+import { getFirebaseToken } from "../../../../utils/firebase-config";
 
 const PaymentResult = () => {
   const dispatch = useDispatch();
 
   const [resultStatus, setResulteStatus] = useState("");
 
-  const getPaymentIntent = async (paymentIntentId: string) => {
-    await getPaymentIntent(paymentIntentId).then((paymentIntent: any) => {
-      setResulteStatus(paymentIntent.status);
-    });
+  const getPaymentIntentStatus = async (paymentIntentId: string) => {
+    const token = await getFirebaseToken();
+    if (!token) {
+      setResulteStatus("firebase_token");
+      return;
+    }
+    await getPaymentIntent(paymentIntentId, token).then(
+      (paymentIntent: any) => {
+        setResulteStatus(paymentIntent.status);
+      }
+    );
   };
 
   useEffect(() => {
@@ -41,7 +50,7 @@ const PaymentResult = () => {
       return;
     }
 
-    getPaymentIntent(paymentIntentId);
+    getPaymentIntentStatus(paymentIntentId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -63,6 +72,7 @@ const PaymentResult = () => {
             style={{ fontSize: "100px" }}
           />
         );
+      case "firebase_token":
       case "requires_payment_method":
         return (
           <ErrorIcon

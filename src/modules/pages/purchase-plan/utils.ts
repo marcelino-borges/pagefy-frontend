@@ -17,6 +17,8 @@ export const translateErrorMessage = (
       return strings.subscriptionPayment.processing;
     case "requires_payment_method":
       return strings.subscriptionPayment.failed;
+    case "firebase_token":
+      return strings.generalErrors.internalError;
     default:
       return strings.subscriptionPayment.somethingWentWrong;
   }
