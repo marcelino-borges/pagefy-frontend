@@ -36,6 +36,7 @@ const PaymentResult = () => {
   };
 
   useEffect(() => {
+    console.log("opening result screen");
     return () => {
       dispatch(clearPurchaseState());
     };
