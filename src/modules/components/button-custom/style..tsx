@@ -9,6 +9,9 @@ export const CustomLink = styled(
     hoverBgColor,
     w,
     h,
+    p,
+    m,
+    fontWeight,
     width,
     height,
     ...rest
@@ -21,15 +24,19 @@ export const CustomLink = styled(
     hoverBgColor,
     w,
     h,
+    p,
+    m,
+    fontWeight,
     width,
     height,
   }: any) => `
   background-color: ${bgColor || "white"};
   color: ${fontColor || PRIMARY_COLOR};
-  padding: 8px;
+  padding: ${p};
+  margin: ${m};
   border-radius: 8px;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: ${m};
   cursor: pointer;
   width: ${w || width || ""};
   height: ${h || height || ""};

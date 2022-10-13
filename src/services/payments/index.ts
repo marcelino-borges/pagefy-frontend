@@ -25,3 +25,14 @@ export const createSubscription = async (
     }
   );
 };
+
+export const cancelSubscription = async (
+  subscriptionId: string,
+  token: string
+): Promise<AxiosResponse<any>> => {
+  return api.put(`/subscription/cancel/${subscriptionId}`, null, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+};

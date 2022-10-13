@@ -36,10 +36,24 @@ const purchaseReducer = (
         loading: false,
       };
 
-    case PurchaseTypes.CLEAR_SUBSCRIPTION_CREATED:
+    case PurchaseTypes.CANCEL_SUBSCRIPTION_LOADING:
       return {
         ...state,
-        subscriptionCreated: initialState.subscriptionCreated,
+        loading: true,
+      };
+
+    case PurchaseTypes.CANCEL_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        subscriptionCreated: undefined,
+        loading: false,
+      };
+
+    case PurchaseTypes.CANCEL_SUBSCRIPTION_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     case PurchaseTypes.CLEAR_STATE:

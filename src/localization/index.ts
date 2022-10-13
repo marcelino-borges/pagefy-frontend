@@ -292,6 +292,7 @@ export interface IDictionary {
     somethingWentWrong: string;
     cardNumberIncomplete: string;
     paymentAlreadySucceeded: string;
+    changeRecurrency: string;
   };
   upgradeYourPlan: string;
   plan: string;

@@ -22,7 +22,10 @@ import {
   SectionTitle,
 } from "./style";
 import LoadingSpinner from "../../components/loading-spinner";
-import { startSubscription } from "../../../store/purchase/actions";
+import {
+  cancelSubscriptionOnDatabase,
+  startSubscription,
+} from "../../../store/purchase/actions";
 import { useNavigate } from "react-router-dom";
 import routes from "./../../../routes/paths";
 import ThinWidthContent from "../../components/site-content/thin-width";
@@ -86,10 +89,12 @@ const PurchasePlanPage = () => {
       setRecurrencyError(strings.requiredFields);
       return;
     }
+
     setHasCheckedOut(true);
     const clearLoading = () => {
       setIsCreatingSubscription(false);
     };
+
     if (
       selectedRecurrency !== undefined &&
       purchaseState.plan &&
@@ -302,6 +307,17 @@ const PurchasePlanPage = () => {
                   planType={purchaseState.plan}
                   recurrency={selectedRecurrency}
                   currency={currency}
+                  changeToRecurrency={() => {
+                    console.log("oi");
+                    setHasCheckedOut(false);
+                    setShowPaymentElement(false);
+                    if (purchaseState.subscriptionCreated?.subscriptionId)
+                      dispatch(
+                        cancelSubscriptionOnDatabase(
+                          purchaseState.subscriptionCreated?.subscriptionId
+                        )
+                      );
+                  }}
                 />
               </Elements>
             )}

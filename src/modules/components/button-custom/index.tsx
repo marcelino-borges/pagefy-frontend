@@ -9,9 +9,13 @@ interface ICustomButtonProps {
   hoverFontColor?: string;
   w?: string;
   h?: string;
+  p?: string;
+  m?: string;
+  fontWeight?: number;
   width?: string;
   height?: string;
   children: any;
+  style?: any;
   [x: string]: any;
 }
 
@@ -24,24 +28,32 @@ const CustomButton = ({
   hoverFontColor,
   w,
   h,
+  p = "8px",
+  m = "0px",
+  fontWeight = 600,
   width,
   height,
   children,
+  style,
   ...rest
 }: ICustomButtonProps) => {
   return (
     <CustomLink
-      {...rest}
       bgColor={bgColor}
       fontColor={fontColor}
       hoverBgColor={hoverBgColor}
       hoverFontColor={hoverFontColor}
       w={w}
       h={h}
+      p={p}
+      m={m}
+      fontWeight={fontWeight}
       width={width}
       height={height}
       to={to}
       onClick={onClick}
+      style={style}
+      {...rest}
     >
       {children}
     </CustomLink>

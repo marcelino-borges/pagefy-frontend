@@ -300,6 +300,7 @@ export const en: IDictionary = {
     cardNumberIncomplete: "Card number imcomplete.",
     paymentAlreadySucceeded:
       "You cannot confirm this PaymentIntent because it has already succeeded after being previously confirmed.",
+    changeRecurrency: "Change recurrency",
   },
   upgradeYourPlan: "Upgrade your plan",
   plan: "Plan",

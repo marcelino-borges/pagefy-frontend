@@ -1,28 +1,38 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import strings from "../../../../localization";
 import { PlansTypes } from "../../../../store/user/types";
 import TriplePageTitle from "../../../components/page-title";
-import { StripePaymentElement } from "./style";
 import { Button, Checkbox, FormControlLabel, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import { ACESSIBILITY_RED } from "./../../../../styles/colors";
+import {
+  ACESSIBILITY_RED,
+  LIGHT_GREY,
+  PRIMARY_COLOR,
+} from "./../../../../styles/colors";
 import LoadingSpinner from "../../../components/loading-spinner";
 import routes from "../../../../routes/paths";
-import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../../store";
-import { APP_ENVIROMENT } from "./../../../../constants/index";
+import { APP_ENVIROMENT } from "./../../../../constants";
 import { translateErrorMessage } from "./../utils";
 import InternalLink from "../../../components/internal-link";
-import { useNavigate } from "react-router-dom";
-import { showErrorToast } from "./../../../../utils/toast/index";
+import { showErrorToast } from "./../../../../utils/toast";
+import CustomButton from "../../../components/button-custom";
+import { StripePaymentElement } from "./style";
 
 interface IPaymentElementProps {
   planType: PlansTypes;
   recurrency: string;
   currency: string;
+  changeToRecurrency: () => void;
 }
 
-const PaymentElement = ({ planType, recurrency }: IPaymentElementProps) => {
+const PaymentElement = ({
+  planType,
+  recurrency,
+  changeToRecurrency,
+}: IPaymentElementProps) => {
   const navigate = useNavigate();
 
   const stripe = useStripe();
@@ -107,6 +117,23 @@ const PaymentElement = ({ planType, recurrency }: IPaymentElementProps) => {
 
   return (
     <>
+      <Grid mb="32px" textAlign="end">
+        <CustomButton
+          bgColor="unset"
+          fontColor={LIGHT_GREY}
+          hoverBgColor="unset"
+          fontWeight={400}
+          p="0px"
+          hoverFontColor={PRIMARY_COLOR}
+          style={{ marginLeft: 0, marginRight: 0, marginBottom: "32px" }}
+          onClick={() => {
+            changeToRecurrency();
+          }}
+        >
+          {"< "}
+          {strings.subscriptionPayment.changeRecurrency}
+        </CustomButton>
+      </Grid>
       <TriplePageTitle
         increasingSize
         marginBottom="70px"

@@ -1,4 +1,7 @@
-import { createSubscription } from "../../services/payments";
+import {
+  cancelSubscription,
+  createSubscription,
+} from "../../services/payments";
 import { getFirebaseToken } from "../../utils/firebase-config";
 import { PlansTypes } from "../user/types";
 import { AxiosError, AxiosResponse } from "axios";
@@ -63,8 +66,53 @@ export const createSubscriptionError = (error: any) => ({
   type: PurchaseTypes.CREATE_SUBSCRIPTION_ERROR,
 });
 
-export const clearSubscription = () => ({
-  type: PurchaseTypes.CLEAR_SUBSCRIPTION_CREATED,
+export const cancelSubscriptionOnDatabase =
+  (
+    subscriptionId: string,
+    successCallback?: (data?: any) => void,
+    errorCallback?: (error?: any) => void
+  ) =>
+  async (dispatch: any) => {
+    dispatch(startSubscriptionLoading());
+
+    const token = await getFirebaseToken();
+
+    if (!token) {
+      if (errorCallback) errorCallback(TOKEN_AUTH_ERROR);
+
+      dispatch(cancelSubscriptionError(TOKEN_AUTH_ERROR));
+      return;
+    }
+
+    cancelSubscription(subscriptionId, token)
+      .then((response: AxiosResponse) => {
+        if (successCallback) successCallback(response.data);
+
+        const subscriptionCanceled: ISubscriptionCreationResult = response.data;
+
+        dispatch(cancelSubscriptionSuccess(subscriptionCanceled));
+      })
+      .catch((error: AxiosError) => {
+        if (errorCallback) errorCallback(error);
+
+        dispatch(cancelSubscriptionError(error.message));
+      });
+  };
+
+export const cancelSubscriptionLoading = () => () => ({
+  type: PurchaseTypes.CANCEL_SUBSCRIPTION_LOADING,
+});
+
+export const cancelSubscriptionSuccess = (
+  subscriptionCanceled: ISubscriptionCreationResult
+) => ({
+  payload: subscriptionCanceled,
+  type: PurchaseTypes.CANCEL_SUBSCRIPTION_SUCCESS,
+});
+
+export const cancelSubscriptionError = (error: any) => ({
+  payload: error,
+  type: PurchaseTypes.CANCEL_SUBSCRIPTION_ERROR,
 });
 
 export const clearPurchaseState = () => ({

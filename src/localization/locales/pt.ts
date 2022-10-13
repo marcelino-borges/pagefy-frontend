@@ -301,6 +301,7 @@ export const pt: IDictionary = {
     cardNumberIncomplete: "Número do cartão incompleto!",
     paymentAlreadySucceeded:
       "Você não pode prosseguir com esse pagamento porque ele já foi processado com sucesso.",
+    changeRecurrency: "Alterar recorrência",
   },
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
