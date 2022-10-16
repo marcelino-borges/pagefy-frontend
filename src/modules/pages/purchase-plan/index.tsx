@@ -30,11 +30,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "./../../../routes/paths";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { formatFloatingNumberFromInt } from "../../../utils";
-import {
-  ACESSIBILITY_RED,
-  PRIMARY_COLOR,
-  SECONDARY_COLOR,
-} from "./../../../styles/colors";
+import { ACESSIBILITY_RED, PRIMARY_COLOR } from "./../../../styles/colors";
 import { Elements } from "@stripe/react-stripe-js";
 import { getCurrencyPrefix } from "./utils";
 

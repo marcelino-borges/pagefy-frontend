@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import strings from "../../../../localization";
 import { clearPurchaseState } from "../../../../store/purchase/actions";
 import Header from "../../../components/header";
-import PrivateRouteChecker from "../../../components/private-route-checker";
 import ThinWidthContent from "../../../components/site-content/thin-width";
 import DoneIcon from "@mui/icons-material/Done";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -20,17 +19,17 @@ import { getFirebaseToken } from "../../../../utils/firebase-config";
 const PaymentResult = () => {
   const dispatch = useDispatch();
 
-  const [resultStatus, setResulteStatus] = useState("");
+  const [resultStatus, setResultStatus] = useState("");
 
   const getPaymentIntentStatus = async (paymentIntentId: string) => {
     const token = await getFirebaseToken();
     if (!token) {
-      setResulteStatus("firebase_token");
+      setResultStatus("firebase_token");
       return;
     }
     await getPaymentIntent(paymentIntentId, token).then(
       (paymentIntent: any) => {
-        setResulteStatus(paymentIntent.status);
+        setResultStatus(paymentIntent.status);
       }
     );
   };
@@ -100,7 +99,9 @@ const PaymentResult = () => {
             <Grid justifyContent="center" textAlign="center">
               {getIconByResultStatus(resultStatus)}
             </Grid>
-            <Grid>{translateErrorMessage(resultStatus)}</Grid>
+            <Grid textAlign="center">
+              {translateErrorMessage(resultStatus)}
+            </Grid>
             <Grid justifyContent="center" textAlign="center" pt="50px">
               <InternalLink to={routes.pages}>{strings.goToPages}</InternalLink>
             </Grid>
