@@ -6,7 +6,7 @@ import routes from "./paths";
 import Support from "./../modules/pages/support";
 import UserPages from "./../modules/pages/user-pages";
 import strings from "./../localization";
-import UserPage from "./../modules/pages/user-page";
+import UserPage from "./../modules/pages/page-editor";
 import LoadingSpinner from "../modules/components/loading-spinner";
 import PageRenderer from "./../modules/components/page-renderer";
 import SignInPage from "../modules/pages/sign-in";

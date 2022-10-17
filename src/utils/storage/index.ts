@@ -14,9 +14,14 @@ export const getStorage = (name: string): string | null => {
   return sessionStorage.getItem(name);
 };
 
-export const clearStorage = (): void => {
+export const clearStorage = (itemKey?: string): void => {
+  if (itemKey) {
+    localStorage.removeItem(itemKey);
+    sessionStorage.removeItem(itemKey);
+    return;
+  }
   localStorage.clear();
-  sessionStorage.clear();
+  localStorage.sessionStorage.clear();
 };
 
 export const removeFromStorage = (name: string): void => {

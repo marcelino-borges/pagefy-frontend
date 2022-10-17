@@ -302,6 +302,8 @@ export const pt: IDictionary = {
     paymentAlreadySucceeded:
       "Você não pode prosseguir com esse pagamento porque ele já foi processado com sucesso.",
     changeRecurrency: "Alterar recorrência",
+    trustWarning:
+      "Não se preocupe, seu pagamento será processado exclusivamente via",
   },
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",

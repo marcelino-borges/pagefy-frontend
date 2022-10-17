@@ -6,6 +6,7 @@ import strings from "../../../../localization";
 import { PlansTypes } from "../../../../store/user/types";
 import TriplePageTitle from "../../../components/page-title";
 import { Button, Checkbox, FormControlLabel, Grid } from "@mui/material";
+import LockIcon from "@mui/icons-material/Lock";
 import {
   ACESSIBILITY_RED,
   LIGHT_GREY,
@@ -15,11 +16,12 @@ import LoadingSpinner from "../../../components/loading-spinner";
 import routes from "../../../../routes/paths";
 import { IApplicationState } from "../../../../store";
 import { APP_ENVIROMENT } from "./../../../../constants";
-import { translateErrorMessage } from "./../utils";
+import { getCurrencyPrefix, translateErrorMessage } from "./../utils";
 import InternalLink from "../../../components/internal-link";
 import { showErrorToast } from "./../../../../utils/toast";
 import CustomButton from "../../../components/button-custom";
 import { StripePaymentElement } from "./style";
+import ExternalLink from "./../../../components/external-link/index";
 
 interface IPaymentElementProps {
   planType: PlansTypes;
@@ -40,6 +42,10 @@ const PaymentElement = ({
 
   const userEmail = useSelector(
     (state: IApplicationState) => state.user.profile?.email
+  );
+
+  const purchaseState = useSelector(
+    (state: IApplicationState) => state.purchase
   );
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -140,10 +146,15 @@ const PaymentElement = ({
         sizes={[1, 3, 0.8]}
         titles={[
           strings.thePlanYouSelectedIs,
-
           `${Object.values(PlansTypes)[planType].toString()} - ${getRecurrency(
             recurrency
-          )}`,
+          )}${
+            purchaseState.currency &&
+            purchaseState.price &&
+            ` - ${getCurrencyPrefix(purchaseState.currency)} ${
+              purchaseState.price
+            }`
+          }`,
           strings.nowItsTimeToSubscribe,
         ]}
       />
@@ -199,6 +210,21 @@ const PaymentElement = ({
               "Submit"
             )}
           </Button>
+        </Grid>
+        <Grid
+          container
+          pt="16px"
+          fontSize="0.7em"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid pr="8px">
+            <LockIcon fontSize="small" />
+          </Grid>
+          <Grid>
+            {`${strings.subscriptionPayment.trustWarning}`}&nbsp;
+            <ExternalLink to="https://stripe.com">Stripe</ExternalLink>
+          </Grid>
         </Grid>
       </form>
     </>

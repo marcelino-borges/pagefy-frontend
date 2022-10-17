@@ -78,7 +78,7 @@ import { PlansTypes } from "../../../store/user/types";
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
 
-const UserPage = () => {
+const PageEditor = () => {
   const dispatch = useDispatch();
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
   const isSmallerThan370 = useMediaQuery("(max-width:370px)");
@@ -808,7 +808,7 @@ const UserPage = () => {
     <>
       <PrivateRouteChecker />
       <Header />
-      <ThinWidthContent>
+      <ThinWidthContent pb="100px">
         <DialogConfirmation
           open={openDeleteIconConfirmation}
           onClose={() => {
@@ -932,4 +932,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default PageEditor;

@@ -46,6 +46,7 @@ const UserPages = () => {
         direction="column"
         minHeight="70vh"
         justifyContent="start"
+        pb="100px"
       >
         <Grid
           container

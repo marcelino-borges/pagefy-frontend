@@ -9,6 +9,10 @@ export enum PurchaseTypes {
   CANCEL_SUBSCRIPTION_LOADING = "@purchase/CANCEL_SUBSCRIPTION_LOADING",
   CANCEL_SUBSCRIPTION_SUCCESS = "@purchase/CANCEL_SUBSCRIPTION_SUCCESS",
   CANCEL_SUBSCRIPTION_ERROR = "@purchase/CANCEL_SUBSCRIPTION_ERROR",
+  SET_CURRENCY = "@purchase/SET_CURRENCY",
+  CLEAR_CURRENCY = "@purchase/CLEAR_CURRENCY",
+  SET_PRICE = "@purchase/SET_PRICE",
+  CLEAR_PRICE = "@purchase/CLEAR_PRICE",
 }
 
 export interface ICreateSubscriptionProps {
@@ -19,12 +23,13 @@ export interface ICreateSubscriptionProps {
 
 export interface ISubscriptionCreationResult {
   subscriptionId: string;
-  subscriptionEnd: number;
-  subscriptionStart: number;
+  subscriptionEnd: string;
+  subscriptionStart: string;
   currency: string;
   priceId: string;
   recurrency?: string;
   customer: any;
+  paymentIntentId?: string;
   latestInvoice: any;
   userId: string;
   status: string;
@@ -34,6 +39,8 @@ export interface IPurchaseState {
   loading: boolean;
   error?: any;
   plan?: PlansTypes;
+  price?: string;
+  currency?: string;
   subscriptionCreated?: ISubscriptionCreationResult;
 }
 

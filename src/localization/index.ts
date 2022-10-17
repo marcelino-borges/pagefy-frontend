@@ -293,6 +293,7 @@ export interface IDictionary {
     cardNumberIncomplete: string;
     paymentAlreadySucceeded: string;
     changeRecurrency: string;
+    trustWarning: string;
   };
   upgradeYourPlan: string;
   plan: string;

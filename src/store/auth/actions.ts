@@ -128,7 +128,7 @@ const signUpError = (error: any) => ({
 export const signOut =
   (onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any) => {
-    clearStorage();
+    // clearStorage();
     dispatch(clearAllStates());
     dispatch(signOutLoading());
     AuthService.signOut()

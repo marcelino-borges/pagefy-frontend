@@ -24,6 +24,8 @@ import {
 import LoadingSpinner from "../../components/loading-spinner";
 import {
   cancelSubscriptionOnDatabase,
+  clearPrice,
+  setPrice,
   startSubscription,
 } from "../../../store/purchase/actions";
 import { useNavigate } from "react-router-dom";
@@ -33,6 +35,8 @@ import { formatFloatingNumberFromInt } from "../../../utils";
 import { ACESSIBILITY_RED, PRIMARY_COLOR } from "./../../../styles/colors";
 import { Elements } from "@stripe/react-stripe-js";
 import { getCurrencyPrefix } from "./utils";
+import { setCurrency } from "./../../../store/purchase/actions";
+import Footer from "../../components/footer";
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
@@ -45,7 +49,7 @@ const PurchasePlanPage = () => {
   const navigate = useNavigate();
 
   const [clientSecret, setClientSecret] = useState("");
-  const [currency, setCurrency] = useState("usd");
+  const [selectedCurrency, setSelectedCurrency] = useState("usd");
   const [selectedRecurrency, setSelectedRecurrency] = useState<
     RecurrencyTypes | undefined
   >();
@@ -100,7 +104,7 @@ const PurchasePlanPage = () => {
       dispatch(
         startSubscription(
           {
-            currency,
+            currency: selectedCurrency,
             recurrency: selectedRecurrency,
             planType: purchaseState.plan,
           },
@@ -115,7 +119,7 @@ const PurchasePlanPage = () => {
     <>
       <PrivateRouteChecker />
       <Header />
-      <ThinWidthContent>
+      <ThinWidthContent pb="100px">
         {!showPaymentElement && (
           <CheckoutContainer
             style={{
@@ -140,9 +144,12 @@ const PurchasePlanPage = () => {
                 displayEmpty
                 variant="outlined"
                 onChange={(e: any) => {
-                  setCurrency(e.target.value);
+                  setSelectedRecurrency(undefined);
+                  setSelectedCurrency(e.target.value);
+                  dispatch(setCurrency(e.target.value));
+                  dispatch(clearPrice());
                 }}
-                value={currency}
+                value={selectedCurrency}
                 sx={{
                   minWidth: "125px",
                   width: "100%",
@@ -168,14 +175,23 @@ const PurchasePlanPage = () => {
                   isSelected={selectedRecurrency === "month"}
                   onClick={() => {
                     setSelectedRecurrency("month");
+                    if (purchaseState.currency) {
+                      dispatch(
+                        setPrice(
+                          formatFloatingNumberFromInt(
+                            (PRICES.vip as any)[selectedCurrency].month
+                          )
+                        )
+                      );
+                    }
                   }}
                 >
                   <CardColumn>{strings.recurrency.monthly}</CardColumn>
                   <CardColumn>
                     <strong>
-                      {`${getCurrencyPrefix(currency)} `}
+                      {`${getCurrencyPrefix(selectedCurrency)} `}
                       {formatFloatingNumberFromInt(
-                        (PRICES.vip as any)[currency].month
+                        (PRICES.vip as any)[selectedCurrency].month
                       )}
                     </strong>
                   </CardColumn>
@@ -184,14 +200,23 @@ const PurchasePlanPage = () => {
                   isSelected={selectedRecurrency === "year"}
                   onClick={() => {
                     setSelectedRecurrency("year");
+                    if (selectedCurrency) {
+                      dispatch(
+                        setPrice(
+                          formatFloatingNumberFromInt(
+                            (PRICES.vip as any)[selectedCurrency].year
+                          )
+                        )
+                      );
+                    }
                   }}
                 >
                   <CardColumn>{strings.recurrency.yearly}</CardColumn>
                   <CardColumn>
                     <strong>
-                      {`${getCurrencyPrefix(currency)} `}
+                      {`${getCurrencyPrefix(selectedCurrency)} `}
                       {formatFloatingNumberFromInt(
-                        (PRICES.vip as any)[currency].year
+                        (PRICES.vip as any)[selectedCurrency].year
                       )}
                     </strong>
                   </CardColumn>
@@ -205,14 +230,22 @@ const PurchasePlanPage = () => {
                   isSelected={selectedRecurrency === "month"}
                   onClick={() => {
                     setSelectedRecurrency("month");
+                    if (selectedCurrency)
+                      dispatch(
+                        setPrice(
+                          formatFloatingNumberFromInt(
+                            (PRICES.platinum as any)[selectedCurrency].month
+                          )
+                        )
+                      );
                   }}
                 >
                   <CardColumn>{strings.recurrency.monthly}</CardColumn>
                   <CardColumn>
                     <strong>
-                      {`${getCurrencyPrefix(currency)} `}
+                      {`${getCurrencyPrefix(selectedCurrency)} `}
                       {formatFloatingNumberFromInt(
-                        (PRICES.platinum as any)[currency].month
+                        (PRICES.platinum as any)[selectedCurrency].month
                       )}
                     </strong>
                   </CardColumn>
@@ -221,14 +254,22 @@ const PurchasePlanPage = () => {
                   isSelected={selectedRecurrency === "year"}
                   onClick={() => {
                     setSelectedRecurrency("year");
+                    if (selectedCurrency)
+                      dispatch(
+                        setPrice(
+                          formatFloatingNumberFromInt(
+                            (PRICES.platinum as any)[selectedCurrency].year
+                          )
+                        )
+                      );
                   }}
                 >
                   <CardColumn>{strings.recurrency.yearly}</CardColumn>
                   <CardColumn>
                     <strong>
-                      {`${getCurrencyPrefix(currency)} `}
+                      {`${getCurrencyPrefix(selectedCurrency)} `}
                       {formatFloatingNumberFromInt(
-                        (PRICES.platinum as any)[currency].year
+                        (PRICES.platinum as any)[selectedCurrency].year
                       )}
                     </strong>
                   </CardColumn>
@@ -293,9 +334,8 @@ const PurchasePlanPage = () => {
                 <PaymentElement
                   planType={purchaseState.plan}
                   recurrency={selectedRecurrency}
-                  currency={currency}
+                  currency={selectedCurrency}
                   changeToRecurrency={() => {
-                    console.log("oi");
                     setHasCheckedOut(false);
                     setShowPaymentElement(false);
                     if (purchaseState.subscriptionCreated?.subscriptionId)
@@ -310,6 +350,7 @@ const PurchasePlanPage = () => {
             )}
         </PaymentElementContainer>
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

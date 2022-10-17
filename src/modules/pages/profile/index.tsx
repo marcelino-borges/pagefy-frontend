@@ -34,6 +34,7 @@ import {
 import { clearLoading, setLoading } from "../../../store/shared/actions";
 import { getFirebaseToken } from "../../../utils/firebase-config";
 import { deleteImage } from "../../../services/files";
+import Footer from "../../components/footer";
 
 const INITIAL_STATE: IUser = {
   firstName: "",
@@ -167,7 +168,7 @@ const Profile = () => {
           setOpenUploadDialog(false);
         }}
       />
-      <ThinWidthContent>
+      <ThinWidthContent pb="100px">
         <TriplePageTitle
           titles={[strings.profile, strings.profileSubtitle, ""]}
           increasingSize
@@ -307,6 +308,7 @@ const Profile = () => {
           </Grid>
         </Grid>
       </ThinWidthContent>
+      <Footer />
     </>
   );
 };

@@ -28,8 +28,12 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
 
   const userState = useSelector((state: IApplicationState) => state.user);
 
-  const loadSignUpOrPurchase = (planSelected: PlansTypes) => {
-    dispatch(setPlanTypeToSubscribe(planSelected));
+  const loadSignUpOrPurchase = (
+    planSelected: PlansTypes,
+    price: string | undefined,
+    currency: string | undefined
+  ) => {
+    dispatch(setPlanTypeToSubscribe(planSelected, price, currency));
     let destination = routes.signUp;
     if (userState.profile) destination = routes.purchasePlan;
     navigate(destination);
@@ -58,7 +62,7 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
             width="100%"
             hoverBgColor={SECONDARY_COLOR_DARK}
             onClick={() => {
-              loadSignUpOrPurchase(PlansTypes.FREE);
+              loadSignUpOrPurchase(PlansTypes.FREE, undefined, undefined);
             }}
           >
             {strings.signUp}
@@ -86,7 +90,11 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
           <CustomButton
             to={routes.signUp}
             onClick={() => {
-              loadSignUpOrPurchase(PlansTypes.VIP);
+              loadSignUpOrPurchase(
+                PlansTypes.VIP,
+                formatFloatingNumberFromInt(PRICES.vip.usd.year),
+                "usd"
+              );
             }}
             bgColor={SECONDARY_COLOR}
             fontColor="white"
@@ -99,7 +107,14 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
         <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
           <i>
             {strings.currency}{" "}
-            {formatFloatingNumberFromInt(PRICES.vip.usd.year)}/{strings.year}
+            {strings.getLanguage() === "pt"
+              ? formatFloatingNumberFromInt(PRICES.vip.brl.month)
+              : formatFloatingNumberFromInt(PRICES.vip.usd.month)}
+            /{strings.recurrency.month} or {strings.currency}{" "}
+            {strings.getLanguage() === "pt"
+              ? formatFloatingNumberFromInt(PRICES.vip.brl.year)
+              : formatFloatingNumberFromInt(PRICES.vip.usd.year)}
+            /{strings.year}
           </i>
         </Grid>
       </FeaturedCard>
@@ -126,7 +141,11 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
           <CustomButton
             to={routes.signUp}
             onClick={() => {
-              loadSignUpOrPurchase(PlansTypes.PLATINUM);
+              loadSignUpOrPurchase(
+                PlansTypes.PLATINUM,
+                formatFloatingNumberFromInt(PRICES.platinum.usd.year),
+                "usd"
+              );
             }}
             bgColor={SECONDARY_COLOR}
             fontColor="white"
@@ -139,8 +158,14 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
         <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
           <i>
             {strings.currency}{" "}
-            {formatFloatingNumberFromInt(PRICES.platinum.usd.year)}/
-            {strings.year}
+            {strings.getLanguage() === "pt"
+              ? formatFloatingNumberFromInt(PRICES.platinum.brl.month)
+              : formatFloatingNumberFromInt(PRICES.platinum.usd.month)}
+            /{strings.recurrency.month} or {strings.currency}{" "}
+            {strings.getLanguage() === "pt"
+              ? formatFloatingNumberFromInt(PRICES.platinum.brl.year)
+              : formatFloatingNumberFromInt(PRICES.platinum.usd.year)}
+            /{strings.year}
           </i>
         </Grid>
       </FeaturedCard>

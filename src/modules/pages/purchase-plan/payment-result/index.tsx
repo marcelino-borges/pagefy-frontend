@@ -99,7 +99,7 @@ const PaymentResult = () => {
             <Grid justifyContent="center" textAlign="center">
               {getIconByResultStatus(resultStatus)}
             </Grid>
-            <Grid textAlign="center">
+            <Grid textAlign="center" pt="32px">
               {translateErrorMessage(resultStatus)}
             </Grid>
             <Grid justifyContent="center" textAlign="center" pt="50px">

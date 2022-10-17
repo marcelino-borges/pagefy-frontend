@@ -5,6 +5,8 @@ const initialState: IPurchaseState = {
   loading: false,
   error: undefined,
   plan: undefined,
+  price: undefined,
+  currency: undefined,
   subscriptionCreated: undefined,
 };
 
@@ -16,7 +18,9 @@ const purchaseReducer = (
     case PurchaseTypes.SET_PLAN_TYPE_TO_SUBSCRIBE:
       return {
         ...state,
-        plan: action.payload,
+        plan: action.payload.plan,
+        price: action.payload.price,
+        currency: action.payload.currency,
       };
     case PurchaseTypes.CREATE_SUBSCRIPTION_LOADING:
       return {
@@ -54,6 +58,30 @@ const purchaseReducer = (
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case PurchaseTypes.SET_CURRENCY:
+      return {
+        ...state,
+        currency: action.payload,
+      };
+
+    case PurchaseTypes.CLEAR_CURRENCY:
+      return {
+        ...state,
+        currency: undefined,
+      };
+
+    case PurchaseTypes.SET_PRICE:
+      return {
+        ...state,
+        price: action.payload,
+      };
+
+    case PurchaseTypes.CLEAR_PRICE:
+      return {
+        ...state,
+        price: undefined,
       };
 
     case PurchaseTypes.CLEAR_STATE:
