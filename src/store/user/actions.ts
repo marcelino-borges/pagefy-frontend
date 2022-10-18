@@ -1,5 +1,6 @@
 import { IUser, UserActionTypes } from "./../user/types";
 import * as UserService from "./../../services/user";
+import * as PaymentService from "./../../services/payments";
 import * as FilesService from "./../../services/files";
 import { AxiosError, AxiosResponse } from "axios";
 import { IAppResult, UserStorageFolder } from "../shared/types";
@@ -7,6 +8,7 @@ import { translateError } from "../../utils/api-errors-mapping";
 import { getAllUserPages } from "./../user-pages/actions";
 import { getFirebaseToken } from "../../utils/firebase-config";
 import { TOKEN_AUTH_ERROR } from "./../../constants/index";
+import { ISubscriptionCreationResult } from "./../purchase/types";
 
 export const getUser =
   (
@@ -74,6 +76,67 @@ export const getUserSuccess = (user: IUser) => ({
 const getUserError = (e: IAppResult) => ({
   payload: e,
   type: UserActionTypes.GET_USER_ERROR,
+});
+
+export const getSubscriptions =
+  (
+    userId: string,
+    onSuccessCallback: any = null,
+    onErrorCallback: any = null
+  ) =>
+  async (dispatch: any) => {
+    let validToken = await getFirebaseToken();
+
+    if (!validToken) {
+      const error: IAppResult = {
+        message: TOKEN_AUTH_ERROR,
+        errorDetails: TOKEN_AUTH_ERROR,
+        statusCode: 0,
+      };
+      dispatch(getUserError(error));
+
+      if (error && error.errorDetails) {
+        const translatedError = translateError(error.errorDetails);
+        if (onErrorCallback) onErrorCallback(translatedError);
+      }
+
+      return;
+    }
+
+    dispatch(getSubscriptionsLoading());
+
+    PaymentService.getUserSubscriptions(userId, validToken)
+      .then((res: AxiosResponse) => {
+        const subscriptions: ISubscriptionCreationResult[] = res.data;
+        dispatch(getSubscriptionsSuccess(subscriptions));
+
+        if (onSuccessCallback) onSuccessCallback(subscriptions);
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(getSubscriptionsError(error));
+
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback) onErrorCallback(translatedError);
+        }
+      });
+  };
+
+const getSubscriptionsLoading = () => ({
+  type: UserActionTypes.GET_SUBSCRIPTIONS_LOADING,
+});
+
+export const getSubscriptionsSuccess = (
+  subscriptions: ISubscriptionCreationResult[]
+) => ({
+  payload: subscriptions,
+  type: UserActionTypes.GET_SUBSCRIPTIONS_SUCCESS,
+});
+
+const getSubscriptionsError = (error: IAppResult) => ({
+  payload: error,
+  type: UserActionTypes.GET_SUBSCRIPTIONS_ERROR,
 });
 
 export const updateUser =

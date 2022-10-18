@@ -25,6 +25,7 @@ import LoadingSpinner from "../../components/loading-spinner";
 import {
   cancelSubscriptionOnDatabase,
   clearPrice,
+  clearSubscription,
   setPrice,
   startSubscription,
 } from "../../../store/purchase/actions";
@@ -37,6 +38,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { getCurrencyPrefix } from "./utils";
 import { setCurrency } from "./../../../store/purchase/actions";
 import Footer from "../../components/footer";
+import ReportIcon from "@mui/icons-material/Report";
+import { getPlanNameByType } from "../../../utils/stripe";
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
@@ -57,6 +60,14 @@ const PurchasePlanPage = () => {
   const [hasCheckedOut, setHasCheckedOut] = useState(false);
   const [showPaymentElement, setShowPaymentElement] = useState(false);
   const [recurrencyError, setRecurrencyError] = useState("");
+  const [showErrorOnClientSecret, setShowErrorOnClientSecret] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearSubscription());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (purchaseState.plan === undefined) {
@@ -74,12 +85,16 @@ const PurchasePlanPage = () => {
   }, [hasCheckedOut]);
 
   useEffect(() => {
-    const secret: string | undefined =
-      purchaseState.subscriptionCreated?.latestInvoice?.payment_intent
-        ?.client_secret;
+    if (purchaseState.subscriptionCreated) {
+      const secret: string | undefined =
+        purchaseState.subscriptionCreated?.latestInvoice?.payment_intent
+          ?.client_secret;
 
-    if (secret) {
-      setClientSecret(secret);
+      if (secret === null) {
+        setShowErrorOnClientSecret(true);
+      } else if (secret) {
+        setClientSecret(secret);
+      }
     }
   }, [purchaseState.subscriptionCreated]);
 
@@ -120,7 +135,26 @@ const PurchasePlanPage = () => {
       <PrivateRouteChecker />
       <Header />
       <ThinWidthContent pb="100px">
-        {!showPaymentElement && (
+        {showErrorOnClientSecret && (
+          <Grid
+            container
+            margin="auto"
+            direction="column"
+            alignItems="center"
+            gap="16px"
+          >
+            <Grid>
+              <ReportIcon
+                color="inherit"
+                style={{ color: ACESSIBILITY_RED, fontSize: "80px" }}
+              />
+            </Grid>
+            <Grid>
+              {strings.subscriptionPayment.errorOnPaymentClientSecret}
+            </Grid>
+          </Grid>
+        )}
+        {!showErrorOnClientSecret && !showPaymentElement && (
           <CheckoutContainer
             style={{
               transform:
@@ -132,9 +166,7 @@ const PurchasePlanPage = () => {
               sizes={[1, 3, 0.8]}
               titles={[
                 strings.thePlanYouSelectedIs,
-                purchaseState.plan
-                  ? Object.values(PlansTypes)[purchaseState.plan].toString()
-                  : "",
+                purchaseState.plan ? getPlanNameByType(purchaseState.plan) : "",
                 strings.youreCloserNowBecomeSubscriber,
               ]}
             />
@@ -291,64 +323,65 @@ const PurchasePlanPage = () => {
                 onClick={validateAndCheckout}
                 style={{ minWidth: "200px" }}
               >
-                {strings.checkout}
+                {isCreatingSubscription ? (
+                  <LoadingSpinner color="grey" size={30} m="0px 0px 0px 32px" />
+                ) : (
+                  strings.checkout
+                )}
               </Button>
-              {isCreatingSubscription && (
-                <LoadingSpinner color="grey" size={30} m="0px 0px 0px 32px" />
-              )}
             </Grid>
           </CheckoutContainer>
         )}
-        <PaymentElementContainer
-          style={{ transform: showPaymentElement ? "translateX(0px)" : "" }}
-        >
-          {selectedRecurrency &&
-            purchaseState.plan &&
-            !isCreatingSubscription &&
-            clientSecret && (
-              <Elements
-                stripe={stripePromise}
-                options={{
-                  clientSecret,
-                  locale: strings.getLanguage() as any,
-                  loader: "always",
-                  fonts: [
-                    {
-                      family: "Montserrat",
-                      src: "url(.src/assets/fonts/montserrat/Montserrat-VariableFont_wght.otf)",
-                      weight: "400",
+        {!showErrorOnClientSecret && showPaymentElement && (
+          <PaymentElementContainer>
+            {selectedRecurrency &&
+              purchaseState.plan &&
+              !isCreatingSubscription &&
+              clientSecret && (
+                <Elements
+                  stripe={stripePromise}
+                  options={{
+                    clientSecret,
+                    locale: strings.getLanguage() as any,
+                    loader: "always",
+                    fonts: [
+                      {
+                        family: "Montserrat",
+                        src: "url(.src/assets/fonts/montserrat/Montserrat-VariableFont_wght.otf)",
+                        weight: "400",
+                      },
+                    ],
+                    appearance: {
+                      theme: "stripe",
+                      variables: {
+                        colorPrimary: PRIMARY_COLOR,
+                        colorDanger: ACESSIBILITY_RED,
+                        spacingUnit: "5px",
+                        borderRadius: "8px",
+                      },
+                      labels: "floating",
                     },
-                  ],
-                  appearance: {
-                    theme: "stripe",
-                    variables: {
-                      colorPrimary: PRIMARY_COLOR,
-                      colorDanger: ACESSIBILITY_RED,
-                      spacingUnit: "5px",
-                      borderRadius: "8px",
-                    },
-                    labels: "floating",
-                  },
-                }}
-              >
-                <PaymentElement
-                  planType={purchaseState.plan}
-                  recurrency={selectedRecurrency}
-                  currency={selectedCurrency}
-                  changeToRecurrency={() => {
-                    setHasCheckedOut(false);
-                    setShowPaymentElement(false);
-                    if (purchaseState.subscriptionCreated?.subscriptionId)
-                      dispatch(
-                        cancelSubscriptionOnDatabase(
-                          purchaseState.subscriptionCreated?.subscriptionId
-                        )
-                      );
                   }}
-                />
-              </Elements>
-            )}
-        </PaymentElementContainer>
+                >
+                  <PaymentElement
+                    planType={purchaseState.plan}
+                    recurrency={selectedRecurrency}
+                    currency={selectedCurrency}
+                    changeToRecurrency={() => {
+                      setHasCheckedOut(false);
+                      setShowPaymentElement(false);
+                      if (purchaseState.subscriptionCreated?.subscriptionId)
+                        dispatch(
+                          cancelSubscriptionOnDatabase(
+                            purchaseState.subscriptionCreated?.subscriptionId
+                          )
+                        );
+                    }}
+                  />
+                </Elements>
+              )}
+          </PaymentElementContainer>
+        )}
       </ThinWidthContent>
       <Footer />
     </>

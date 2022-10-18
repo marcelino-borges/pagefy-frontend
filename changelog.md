@@ -16,6 +16,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.15.0] - 2022-10-18
+
+- Feature: Profile page for personal data
+- Feature: Profile page for finance history
+- Feature: Profile page for gallery (WIP)
+- Feature: Payment screens:
+  - Payment recurrency selection
+  - Payment checkout with stripe component
+  - Payment result
+- Fix: header height and mobile logo
+
 ### [1.14.1] - 2022-10-10
 
 - Fix: Custom script disabled in the page editor for non-Platinum user

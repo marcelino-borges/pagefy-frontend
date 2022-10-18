@@ -30,8 +30,13 @@ export const CustomLink = styled(
     width,
     height,
   }: any) => `
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
   background-color: ${bgColor || "white"};
   color: ${fontColor || PRIMARY_COLOR};
+  font-weight: ${fontWeight || "unset"};
   padding: ${p};
   margin: ${m};
   border-radius: 8px;

@@ -16,6 +16,7 @@ const initialState: IUserState = {
   loading: false,
   error: undefined,
   profile: undefined,
+  subscriptions: undefined,
 };
 
 const userReducer = (
@@ -25,6 +26,7 @@ const userReducer = (
   switch (action.type) {
     case UserActionTypes.UPLOAD_USER_LOADING:
     case UserActionTypes.GET_USER_LOADING:
+    case UserActionTypes.GET_SUBSCRIPTIONS_LOADING:
       return {
         ...state,
         loading: true,
@@ -41,10 +43,19 @@ const userReducer = (
 
     case UserActionTypes.UPLOAD_USER_ERROR:
     case UserActionTypes.GET_USER_ERROR:
+    case UserActionTypes.GET_SUBSCRIPTIONS_ERROR:
       return {
         ...state,
         error: action.payload,
         loading: false,
+      };
+
+    case UserActionTypes.GET_SUBSCRIPTIONS_SUCCESS:
+      return {
+        ...state,
+        subscriptions: action.payload,
+        loading: false,
+        error: undefined,
       };
 
     case UserActionTypes.CLEAR_STATE:

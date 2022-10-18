@@ -51,12 +51,9 @@ export const RecurrencyErrorText = styled("div")`
   color: ${ACESSIBILITY_RED};
 `;
 
-export const CheckoutContainer = styled("div")`
-  transition: transform linear 0.25s;
-`;
+export const CheckoutContainer = styled("div")``;
 
 export const PaymentElementContainer = styled("div")`
-  transform: translateX(3000px);
   transition: transform linear 0.25s;
 `;
 

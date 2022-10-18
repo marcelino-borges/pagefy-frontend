@@ -5,6 +5,7 @@ export const pt: IDictionary = {
   youAreSpecial: "Você também pode ser especial!",
   ok: "OK",
   recurrency: {
+    title: "Recorrência",
     monthly: "Mensal",
     month: "Mês",
     yearly: "Anual",
@@ -292,6 +293,7 @@ export const pt: IDictionary = {
   nowChooseTheRecurrency:
     "Agora falta apenas escolher uam recorrência (com ou sem desconto anual)",
   nowItsTimeToSubscribe: "Agora é hora de finalizar sua assinatura",
+  subscription: "Assinatura",
   subscriptionPayment: {
     succeeded: "Assinatura finalizada com sucesso!",
     processing: "Sua assinatura está sendo processada.",
@@ -304,6 +306,17 @@ export const pt: IDictionary = {
     changeRecurrency: "Alterar recorrência",
     trustWarning:
       "Não se preocupe, seu pagamento será processado exclusivamente via",
+    youHaveNoFinanceHistory:
+      "Você não possui histórico de pagamentos ou assinaturas.",
+    errorOnPaymentClientSecret:
+      "Erro ao carregar pagamento. Por favor atualize a página e tente novamente.",
+    subscriptionStatuses: {
+      incomplete: "Incompleta",
+      canceled: "Cancelada",
+      paid: "Paga",
+      succeeded: "Sucesso",
+    },
+    amountPaid: "Valor pago",
   },
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
@@ -393,5 +406,15 @@ export const pt: IDictionary = {
     headerScript: "Script para o Header",
     endBodyScript: "Script para o final do body",
     scriptNotValidated: "Script não pôde ser validado",
+  },
+  personalData: "Dados Pessoais",
+  finance: {
+    title: "Financeiro",
+    profileTableHeaders: {
+      plan: "Plano",
+      startDate: "Início",
+      endDate: "Fim",
+      status: "Status",
+    },
   },
 };

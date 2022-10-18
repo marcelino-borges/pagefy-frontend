@@ -10,8 +10,18 @@ const FullWidthContent = ({ pt, pb, pl, pr, children, ...rest }: any) => {
   }, []);
 
   return (
-    <Root container justifyContent="center" {...rest}>
-      <Grid container item direction="column" pt={pt} pb={pb} pl={pl} pr={pr}>
+    <Root
+      container
+      justifyContent="center"
+      {...rest}
+      style={{
+        paddingTop: pt,
+        paddingBottom: pb,
+        paddingLeft: pl,
+        paddingRight: pr,
+      }}
+    >
+      <Grid container item direction="column">
         {children}
       </Grid>
     </Root>

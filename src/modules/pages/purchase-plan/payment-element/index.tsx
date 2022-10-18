@@ -22,6 +22,7 @@ import { showErrorToast } from "./../../../../utils/toast";
 import CustomButton from "../../../components/button-custom";
 import { StripePaymentElement } from "./style";
 import ExternalLink from "./../../../components/external-link/index";
+import { getPlanNameByType, getRecurrency } from "../../../../utils/stripe";
 
 interface IPaymentElementProps {
   planType: PlansTypes;
@@ -78,9 +79,6 @@ const PaymentElement = ({
       if (!canSubmit) setCanSubmit(true);
     }
   }, [stripe, elements, canSubmit]);
-
-  const getRecurrency = (recur: string) =>
-    recur === "month" ? strings.recurrency.monthly : strings.recurrency.yearly;
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -146,9 +144,7 @@ const PaymentElement = ({
         sizes={[1, 3, 0.8]}
         titles={[
           strings.thePlanYouSelectedIs,
-          `${Object.values(PlansTypes)[planType].toString()} - ${getRecurrency(
-            recurrency
-          )}${
+          `${getPlanNameByType(planType)} - ${getRecurrency(recurrency)}${
             purchaseState.currency &&
             purchaseState.price &&
             ` - ${getCurrencyPrefix(purchaseState.currency)} ${

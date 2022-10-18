@@ -23,6 +23,10 @@ import { clearBackgroundImage, setBackgroundImage } from "./utils";
 import UserTestimonialCard from "../../components/user-testimonial-card";
 import TriplePageTitle from "../../components/page-title";
 import PlansCards from "../../components/plans-cards";
+import {
+  HEADER_HEIGHT_DESKTOP,
+  HEADER_HEIGHT_MOBILE,
+} from "../../../constants";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -63,19 +67,10 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div
-        style={{
-          height: isSmallerThan900 ? "3vh" : "108px",
-          width: "200%",
-          backgroundColor: GLOBAL_LIGHT_BG,
-        }}
-      ></div>
       <FullWidthContent
-        style={{
-          paddingLeft: "0px",
-          paddingRight: "0px",
-          paddingTop: "0px",
-        }}
+        pl="0px"
+        pr="0px"
+        pt={isSmallerThan900 ? HEADER_HEIGHT_MOBILE : HEADER_HEIGHT_DESKTOP}
       >
         {/* BANNER */}
         <Grid container bgcolor="white">
@@ -109,7 +104,7 @@ const Home = () => {
         </Grid>
 
         {/* PLANS FEATURED CARDS */}
-        <PlansCards />
+        <PlansCards py="70px" />
 
         {/* LAST SECTION */}
         <SignUpSection container direction="column">

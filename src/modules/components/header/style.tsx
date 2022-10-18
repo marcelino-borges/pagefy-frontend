@@ -5,6 +5,7 @@ import { Close, Menu } from "@mui/icons-material";
 
 export const Parent = styled(Grid)`
   border-bottom: 1px solid #e9e9e9;
+  box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.03);
   background-color: white;
   min-width: 320px;
   z-index: 1000;
@@ -14,7 +15,7 @@ export const Parent = styled(Grid)`
 
 export const HeaderLinkDesktop = styled(Link)`
   color: black;
-  padding-bottom: 50.5px; /* distance from text to underline when hover */
+  padding-bottom: 41px; /* distance from text to underline when hover */
   transition: all 0.2s ease-in-out;
   position: relative;
   height: 100%;

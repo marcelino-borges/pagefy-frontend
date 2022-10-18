@@ -60,6 +60,12 @@ const purchaseReducer = (
         loading: false,
       };
 
+    case PurchaseTypes.CLEAR_SUBSCRIPTION:
+      return {
+        ...state,
+        subscriptionCreated: undefined,
+      };
+
     case PurchaseTypes.SET_CURRENCY:
       return {
         ...state,

@@ -11,17 +11,23 @@ import {
 } from "./style";
 import strings from "../../../localization";
 import routes from "./../../../routes/paths";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logos from "../../../assets/img/logos";
 import UserLoggedIn from "./user-loggedin";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
+import { PRIMARY_COLOR } from "../../../styles/colors";
+import {
+  HEADER_HEIGHT_DESKTOP,
+  HEADER_HEIGHT_MOBILE,
+} from "../../../constants";
 
 const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmallerThan400 = useMediaQuery("(max-width:400px)");
+  const isSmallerThan420 = useMediaQuery("(max-width:420px)");
 
   const userState = useSelector((state: IApplicationState) => state.user);
 
@@ -56,15 +62,36 @@ const Header = () => {
         wrap="nowrap"
       >
         <Grid item padding={2}>
-          <HeaderLinkDesktop to={routes.root}>{strings.home}</HeaderLinkDesktop>
+          <HeaderLinkDesktop
+            to={routes.root}
+            style={{
+              color: location.pathname === routes.root ? PRIMARY_COLOR : "",
+            }}
+          >
+            {strings.home}
+          </HeaderLinkDesktop>
         </Grid>
         <Grid item padding={2}>
-          <HeaderLinkDesktop to={routes.pages}>
+          <HeaderLinkDesktop
+            to={routes.pages}
+            style={{
+              color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
+            }}
+          >
             {strings.pages}
           </HeaderLinkDesktop>
         </Grid>
         <Grid item padding={2}>
-          <HeaderLinkDesktop to={routes.faq}>
+          <HeaderLinkDesktop
+            to={routes.faq}
+            style={{
+              color:
+                location.pathname === routes.faq ||
+                location.pathname === routes.support
+                  ? PRIMARY_COLOR
+                  : "",
+            }}
+          >
             {strings.support}
           </HeaderLinkDesktop>
         </Grid>
@@ -110,6 +137,9 @@ const Header = () => {
               item
               alignItems="center"
               onClick={() => onClickLinkCallback(routes.root)}
+              style={{
+                color: location.pathname === routes.root ? PRIMARY_COLOR : "",
+              }}
             >
               {strings.home}
             </MobileMenuGridItem>
@@ -118,6 +148,9 @@ const Header = () => {
               item
               alignItems="center"
               onClick={() => onClickLinkCallback(routes.pages)}
+              style={{
+                color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
+              }}
             >
               {strings.pages}
             </MobileMenuGridItem>
@@ -126,6 +159,13 @@ const Header = () => {
               item
               alignItems="center"
               onClick={() => onClickLinkCallback(routes.faq)}
+              style={{
+                color:
+                  location.pathname === routes.faq ||
+                  location.pathname === routes.support
+                    ? PRIMARY_COLOR
+                    : "",
+              }}
             >
               {strings.support}
             </MobileMenuGridItem>
@@ -146,20 +186,31 @@ const Header = () => {
         alignItems="center"
         style={{
           paddingLeft: "32px",
-          height: isSmallerThanMD ? "unset" : "117px",
+          height: isSmallerThanMD
+            ? HEADER_HEIGHT_MOBILE
+            : HEADER_HEIGHT_DESKTOP,
         }}
       >
         <Link to={userState.profile?._id ? routes.pages : routes.root}>
-          <img
-            src={logos.LogoHorizontalLightBGPNG}
-            style={{
-              height: "auto",
-              width: isSmallerThan400 ? "125px" : "70%",
-              margin: "8px",
-              maxHeight: "80px",
-            }}
-            alt="Logo"
-          />
+          {isSmallerThan420 ? (
+            <img
+              src={logos.LogoIconColorPng}
+              style={{
+                margin: "8px",
+                height: "50px",
+              }}
+              alt="Logo"
+            />
+          ) : (
+            <img
+              src={logos.LogoHorizontalLightBgPng}
+              style={{
+                margin: "8px",
+                height: "50px",
+              }}
+              alt="Logo"
+            />
+          )}
         </Link>
       </Grid>
       {isSmallerThanMD ? <MobileHeader /> : <DesktopHeader />}

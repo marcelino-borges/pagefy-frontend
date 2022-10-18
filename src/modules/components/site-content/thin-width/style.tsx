@@ -1,17 +1,21 @@
 import { styled } from "@mui/system";
 import { Grid } from "@mui/material";
-import { FOOTER_HEIGHT } from "../../../../constants";
+import {
+  FOOTER_HEIGHT,
+  HEADER_HEIGHT_DESKTOP,
+  HEADER_HEIGHT_MOBILE,
+} from "../../../../constants";
 
 export const Root = styled(Grid)`
   min-height: calc(100vh - ${FOOTER_HEIGHT});
   max-width: var(--max-site-width);
-  padding: 150px 32px 32px 32px;
+  padding: calc(${HEADER_HEIGHT_DESKTOP} + 16px) 32px 0px 32px;
 
   @media (max-width: 900px) {
-    padding: 13vw 24px 24px 24px;
+    padding: calc(${HEADER_HEIGHT_MOBILE} + 24px) 24px 24px 24px;
   }
 
   @media (max-width: 400px) {
-    padding: 19vw 8px 8px 8px;
+    padding: calc(${HEADER_HEIGHT_MOBILE} + 16px) 8px 8px 8px;
   }
 `;

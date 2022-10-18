@@ -20,9 +20,10 @@ import { PRICES } from "../../../constants";
 
 interface IPlansCardsProps {
   px?: string;
+  py?: string;
 }
 
-const PlansCards = ({ px }: IPlansCardsProps) => {
+const PlansCards = ({ px, py }: IPlansCardsProps) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -41,7 +42,12 @@ const PlansCards = ({ px }: IPlansCardsProps) => {
 
   return (
     <FeaturedCardsContainer
-      style={px ? { paddingLeft: px, paddingRight: px } : undefined}
+      style={{
+        paddingLeft: px,
+        paddingRight: px,
+        paddingTop: py,
+        paddingBottom: py,
+      }}
     >
       <FeaturedCard
         overTitle={strings.plan}

@@ -9,6 +9,8 @@ const apiErrors: any = {
   "auth/invalid-email": strings.authErrors.invalidEmail,
   "auth/weak-password": strings.authErrors.weakPassword,
   "auth/invalid-token": strings.authErrors.invalidToken,
+  "User has no subscriptions.":
+    strings.subscriptionPayment.youHaveNoFinanceHistory,
 };
 
 export const translateError = (errorMsg: string) => {

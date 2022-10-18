@@ -90,6 +90,7 @@ export interface IDictionary {
   checkOurPlans: string;
   youAreSpecial: string;
   recurrency: {
+    title: string;
     monthly: string;
     month: string;
     yearly: string;
@@ -285,6 +286,7 @@ export interface IDictionary {
   youreCloserNowBecomeSubscriber: string;
   nowChooseTheRecurrency: string;
   nowItsTimeToSubscribe: string;
+  subscription: string;
   subscriptionPayment: {
     succeeded: string;
     processing: string;
@@ -294,6 +296,15 @@ export interface IDictionary {
     paymentAlreadySucceeded: string;
     changeRecurrency: string;
     trustWarning: string;
+    youHaveNoFinanceHistory: string;
+    errorOnPaymentClientSecret: string;
+    subscriptionStatuses: {
+      incomplete: string;
+      canceled: string;
+      paid: string;
+      succeeded: string;
+    };
+    amountPaid: string;
   };
   upgradeYourPlan: string;
   plan: string;
@@ -354,6 +365,16 @@ export interface IDictionary {
     endBodyScript: string;
     customScriptDescription: string;
     scriptNotValidated: string;
+  };
+  personalData: string;
+  finance: {
+    title: string;
+    profileTableHeaders: {
+      plan: string;
+      startDate: string;
+      endDate: string;
+      status: string;
+    };
   };
 }
 

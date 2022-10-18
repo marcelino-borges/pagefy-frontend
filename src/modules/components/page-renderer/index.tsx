@@ -322,7 +322,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
                     borderRadius="8px"
                   >
                     <img
-                      src={Logos.LogoHorizontalLightBGPNG}
+                      src={Logos.LogoHorizontalLightBgPng}
                       alt="Socialbio.me"
                       width="150px"
                     />

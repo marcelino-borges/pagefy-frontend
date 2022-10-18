@@ -47,3 +47,14 @@ export const cancelSubscription = async (
     },
   });
 };
+
+export const getUserSubscriptions = async (
+  userId: string,
+  token: string
+): Promise<AxiosResponse<any>> => {
+  return api.get(`/subscription/user/${userId}`, {
+    headers: {
+      Authorization: "Bearer " + token,
+    },
+  });
+};

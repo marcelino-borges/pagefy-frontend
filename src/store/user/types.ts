@@ -1,3 +1,5 @@
+import { ISubscriptionCreationResult } from "../purchase/types";
+
 export enum UserActionTypes {
   GET_USER_LOADING = "@user/GET_USER_LOADING",
   GET_USER_SUCCESS = "@user/GET_USER_SUCCESS",
@@ -5,6 +7,9 @@ export enum UserActionTypes {
   UPLOAD_USER_LOADING = "@user/UPLOAD_USER_LOADING",
   UPLOAD_USER_SUCCESS = "@user/UPLOAD_USER_SUCCESS",
   UPLOAD_USER_ERROR = "@user/UPLOAD_USER_ERROR",
+  GET_SUBSCRIPTIONS_LOADING = "@user/GET_SUBSCRIPTIONS_LOADING",
+  GET_SUBSCRIPTIONS_SUCCESS = "@user/GET_SUBSCRIPTIONS_SUCCESS",
+  GET_SUBSCRIPTIONS_ERROR = "@user/GET_SUBSCRIPTIONS_ERROR",
   CLEAR_STATE = "@user/CLEAR_STATE",
 }
 
@@ -31,4 +36,5 @@ export interface IUserState {
   loading: boolean;
   error?: any;
   profile?: IUser;
+  subscriptions?: ISubscriptionCreationResult[];
 }

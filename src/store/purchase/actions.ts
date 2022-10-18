@@ -70,6 +70,10 @@ export const createSubscriptionError = (error: any) => ({
   type: PurchaseTypes.CREATE_SUBSCRIPTION_ERROR,
 });
 
+export const clearSubscription = () => ({
+  type: PurchaseTypes.CLEAR_SUBSCRIPTION,
+});
+
 export const cancelSubscriptionOnDatabase =
   (
     subscriptionId: string,

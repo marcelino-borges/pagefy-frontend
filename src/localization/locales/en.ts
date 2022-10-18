@@ -5,6 +5,7 @@ export const en: IDictionary = {
   youAreSpecial: "You can be special too!",
   ok: "OK",
   recurrency: {
+    title: "Recurrency",
     monthly: "Monthly",
     month: "Month",
     yearly: "Yearly",
@@ -292,6 +293,7 @@ export const en: IDictionary = {
   nowChooseTheRecurrency:
     "Now you only need to choose a recurrency (with or without the year discount)",
   nowItsTimeToSubscribe: "Now it's time to finish your subscription",
+  subscription: "Subscription",
   subscriptionPayment: {
     succeeded: "Subscription payment succeeded!",
     processing: "Your payment is processing.",
@@ -302,6 +304,16 @@ export const en: IDictionary = {
       "You cannot confirm this PaymentIntent because it has already succeeded after being previously confirmed.",
     changeRecurrency: "Change recurrency",
     trustWarning: "Don't worry, your payment will be processed exclusively via",
+    youHaveNoFinanceHistory: "You have no payments or subscriptions history.",
+    errorOnPaymentClientSecret:
+      "Error loading payment. Please refresh the page and try again.",
+    subscriptionStatuses: {
+      incomplete: "Incomplete",
+      canceled: "Canceled",
+      paid: "Paid",
+      succeeded: "Succeeded",
+    },
+    amountPaid: "Amount paid",
   },
   upgradeYourPlan: "Upgrade your plan",
   plan: "Plan",
@@ -391,5 +403,15 @@ export const en: IDictionary = {
     headerScript: "Script for the Header",
     endBodyScript: "Script after body",
     scriptNotValidated: "Script didn't pass our validation.",
+  },
+  personalData: "Personal",
+  finance: {
+    title: "Finance",
+    profileTableHeaders: {
+      plan: "Plan",
+      startDate: "Start",
+      endDate: "End",
+      status: "Status",
+    },
   },
 };
