@@ -19,6 +19,9 @@ import {
 import SubscriptionDetailsDialog from "./dialog-sub-details";
 import { InteractiveRow, TableContainer } from "./style";
 import { formatToDateOnly } from "../../../../utils/dates";
+import TriplePageTitle from "../../../components/page-title";
+import strings from "../../../../localization";
+import { SECONDARY_COLOR_LIGHTER } from "./../../../../styles/colors";
 
 interface IFinanceProps {
   userId: string;
@@ -47,10 +50,18 @@ const Finance = ({ userId }: IFinanceProps) => {
     <>
       {errorMessage || (
         <>
-          <TableContainer component={Paper} style={{}}>
+          <TriplePageTitle
+            titles={[strings.finance.title, strings.finance.subtitle, ""]}
+            increasingSize
+          />
+          <TableContainer component={Paper} style={{ marginTop: "50px" }}>
             <Table>
               <TableHead>
-                <TableRow>
+                <TableRow
+                  style={{
+                    borderBottom: "2px solid " + SECONDARY_COLOR_LIGHTER,
+                  }}
+                >
                   <TableCell>Plano</TableCell>
                   {!isSmallerThan500 && <TableCell>Início</TableCell>}
                   <TableCell>Fim</TableCell>

@@ -13,26 +13,13 @@ import routes from "../../../../routes/paths";
 import { translateErrorMessage } from "../utils";
 import LoadingSpinner from "../../../components/loading-spinner";
 import { SECONDARY_COLOR } from "../../../../styles/colors";
-import { getPaymentIntent } from "../../../../services/payments";
-import { getFirebaseToken } from "../../../../utils/firebase-config";
 
 const PaymentResult = () => {
   const dispatch = useDispatch();
 
-  const [resultStatus, setResultStatus] = useState("");
-
-  const getPaymentIntentStatus = async (paymentIntentId: string) => {
-    const token = await getFirebaseToken();
-    if (!token) {
-      setResultStatus("firebase_token");
-      return;
-    }
-    await getPaymentIntent(paymentIntentId, token).then(
-      (paymentIntent: any) => {
-        setResultStatus(paymentIntent.status);
-      }
-    );
-  };
+  const [resultStatus, setResultStatus] = useState<string | null | undefined>(
+    ""
+  );
 
   useEffect(() => {
     console.log("opening result screen");
@@ -42,15 +29,11 @@ const PaymentResult = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const paymentIntentId = new URLSearchParams(window.location.search).get(
-      "payment_intent"
+    const redirectStatus = new URLSearchParams(window.location.search).get(
+      "redirect_status"
     );
 
-    if (!paymentIntentId) {
-      return;
-    }
-
-    getPaymentIntentStatus(paymentIntentId);
+    setResultStatus(redirectStatus);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -72,6 +55,7 @@ const PaymentResult = () => {
             style={{ fontSize: "100px" }}
           />
         );
+      case "failed":
       case "firebase_token":
       case "requires_payment_method":
         return (

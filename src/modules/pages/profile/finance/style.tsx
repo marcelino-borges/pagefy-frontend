@@ -17,6 +17,7 @@ export const InteractiveRow = styled(({ index, children, ...rest }: any) => (
   &:hover {
     background-color: ${LIGHTER_GREY};
     border-right: 3px solid grey;
+    border-left: 3px solid grey;
   }
 `
 );

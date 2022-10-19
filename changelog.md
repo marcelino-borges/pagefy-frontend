@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.15.1] - 2022-10-19
+
+- Fix: Payment result screen only reads the status from the url now
+- Fix: Added the finance tab title
+
 ### [1.15.0] - 2022-10-18
 
 - Feature: Profile page for personal data

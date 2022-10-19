@@ -13,10 +13,11 @@ export const translateErrorMessage = (
       return strings.subscriptionPayment.paymentAlreadySucceeded;
     case "succeeded":
       return strings.subscriptionPayment.succeeded;
-    case "processing":
-      return strings.subscriptionPayment.processing;
+    case "failed":
     case "requires_payment_method":
       return strings.subscriptionPayment.failed;
+    case "processing":
+      return strings.subscriptionPayment.processing;
     case "firebase_token":
       return strings.generalErrors.internalError;
     default:

@@ -324,7 +324,7 @@ const PurchasePlanPage = () => {
                 style={{ minWidth: "200px" }}
               >
                 {isCreatingSubscription ? (
-                  <LoadingSpinner color="grey" size={30} m="0px 0px 0px 32px" />
+                  <LoadingSpinner color="grey" size={20} m="0px 0px 0px 32px" />
                 ) : (
                   strings.checkout
                 )}

@@ -410,6 +410,7 @@ export const pt: IDictionary = {
   personalData: "Dados Pessoais",
   finance: {
     title: "Financeiro",
+    subtitle: "Encontre aqui seu histórico de pagamentos",
     profileTableHeaders: {
       plan: "Plano",
       startDate: "Início",

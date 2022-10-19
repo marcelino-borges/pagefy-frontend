@@ -369,6 +369,7 @@ export interface IDictionary {
   personalData: string;
   finance: {
     title: string;
+    subtitle: string;
     profileTableHeaders: {
       plan: string;
       startDate: string;

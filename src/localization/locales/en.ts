@@ -407,6 +407,7 @@ export const en: IDictionary = {
   personalData: "Personal",
   finance: {
     title: "Finance",
+    subtitle: "Find here your payment history",
     profileTableHeaders: {
       plan: "Plan",
       startDate: "Start",
