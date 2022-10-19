@@ -21,7 +21,10 @@ import { InteractiveRow, TableContainer } from "./style";
 import { formatToDateOnly } from "../../../../utils/dates";
 import TriplePageTitle from "../../../components/page-title";
 import strings from "../../../../localization";
-import { SECONDARY_COLOR_LIGHTER } from "./../../../../styles/colors";
+import {
+  PRIMARY_COLOR,
+  SECONDARY_COLOR_LIGHTER,
+} from "./../../../../styles/colors";
 
 interface IFinanceProps {
   userId: string;
@@ -46,6 +49,17 @@ const Finance = ({ userId }: IFinanceProps) => {
     );
   }, [dispatch, userId]);
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "succeeded":
+        return PRIMARY_COLOR;
+      case "failed":
+        return "red";
+      default:
+        return "black";
+    }
+  };
+
   return (
     <>
       {errorMessage || (
@@ -62,43 +76,71 @@ const Finance = ({ userId }: IFinanceProps) => {
                     borderBottom: "2px solid " + SECONDARY_COLOR_LIGHTER,
                   }}
                 >
-                  <TableCell>Plano</TableCell>
-                  {!isSmallerThan500 && <TableCell>Início</TableCell>}
-                  <TableCell>Fim</TableCell>
-                  <TableCell>Status</TableCell>
+                  <TableCell>
+                    {strings.finance.profileTableHeaders.plan}
+                  </TableCell>
+                  {!isSmallerThan500 && (
+                    <TableCell>
+                      {strings.finance.profileTableHeaders.startDate}
+                    </TableCell>
+                  )}
+                  <TableCell>
+                    {strings.finance.profileTableHeaders.endDate}
+                  </TableCell>
+                  <TableCell>
+                    {strings.finance.profileTableHeaders.status}
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {subscriptions?.length &&
-                  subscriptions.map(
-                    (
-                      subscription: ISubscriptionCreationResult,
-                      index: number
-                    ) => (
-                      <InteractiveRow
-                        key={subscription.subscriptionId}
-                        onClick={() =>
-                          setSubscriptionToShowDetails(subscription)
-                        }
-                        index={index}
-                      >
-                        <TableCell>
-                          {getPlanNameByPriceId(subscription.priceId)}
-                        </TableCell>
-                        {!isSmallerThan500 && (
-                          <TableCell>
-                            {formatToDateOnly(subscription.subscriptionStart)}
-                          </TableCell>
-                        )}
-                        <TableCell>
-                          {formatToDateOnly(subscription.subscriptionEnd)}
-                        </TableCell>
-                        <TableCell>
-                          {translateStatus(subscription.status)}
-                        </TableCell>
-                      </InteractiveRow>
+                  subscriptions
+                    .sort(
+                      (
+                        a: ISubscriptionCreationResult,
+                        b: ISubscriptionCreationResult
+                      ) => {
+                        const aUpdate = new Date(a.updatedAt).getTime();
+                        const bUpdate = new Date(b.updatedAt).getTime();
+
+                        return bUpdate - aUpdate;
+                      }
                     )
-                  )}
+                    .map(
+                      (
+                        subscription: ISubscriptionCreationResult,
+                        index: number
+                      ) => (
+                        <InteractiveRow
+                          key={subscription.subscriptionId}
+                          onClick={() =>
+                            setSubscriptionToShowDetails(subscription)
+                          }
+                          index={index}
+                        >
+                          <TableCell>
+                            {getPlanNameByPriceId(subscription.priceId)}
+                          </TableCell>
+                          {!isSmallerThan500 && (
+                            <TableCell>
+                              {formatToDateOnly(subscription.subscriptionStart)}
+                            </TableCell>
+                          )}
+                          <TableCell>
+                            {formatToDateOnly(subscription.subscriptionEnd)}
+                          </TableCell>
+                          <TableCell>
+                            <span
+                              style={{
+                                color: getStatusColor(subscription.status),
+                              }}
+                            >
+                              {translateStatus(subscription.status)}
+                            </span>
+                          </TableCell>
+                        </InteractiveRow>
+                      )
+                    )}
               </TableBody>
             </Table>
           </TableContainer>

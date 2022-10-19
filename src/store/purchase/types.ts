@@ -34,6 +34,8 @@ export interface ISubscriptionCreationResult {
   latestInvoice: any;
   userId: string;
   status: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IPurchaseState {

@@ -60,7 +60,8 @@ const PurchasePlanPage = () => {
   const [hasCheckedOut, setHasCheckedOut] = useState(false);
   const [showPaymentElement, setShowPaymentElement] = useState(false);
   const [recurrencyError, setRecurrencyError] = useState("");
-  const [showErrorOnClientSecret, setShowErrorOnClientSecret] = useState(false);
+  const [showErrorOnPaymentElement, setShowErrorOnPaymentElement] =
+    useState(false);
 
   useEffect(() => {
     return () => {
@@ -68,6 +69,13 @@ const PurchasePlanPage = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (purchaseState.error) {
+      setShowErrorOnPaymentElement(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [purchaseState.error]);
 
   useEffect(() => {
     if (purchaseState.plan === undefined) {
@@ -91,7 +99,7 @@ const PurchasePlanPage = () => {
           ?.client_secret;
 
       if (secret === null) {
-        setShowErrorOnClientSecret(true);
+        setShowErrorOnPaymentElement(true);
       } else if (secret) {
         setClientSecret(secret);
       }
@@ -135,7 +143,7 @@ const PurchasePlanPage = () => {
       <PrivateRouteChecker />
       <Header />
       <ThinWidthContent pb="100px">
-        {showErrorOnClientSecret && (
+        {showErrorOnPaymentElement && (
           <Grid
             container
             margin="auto"
@@ -154,7 +162,7 @@ const PurchasePlanPage = () => {
             </Grid>
           </Grid>
         )}
-        {!showErrorOnClientSecret && !showPaymentElement && (
+        {!showErrorOnPaymentElement && !showPaymentElement && (
           <CheckoutContainer
             style={{
               transform:
@@ -332,7 +340,7 @@ const PurchasePlanPage = () => {
             </Grid>
           </CheckoutContainer>
         )}
-        {!showErrorOnClientSecret && showPaymentElement && (
+        {!showErrorOnPaymentElement && showPaymentElement && (
           <PaymentElementContainer>
             {selectedRecurrency &&
               purchaseState.plan &&
