@@ -13,6 +13,7 @@ import routes from "../../../../routes/paths";
 import { translateErrorMessage } from "../utils";
 import LoadingSpinner from "../../../components/loading-spinner";
 import { SECONDARY_COLOR } from "../../../../styles/colors";
+import PrivateRouteChecker from "../../../components/private-route-checker";
 
 const PaymentResult = () => {
   const dispatch = useDispatch();
@@ -75,6 +76,7 @@ const PaymentResult = () => {
 
   return (
     <>
+      <PrivateRouteChecker />
       <Header />
       <ThinWidthContent>
         {resultStatus ? (
