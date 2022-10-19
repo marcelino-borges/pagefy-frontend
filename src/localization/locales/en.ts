@@ -298,6 +298,9 @@ export const en: IDictionary = {
     succeeded: "Subscription payment succeeded!",
     processing: "Your payment is processing.",
     failed: "Your payment was not successful, please try again.",
+    declined: "Your payment was declined. Please check it with your bank.",
+    userAbort: "Payment aborted. Try again.",
+    processingError: "Sorry, we had a technical error.",
     somethingWentWrong: "Something went wrong.",
     cardNumberIncomplete: "Card number imcomplete.",
     paymentAlreadySucceeded:

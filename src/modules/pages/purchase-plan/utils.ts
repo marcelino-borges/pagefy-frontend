@@ -18,6 +18,12 @@ export const translateErrorMessage = (
       return strings.subscriptionPayment.failed;
     case "processing":
       return strings.subscriptionPayment.processing;
+    case "declined":
+      return strings.subscriptionPayment.declined;
+    case "user_abort ":
+      return strings.subscriptionPayment.userAbort;
+    case "processing_error ":
+      return strings.subscriptionPayment.processingError;
     case "firebase_token":
       return strings.generalErrors.internalError;
     default:

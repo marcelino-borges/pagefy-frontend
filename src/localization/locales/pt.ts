@@ -299,6 +299,10 @@ export const pt: IDictionary = {
     processing: "Sua assinatura está sendo processada.",
     failed:
       "Sua assinatura não pôde ser processada, por favor tente novamente.",
+    declined:
+      "Seu pagamento foi recusado. Por favor verifique junto ao seu banco.",
+    userAbort: "Pagamento abortado. Tente novamente.",
+    processingError: "Desculpe, tivemos um erro técnico.",
     somethingWentWrong: "Algo deu errado com sua assinatura.",
     cardNumberIncomplete: "Número do cartão incompleto!",
     paymentAlreadySucceeded:

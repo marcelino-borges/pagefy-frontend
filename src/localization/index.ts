@@ -291,6 +291,9 @@ export interface IDictionary {
     succeeded: string;
     processing: string;
     failed: string;
+    declined: string;
+    userAbort: string;
+    processingError: string;
     somethingWentWrong: string;
     cardNumberIncomplete: string;
     paymentAlreadySucceeded: string;

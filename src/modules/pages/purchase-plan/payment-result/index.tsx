@@ -57,7 +57,10 @@ const PaymentResult = () => {
         );
       case "failed":
       case "firebase_token":
+      case "declined":
       case "requires_payment_method":
+      case "user_abort":
+      case "processing_error":
         return (
           <ErrorIcon
             color="error"
