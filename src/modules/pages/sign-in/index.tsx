@@ -97,7 +97,7 @@ const SignInPage = () => {
   return (
     <>
       <Header />
-      <ThinWidthContent>
+      <ThinWidthContent pb="50px">
         <h2 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.accessAccount}
         </h2>
