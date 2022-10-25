@@ -14,6 +14,10 @@ interface IProfileEditableAvatarProps {
   imageUrl?: string | undefined;
   height?: string | undefined;
   width?: string | undefined;
+  maxWidth?: string | undefined;
+  maxHeight?: string | undefined;
+  minWidth?: string | undefined;
+  minHeight?: string | undefined;
   badgeBgSize?: string | undefined;
   badgeIconSize?: string | undefined;
   noUserIconSize?: string | undefined;
@@ -23,8 +27,12 @@ const ProfileEditableAvatar = ({
   text,
   imageUrl,
   onClick,
-  width,
-  height,
+  width = "100px",
+  height = "100px",
+  maxWidth = "",
+  maxHeight = "",
+  minWidth = "",
+  minHeight = "",
   badgeBgSize,
   badgeIconSize = "20px",
   noUserIconSize = "48px",
@@ -44,6 +52,10 @@ const ProfileEditableAvatar = ({
         src={imageUrl}
         height={height}
         width={width}
+        maxWidth={maxWidth}
+        maxHeight={maxHeight}
+        minWidth={minWidth}
+        minHeight={minHeight}
         sx={{ bgcolor: MEDIUM_GREY }}
       >
         {text && text.length > 1 ? (

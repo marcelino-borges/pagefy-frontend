@@ -7,10 +7,10 @@ import {
   DialogTitle,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import strings from "./../../../../localization/index";
 import { DescriptionText } from "./styles";
-import theme from "../../../../theme";
 import { includesAnyInString } from "../../../../utils";
 import { showErrorToast } from "./../../../../utils/toast/index";
 
@@ -30,6 +30,7 @@ const CustomScriptDialog = ({
   existingHeaderScript,
   existingEndBodyScript,
 }: ICustomScriptDialogProps) => {
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [headerScript, setHeaderScript] = useState<string>("");

@@ -102,6 +102,7 @@ export const pt: IDictionary = {
   invalidId: " ID inválido",
   warningPrivatePage: "Esta página não está disponível publicamente.",
   create: "Criar",
+  chooseOneToCreate: "Escolha uma para criar",
   createPage: "Criar Página",
   pageName: "Nome da página",
   pageUrl: "URL da página",

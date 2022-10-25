@@ -24,11 +24,23 @@ export const EditPenIcon = styled(Edit)`
   }
 `;
 
-export const PageAvatar = styled(({ width, height, ...rest }: any) => (
-  <Avatar {...rest} />
-))`
-  height: ${(props) => props.height || "100px"};
-  width: ${(props) => props.width || "100px"};
+export const PageAvatar = styled(
+  ({
+    width,
+    height,
+    maxWidth,
+    maxHeight,
+    minWidth,
+    minHeight,
+    ...rest
+  }: any) => <Avatar {...rest} />
+)`
+  height: ${({ height }) => height};
+  width: ${({ width }) => width};
+  max-width: ${({ maxWidth }) => maxWidth};
+  max-height: ${({ maxHeight }) => maxHeight};
+  min-width: ${({ minWidth }) => minWidth};
+  min-height: ${({ minHeight }) => minHeight};
   font-size: 2em;
   position: relative;
   cursor: pointer;

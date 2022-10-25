@@ -16,6 +16,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.16.0] - 2022-10-25
+
+- Feature: tools now live in a dialog, opened by the + icon in the page editor toolbar
+- Feature: new favicon with white BG
+- Fix: Header now uses memoized components to optimize the application
+
 ### [1.15.1] - 2022-10-19
 
 - Fix: Payment result screen only reads the status from the url now

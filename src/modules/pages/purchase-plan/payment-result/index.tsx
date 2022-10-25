@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import strings from "../../../../localization";
 import { clearPurchaseState } from "../../../../store/purchase/actions";
-import Header from "../../../components/header";
+import Navigation from "../../../components/navigation";
 import ThinWidthContent from "../../../components/site-content/thin-width";
 import DoneIcon from "@mui/icons-material/Done";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -77,7 +77,7 @@ const PaymentResult = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <ThinWidthContent>
         {resultStatus ? (
           <div

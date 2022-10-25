@@ -1,3 +1,4 @@
+export const PRIMARY_COLOR_LIGHTER = "#96f2cc";
 export const PRIMARY_COLOR = "#65C29B";
 export const PRIMARY_COLOR_DARK = "#50a380";
 export const SECONDARY_COLOR_LIGHTEST = "#c5f1fc";

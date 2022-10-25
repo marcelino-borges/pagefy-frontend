@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import { loadStripe } from "@stripe/stripe-js";
 import { PRICES, STRIPE_PUBLIC_KEY } from "../../../constants";
@@ -141,7 +141,7 @@ const PurchasePlanPage = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <ThinWidthContent pb="100px">
         {showErrorOnPaymentElement && (
           <Grid

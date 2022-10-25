@@ -462,7 +462,11 @@ const ComponentDialog = ({
                 .map(
                   (radius: string | ComponentBorderRadius, index: number) => {
                     return (
-                      <Grid item pl={index === 0 ? "" : "24px"}>
+                      <Grid
+                        key={radius.toString() + index.toString()}
+                        item
+                        pl={index === 0 ? "" : "24px"}
+                      >
                         <ComponentDetailsButton
                           size="60px"
                           fontSize="27px"

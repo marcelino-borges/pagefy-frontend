@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Grid } from "@mui/material";
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import Footer from "../../components/footer";
 import ProfileLeftMenu from "./left-menu";
@@ -26,7 +26,7 @@ const Profile = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <Grid container direction="row" wrap="nowrap">
         <ProfileLeftMenu
           setSelectedMenuItem={(menuNumber: number) => {

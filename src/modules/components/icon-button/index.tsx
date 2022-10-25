@@ -2,8 +2,8 @@ import { PRIMARY_COLOR } from "../../../styles/colors";
 import { IconButtonCustom } from "./style";
 
 interface IIconButtonProps {
-  size: any;
-  onClick: any;
+  size?: any;
+  onClick?: any;
   children: any;
   color?:
     | "default"

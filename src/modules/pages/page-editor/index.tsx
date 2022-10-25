@@ -1,17 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Grid, useMediaQuery } from "@mui/material";
 import {
-  Construction as CreateComponentIcon,
-  InsertEmoticon as InsertIconIcon,
-  YouTube as YouTubeIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
   ImageSearch as ImageSearchIcon,
   Delete as DeleteIcon,
-  RocketLaunch as LaunchIcon,
   OpenInNew as OpenInNewIcon,
   Code,
+  Add as AddIcon,
 } from "@mui/icons-material";
 import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-color";
 import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
@@ -24,11 +21,10 @@ import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
   PageToolbar,
   PageName,
-  ToolbarButton,
-  ToolbarIconText,
   PageUrl,
   ToolbarBottomToolsStyled,
   EditPenIcon,
+  ToolsMenuIcon,
 } from "./style";
 import strings from "../../../localization";
 import TransparentTextField from "./../../components/transparent-textfield/index";
@@ -51,7 +47,7 @@ import { v4 as uuidv4 } from "uuid";
 import IconsDialog from "./icons-dialog";
 import ComponentDialog from "./create-component-dialog";
 import VideoDialog from "./video-dialog";
-import Header from "./../../components/header";
+import Navigation from "./../../components/navigation";
 import UploadImageDialog from "../../components/dialog-upload-image";
 import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
@@ -74,13 +70,12 @@ import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
-
-const BREAK_TOOLBAR_TEXT = true;
-const BREAK_POINT_TOOLBAR_TEXT = 12;
+import ToolsDialog from "./tools-dialog";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
+  const isSmallerThan500 = useMediaQuery("(max-width:500px)");
   const isSmallerThan370 = useMediaQuery("(max-width:370px)");
 
   const [page, setPage] = useState<IUserPage>();
@@ -109,6 +104,7 @@ const PageEditor = () => {
   const [openPreviewDialog, setOpenPreviewDialog] = useState<boolean>(false);
   const [openCustomScriptDialog, setOpenCustomScriptDialog] =
     useState<boolean>(false);
+  const [openToolsDialog, setOpenToolsDialog] = useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -165,14 +161,14 @@ const PageEditor = () => {
     setPageUrl(event.target.value);
   };
 
-  const onSubmitPageNameForm = () => {
+  const onSubmitPageNameForm = useCallback(() => {
     if (!page || !page._id) return;
     if (pageName !== page.name)
       dispatch(updateUserPageName(page._id, pageName));
     setIsEdittingPageName(false);
-  };
+  }, [dispatch, page, pageName]);
 
-  const onSubmitPageUrlForm = () => {
+  const onSubmitPageUrlForm = useCallback(() => {
     const savePage = () => {
       if (page && page._id && pageUrl !== page.url) {
         console.log("saving");
@@ -198,7 +194,7 @@ const PageEditor = () => {
       .finally(() => {
         setIsEdittingPageUrl(false);
       });
-  };
+  }, [dispatch, page, pageUrl]);
 
   const onSubmitPageScripts = (
     headerScriptFromDialog: string | undefined,
@@ -331,68 +327,71 @@ const PageEditor = () => {
     setChosenImage(undefined);
   };
 
-  const savePageBGImage = async (imageUrl?: string) => {
-    const token = await getFirebaseToken();
-    if ((!imageUrl && !chosenImage) || !token || !page || !page._id) return;
+  const savePageBGImage = useCallback(
+    async (imageUrl?: string) => {
+      const token = await getFirebaseToken();
+      if ((!imageUrl && !chosenImage) || !token || !page || !page._id) return;
 
-    if (
-      page.style &&
-      page.style.backgroundImage &&
-      page.style.backgroundImage?.length > 0
-    ) {
-      const urlToDelete = page.style.backgroundImage
-        .replace("url", "")
-        .replaceAll("(", "")
-        .replaceAll(")", "");
-      dispatch(setLoading());
-      deleteImage(urlToDelete, page.userId, token);
-    }
+      if (
+        page.style &&
+        page.style.backgroundImage &&
+        page.style.backgroundImage?.length > 0
+      ) {
+        const urlToDelete = page.style.backgroundImage
+          .replace("url", "")
+          .replaceAll("(", "")
+          .replaceAll(")", "");
+        dispatch(setLoading());
+        deleteImage(urlToDelete, page.userId, token);
+      }
 
-    const successCallback = (url: string) => {
-      const pageToSave: IUserPage = {
-        ...page,
-        style: {
-          ...page.style,
-          backgroundImage: `url(${url})`,
-        },
-      };
-      dispatch(
-        updatePage(
-          pageToSave,
-          () => {
-            dispatch(clearLoading());
-            setPage({
-              ...page,
-              style: {
-                ...page.style,
-                backgroundImage: `url(${url})`,
-              },
-            });
+      const successCallback = (url: string) => {
+        const pageToSave: IUserPage = {
+          ...page,
+          style: {
+            ...page.style,
+            backgroundImage: `url(${url})`,
           },
-          () => {
-            dispatch(clearLoading());
-          }
-        )
-      );
-    };
+        };
+        dispatch(
+          updatePage(
+            pageToSave,
+            () => {
+              dispatch(clearLoading());
+              setPage({
+                ...page,
+                style: {
+                  ...page.style,
+                  backgroundImage: `url(${url})`,
+                },
+              });
+            },
+            () => {
+              dispatch(clearLoading());
+            }
+          )
+        );
+      };
 
-    const errorCallback = (errorTranslated: string) => {
-      dispatch(clearLoading());
-      showErrorToast(errorTranslated);
-    };
+      const errorCallback = (errorTranslated: string) => {
+        dispatch(clearLoading());
+        showErrorToast(errorTranslated);
+      };
 
-    if (imageUrl) {
-      dispatch(setPageImage(imageUrl, successCallback, errorCallback));
-    } else if (chosenImage) {
-      dispatch(
-        setPageBGImage(chosenImage, page, successCallback, errorCallback)
-      );
-    }
+      if (imageUrl) {
+        dispatch(setPageImage(imageUrl, successCallback, errorCallback));
+      } else if (chosenImage) {
+        dispatch(
+          setPageBGImage(chosenImage, page, successCallback, errorCallback)
+        );
+      }
 
-    setChosenImage(undefined);
-  };
+      setChosenImage(undefined);
+    },
+    [chosenImage, dispatch, page]
+  );
 
-  const ToolbarBottomTools = () => {
+  const ToolbarBottomTools = useCallback(() => {
     return (
       <ToolbarBottomToolsStyled
         container
@@ -404,14 +403,19 @@ const PageEditor = () => {
         <CustomTooltip title={strings.toggleVisibility}>
           <Grid item>
             <IconButton
-              size="large"
+              size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => toggleIsPublic()}
               hoverBackgroundColor={LIGHT_GREY}
             >
               {page?.isPublic ? (
-                <VisibilityIcon color="primary" />
+                <VisibilityIcon
+                  color="primary"
+                  fontSize={isSmallerThan370 ? "small" : "medium"}
+                />
               ) : (
-                <VisibilityOffIcon />
+                <VisibilityOffIcon
+                  fontSize={isSmallerThan370 ? "small" : "medium"}
+                />
               )}
             </IconButton>
           </Grid>
@@ -420,13 +424,14 @@ const PageEditor = () => {
         <CustomTooltip title={strings.backgroundColor}>
           <Grid item>
             <IconButton
-              size="large"
+              size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => {
                 setShowBackgroundColorPicker(!showBackgroundColorPicker);
               }}
               hoverBackgroundColor={LIGHT_GREY}
             >
               <BackgroundColorIcon
+                size={isSmallerThan370 ? 16 : 26}
                 bucketColor={
                   page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
                 }
@@ -448,12 +453,13 @@ const PageEditor = () => {
           <Grid item>
             <IconButton
               hoverBackgroundColor={LIGHT_GREY}
-              size="large"
+              size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => {
                 setShowFontColorPicker(!showFontColorPicker);
               }}
             >
               <FontColorIcon
+                size={isSmallerThan370 ? 16 : 26}
                 bucketColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
                 selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
               />
@@ -470,13 +476,14 @@ const PageEditor = () => {
         <CustomTooltip title={strings.uploadBackgroundImage}>
           <Grid item>
             <IconButton
-              size="large"
+              size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => {
                 setOpenChooseFileBGDialog(true);
               }}
               hoverBackgroundColor={LIGHT_GREY}
             >
               <ImageSearchIcon
+                fontSize={isSmallerThan370 ? "small" : "medium"}
                 color={page?.style?.backgroundImage ? "primary" : "inherit"}
               />
             </IconButton>
@@ -508,7 +515,7 @@ const PageEditor = () => {
         >
           <Grid item>
             <IconButton
-              size="large"
+              size={isSmallerThan370 ? "small" : "medium"}
               disabled={userProfile?.plan !== PlansTypes.PLATINUM}
               onClick={() => {
                 setOpenCustomScriptDialog(true);
@@ -516,6 +523,7 @@ const PageEditor = () => {
               hoverBackgroundColor={LIGHT_GREY}
             >
               <Code
+                fontSize={isSmallerThan370 ? "small" : "medium"}
                 color={
                   page?.customScripts?.endBody?.length ||
                   page?.customScripts?.header?.length
@@ -545,13 +553,13 @@ const PageEditor = () => {
         <CustomTooltip title={strings.remove}>
           <Grid item>
             <IconButton
-              size="large"
+              size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => {
                 setShowDeletePageConfirmation(true);
               }}
               hoverBackgroundColor={LIGHT_GREY}
             >
-              <DeleteIcon />
+              <DeleteIcon fontSize={isSmallerThan370 ? "small" : "medium"} />
             </IconButton>
           </Grid>
         </CustomTooltip>
@@ -566,10 +574,12 @@ const PageEditor = () => {
               >
                 <IconButton
                   onClick={() => {}}
-                  size="large"
+                  size={isSmallerThan370 ? "small" : "medium"}
                   hoverBackgroundColor={LIGHT_GREY}
                 >
-                  <OpenInNewIcon />
+                  <OpenInNewIcon
+                    fontSize={isSmallerThan370 ? "small" : "medium"}
+                  />
                 </IconButton>
               </Link>
             ) : (
@@ -577,315 +587,252 @@ const PageEditor = () => {
                 onClick={() => {
                   setOpenPreviewDialog(true);
                 }}
-                size="large"
+                size={isSmallerThan370 ? "small" : "medium"}
                 hoverBackgroundColor={LIGHT_GREY}
               >
-                <OpenInNewIcon />
+                <OpenInNewIcon
+                  fontSize={isSmallerThan370 ? "small" : "medium"}
+                />
               </IconButton>
             )}
           </Grid>
         </CustomTooltip>
       </ToolbarBottomToolsStyled>
     );
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    page?.isPublic,
+    page?.style?.backgroundColor,
+    page?.style?.color,
+    page?.style?.backgroundImage,
+    page?.customScripts?.endBody,
+    page?.customScripts?.header,
+    page?.url,
+    userProfile?.plan,
+  ]);
 
-  const ToolBar = () => {
-    return (
+  const ToolBar = useCallback(
+    () => (
       <PageToolbar
         container
         item
-        direction="column"
+        direction={!isSmallerThan500 ? "row" : "column"}
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid
-          container
-          justifyContent={!isSmallerThan600 ? "space-evenly" : "center"}
-          alignItems="center"
-          direction={isSmallerThan600 ? "column" : "row"}
-        >
-          <Grid item>
-            <Grid container justifyContent="center" alignItems="center">
-              {page && (
-                <ProfileEditableAvatar
-                  text={page.name}
-                  imageUrl={page.pageImageUrl}
-                  onClick={() => setOpenChooseFilePageDialog(true)}
-                />
-              )}
-            </Grid>
-          </Grid>
-
-          <Grid item>
-            <Grid
-              container
-              item
-              direction="row"
-              justifyContent={isSmallerThan600 ? "space-evenly" : "center"}
-              style={{ paddingTop: isSmallerThan600 ? "24px" : "0" }}
-            >
-              <Grid item xs={3}>
-                <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton onClick={handleOpenComponentDialog}>
-                    <CreateComponentIcon />
-
-                    {!isSmallerThan370 && (
-                      <ToolbarIconText>
-                        {BREAK_TOOLBAR_TEXT &&
-                        strings.addLink.length > BREAK_POINT_TOOLBAR_TEXT &&
-                        strings.addLink.split(" ").length > 1 ? (
-                          strings.addLink.split(" ").map((word: string) => {
-                            return (
-                              <span key={uuidv4()}>
-                                {word} <br />
-                              </span>
-                            );
-                          })
-                        ) : (
-                          <>{strings.addLink}</>
-                        )}
-                      </ToolbarIconText>
-                    )}
-                  </ToolbarButton>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={3}>
-                <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton onClick={handleOpenIconsDialog}>
-                    <InsertIconIcon />
-
-                    {!isSmallerThan370 && (
-                      <ToolbarIconText>
-                        {BREAK_TOOLBAR_TEXT &&
-                        strings.addIcon.length > BREAK_POINT_TOOLBAR_TEXT &&
-                        strings.addIcon.split(" ").length > 1 ? (
-                          strings.addIcon.split(" ").map((word: string) => {
-                            return (
-                              <span key={uuidv4()}>
-                                {word} <br />
-                              </span>
-                            );
-                          })
-                        ) : (
-                          <>{strings.addIcon}</>
-                        )}
-                      </ToolbarIconText>
-                    )}
-                  </ToolbarButton>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={3}>
-                <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton onClick={handleOpenVideoDialog}>
-                    <YouTubeIcon />
-
-                    {!isSmallerThan370 && (
-                      <ToolbarIconText>
-                        {BREAK_TOOLBAR_TEXT &&
-                        strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
-                        strings.addVideo.split(" ").length > 1 ? (
-                          strings.addVideo.split(" ").map((word: string) => {
-                            return (
-                              <span key={uuidv4()}>
-                                {word} <br />
-                              </span>
-                            );
-                          })
-                        ) : (
-                          <>{strings.addVideo}</>
-                        )}
-                      </ToolbarIconText>
-                    )}
-                  </ToolbarButton>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={3}>
-                <Grid container item direction="column" alignItems="center">
-                  <ToolbarButton onClick={handleOpenLaunchDialog}>
-                    <LaunchIcon />
-
-                    {!isSmallerThan370 && (
-                      <ToolbarIconText>
-                        {BREAK_TOOLBAR_TEXT &&
-                        strings.addLaunch.length > BREAK_POINT_TOOLBAR_TEXT &&
-                        strings.addLaunch.split(" ").length > 1 ? (
-                          strings.addLaunch.split(" ").map((word: string) => {
-                            return (
-                              <span key={uuidv4()}>
-                                {word} <br />
-                              </span>
-                            );
-                          })
-                        ) : (
-                          <>{strings.addLaunch}</>
-                        )}
-                      </ToolbarIconText>
-                    )}
-                  </ToolbarButton>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+        <Grid item justifyContent="center" alignItems="center">
+          {page && (
+            <ProfileEditableAvatar
+              width="15vw"
+              height="15vw"
+              maxWidth="100px"
+              maxHeight="100px"
+              minWidth="80px"
+              minHeight="80px"
+              text={page.name}
+              imageUrl={page.pageImageUrl}
+              onClick={() => setOpenChooseFilePageDialog(true)}
+            />
+          )}
         </Grid>
 
-        <PageName container justifyContent="center" alignItems="center">
-          {isEdittingPageName ? (
-            <form onSubmit={handleSubmit(onSubmitPageNameForm)}>
-              <TransparentTextField
-                autoFocus
-                color="#bfbfbf"
-                fontSize="26px"
-                textAlign="center"
-                value={pageName}
-                onChange={handleChangePageName}
-                onBlur={() => {
-                  if (page) setPageName(page.name);
-                  setIsEdittingPageName(false);
+        <Grid item alignItems="center">
+          <PageName item>
+            {isEdittingPageName ? (
+              <form onSubmit={handleSubmit(onSubmitPageNameForm)}>
+                <TransparentTextField
+                  autoFocus
+                  color="#bfbfbf"
+                  fontSize="26px"
+                  textAlign="center"
+                  value={pageName}
+                  onChange={handleChangePageName}
+                  onBlur={() => {
+                    if (page) setPageName(page.name);
+                    setIsEdittingPageName(false);
+                  }}
+                  InputProps={{
+                    style: { width: "100%" },
+                  }}
+                />
+              </form>
+            ) : (
+              <span
+                onClick={() => {
+                  onSubmitPageNameForm();
+                  setIsEdittingPageName(true);
                 }}
-                InputProps={{
-                  style: { width: "100%" },
-                }}
-              />
-            </form>
-          ) : (
-            <span
-              onClick={() => {
-                onSubmitPageNameForm();
-                setIsEdittingPageName(true);
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              {pageName}
-              <EditPenIcon />
-            </span>
-          )}
-          {/* <VisibilityIcon /> */}
-        </PageName>
+                style={{ cursor: "pointer" }}
+              >
+                {pageName}
+                <EditPenIcon />
+              </span>
+            )}
+            {/* <VisibilityIcon /> */}
+          </PageName>
 
-        <PageUrl container justifyContent="center" alignItems="center">
-          {isEdittingPageUrl ? (
-            <form onSubmit={handleSubmit(onSubmitPageUrlForm)}>
-              <TransparentTextField
-                autoFocus
-                error={!!urlFieldError}
-                helperText={urlFieldError || ""}
-                color="#bfbfbf"
-                fontSize="1.2em"
-                InputProps={{
-                  style: { width: "100%" },
+          <PageUrl item>
+            {isEdittingPageUrl ? (
+              <form onSubmit={handleSubmit(onSubmitPageUrlForm)}>
+                <TransparentTextField
+                  autoFocus
+                  error={!!urlFieldError}
+                  helperText={urlFieldError || ""}
+                  color="#bfbfbf"
+                  fontSize="1.2em"
+                  InputProps={{
+                    style: { width: "100%" },
+                  }}
+                  fontWeight="300"
+                  textAlign="center"
+                  value={pageUrl}
+                  onChange={handleChangePageUrl}
+                  onBlur={() => {
+                    onSubmitPageUrlForm();
+                    setIsEdittingPageUrl(false);
+                  }}
+                />
+              </form>
+            ) : (
+              <span
+                onClick={() => {
+                  if (page) setPageUrl(page.url);
+                  setIsEdittingPageUrl(true);
                 }}
-                fontWeight="300"
-                textAlign="center"
-                value={pageUrl}
-                onChange={handleChangePageUrl}
-                onBlur={() => {
-                  onSubmitPageUrlForm();
-                  setIsEdittingPageUrl(false);
-                }}
-              />
-            </form>
-          ) : (
-            <span
+                style={{ cursor: "pointer" }}
+              >
+                {pageUrl}
+                <EditPenIcon />
+              </span>
+            )}
+          </PageUrl>
+        </Grid>
+        <CustomTooltip title={strings.create}>
+          <Grid item justifyContent="center" alignItems="center" py="16px">
+            <ToolsMenuIcon
               onClick={() => {
-                if (page) setPageUrl(page.url);
-                setIsEdittingPageUrl(true);
+                setOpenToolsDialog(true);
               }}
-              style={{ cursor: "pointer" }}
             >
-              {pageUrl}
-              <EditPenIcon />
-            </span>
-          )}
-        </PageUrl>
+              <AddIcon color="inherit" />
+            </ToolsMenuIcon>
+          </Grid>
+        </CustomTooltip>
       </PageToolbar>
-    );
-  };
+    ),
+    [
+      handleSubmit,
+      isEdittingPageName,
+      isEdittingPageUrl,
+      isSmallerThan500,
+      onSubmitPageNameForm,
+      onSubmitPageUrlForm,
+      page,
+      pageName,
+      pageUrl,
+      urlFieldError,
+    ]
+  );
+
+  const Dialogs = () => (
+    <>
+      <DialogConfirmation
+        open={openDeleteIconConfirmation}
+        onClose={() => {
+          setOpenDeleteIconConfirmation(false);
+        }}
+        onConfirmCallback={() => {
+          if (
+            !idIconToDelete ||
+            idIconToDelete.length < 1 ||
+            !page ||
+            !page._id
+          )
+            return;
+          dispatch(
+            deleteTopComponentFromPage(
+              idIconToDelete,
+              page._id,
+              null,
+              (translatedError: string) => {
+                showErrorToast(translatedError);
+              }
+            )
+          );
+        }}
+        title={strings.removeIcon}
+        message={strings.removeIconConfirmation}
+      />
+      <DialogConfirmation
+        open={showDeletePageConfirmation}
+        title={strings.removePage}
+        onClose={() => {
+          setShowDeletePageConfirmation(false);
+        }}
+        onConfirmCallback={() => {
+          if (page && page._id) {
+            dispatch(deletePage(page._id));
+            navigate(routes.pages);
+          }
+        }}
+        message={strings.removePageConfirmation}
+      />
+      <UploadImageDialog
+        context={[GalleryContext.PAGE_IMAGE]}
+        openChooseFileDialog={openChooseFilePageDialog}
+        setOpenChooseFileDialog={setOpenChooseFilePageDialog}
+        chosenImage={chosenImage}
+        setChosenImage={setChosenImage}
+        acceptedFiles={IMAGE_EXTENSIONS}
+        submitDialog={async (imageUrl?: string) => {
+          savePageImage(imageUrl);
+          setOpenChooseFilePageDialog(false);
+        }}
+        cancelDialog={() => {
+          setChosenImage(undefined);
+          setOpenChooseFilePageDialog(false);
+        }}
+      />
+      <IconsDialog
+        open={openIconsDialog}
+        handleClose={handleCloseIconsDialog}
+        pageId={page?._id}
+      />
+      <ComponentDialog
+        open={openComponentDialog}
+        handleClose={handleCloseComponentDialog}
+        pageId={page?._id}
+      />
+      <VideoDialog
+        open={openVideoDialog}
+        handleClose={handleCloseVideoDialog}
+        pageId={page?._id}
+      />
+      <LaunchDialog
+        open={openLaunchDialog}
+        handleClose={handleCloseLaunchDialog}
+        pageId={page?._id}
+      />
+      <ToolsDialog
+        open={openToolsDialog}
+        handleClose={() => {
+          setOpenToolsDialog(false);
+        }}
+        isSmallerThan600={isSmallerThan600}
+        handleOpenComponentDialog={handleOpenComponentDialog}
+        isSmallerThan370={isSmallerThan370}
+        handleOpenIconsDialog={handleOpenIconsDialog}
+        handleOpenVideoDialog={handleOpenVideoDialog}
+        handleOpenLaunchDialog={handleOpenLaunchDialog}
+      />
+    </>
+  );
 
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <ThinWidthContent pb="100px">
-        <DialogConfirmation
-          open={openDeleteIconConfirmation}
-          onClose={() => {
-            setOpenDeleteIconConfirmation(false);
-          }}
-          onConfirmCallback={() => {
-            if (
-              !idIconToDelete ||
-              idIconToDelete.length < 1 ||
-              !page ||
-              !page._id
-            )
-              return;
-            dispatch(
-              deleteTopComponentFromPage(
-                idIconToDelete,
-                page._id,
-                null,
-                (translatedError: string) => {
-                  showErrorToast(translatedError);
-                }
-              )
-            );
-          }}
-          title={strings.removeIcon}
-          message={strings.removeIconConfirmation}
-        />
-        <DialogConfirmation
-          open={showDeletePageConfirmation}
-          title={strings.removePage}
-          onClose={() => {
-            setShowDeletePageConfirmation(false);
-          }}
-          onConfirmCallback={() => {
-            if (page && page._id) {
-              dispatch(deletePage(page._id));
-              navigate(routes.pages);
-            }
-          }}
-          message={strings.removePageConfirmation}
-        />
-        <UploadImageDialog
-          context={[GalleryContext.PAGE_IMAGE]}
-          openChooseFileDialog={openChooseFilePageDialog}
-          setOpenChooseFileDialog={setOpenChooseFilePageDialog}
-          chosenImage={chosenImage}
-          setChosenImage={setChosenImage}
-          acceptedFiles={IMAGE_EXTENSIONS}
-          submitDialog={async (imageUrl?: string) => {
-            savePageImage(imageUrl);
-            setOpenChooseFilePageDialog(false);
-          }}
-          cancelDialog={() => {
-            setChosenImage(undefined);
-            setOpenChooseFilePageDialog(false);
-          }}
-        />
-        <IconsDialog
-          open={openIconsDialog}
-          handleClose={handleCloseIconsDialog}
-          pageId={page?._id}
-        />
-        <ComponentDialog
-          open={openComponentDialog}
-          handleClose={handleCloseComponentDialog}
-          pageId={page?._id}
-        />
-        <VideoDialog
-          open={openVideoDialog}
-          handleClose={handleCloseVideoDialog}
-          pageId={page?._id}
-        />
-        <LaunchDialog
-          open={openLaunchDialog}
-          handleClose={handleCloseLaunchDialog}
-          pageId={page?._id}
-        />
         {page && (
           <PreviewPageDialog
             page={page}
@@ -928,6 +875,7 @@ const PageEditor = () => {
         )}
       </ThinWidthContent>
       <Footer />
+      <Dialogs />
     </>
   );
 };

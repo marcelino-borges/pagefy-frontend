@@ -19,6 +19,7 @@ import {
 import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { clearLoading, setLoading } from "./../../../../store/shared/actions";
 import SignInRegisterButtons from "../../signin-register-buttons";
+import React from "react";
 
 const UserLoggedIn = () => {
   const dispatch = useDispatch();
@@ -185,4 +186,4 @@ const UserLoggedIn = () => {
   );
 };
 
-export default UserLoggedIn;
+export default React.memo(UserLoggedIn);

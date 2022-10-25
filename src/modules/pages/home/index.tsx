@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid, useMediaQuery } from "@mui/material";
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import strings from "../../../localization";
 import routes from "./../../../routes/paths";
 import { clearLoading } from "../../../store/shared/actions";
@@ -66,7 +66,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Navigation />
       <FullWidthContent
         pl="0px"
         pr="0px"

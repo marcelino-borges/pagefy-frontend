@@ -1,10 +1,11 @@
 import { styled } from "@mui/system";
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import { Visibility, Edit, Delete } from "@mui/icons-material";
 import {
   LIGHTER_GREY,
   MEDIUM_GREY,
   PRIMARY_COLOR,
+  PRIMARY_COLOR_DARK,
 } from "./../../../styles/colors";
 
 export const PageToolbar = styled(
@@ -28,6 +29,16 @@ export const PageToolbar = styled(
   }
 `;
 
+export const ToolsMenuIcon = styled(({ children, ...rest }: any) => (
+  <IconButton {...rest}>{children}</IconButton>
+))`
+  background-color: ${PRIMARY_COLOR};
+  color: white;
+
+  &:hover {
+    background-color: ${PRIMARY_COLOR_DARK};
+  }
+`;
 export const PageName = styled(
   ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
     <Grid {...rest} />
@@ -36,7 +47,6 @@ export const PageName = styled(
   font-weight: 700;
   font-size: 1.4em;
   margin-top: 24px;
-  text-align: center;
 `;
 
 export const PageUrl = styled(

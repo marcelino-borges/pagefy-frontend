@@ -53,12 +53,6 @@ const authReducer = (
         error: action.payload,
       };
 
-    case AuthActionTypes.SIGNOUT_LOADING:
-      return {
-        ...state,
-        error: undefined,
-      };
-
     case AuthActionTypes.SIGNOUT_SUCCESS:
       return initialState;
 

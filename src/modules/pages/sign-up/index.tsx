@@ -14,11 +14,11 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import Header from "../../components/header/index";
+import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import UploadImageDialog from "../../components/dialog-upload-image/index";
+import UploadImageDialog from "../../components/dialog-upload-image";
 import {
   ALLOW_SIGNUP,
   EMAIL_REGEX,
@@ -27,7 +27,7 @@ import {
 } from "../../../constants";
 import ProfileEditableAvatar from "../../components/profile-editable-avatar";
 import { signIn, signOut, signUp } from "../../../store/auth/actions";
-import { showErrorToast } from "./../../../utils/toast/index";
+import { showErrorToast } from "./../../../utils/toast";
 import routes from "./../../../routes/paths";
 import { PlansTypes, IUser } from "../../../store/user/types";
 import { uploadImage } from "../../../services/files";
@@ -170,7 +170,7 @@ const SignUpPage = () => {
   if (!ALLOW_SIGNUP) {
     return (
       <>
-        <Header />
+        <Navigation />
         <ThinWidthContent style={{ height: "100vh" }}>
           <div style={{ textAlign: "center", margin: "auto" }}>
             <div>{strings.sorry + ","}</div>
@@ -183,7 +183,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <Header />
+      <Navigation />
       <UploadImageDialog
         openChooseFileDialog={openUploadDialog}
         setOpenChooseFileDialog={setOpenUploadDialog}

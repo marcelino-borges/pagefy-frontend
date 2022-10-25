@@ -7,7 +7,7 @@ import { faqsPT, faqsEN } from "../../../store/faq/temp";
 import { IUser, PlansTypes } from "../../../store/user/types";
 import Accordion from "../../components/accordion";
 import Footer from "../../components/footer";
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import InternalLink from "../../components/internal-link";
 import TriplePageTitle from "../../components/page-title";
 import ThinWidthContent from "../../components/site-content/thin-width";
@@ -77,7 +77,7 @@ const Faq = () => {
 
   return (
     <>
-      <Header />
+      <Navigation />
       <div style={{ marginTop: "20px" }}>
         <ThinWidthContent>
           <TriplePageTitle

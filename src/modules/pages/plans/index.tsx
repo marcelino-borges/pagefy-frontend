@@ -1,4 +1,4 @@
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import PlansCards from "../../components/plans-cards";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import FullWidthContent from "./../../components/site-content/full-width";
@@ -9,7 +9,7 @@ const PlansPage = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <FullWidthContent>
         <TriplePageTitle
           titles={[

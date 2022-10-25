@@ -128,12 +128,13 @@ const signUpError = (error: any) => ({
 export const signOut =
   (onSuccessCallback: any = null, onErrorCallback: any = null) =>
   (dispatch: any) => {
-    // clearStorage();
+    clearStorage("user");
+    clearStorage("auth");
+    dispatch(signOutSuccess());
     dispatch(clearAllStates());
-    dispatch(signOutLoading());
+
     AuthService.signOut()
       .then(() => {
-        dispatch(signOutSuccess());
         if (onSuccessCallback) onSuccessCallback();
       })
       .catch((e: AxiosError) => {
@@ -147,10 +148,6 @@ export const signOut =
           onErrorCallback(strings.generalErrors.errorSignOut);
       });
   };
-
-const signOutLoading = () => ({
-  type: AuthActionTypes.SIGNOUT_LOADING,
-});
 
 export const signOutSuccess = () => ({
   type: AuthActionTypes.SIGNOUT_SUCCESS,

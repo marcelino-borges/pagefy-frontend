@@ -186,6 +186,7 @@ export interface IDictionary {
   invalidId: string;
   warningPrivatePage: string;
   create: string;
+  chooseOneToCreate: string;
   createPage: string;
   pageName: string;
   pageUrl: string;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Grid } from "@mui/material";
 import { IApplicationState } from "../../../store";
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import PageCard from "./page-card/index";
 import CreatePageDialog from "./dialog-create-page/index";
@@ -33,7 +33,7 @@ const UserPages = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <CreatePageDialog
         open={showCreatePageDialog}
         title={strings.createPage}

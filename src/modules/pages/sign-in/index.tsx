@@ -12,7 +12,7 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import Header from "../../components/header/index";
+import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
@@ -96,7 +96,7 @@ const SignInPage = () => {
 
   return (
     <>
-      <Header />
+      <Navigation />
       <ThinWidthContent pb="50px">
         <h2 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.accessAccount}

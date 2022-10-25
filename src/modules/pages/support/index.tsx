@@ -1,4 +1,4 @@
-import Header from "../../components/header";
+import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import TriplePageTitle from "./../../components/page-title";
 import strings from "./../../../localization/index";
@@ -77,7 +77,7 @@ const Support = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Header />
+      <Navigation />
       <ThinWidthContent>
         <TriplePageTitle
           titles={[strings.support, strings.supportDescription]}
