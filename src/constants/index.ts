@@ -114,6 +114,7 @@ export const ALLOW_SIGNUP = process.env.REACT_APP_ALLOW_SIGNUP === "true";
 export const RECAPTCHA_SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 export const APP_ENVIROMENT = process.env.REACT_APP_ENV || "PROD";
+export const ALLOW_PURCHASE = process.env.REACT_APP_ALLOW_PURCHASE || true;
 
 export enum GalleryContext {
   BACKGROUND,

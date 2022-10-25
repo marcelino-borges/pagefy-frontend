@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navigation from "../../components/navigation";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import { loadStripe } from "@stripe/stripe-js";
-import { PRICES, STRIPE_PUBLIC_KEY } from "../../../constants";
+import { ALLOW_PURCHASE, PRICES, STRIPE_PUBLIC_KEY } from "../../../constants";
 import PaymentElement from "./payment-element";
 import strings from "../../../localization";
 import TriplePageTitle from "../../components/page-title";
@@ -67,6 +67,13 @@ const PurchasePlanPage = () => {
     return () => {
       dispatch(clearSubscription());
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!ALLOW_PURCHASE) {
+      navigate(routes.root);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

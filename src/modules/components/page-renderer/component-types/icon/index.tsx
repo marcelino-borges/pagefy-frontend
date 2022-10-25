@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { Close } from "@mui/icons-material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import CustomTooltip from "../../../tooltip";
 import { IconOverlaySpan } from "./style";
@@ -56,18 +57,26 @@ const IconsComponent = ({
               key={uuidv4()}
             >
               <CustomTooltip title={iconComponent.url}>
-                <Icon
-                  icon={iconComponent.iconDetails.icon}
-                  style={{
-                    fontSize: "46px",
-                    cursor: "pointer",
-                    color:
-                      iconComponent.iconDetails.icon.includes("logos") ||
-                      iconComponent.iconDetails.icon.includes("grommet")
-                        ? "unset"
-                        : iconComponent.style?.color || "black",
-                  }}
-                />
+                <>
+                  {!isRenderer && (
+                    <div id="delete-icon-bg">
+                      <Close id="delete-icon" color="inherit" />
+                    </div>
+                  )}
+                  <Icon
+                    id="app-icon"
+                    icon={iconComponent.iconDetails.icon}
+                    style={{
+                      fontSize: "46px",
+                      cursor: "pointer",
+                      color:
+                        iconComponent.iconDetails.icon.includes("logos") ||
+                        iconComponent.iconDetails.icon.includes("grommet")
+                          ? "unset"
+                          : iconComponent.style?.color || "black",
+                    }}
+                  />
+                </>
               </CustomTooltip>
             </IconOverlaySpan>
           );

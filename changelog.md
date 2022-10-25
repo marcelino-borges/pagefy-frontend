@@ -21,6 +21,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Feature: tools now live in a dialog, opened by the + icon in the page editor toolbar
 - Feature: new favicon with white BG
 - Fix: Header now uses memoized components to optimize the application
+- Feature: icons component (page editor and page renderer) now stay red on hover, to indicate deletion feature
+- Feature: added constant on purchase-plan page to verify if the user can purchase any plan
 
 ### [1.15.1] - 2022-10-19
 
