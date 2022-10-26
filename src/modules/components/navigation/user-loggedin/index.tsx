@@ -128,8 +128,7 @@ const UserLoggedIn = () => {
         existingImageUrl={userState.profile.profileImageUrl}
         submitDialog={async (imageUrl?: string) => {
           const token = await getFirebaseToken();
-          if ((!imageUrl && !chosenImage) || !token || !userState.profile)
-            return;
+          if (!token || !userState.profile) return;
           const clearLoadingFromState = () => {
             dispatch(clearLoading());
           };
@@ -152,17 +151,7 @@ const UserLoggedIn = () => {
               console.log("Failed to delete image. Details: ", e.message);
             }
           }
-
-          if (imageUrl) {
-            dispatch(
-              setUserProfileImage(
-                imageUrl,
-                userState.profile,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-          } else if (chosenImage) {
+          if (chosenImage) {
             dispatch(
               uploadAndSetUserProfileImage(
                 chosenImage,
@@ -171,19 +160,18 @@ const UserLoggedIn = () => {
                 clearLoadingFromState
               )
             );
-
-            setChosenImage(undefined);
-            setOpenChooseFileBGDialog(false);
           } else {
             dispatch(
               setUserProfileImage(
-                "",
+                imageUrl || "",
                 userState.profile,
                 clearLoadingFromState,
                 clearLoadingFromState
               )
             );
           }
+          setChosenImage(undefined);
+          setOpenChooseFileBGDialog(false);
         }}
         cancelDialog={() => {
           setChosenImage(undefined);

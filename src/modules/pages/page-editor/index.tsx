@@ -292,7 +292,7 @@ const PageEditor = () => {
 
   const savePageImage = async (imageUrl?: string) => {
     const token = await getFirebaseToken();
-    if ((!imageUrl && !chosenImage) || !token || !page || !page._id) return;
+    if (!token || !page || !page._id) return;
 
     if (page.pageImageUrl && page.pageImageUrl.length > 0) {
       dispatch(setLoading());
@@ -325,12 +325,13 @@ const PageEditor = () => {
       showErrorToast(errorTranslated);
       dispatch(clearLoading());
     };
-
-    if (imageUrl) {
-      dispatch(setPageImage(imageUrl, successCallback, errorCallback));
-    } else if (chosenImage) {
+    if (chosenImage) {
       dispatch(
         uploadAndSetPageImage(chosenImage, page, successCallback, errorCallback)
+      );
+    } else {
+      dispatch(
+        setPageImage(imageUrl || "", page._id, successCallback, errorCallback)
       );
     }
 
@@ -340,7 +341,7 @@ const PageEditor = () => {
   const savePageBGImage = useCallback(
     async (imageUrl?: string) => {
       const token = await getFirebaseToken();
-      if ((!imageUrl && !chosenImage) || !token || !page || !page._id) return;
+      if (!token || !page || !page._id) return;
 
       if (
         page.style &&
@@ -360,7 +361,7 @@ const PageEditor = () => {
           ...page,
           style: {
             ...page.style,
-            backgroundImage: `url(${url})`,
+            backgroundImage: url ? `url(${url})` : "",
           },
         };
         dispatch(
@@ -372,7 +373,7 @@ const PageEditor = () => {
                 ...page,
                 style: {
                   ...page.style,
-                  backgroundImage: `url(${url})`,
+                  backgroundImage: url ? `url(${url})` : "",
                 },
               });
             },
@@ -387,12 +388,13 @@ const PageEditor = () => {
         dispatch(clearLoading());
         showErrorToast(errorTranslated);
       };
-
-      if (imageUrl) {
-        dispatch(setPageImage(imageUrl, successCallback, errorCallback));
-      } else if (chosenImage) {
+      if (chosenImage) {
         dispatch(
           setPageBGImage(chosenImage, page, successCallback, errorCallback)
+        );
+      } else {
+        dispatch(
+          setPageImage(imageUrl || "", page._id, successCallback, errorCallback)
         );
       }
 
@@ -510,6 +512,16 @@ const PageEditor = () => {
               submitDialog={async (imageUrl?: string) => {
                 savePageBGImage(imageUrl);
                 setOpenChooseFileBGDialog(false);
+
+                if (imageUrl === undefined && page) {
+                  setPage({
+                    ...page,
+                    style: {
+                      ...page.style,
+                      backgroundImage: undefined,
+                    },
+                  });
+                }
               }}
               cancelDialog={() => {
                 setChosenImage(undefined);
@@ -614,13 +626,7 @@ const PageEditor = () => {
     );
   }, [
     isSmallerThan370,
-    page?.isPublic,
-    page?.style?.backgroundColor,
-    page?.style?.color,
-    page?.style?.backgroundImage,
-    page?.customScripts?.endBody,
-    page?.customScripts?.header,
-    page?.url,
+    page,
     showBackgroundColorPicker,
     handleChangeBackgroundColorComplete,
     showFontColorPicker,
@@ -833,6 +839,13 @@ const PageEditor = () => {
         submitDialog={async (imageUrl?: string) => {
           savePageImage(imageUrl);
           setOpenChooseFilePageDialog(false);
+
+          if (imageUrl === undefined && page) {
+            setPage({
+              ...page,
+              pageImageUrl: undefined,
+            });
+          }
         }}
         cancelDialog={() => {
           setChosenImage(undefined);

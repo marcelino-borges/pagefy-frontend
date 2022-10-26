@@ -1,5 +1,6 @@
 import { IFaq } from "./types";
 
+// TODO: Remover
 export const faqsPT: IFaq[] = [
   {
     question: "O que é a Socialbio?",

@@ -253,7 +253,6 @@ const DraggableUserComponent = ({
           const token = await getFirebaseToken();
 
           if (
-            (!imageUrl && chosenImage === undefined) ||
             token === undefined ||
             userState === undefined ||
             userState._id === undefined ||
@@ -280,18 +279,7 @@ const DraggableUserComponent = ({
           const clearLoadingFromState = () => {
             dispatch(clearLoading());
           };
-
-          if (imageUrl) {
-            dispatch(
-              setComponentImage(
-                imageUrl,
-                component._id,
-                pageId,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-          } else if (chosenImage) {
+          if (chosenImage) {
             dispatch(
               uploadAndSetComponentImage(
                 chosenImage,
@@ -305,7 +293,7 @@ const DraggableUserComponent = ({
           } else {
             dispatch(
               setComponentImage(
-                "",
+                imageUrl || "",
                 component._id,
                 pageId,
                 clearLoadingFromState,

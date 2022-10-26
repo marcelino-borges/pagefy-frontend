@@ -72,7 +72,7 @@ const pagesReducer = (
           if (page._id === action.payload.pageId) {
             const updatedPage: IUserPage = {
               ...page,
-              pageImageUrl: action.payload,
+              pageImageUrl: action.payload.url,
             };
 
             return updatedPage;

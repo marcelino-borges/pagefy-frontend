@@ -251,7 +251,7 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
         acceptedFiles={IMAGE_EXTENSIONS}
         submitDialog={async (imageUrl?: string) => {
           const token = await getFirebaseToken();
-          if ((!imageUrl && !chosenImage) || !token || !userProfile) return;
+          if (!token || !userProfile) return;
           const clearLoadingFromState = () => {
             dispatch(clearLoading());
           };
@@ -274,18 +274,7 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
               console.log("Failed to delete image. Details: ", e.message);
             }
           }
-
-          if (imageUrl) {
-            dispatch(
-              setUserProfileImage(
-                imageUrl,
-                userProfile,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-            return;
-          } else if (chosenImage) {
+          if (chosenImage) {
             dispatch(
               uploadAndSetUserProfileImage(
                 chosenImage,
@@ -294,6 +283,16 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
                 clearLoadingFromState
               )
             );
+          } else {
+            dispatch(
+              setUserProfileImage(
+                imageUrl || "",
+                userProfile,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+            return;
           }
           setChosenImage(undefined);
           setOpenUploadDialog(false);

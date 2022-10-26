@@ -517,7 +517,8 @@ export const setPageToBeSaved = (page: IUserPage) => ({
 
 export const setPageImage =
   (
-    imageUrl: string,
+    imageUrl: string | undefined,
+    pageId: string | undefined,
     onSuccessCallback: any = null,
     onErrorCallback: any = null
   ) =>
@@ -530,7 +531,7 @@ export const setPageImage =
       if (onErrorCallback) onErrorCallback();
       return;
     }
-    dispatch(setPageImageSuccess(imageUrl));
+    dispatch(setPageImageSuccess(imageUrl, pageId));
 
     if (onSuccessCallback) onSuccessCallback(imageUrl);
   };
@@ -560,7 +561,7 @@ export const uploadAndSetPageImage =
     )
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
-        dispatch(setPageImageSuccess(imageUrl));
+        dispatch(setPageImageSuccess(imageUrl, page._id));
 
         if (onSuccessCallback) onSuccessCallback(imageUrl);
       })
@@ -581,8 +582,11 @@ export const setPageImageLoading = () => ({
   type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_LOADING,
 });
 
-export const setPageImageSuccess = (url: string) => ({
-  payload: url,
+export const setPageImageSuccess = (
+  url: string | undefined,
+  pageId: string | undefined
+) => ({
+  payload: { url, pageId },
   type: UserPagesActionTypes.UPDATE_PAGE_IMAGE_SUCCESS,
 });
 
@@ -597,6 +601,8 @@ export const deleteImage = async (
   onSuccessCallback: any = null,
   onErrorCallback: any = null
 ) => {
+  if (!url) return;
+
   const token = await getFirebaseToken();
 
   if (!token) {
