@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.16.1] - 2022-10-26
+
+- Fix: Sign in and Sign up pages trimming email and names when submitting
+- Fix: env var ALLOW_PURCHASE
+
 ### [1.16.0] - 2022-10-25
 
 - Feature: tools now live in a dialog, opened by the + icon in the page editor toolbar

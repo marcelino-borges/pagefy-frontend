@@ -97,9 +97,9 @@ const SignUpPage = () => {
       }
 
       const newUser = {
-        firstName: capitalizeOnlyFirstLetter(values.firstName),
-        lastName: capitalizeOnlyFirstLetter(values.lastName),
-        email: values.email,
+        firstName: capitalizeOnlyFirstLetter(String(values.firstName).trim()),
+        lastName: capitalizeOnlyFirstLetter(String(values.lastName).trim()),
+        email: String(values.email).trim(),
         password: values.password,
         confirmPassword: values.confirmPassword,
         receiveCommunications,

@@ -70,7 +70,7 @@ const SignInPage = () => {
   const onSubmit = () => {
     runAfterValidateRecaptcha(window, () => {
       const credentials: IUserCredentials = {
-        email: values.email,
+        email: String(values.email).trim(),
         password: values.password,
       };
 
