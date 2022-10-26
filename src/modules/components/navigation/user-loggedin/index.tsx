@@ -125,6 +125,7 @@ const UserLoggedIn = () => {
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
         context={[GalleryContext.USER_PROFILE]}
+        existingImageUrl={userState.profile.profileImageUrl}
         submitDialog={async (imageUrl?: string) => {
           const token = await getFirebaseToken();
           if ((!imageUrl && !chosenImage) || !token || !userState.profile)
@@ -173,6 +174,15 @@ const UserLoggedIn = () => {
 
             setChosenImage(undefined);
             setOpenChooseFileBGDialog(false);
+          } else {
+            dispatch(
+              setUserProfileImage(
+                "",
+                userState.profile,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
           }
         }}
         cancelDialog={() => {

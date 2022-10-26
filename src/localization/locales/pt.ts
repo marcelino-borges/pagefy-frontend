@@ -1,4 +1,5 @@
 import { IDictionary } from "..";
+import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const pt: IDictionary = {
   checkOurPlans: "Confira nossos planos",
@@ -40,9 +41,26 @@ export const pt: IDictionary = {
   chooseEffect: "Escolher efeito",
   toggleVisibility: "Mudar visibilidade",
   remove: "Remover",
+  removeExisting: "Remover existente",
   tools: {
     button: {
       name: "Botão",
+      dialogTitle: "Crie um botão",
+      typeHelpText:
+        "Seu botão pode ser de apenas um tipo. Pode ter apenas texto, sem imagem; pode ter tanto texto quanto imagem; ou pode ter apenas imagem.",
+      columnsHelpText:
+        "Toda página pode ser dividida em até duas seções (colunas) e seu botão poderá ocupar uma (metade) ou duas delas (completo).",
+      rowsHelpText: `Seu botão pode ocupar o espaço de um até 8 linhas. Multiplique o total de linhas por ${RENDERED_PAGE_COMPONENT_HEIGHT} e você terá a altura total do seu botão (em pixels).`,
+      borderRadiusHelpText:
+        "Seu botão poderá ter bordas com diferentes raios pré-definidos.",
+      shadowHelpText: "Seu botão poderá ter diferentes sombras pré-definidos.",
+      shadowStyles: {
+        none: "Nenhuma",
+        smooth: "Suave",
+        normal: "Normal",
+        hard: "Forte",
+        extreme: "Extrema",
+      },
     },
     icon: {
       name: "Ícone",
@@ -422,6 +440,7 @@ export const pt: IDictionary = {
   orUploadANewFile: "Ou envie uma nova imagem",
   orFromYourDevice: "Ou do seu dispositivo",
   componentBorderRadius: "Arredondamento das Bordas",
+  shadow: "Sombra",
   customScripts: {
     insertCustomScript: "Insira um código personalizado",
     customScriptDescription:

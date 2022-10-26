@@ -124,11 +124,25 @@ export interface IDictionary {
   chooseEffect: string;
   toggleVisibility: string;
   remove: string;
+  removeExisting: string;
   duplicate: string;
   viewPage: string;
   tools: {
     button: {
       name: string;
+      dialogTitle: string;
+      typeHelpText: string;
+      columnsHelpText: string;
+      rowsHelpText: string;
+      borderRadiusHelpText: string;
+      shadowHelpText: string;
+      shadowStyles: {
+        none: string;
+        smooth: string;
+        normal: string;
+        hard: string;
+        extreme: string;
+      };
     };
     icon: {
       name: string;
@@ -380,6 +394,7 @@ export interface IDictionary {
   orUploadANewFile: string;
   orFromYourDevice: string;
   componentBorderRadius: string;
+  shadow: string;
   customScripts: {
     insertCustomScript: string;
     headerScript: string;

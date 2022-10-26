@@ -506,6 +506,7 @@ const PageEditor = () => {
               chosenImage={chosenImage}
               setChosenImage={setChosenImage}
               acceptedFiles={IMAGE_EXTENSIONS}
+              existingImageUrl={page?.style?.backgroundImage}
               submitDialog={async (imageUrl?: string) => {
                 savePageBGImage(imageUrl);
                 setOpenChooseFileBGDialog(false);
@@ -828,6 +829,7 @@ const PageEditor = () => {
         chosenImage={chosenImage}
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
+        existingImageUrl={page?.pageImageUrl}
         submitDialog={async (imageUrl?: string) => {
           savePageImage(imageUrl);
           setOpenChooseFilePageDialog(false);

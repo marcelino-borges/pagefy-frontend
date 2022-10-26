@@ -1,4 +1,5 @@
 import { IDictionary } from "..";
+import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const en: IDictionary = {
   checkOurPlans: "Check our plans",
@@ -40,9 +41,26 @@ export const en: IDictionary = {
   chooseEffect: "Choose effect",
   toggleVisibility: "Toggle visibility",
   remove: "Remove",
+  removeExisting: "Remove Existing",
   tools: {
     button: {
       name: "Button",
+      dialogTitle: "Create a Button",
+      typeHelpText:
+        "Your button may be only of a single type. It may have only text with no image, both text and image or only image.",
+      columnsHelpText:
+        "Every page may be divided in up to two sections (columns) and your button may occupy one (half) or two of them (full).",
+      rowsHelpText: `Your button may occupy the space of one to 8 rows. Multiply the amount of rows by ${RENDERED_PAGE_COMPONENT_HEIGHT} and you will have the total height of your button (in pixels).`,
+      borderRadiusHelpText:
+        "Your button may have different pre-defined border radius.",
+      shadowHelpText: "Your button may have different pre-defined shadows.",
+      shadowStyles: {
+        none: "None",
+        smooth: "Smooth",
+        normal: "Normal",
+        hard: "Hard",
+        extreme: "Extreme",
+      },
     },
     icon: {
       name: "Icon",
@@ -179,7 +197,7 @@ export const en: IDictionary = {
   accessAccount: "Access your account",
   emailExample: "email@example.com",
   passwordRequirements:
-    "Password requirements: \n * Minimum 8 characters \n * At least 1 lowercase letter \n * At least 1 number",
+    "Password requirements:  * Minimum 8 characters \n * At least 1 lowercase letter \n * At least 1 number",
 
   requiredPrivacyAccept: "You must accept terms and privacy to continue.",
   authErrors: {
@@ -418,6 +436,7 @@ export const en: IDictionary = {
   orUploadANewFile: "Or upload a new image",
   orFromYourDevice: "Or from your device",
   componentBorderRadius: "Border Radius",
+  shadow: "Shadow",
   customScripts: {
     insertCustomScript: "Insert a custom script",
     customScriptDescription:

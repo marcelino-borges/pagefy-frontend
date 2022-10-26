@@ -132,6 +132,13 @@ export enum ComponentBorderRadius {
   HARD_ROUNDED = 20,
   ROUNDED = 30,
 }
+export enum ComponentShadowStyle {
+  NONE = "0px 0px 0px rgba(0, 0, 0, 0)",
+  SMOOTH = "0px 4px 4px rgba(0, 0, 0, 0.06)",
+  NORMAL = "0px 4px 4px rgba(0, 0, 0, 0.1)",
+  HARD = "0px 4px 4px rgba(0, 0, 0, 0.3)",
+  EXTREME = "0px 4px 1px rgba(0, 0, 0, 1)",
+}
 export const DEFAULT_COMPONENT_RADIUS = ComponentBorderRadius.SMOOTH_ROUNDED;
 
 export const STRIPE_PUBLIC_KEY = process.env.REACT_APP_STRIPE_PUBLIC_KEY || "";

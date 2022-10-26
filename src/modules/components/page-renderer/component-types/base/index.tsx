@@ -6,6 +6,7 @@ import {
 import {
   RENDERED_PAGE_COMPONENT_HEIGHT,
   DEFAULT_COMPONENT_RADIUS,
+  ComponentShadowStyle,
 } from "../../../../../constants";
 import { Root } from "./style";
 import CustomTooltip from "../../../tooltip";
@@ -54,6 +55,7 @@ const BaseComponentType = ({
           item
           style={{
             ...style,
+            boxShadow: style.boxShadow || ComponentShadowStyle.NONE,
             minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
             borderRadius: style.borderRadius || `${DEFAULT_COMPONENT_RADIUS}px`,
           }}
@@ -65,12 +67,10 @@ const BaseComponentType = ({
     </Root>
   );
 
-  return url ? (
-    <CustomTooltip title={url}>
+  return (
+    <CustomTooltip disabled={!url} title={url || ""}>
       <MainComponent />
     </CustomTooltip>
-  ) : (
-    <MainComponent />
   );
 };
 

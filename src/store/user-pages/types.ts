@@ -116,6 +116,7 @@ export interface IComponentStyle {
   backgroundPosition?: string;
   color?: string;
   borderRadius?: string;
+  boxShadow?: string;
 }
 
 export const enum ComponentType {

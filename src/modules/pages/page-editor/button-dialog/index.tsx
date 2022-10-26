@@ -26,6 +26,8 @@ import {
   AutoFixHigh as ChooseAnimationIcon,
   Circle,
   WhatsApp as WhatsappIcon,
+  HelpOutline as HelpCenterIcon,
+  WbIncandescent as LightIcon,
 } from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
@@ -42,6 +44,7 @@ import {
   LIGHTER_GREY,
   LIGHT_GREY,
   PRIMARY_COLOR,
+  SECONDARY_COLOR,
   TRANSPARENT,
 } from "../../../../styles/colors";
 import CustomTooltip from "../../../components/tooltip";
@@ -51,6 +54,7 @@ import BackgroundColorIcon from "../../../../assets/icons/custom-icons/backgroun
 import UploadImageDialog from "../../../components/dialog-upload-image";
 import {
   ComponentBorderRadius,
+  ComponentShadowStyle,
   COMPONENT_MAX_COLUMNS,
   COMPONENT_MAX_ROWS,
   GalleryContext,
@@ -73,6 +77,7 @@ import { IApplicationState } from "../../../../store";
 import { UserStorageFolder } from "../../../../store/shared/types";
 import { PlansTypes } from "../../../../store/user/types";
 import WhatsappDialog from "../whatsapp-dialog";
+import { translateShadowStyleEnum } from "./../../../../utils/index";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -98,6 +103,9 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
   const [selectedRowsCount, setSelectedRowsCount] = useState<number>(1);
   const [selectedBorder, setSelectedBorder] = useState<ComponentBorderRadius>(
     ComponentBorderRadius.SQUARE
+  );
+  const [shadowStyle, setShadowStyle] = useState<ComponentShadowStyle>(
+    ComponentShadowStyle.NONE
   );
 
   const [typeError, setTypeError] = useState<string>();
@@ -200,6 +208,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
           backgroundColor,
           color: fontColor,
           borderRadius: selectedBorder.toString() + "px",
+          boxShadow: shadowStyle,
         },
         visible: isVisible,
         clicks: 0,
@@ -291,11 +300,22 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
     setShowFontColorPicker(false);
   };
 
-  const Section = ({ title, icon, error }: any) => (
+  const Section = ({ title, icon, error, helpText }: any) => (
     <SectionHeader item>
       {icon}
       <LayoutPickerHeaderText>
         {title}
+        <CustomTooltip title={helpText}>
+          <HelpCenterIcon
+            fontSize="inherit"
+            style={{
+              marginLeft: "4px",
+              color: SECONDARY_COLOR,
+              fontSize: "1em",
+              cursor: "pointer",
+            }}
+          />
+        </CustomTooltip>
         {error !== undefined && (
           <CustomTooltip title={error}>
             <FeedbackIcon
@@ -317,7 +337,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.tools.button.name}</DialogTitle>
+      <DialogTitle>{strings.tools.button.dialogTitle}</DialogTitle>
       {!showStep2 ? (
         /*
          * STEP 1
@@ -336,6 +356,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
               title={strings.type}
               icon={<CategoryIcon sx={{ transform: "translateY(-4px)" }} />}
               error={typeError}
+              helpText={strings.tools.button.typeHelpText}
             />
 
             {/* TYPE section */}
@@ -384,11 +405,12 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
             {/* Columns selector */}
             <Grid container width="100%" pt="24px">
-              <Grid item width="100%" xs={6}>
+              <Grid item width="100%" xs={12} sm={6}>
                 <Section
                   title={`${strings.columns} (1 - ${COMPONENT_MAX_COLUMNS})`}
                   icon={<ColumnsIcon sx={{ transform: "translateY(-4px)" }} />}
                   error={columnsError}
+                  helpText={strings.tools.button.columnsHelpText}
                 />
                 <LayoutPickerContainer container item direction="column">
                   <TextField
@@ -414,11 +436,12 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
               </Grid>
 
               {/* Rows selector */}
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
                 <Section
                   title={`${strings.rows} (1 - ${COMPONENT_MAX_ROWS})`}
                   icon={<RowsIcon sx={{ transform: "translateY(-4px)" }} />}
                   error={rowsError}
+                  helpText={strings.tools.button.rowsHelpText}
                 />
                 <LayoutPickerContainer container item direction="column">
                   <TextField
@@ -453,33 +476,69 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                     sx={{ width: "16px", transform: "translateY(-4px)" }}
                   />
                 }
-                error={columnsError}
+                helpText={strings.tools.button.borderRadiusHelpText}
               />
-              {Object.values(ComponentBorderRadius)
-                .filter((v) => !isNaN(Number(v)))
-                .map(
-                  (radius: string | ComponentBorderRadius, index: number) => {
+              <Grid container width="100%" gap="24px">
+                {Object.values(ComponentBorderRadius)
+                  .filter((v) => !isNaN(Number(v)))
+                  .map(
+                    (radius: string | ComponentBorderRadius, index: number) => {
+                      return (
+                        <Grid key={radius.toString() + index.toString()} item>
+                          <ComponentDetailsButton
+                            size="60px"
+                            iconSize="27px"
+                            isSelected={selectedBorder === radius}
+                            borderRadius={radius}
+                            onClick={() => {
+                              setSelectedBorder(
+                                radius as ComponentBorderRadius
+                              );
+                            }}
+                          >
+                            {radius}
+                          </ComponentDetailsButton>
+                        </Grid>
+                      );
+                    }
+                  )}
+              </Grid>
+            </Grid>
+
+            {/* Shadow */}
+            <Grid container width="100%" pt="24px">
+              <Section
+                title={strings.shadow}
+                icon={
+                  <LightIcon
+                    sx={{ width: "20px", transform: "translateY(-4px)" }}
+                  />
+                }
+                helpText={strings.tools.button.shadowHelpText}
+              />
+              <Grid container width="100%" gap="24px">
+                {Object.values(ComponentShadowStyle).map(
+                  (shadow: string | ComponentShadowStyle, index: number) => {
                     return (
-                      <Grid
-                        key={radius.toString() + index.toString()}
-                        item
-                        pl={index === 0 ? "" : "24px"}
-                      >
+                      <Grid key={shadow.toString() + index.toString()} item>
                         <ComponentDetailsButton
                           size="60px"
-                          fontSize="27px"
-                          isSelected={selectedBorder === radius}
-                          borderRadius={radius}
+                          fontSize="0.9em"
+                          isSelected={shadowStyle === shadow}
+                          shadow={shadow}
                           onClick={() => {
-                            setSelectedBorder(radius as ComponentBorderRadius);
+                            setShadowStyle(shadow as ComponentShadowStyle);
                           }}
                         >
-                          {radius}
+                          {translateShadowStyleEnum(
+                            shadow as ComponentShadowStyle
+                          )}
                         </ComponentDetailsButton>
                       </Grid>
                     );
                   }
                 )}
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>

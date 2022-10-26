@@ -242,6 +242,7 @@ const DraggableUserComponent = ({
 
       <DeleteComponentConfirmationDialog />
       <UploadImageDialog
+        existingImageUrl={component.style?.backgroundImage}
         context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
         openChooseFileDialog={openChooseFileDialog}
         setOpenChooseFileDialog={setOpenChooseFileDialog}
@@ -297,6 +298,16 @@ const DraggableUserComponent = ({
                 component._id,
                 pageId,
                 userState._id,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          } else {
+            dispatch(
+              setComponentImage(
+                "",
+                component._id,
+                pageId,
                 clearLoadingFromState,
                 clearLoadingFromState
               )

@@ -24,6 +24,7 @@ interface IUploadImageDialogProps {
   chosenImage: any;
   setChosenImage: any;
   acceptedFiles?: string;
+  existingImageUrl?: string;
   submitDialog?: (imageUrl?: string) => void;
   cancelDialog?: any;
   context?: GalleryContext[];
@@ -38,6 +39,7 @@ const UploadImageDialog = ({
   submitDialog,
   cancelDialog,
   context,
+  existingImageUrl,
 }: IUploadImageDialogProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -56,7 +58,9 @@ const UploadImageDialog = ({
       }
     }
 
-    if (!hasError) setChosenImage(file);
+    if (!hasError) {
+      setChosenImage(file);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -107,10 +111,32 @@ const UploadImageDialog = ({
           <Text>{strings.orFromYourDevice}</Text>
 
           {!chosenImage ? (
-            <Dropzone container {...getRootProps()}>
-              <input {...getInputProps()} />
-              {showDropzoneText()}
-            </Dropzone>
+            <>
+              <Dropzone container {...getRootProps()}>
+                <input {...getInputProps()} />
+                {showDropzoneText()}
+              </Dropzone>
+              {existingImageUrl && (
+                <Grid
+                  item
+                  color={MEDIUM_GREY}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    if (submitDialog) {
+                      submitDialog(undefined);
+                    }
+                  }}
+                >
+                  <DeleteIcon
+                    style={{
+                      transform: "translateY(5px)",
+                      marginRight: "4px",
+                    }}
+                  />
+                  {strings.removeExisting}
+                </Grid>
+              )}
+            </>
           ) : (
             <>
               <DropzoneFileReady
@@ -166,10 +192,19 @@ const UploadImageDialog = ({
         </>
       </DialogContent>
       <DialogActions>
-        <Button onClick={cancelDialog}>{strings.back}</Button>
         <Button
           onClick={() => {
-            if (submitDialog) submitDialog();
+            cancelDialog();
+          }}
+        >
+          {strings.back}
+        </Button>
+        <Button
+          disabled={!chosenImage}
+          onClick={() => {
+            if (submitDialog) {
+              submitDialog();
+            }
           }}
         >
           {strings.send}

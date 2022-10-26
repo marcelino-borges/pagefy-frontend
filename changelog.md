@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.18.0] - 2022-10-26
+
+- Feature: added shadow feature in the button creation
+- Feature: added button to upload file dialog to remove the current image
+
 ### [1.17.0] - 2022-10-26
 
 - Feature: implemented whatsapp feature into the buttons and icons create-dialogs

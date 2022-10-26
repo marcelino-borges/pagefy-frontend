@@ -242,6 +242,7 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
         }}
       />
       <UploadImageDialog
+        existingImageUrl={userProfile.profileImageUrl}
         context={[GalleryContext.USER_PROFILE]}
         openChooseFileDialog={openUploadDialog}
         setOpenChooseFileDialog={setOpenUploadDialog}

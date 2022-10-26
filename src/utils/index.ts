@@ -1,8 +1,10 @@
 import {
+  ComponentShadowStyle,
   YOUTUBE_EMBED_URL_IDENTIFIER,
   YOUTUBE_FULL_URL_IDENTIFIER,
   YOUTUBE_SHORT_URL_IDENTIFIER,
 } from "../constants";
+import strings from "../localization";
 
 /**
  * Shortens a string to the `maxSize` length
@@ -151,4 +153,23 @@ export const formatFloatingNumberFromInt = (int: number) => {
     "," +
     asString.slice(asString.length - 2, asString.length)
   );
+};
+
+export const translateShadowStyleEnum = (
+  shadowStyle: ComponentShadowStyle
+): string => {
+  switch (shadowStyle) {
+    case ComponentShadowStyle.NONE:
+      return strings.tools.button.shadowStyles.none;
+    case ComponentShadowStyle.SMOOTH:
+      return strings.tools.button.shadowStyles.smooth;
+    case ComponentShadowStyle.NORMAL:
+      return strings.tools.button.shadowStyles.normal;
+    case ComponentShadowStyle.HARD:
+      return strings.tools.button.shadowStyles.hard;
+    case ComponentShadowStyle.EXTREME:
+      return strings.tools.button.shadowStyles.extreme;
+    default:
+      return strings.tools.button.shadowStyles.none;
+  }
 };

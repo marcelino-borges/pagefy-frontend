@@ -22,11 +22,17 @@ export const SectionHeader = styled((props: any) => <Grid {...props} />)`
 `;
 
 export const ComponentDetailsButton = styled(
-  ({ isSelected, size, fontSize, borderRadius, ...rest }: any) => (
-    <div {...rest} />
-  )
+  ({
+    isSelected,
+    size,
+    fontSize,
+    iconSize,
+    borderRadius,
+    shadow,
+    ...rest
+  }: any) => <div {...rest} />
 )(
-  ({ isSelected, size, fontSize, borderRadius }) => `
+  ({ isSelected, size, iconSize, fontSize, borderRadius, shadow }) => `
   padding: 8px;
   cursor: pointer;
   border-radius: ${borderRadius !== undefined ? borderRadius : 8}px;
@@ -38,6 +44,8 @@ export const ComponentDetailsButton = styled(
   justify-content: center;
   align-items: center;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: ${shadow};
+  font-size: ${fontSize || "1em"};
 
   @media (max-width: 400px) {
     margin: 12px 0px;
@@ -63,7 +71,7 @@ export const ComponentDetailsButton = styled(
   }
 
   svg {
-    font-size: ${fontSize || "64px"};
+    font-size: ${iconSize || "64px"};
   }
 `
 );
