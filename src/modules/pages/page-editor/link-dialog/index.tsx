@@ -640,6 +640,7 @@ const ComponentDialog = ({
                         <ColorPicker
                           color={fontColor}
                           onChangeComplete={handleChangeFontColorComplete}
+                          onCancel={() => setShowFontColorPicker(false)}
                         />
                       )}
                     </Grid>
@@ -674,6 +675,7 @@ const ComponentDialog = ({
                         <ColorPicker
                           color={backgroundColor}
                           onChangeComplete={handleChangeBackgroundColorComplete}
+                          onCancel={() => setShowBackgroundColorPicker(false)}
                         />
                       )}
                     </Grid>

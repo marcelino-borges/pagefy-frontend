@@ -355,6 +355,7 @@ export const en: IDictionary = {
   year: "year",
   purchase: "Purchase",
   andWinAVipPlanFor: "and win a VIP plan for",
+  sorryThisIsNotAvailable: "Sorry, this is not available yet",
   faq: {
     menu: "FAQ",
     title: "Frequent Questions",

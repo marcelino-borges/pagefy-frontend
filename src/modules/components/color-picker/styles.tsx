@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { styled } from "@mui/system";
+import { PRIMARY_COLOR } from "../../../styles/colors";
 
 export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
   z-index: 5000;
@@ -16,21 +17,33 @@ export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
   transform: scale(1.3);
 `;
 
+export const Container = styled(({ ...rest }: any) => <div {...rest} />)`
+  width: 300px;
+  max-width: 70vw;
+
+  & .sketch-picker {
+    width: calc(100% - 20px) !important;
+    max-width: 70vw;
+    border-radius: 4px 4px 0px 0px !important;
+  }
+`;
+
 export const Group = styled(({ ...rest }: any) => <div {...rest} />)`
   background-color: white;
-  transform: translateY(-8px);
-  height: 70px;
-  width: 220px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
   border-radius: 0px 0px 4px 4px;
+  transform: translateY(-1px);
 `;
 
 export const SubmitButton = styled(({ ...rest }: any) => <Button {...rest} />)`
-  margin: 0;
-  z-index: 5001;
-  height: 36px;
   font-size: 0.6em;
   z-index: 5010;
+  min-width: unset;
+
+  &:hover {
+    background-color: unset;
+    color: ${PRIMARY_COLOR};
+  }
 `;

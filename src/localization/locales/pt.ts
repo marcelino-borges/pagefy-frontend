@@ -359,6 +359,7 @@ export const pt: IDictionary = {
   year: "ano",
   purchase: "Adquirir",
   andWinAVipPlanFor: "e ganhe um plano VIP por",
+  sorryThisIsNotAvailable: "Desculpe, isso ainda não está disponível",
   faq: {
     menu: "FAQ",
     title: "Perguntas Frequentes",

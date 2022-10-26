@@ -1,22 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import SketchPicker from "react-color/lib/components/sketch/Sketch";
 import strings from "../../../localization";
-import { ColorPickerSpan, Group, SubmitButton } from "./styles";
+import { ColorPickerSpan, Container, Group, SubmitButton } from "./styles";
 
 interface IColorPickerProps {
   color: any;
   onChangeComplete: any;
+  onCancel: () => void;
 }
 
 const ColorPicker = ({
   color: originalColor,
   onChangeComplete,
+  onCancel,
 }: IColorPickerProps) => {
   const [currentColor, setCurrentColor] = useState();
 
   const escFunction = useCallback((event: any) => {
     if (event.keyCode === 27) {
-      handleCancel();
+      onCancel();
     }
     setCurrentColor(originalColor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,10 +36,6 @@ const ColorPicker = ({
     setCurrentColor(color);
   };
 
-  const handleCancel = () => {
-    onSubmitColor(originalColor);
-  };
-
   const onSubmitColor = (color: any) => {
     onChangeComplete(color);
     setCurrentColor(color);
@@ -49,22 +47,24 @@ const ColorPicker = ({
         event.preventDefault();
       }}
     >
-      <SketchPicker
-        color={currentColor}
-        onChangeComplete={(color: any) => {
-          handleChangeComplete(color);
-        }}
-      />
-      <Group>
-        <SubmitButton onClick={handleCancel}>{strings.cancel}</SubmitButton>
-        <SubmitButton
-          onClick={() => {
-            onSubmitColor(currentColor);
+      <Container>
+        <SketchPicker
+          color={currentColor}
+          onChangeComplete={(color: any) => {
+            handleChangeComplete(color);
           }}
-        >
-          {strings.save}
-        </SubmitButton>
-      </Group>
+        />
+        <Group>
+          <SubmitButton onClick={onCancel}>{strings.cancel}</SubmitButton>
+          <SubmitButton
+            onClick={() => {
+              onSubmitColor(currentColor);
+            }}
+          >
+            {strings.save}
+          </SubmitButton>
+        </Group>
+      </Container>
     </ColorPickerSpan>
   );
 };

@@ -45,7 +45,7 @@ import {
 import DraggableUserComponent from "./draggable-component";
 import { v4 as uuidv4 } from "uuid";
 import IconsDialog from "./icons-dialog";
-import ComponentDialog from "./create-component-dialog";
+import ComponentDialog from "./link-dialog";
 import VideoDialog from "./video-dialog";
 import Navigation from "./../../components/navigation";
 import UploadImageDialog from "../../components/dialog-upload-image";
@@ -197,30 +197,33 @@ const PageEditor = () => {
       });
   }, [dispatch, page, pageUrl]);
 
-  const onSubmitPageScripts = (
-    headerScriptFromDialog: string | undefined,
-    endBodyScriptFromDialog: string | undefined
-  ) => {
-    if (
-      !page ||
-      !page._id ||
-      (headerScriptFromDialog === undefined &&
-        endBodyScriptFromDialog === undefined)
-    )
-      return;
-    const updatedPage: IUserPage = {
-      ...page,
-      customScripts: {
-        header: headerScriptFromDialog || "",
-        endBody: endBodyScriptFromDialog || "",
-      },
-    };
-    dispatch(
-      updatePage(updatedPage, () => {
-        showSuccessToast(strings.successUpdatePage);
-      })
-    );
-  };
+  const onSubmitPageScripts = useCallback(
+    (
+      headerScriptFromDialog: string | undefined,
+      endBodyScriptFromDialog: string | undefined
+    ) => {
+      if (
+        !page ||
+        !page._id ||
+        (headerScriptFromDialog === undefined &&
+          endBodyScriptFromDialog === undefined)
+      )
+        return;
+      const updatedPage: IUserPage = {
+        ...page,
+        customScripts: {
+          header: headerScriptFromDialog || "",
+          endBody: endBodyScriptFromDialog || "",
+        },
+      };
+      dispatch(
+        updatePage(updatedPage, () => {
+          showSuccessToast(strings.successUpdatePage);
+        })
+      );
+    },
+    [dispatch, page]
+  );
 
   const handleOpenIconsDialog = () => {
     if (!page?._id) return;
@@ -262,24 +265,30 @@ const PageEditor = () => {
     setOpenLaunchDialog(false);
   };
 
-  const handleChangeBackgroundColorComplete = (color: any) => {
-    if (page && page._id) {
-      dispatch(setPageBackgroundColor(page._id, String(color.hex)));
-      setShowBackgroundColorPicker(false);
-    }
-  };
+  const handleChangeBackgroundColorComplete = useCallback(
+    (color: any) => {
+      if (page && page._id) {
+        dispatch(setPageBackgroundColor(page._id, String(color.hex)));
+        setShowBackgroundColorPicker(false);
+      }
+    },
+    [dispatch, page]
+  );
 
-  const handleChangeFontColorComplete = (color: any) => {
-    if (page && page._id) {
-      dispatch(setPageFontColor(page._id, String(color.hex)));
-      setShowFontColorPicker(false);
-    }
-  };
+  const handleChangeFontColorComplete = useCallback(
+    (color: any) => {
+      if (page && page._id) {
+        dispatch(setPageFontColor(page._id, String(color.hex)));
+        setShowFontColorPicker(false);
+      }
+    },
+    [dispatch, page]
+  );
 
-  const toggleIsPublic = () => {
+  const toggleIsPublic = useCallback(() => {
     if (!page || !page._id) return;
     dispatch(togglePageIsPublic(page._id));
-  };
+  }, [dispatch, page]);
 
   const savePageImage = async (imageUrl?: string) => {
     const token = await getFirebaseToken();
@@ -445,6 +454,7 @@ const PageEditor = () => {
               <ColorPicker
                 color={page?.style?.backgroundColor || "white"}
                 onChangeComplete={handleChangeBackgroundColorComplete}
+                onCancel={() => setShowBackgroundColorPicker(false)}
               />
             )}
           </Grid>
@@ -469,6 +479,7 @@ const PageEditor = () => {
               <ColorPicker
                 color={page?.style?.color || "white"}
                 onChangeComplete={handleChangeFontColorComplete}
+                onCancel={() => setShowFontColorPicker(false)}
               />
             )}
           </Grid>
@@ -600,8 +611,8 @@ const PageEditor = () => {
         </CustomTooltip>
       </ToolbarBottomToolsStyled>
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    isSmallerThan370,
     page?.isPublic,
     page?.style?.backgroundColor,
     page?.style?.color,
@@ -609,7 +620,17 @@ const PageEditor = () => {
     page?.customScripts?.endBody,
     page?.customScripts?.header,
     page?.url,
+    showBackgroundColorPicker,
+    handleChangeBackgroundColorComplete,
+    showFontColorPicker,
+    handleChangeFontColorComplete,
+    openChooseFileBGDialog,
+    chosenImage,
     userProfile?.plan,
+    openCustomScriptDialog,
+    toggleIsPublic,
+    savePageBGImage,
+    onSubmitPageScripts,
   ]);
 
   const ToolBar = useCallback(

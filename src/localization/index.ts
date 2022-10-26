@@ -319,6 +319,7 @@ export interface IDictionary {
   year: string;
   purchase: string;
   andWinAVipPlanFor: string;
+  sorryThisIsNotAvailable: string;
   faq: {
     menu: string;
     title: string;

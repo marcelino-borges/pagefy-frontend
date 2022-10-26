@@ -40,6 +40,7 @@ import { setCurrency } from "./../../../store/purchase/actions";
 import Footer from "../../components/footer";
 import ReportIcon from "@mui/icons-material/Report";
 import { getPlanNameByType } from "../../../utils/stripe";
+import { showInfoToast } from "./../../../utils/toast/index";
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
@@ -73,6 +74,7 @@ const PurchasePlanPage = () => {
   useEffect(() => {
     if (!ALLOW_PURCHASE) {
       navigate(routes.root);
+      showInfoToast(strings.sorryThisIsNotAvailable);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

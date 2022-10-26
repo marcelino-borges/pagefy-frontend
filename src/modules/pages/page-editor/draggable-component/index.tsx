@@ -681,6 +681,7 @@ const DraggableUserComponent = ({
               <ColorPicker
                 color={component.style?.backgroundColor}
                 onChangeComplete={handleChangeBackgroundColorComplete}
+                onCancel={() => setShowBackgroundColorPicker(false)}
               />
             )}
           </ToolGridItem>
@@ -728,6 +729,7 @@ const DraggableUserComponent = ({
               <ColorPicker
                 color={component.style?.color}
                 onChangeComplete={handleChangeFontColorComplete}
+                onCancel={() => setShowFontColorPicker(false)}
               />
             )}
           </ToolGridItem>

@@ -321,6 +321,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                       <ColorPicker
                         color={colorSelected}
                         onChangeComplete={handleChangeColorComplete}
+                        onCancel={() => setShowColorPicker(false)}
                       />
                     )}
                   </Grid>
