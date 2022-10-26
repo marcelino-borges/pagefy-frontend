@@ -12,14 +12,19 @@ import {
   TextField,
   useMediaQuery,
 } from "@mui/material";
-import { Search as SearchIcon, Clear as ClearIcon } from "@mui/icons-material";
-import strings from "./../../../../localization/index";
+import {
+  Search as SearchIcon,
+  Clear as ClearIcon,
+  WhatsApp as WhatsAppIcon,
+} from "@mui/icons-material";
+import strings from "./../../../../localization";
 import {
   IconsResult,
   IconsSearchResultsArea,
   ColorPickerIcon,
   SelectedIconButton,
   ColorPickerOverlay,
+  WhatsAppButton,
 } from "./styles";
 import { useForm } from "react-hook-form";
 import {
@@ -43,6 +48,7 @@ import { Icon } from "@iconify/react";
 import ColorPicker from "./../../../components/color-picker/index";
 import { v4 as uuidv4 } from "uuid";
 import { isTelUrlValid } from "./../../../../utils/validators/url";
+import WhatsappDialog from "../whatsapp-dialog";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -68,6 +74,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const [colorSelected, setColorSelected] = useState<string>("black");
   const [url, setUrl] = useState<string>("");
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const [openWhatsappDialog, setOpenWhatsappDialog] = useState<boolean>(false);
 
   const searchIcon = (search: string) => {
     const results: IIconifyIcon[] = [];
@@ -209,7 +216,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.addIcon}</DialogTitle>
+      <DialogTitle>{strings.tools.icon.name}</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmitSearch(validateAndSearchOnSubmit)}>
           <TextField
@@ -333,7 +340,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     helperText={isUrlInvalid ? strings.invalidUrl : ""}
                     autoFocus
                     required
-                    placeholder={'URL or "mailto:" or "tel:"'}
+                    placeholder={`URL ${strings.or} "mailto:" ${strings.or} "tel:"`}
                     type="text"
                     fullWidth
                     variant="outlined"
@@ -360,6 +367,20 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   />
                 </Grid>
               </Grid>
+              <Grid container justifyContent="flex-end" mt="16px">
+                {iconSelected.userFriendlyName
+                  .toLowerCase()
+                  .includes("whatsapp") && (
+                  <WhatsAppButton
+                    onClick={() => {
+                      setOpenWhatsappDialog(true);
+                    }}
+                  >
+                    <WhatsAppIcon color="primary" />
+                    {strings.mountWhatsappURL}
+                  </WhatsAppButton>
+                )}
+              </Grid>
               <Grid container style={{ marginTop: "16px" }}>
                 <Grid container item xs={1}></Grid>
                 <Grid container item xs={11}></Grid>
@@ -385,6 +406,13 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
           {strings.add}
         </Button>
       </DialogActions>
+      <WhatsappDialog
+        open={openWhatsappDialog}
+        handleClose={() => setOpenWhatsappDialog(false)}
+        onMountUrl={(url: string) => {
+          setUrl(url);
+        }}
+      />
     </Dialog>
   );
 };

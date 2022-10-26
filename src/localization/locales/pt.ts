@@ -40,10 +40,23 @@ export const pt: IDictionary = {
   chooseEffect: "Escolher efeito",
   toggleVisibility: "Mudar visibilidade",
   remove: "Remover",
-  addLink: "Adicionar Link",
-  addIcon: "Adicionar Ícone",
-  addVideo: "Adicionar Vídeo",
-  addLaunch: "Adicionar Lançamento",
+  tools: {
+    button: {
+      name: "Botão",
+    },
+    icon: {
+      name: "Ícone",
+    },
+    video: {
+      name: "Vídeo",
+    },
+    launch: {
+      name: "Lançamento",
+    },
+    whatsapp: {
+      name: "Whatsapp",
+    },
+  },
   removeIcon: "Remover Ícone",
   removeComponent: "Remover Componente",
   removePage: "Remover Página",
@@ -51,6 +64,7 @@ export const pt: IDictionary = {
   back: "Voltar",
   cancel: "Cancelar",
   add: "Inserir",
+  mountURL: "Montar URL",
   searchIconMinCaracters: "Busca precisa ter mais de 3 caracteres.",
   url: "URL",
   invalidUrl: "URL inválida",
@@ -127,6 +141,7 @@ export const pt: IDictionary = {
   secondsAbbreviated: "seg",
   launchPrefixText: "Restam",
   chooseAnimation: "Escolher animação",
+  mountWhatsappURL: "Montar URL do Whatsapp",
   selectAnOption: "Selecione uma opção",
   selectACurrency: "Selecione uma moeda",
   selectARecurrency: "Selecione uma recorrência",
@@ -376,6 +391,8 @@ export const pt: IDictionary = {
   sorry: "Desculpe",
   pagePreview: "Pré-visualização da página",
   message: "Mensagem",
+  messageExample:
+    "Oi! Aqui é a Maria. Tudo bem? Estou entrando em contato porque tenho uma oportunidade de negócio para você!",
   errorSendingSupportContact: "Erro enviando email para o suporte.",
   successSendingSupportContact: "Mensagem enviada com sucesso!",
   errorRecaptchaValidation: "Você é um humano mesmo? Erro ao validar sua ação.",
@@ -424,4 +441,5 @@ export const pt: IDictionary = {
       status: "Status",
     },
   },
+  phoneNumber: "Telefone",
 };

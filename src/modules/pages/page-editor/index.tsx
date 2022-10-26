@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { AxiosResponse } from "axios";
+import { useForm } from "react-hook-form";
 import { Button, Grid, useMediaQuery } from "@mui/material";
 import {
   Visibility as VisibilityIcon,
@@ -14,7 +16,8 @@ import BackgroundColorIcon from "../../../assets/icons/custom-icons/background-c
 import FontColorIcon from "../../../assets/icons/custom-icons/font-color";
 import { IUserComponent, IUserPage } from "../../../store/user-pages/types";
 import { useDispatch, useSelector } from "react-redux";
-import { IApplicationState } from "./../../../store/index";
+import { v4 as uuidv4 } from "uuid";
+import { IApplicationState } from "./../../../store";
 import routes from "./../../../routes/paths";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { setPageBeingManaged } from "../../../store/page-management/actions";
@@ -27,8 +30,7 @@ import {
   ToolsMenuIcon,
 } from "./style";
 import strings from "../../../localization";
-import TransparentTextField from "./../../components/transparent-textfield/index";
-import { useForm } from "react-hook-form";
+import TransparentTextField from "./../../components/transparent-textfield";
 import {
   deletePage,
   deleteTopComponentFromPage,
@@ -43,16 +45,16 @@ import {
   setPageImage,
 } from "../../../store/user-pages/actions";
 import DraggableUserComponent from "./draggable-component";
-import { v4 as uuidv4 } from "uuid";
+import ToolsDialog from "./tools-dialog";
 import IconsDialog from "./icons-dialog";
-import ComponentDialog from "./link-dialog";
+import ButtonDialog from "./button-dialog";
 import VideoDialog from "./video-dialog";
-import Navigation from "./../../components/navigation";
+import LaunchDialog from "./launch-dialog";
 import UploadImageDialog from "../../components/dialog-upload-image";
+import Navigation from "./../../components/navigation";
 import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation";
-import LaunchDialog from "./launch-dialog";
 import ProfileEditableAvatar from "../../components/profile-editable-avatar";
 import PrivateRouteChecker from "./../../components/private-route-checker";
 import CustomTooltip from "../../components/tooltip";
@@ -60,7 +62,6 @@ import ColorPicker from "./../../components/color-picker";
 import { getUser } from "../../../store/user/actions";
 import IconButton from "../../components/icon-button";
 import { getPageByUrl } from "../../../services/user-pages";
-import { AxiosResponse } from "axios";
 import { showErrorToast, showSuccessToast } from "./../../../utils/toast";
 import { clearLoading, setLoading } from "../../../store/shared/actions";
 import { deleteImage } from "../../../services/files";
@@ -70,7 +71,6 @@ import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
-import ToolsDialog from "./tools-dialog";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -837,26 +837,6 @@ const PageEditor = () => {
           setOpenChooseFilePageDialog(false);
         }}
       />
-      <IconsDialog
-        open={openIconsDialog}
-        handleClose={handleCloseIconsDialog}
-        pageId={page?._id}
-      />
-      <ComponentDialog
-        open={openComponentDialog}
-        handleClose={handleCloseComponentDialog}
-        pageId={page?._id}
-      />
-      <VideoDialog
-        open={openVideoDialog}
-        handleClose={handleCloseVideoDialog}
-        pageId={page?._id}
-      />
-      <LaunchDialog
-        open={openLaunchDialog}
-        handleClose={handleCloseLaunchDialog}
-        pageId={page?._id}
-      />
       <ToolsDialog
         open={openToolsDialog}
         handleClose={() => {
@@ -868,6 +848,26 @@ const PageEditor = () => {
         handleOpenIconsDialog={handleOpenIconsDialog}
         handleOpenVideoDialog={handleOpenVideoDialog}
         handleOpenLaunchDialog={handleOpenLaunchDialog}
+      />
+      <ButtonDialog
+        open={openComponentDialog}
+        handleClose={handleCloseComponentDialog}
+        pageId={page?._id}
+      />
+      <IconsDialog
+        open={openIconsDialog}
+        handleClose={handleCloseIconsDialog}
+        pageId={page?._id}
+      />
+      <VideoDialog
+        open={openVideoDialog}
+        handleClose={handleCloseVideoDialog}
+        pageId={page?._id}
+      />
+      <LaunchDialog
+        open={openLaunchDialog}
+        handleClose={handleCloseLaunchDialog}
+        pageId={page?._id}
       />
     </>
   );

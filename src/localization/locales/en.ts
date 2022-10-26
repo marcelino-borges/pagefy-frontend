@@ -40,10 +40,23 @@ export const en: IDictionary = {
   chooseEffect: "Choose effect",
   toggleVisibility: "Toggle visibility",
   remove: "Remove",
-  addLink: "Add Link",
-  addIcon: "Add Icon",
-  addVideo: "Add Video",
-  addLaunch: "Add Launch",
+  tools: {
+    button: {
+      name: "Button",
+    },
+    icon: {
+      name: "Icon",
+    },
+    video: {
+      name: "Video",
+    },
+    launch: {
+      name: "Launch",
+    },
+    whatsapp: {
+      name: "Whatsapp",
+    },
+  },
   removeIcon: "Remove Icon",
   removeComponent: "Remove Component",
   removePage: "Remove Page",
@@ -51,6 +64,7 @@ export const en: IDictionary = {
   back: "Back",
   cancel: "Cancel",
   add: "Add",
+  mountURL: "Mount URL",
   searchIconMinCaracters: "Search must have at least 3 caracters.",
   url: "URL",
   invalidUrl: "Invalid URL",
@@ -127,6 +141,7 @@ export const en: IDictionary = {
   seconds: "seconds",
   launchPrefixText: "It's left",
   chooseAnimation: "Choose animation",
+  mountWhatsappURL: "Mount Whatsapp URL",
   selectAnOption: "Select an option",
   selectACurrency: "Select a currency",
   selectARecurrency: "Select a recurrency",
@@ -372,6 +387,8 @@ export const en: IDictionary = {
   sorry: "Sorry",
   pagePreview: "Page Preview",
   message: "Message",
+  messageExample:
+    "Hi! This is Maria. What's up? I'm reaching you because I have a business opportunity for you!",
   errorSendingSupportContact: "Error sending email to support.",
   successSendingSupportContact: "Message sent successfully!",
   errorRecaptchaValidation:
@@ -420,4 +437,5 @@ export const en: IDictionary = {
       status: "Status",
     },
   },
+  phoneNumber: "Phone Number",
 };

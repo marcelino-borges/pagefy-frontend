@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { ToolbarButton, ToolbarIconText } from "../style";
 import {
-  Construction as CreateComponentIcon,
+  Crop169 as CreateButtonIcon,
   InsertEmoticon as InsertIconIcon,
   YouTube as YouTubeIcon,
   RocketLaunch as LaunchIcon,
@@ -59,36 +59,37 @@ const ToolsDialog = ({
           container
           item
           direction="row"
-          justifyContent={isSmallerThan600 ? "space-evenly" : "center"}
-          alignItems="center"
+          justifyContent="flex-start"
+          alignItems="flex-start"
           paddingTop={isSmallerThan600 ? "24px" : "0"}
-          my="32px"
-          height="100%"
         >
-          <Grid item xs={3}>
-            <Grid container item direction="column" alignItems="center">
+          <Grid item xs={3} py="16px">
+            <Grid container item direction="column">
               <ToolbarButton
                 onClick={() => {
                   handleOpenComponentDialog();
                   handleClose();
                 }}
               >
-                <CreateComponentIcon />
+                <CreateButtonIcon />
 
                 {!isSmallerThan370 && (
                   <ToolbarIconText>
                     {BREAK_TOOLBAR_TEXT &&
-                    strings.addLink.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addLink.split(" ").length > 1 ? (
-                      strings.addLink.split(" ").map((word: string) => {
-                        return (
-                          <span key={uuidv4()}>
-                            {word} <br />
-                          </span>
-                        );
-                      })
+                    strings.tools.button.name.length >
+                      BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.button.name.split(" ").length > 1 ? (
+                      strings.tools.button.name
+                        .split(" ")
+                        .map((word: string) => {
+                          return (
+                            <span key={uuidv4()}>
+                              {word} <br />
+                            </span>
+                          );
+                        })
                     ) : (
-                      <>{strings.addLink}</>
+                      <>{strings.tools.button.name}</>
                     )}
                   </ToolbarIconText>
                 )}
@@ -96,7 +97,7 @@ const ToolsDialog = ({
             </Grid>
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={3} py="16px">
             <Grid container item direction="column" alignItems="center">
               <ToolbarButton
                 onClick={() => {
@@ -109,9 +110,9 @@ const ToolsDialog = ({
                 {!isSmallerThan370 && (
                   <ToolbarIconText>
                     {BREAK_TOOLBAR_TEXT &&
-                    strings.addIcon.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addIcon.split(" ").length > 1 ? (
-                      strings.addIcon.split(" ").map((word: string) => {
+                    strings.tools.icon.name.length > BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.icon.name.split(" ").length > 1 ? (
+                      strings.tools.icon.name.split(" ").map((word: string) => {
                         return (
                           <span key={uuidv4()}>
                             {word} <br />
@@ -119,7 +120,7 @@ const ToolsDialog = ({
                         );
                       })
                     ) : (
-                      <>{strings.addIcon}</>
+                      <>{strings.tools.icon.name}</>
                     )}
                   </ToolbarIconText>
                 )}
@@ -127,7 +128,7 @@ const ToolsDialog = ({
             </Grid>
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={3} py="16px">
             <Grid container item direction="column" alignItems="center">
               <ToolbarButton
                 onClick={() => {
@@ -140,17 +141,20 @@ const ToolsDialog = ({
                 {!isSmallerThan370 && (
                   <ToolbarIconText>
                     {BREAK_TOOLBAR_TEXT &&
-                    strings.addVideo.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addVideo.split(" ").length > 1 ? (
-                      strings.addVideo.split(" ").map((word: string) => {
-                        return (
-                          <span key={uuidv4()}>
-                            {word} <br />
-                          </span>
-                        );
-                      })
+                    strings.tools.video.name.length >
+                      BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.video.name.split(" ").length > 1 ? (
+                      strings.tools.video.name
+                        .split(" ")
+                        .map((word: string) => {
+                          return (
+                            <span key={uuidv4()}>
+                              {word} <br />
+                            </span>
+                          );
+                        })
                     ) : (
-                      <>{strings.addVideo}</>
+                      <>{strings.tools.video.name}</>
                     )}
                   </ToolbarIconText>
                 )}
@@ -158,7 +162,7 @@ const ToolsDialog = ({
             </Grid>
           </Grid>
 
-          <Grid item xs={3}>
+          <Grid item xs={3} py="16px">
             <Grid container item direction="column" alignItems="center">
               <ToolbarButton
                 onClick={() => {
@@ -171,17 +175,20 @@ const ToolsDialog = ({
                 {!isSmallerThan370 && (
                   <ToolbarIconText>
                     {BREAK_TOOLBAR_TEXT &&
-                    strings.addLaunch.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.addLaunch.split(" ").length > 1 ? (
-                      strings.addLaunch.split(" ").map((word: string) => {
-                        return (
-                          <span key={uuidv4()}>
-                            {word} <br />
-                          </span>
-                        );
-                      })
+                    strings.tools.launch.name.length >
+                      BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.launch.name.split(" ").length > 1 ? (
+                      strings.tools.launch.name
+                        .split(" ")
+                        .map((word: string) => {
+                          return (
+                            <span key={uuidv4()}>
+                              {word} <br />
+                            </span>
+                          );
+                        })
                     ) : (
-                      <>{strings.addLaunch}</>
+                      <>{strings.tools.launch.name}</>
                     )}
                   </ToolbarIconText>
                 )}

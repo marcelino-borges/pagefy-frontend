@@ -25,6 +25,7 @@ import {
   Timer as TimerIcon,
   AutoFixHigh as ChooseAnimationIcon,
   Circle,
+  WhatsApp as WhatsappIcon,
 } from "@mui/icons-material";
 import strings from "../../../../localization/index";
 import {
@@ -71,6 +72,7 @@ import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { IApplicationState } from "../../../../store";
 import { UserStorageFolder } from "../../../../store/shared/types";
 import { PlansTypes } from "../../../../store/user/types";
+import WhatsappDialog from "../whatsapp-dialog";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -78,11 +80,7 @@ interface IComponentDialogProps {
   handleClose: any;
 }
 
-const ComponentDialog = ({
-  pageId,
-  open,
-  handleClose,
-}: IComponentDialogProps) => {
+const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
   const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallerThanXM = useMediaQuery(theme.breakpoints.down("xm"));
@@ -133,6 +131,7 @@ const ComponentDialog = ({
     startDelay: 0,
     infinite: false,
   });
+  const [openWhatsappDialog, setOpenWhatsappDialog] = useState<boolean>(false);
 
   const clearStates = () => {
     // Step 1 buttons
@@ -169,7 +168,6 @@ const ComponentDialog = ({
         return;
       }
 
-      console.log("selectedBorder.toString()", selectedBorder.toString());
       handleGoToStep(1, 350);
     } else if (step === 1) {
       if (!isStep2Valid()) {
@@ -319,7 +317,7 @@ const ComponentDialog = ({
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.addLink}</DialogTitle>
+      <DialogTitle>{strings.tools.button.name}</DialogTitle>
       {!showStep2 ? (
         /*
          * STEP 1
@@ -764,6 +762,28 @@ const ComponentDialog = ({
                   </Grid>
                 </CustomTooltip>
               </Grid>
+
+              {/* Mount Whatsapp URL */}
+              <Grid item>
+                <CustomTooltip
+                  disableInteractive
+                  leaveDelay={0.1}
+                  title={strings.mountWhatsappURL}
+                  placement="bottom"
+                >
+                  <Grid item>
+                    <IconButton
+                      onClick={() => {
+                        setOpenWhatsappDialog(true);
+                      }}
+                    >
+                      <WhatsappIcon
+                        sx={{ fontSize: "26px", color: LIGHT_GREY }}
+                      />
+                    </IconButton>
+                  </Grid>
+                </CustomTooltip>
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>
@@ -778,8 +798,15 @@ const ComponentDialog = ({
           {step === 0 ? strings.next : strings.add}
         </Button>
       </DialogActions>
+      <WhatsappDialog
+        open={openWhatsappDialog}
+        handleClose={() => setOpenWhatsappDialog(false)}
+        onMountUrl={(url: string) => {
+          setUrl(url);
+        }}
+      />
     </Dialog>
   );
 };
 
-export default ComponentDialog;
+export default ButtonDialog;

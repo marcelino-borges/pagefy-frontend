@@ -116,7 +116,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.addLaunch}</DialogTitle>
+      <DialogTitle>{strings.tools.launch.name}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" wrap="nowrap">
           <DescriptionText>

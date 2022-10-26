@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.17.0] - 2022-10-26
+
+- Feature: implemented whatsapp feature into the buttons and icons create-dialogs
+
 ### [1.16.1] - 2022-10-26
 
 - Fix: Sign in and Sign up pages trimming email and names when submitting

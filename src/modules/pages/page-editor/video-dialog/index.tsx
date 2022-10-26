@@ -103,7 +103,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       maxWidth="sm"
       style={{ minWidth: "300px" }}
     >
-      <DialogTitle>{strings.addVideo}</DialogTitle>
+      <DialogTitle>{strings.tools.video.name}</DialogTitle>
       <DialogContent>
         <DescriptionText>
           {strings.youtubeIdInstructions}. {strings.videoComponentDescription}.

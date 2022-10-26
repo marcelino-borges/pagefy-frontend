@@ -1,5 +1,5 @@
 import { styled } from "@mui/system";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Colorize } from "@mui/icons-material";
 
 export const IconsSearchResultsArea = styled(
@@ -68,4 +68,15 @@ export const SelectedIconButton = styled(({ ...rest }: any) => (
   <span {...rest} />
 ))`
   position: static;
+`;
+
+export const WhatsAppButton = styled(({ ...rest }: any) => (
+  <Button {...rest} />
+))`
+  svg {
+    margin-right: 4px;
+  }
+  &:hover svg {
+    color: white;
+  }
 `;

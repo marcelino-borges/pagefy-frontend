@@ -126,10 +126,23 @@ export interface IDictionary {
   remove: string;
   duplicate: string;
   viewPage: string;
-  addLink: string;
-  addIcon: string;
-  addVideo: string;
-  addLaunch: string;
+  tools: {
+    button: {
+      name: string;
+    };
+    icon: {
+      name: string;
+    };
+    video: {
+      name: string;
+    };
+    launch: {
+      name: string;
+    };
+    whatsapp: {
+      name: string;
+    };
+  };
   removeIcon: string;
   removeComponent: string;
   removePage: string;
@@ -137,6 +150,7 @@ export interface IDictionary {
   back: string;
   cancel: string;
   add: string;
+  mountURL: string;
   searchIconMinCaracters: string;
   url: string;
   invalidUrl: string;
@@ -209,6 +223,7 @@ export interface IDictionary {
   secondsAbbreviated: string;
   launchPrefixText: string;
   chooseAnimation: string;
+  mountWhatsappURL: string;
   selectAnOption: string;
   selectACurrency: string;
   selectARecurrency: string;
@@ -336,6 +351,7 @@ export interface IDictionary {
   sorry: string;
   pagePreview: string;
   message: string;
+  messageExample: string;
   errorSendingSupportContact: string;
   successSendingSupportContact: string;
   errorRecaptchaValidation: string;
@@ -382,6 +398,7 @@ export interface IDictionary {
       status: string;
     };
   };
+  phoneNumber: string;
 }
 
 // Dictionaries
