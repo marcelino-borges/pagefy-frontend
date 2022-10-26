@@ -1,11 +1,12 @@
+import React from "react";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { Grid } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import CustomTooltip from "../../../tooltip";
 import { IconOverlaySpan } from "./style";
 import { Icon } from "@iconify/react";
-import { v4 as uuidv4 } from "uuid";
-import { useDispatch } from "react-redux";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 
 interface IIconsComponentProps {
@@ -87,4 +88,4 @@ const IconsComponent = ({
   );
 };
 
-export default IconsComponent;
+export default React.memo(IconsComponent);

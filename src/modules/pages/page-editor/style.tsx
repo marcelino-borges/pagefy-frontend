@@ -46,7 +46,10 @@ export const PageName = styled(
 )`
   font-weight: 700;
   font-size: 1.4em;
-  margin-top: 24px;
+
+  @media (max-width: 500px) {
+    margin-top: 16px;
+  }
 `;
 
 export const PageUrl = styled(

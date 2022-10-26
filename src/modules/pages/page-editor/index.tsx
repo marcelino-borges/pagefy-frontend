@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Grid, useMediaQuery } from "@mui/material";
+import { Button, Grid, useMediaQuery } from "@mui/material";
 import {
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon,
@@ -74,6 +74,7 @@ import ToolsDialog from "./tools-dialog";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
+  const isLargerThan800 = useMediaQuery("(min-width:800px)");
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
   const isSmallerThan500 = useMediaQuery("(max-width:500px)");
   const isSmallerThan370 = useMediaQuery("(max-width:370px)");
@@ -707,15 +708,36 @@ const PageEditor = () => {
             )}
           </PageUrl>
         </Grid>
-        <CustomTooltip title={strings.create}>
-          <Grid item justifyContent="center" alignItems="center" py="16px">
-            <ToolsMenuIcon
-              onClick={() => {
-                setOpenToolsDialog(true);
-              }}
-            >
-              <AddIcon color="inherit" />
-            </ToolsMenuIcon>
+        <CustomTooltip title={strings.create} disabled={isSmallerThan500}>
+          <Grid
+            item
+            justifyContent="center"
+            alignItems="center"
+            py="16px"
+            width={isSmallerThan500 ? "100%" : "unset"}
+          >
+            {isSmallerThan500 || isLargerThan800 ? (
+              <Button
+                fullWidth
+                color="primary"
+                variant="contained"
+                sx={{ color: "white" }}
+                onClick={() => {
+                  setOpenToolsDialog(true);
+                }}
+              >
+                <AddIcon color="inherit" sx={{ marginRight: "4px" }} />
+                {strings.create}
+              </Button>
+            ) : (
+              <ToolsMenuIcon
+                onClick={() => {
+                  setOpenToolsDialog(true);
+                }}
+              >
+                <AddIcon color="inherit" />
+              </ToolsMenuIcon>
+            )}
           </Grid>
         </CustomTooltip>
       </PageToolbar>
@@ -724,6 +746,7 @@ const PageEditor = () => {
       handleSubmit,
       isEdittingPageName,
       isEdittingPageUrl,
+      isLargerThan800,
       isSmallerThan500,
       onSubmitPageNameForm,
       onSubmitPageUrlForm,
@@ -828,6 +851,27 @@ const PageEditor = () => {
     </>
   );
 
+  const MiddleComponents = useCallback(() => {
+    if (page && page.middleComponents) {
+      return (
+        <>
+          {page.middleComponents.map(
+            (component: IUserComponent, index: number) => (
+              <DraggableUserComponent
+                component={component}
+                index={index}
+                pageId={page?._id}
+                key={uuidv4()}
+              />
+            )
+          )}
+        </>
+      );
+    }
+    return <></>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page?.middleComponents]);
+
   return (
     <>
       <PrivateRouteChecker />
@@ -856,16 +900,7 @@ const PageEditor = () => {
         )}
         {page && page.middleComponents && page.middleComponents.length > 0 ? (
           <Grid container direction="column" ref={listContainer}>
-            {page.middleComponents.map(
-              (component: IUserComponent, index: number) => (
-                <DraggableUserComponent
-                  component={component}
-                  index={index}
-                  pageId={page._id}
-                  key={uuidv4()}
-                />
-              )
-            )}
+            <MiddleComponents />
           </Grid>
         ) : (
           <></>
