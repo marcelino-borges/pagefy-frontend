@@ -112,6 +112,7 @@ export interface IDictionary {
   icon: string;
   video: string;
   launch: string;
+  textOverImage: string;
   unknown: string;
   columns: string;
   rows: string;

@@ -203,7 +203,8 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
         text: selectedType !== ButtonType.Image ? text : undefined,
         url,
         style: {
-          backgroundColor,
+          backgroundColor:
+            selectedType !== ButtonType.TextOverImage ? backgroundColor : "",
           color: fontColor,
           borderRadius: selectedBorder.toString() + "px",
           boxShadow: shadowStyle,
@@ -381,22 +382,45 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                   isSelected={selectedType === ButtonType.TextImage}
                   onClick={() => setSelectedType(ButtonType.TextImage)}
                 >
-                  <TextFieldsIcon
+                  <ImageIcon
                     style={{ fontSize: "30px", marginBottom: "25px" }}
                   />
                   +
-                  <ImageIcon style={{ fontSize: "30px", marginTop: "30px" }} />
+                  <TextFieldsIcon
+                    style={{ fontSize: "30px", marginTop: "30px" }}
+                  />
                 </ComponentDetailsButton>
               </Grid>
 
               {/* Only image */}
-              <Grid item>
+              <Grid item pr="24px">
                 <ComponentDetailsButton
                   size="60px"
                   isSelected={selectedType === ButtonType.Image}
                   onClick={() => setSelectedType(ButtonType.Image)}
                 >
                   <ImageIcon style={{ fontSize: "40px" }} />
+                </ComponentDetailsButton>
+              </Grid>
+
+              {/* Text over image */}
+              <Grid item>
+                <ComponentDetailsButton
+                  size="60px"
+                  isSelected={selectedType === ButtonType.TextOverImage}
+                  onClick={() => setSelectedType(ButtonType.TextOverImage)}
+                >
+                  <ImageIcon
+                    style={{ fontSize: "70px", position: "absolute" }}
+                  />
+                  <TextFieldsIcon
+                    style={{
+                      fontSize: "30px",
+                      position: "absolute",
+                      color: LIGHTER_GREY,
+                      marginBottom: "12px",
+                    }}
+                  />
                 </ComponentDetailsButton>
               </Grid>
             </Grid>
@@ -705,38 +729,41 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
               {/* Background Color */}
 
-              {selectedType !== ButtonType.Image && (
-                <Grid item>
-                  <CustomTooltip
-                    disableInteractive
-                    leaveDelay={0.1}
-                    title={strings.backgroundColor}
-                    placement="bottom"
-                  >
-                    <Grid item>
-                      <IconButton
-                        onClick={() => {
-                          setShowBackgroundColorPicker(
-                            !showBackgroundColorPicker
-                          );
-                        }}
-                      >
-                        <BackgroundColorIcon
-                          bucketColor={LIGHT_GREY}
-                          selectedColor={backgroundColor}
-                        />
-                      </IconButton>
-                      {showBackgroundColorPicker && (
-                        <ColorPicker
-                          color={backgroundColor}
-                          onChangeComplete={handleChangeBackgroundColorComplete}
-                          onCancel={() => setShowBackgroundColorPicker(false)}
-                        />
-                      )}
-                    </Grid>
-                  </CustomTooltip>
-                </Grid>
-              )}
+              {selectedType !== ButtonType.Image &&
+                selectedType !== ButtonType.TextOverImage && (
+                  <Grid item>
+                    <CustomTooltip
+                      disableInteractive
+                      leaveDelay={0.1}
+                      title={strings.backgroundColor}
+                      placement="bottom"
+                    >
+                      <Grid item>
+                        <IconButton
+                          onClick={() => {
+                            setShowBackgroundColorPicker(
+                              !showBackgroundColorPicker
+                            );
+                          }}
+                        >
+                          <BackgroundColorIcon
+                            bucketColor={LIGHT_GREY}
+                            selectedColor={backgroundColor}
+                          />
+                        </IconButton>
+                        {showBackgroundColorPicker && (
+                          <ColorPicker
+                            color={backgroundColor}
+                            onChangeComplete={
+                              handleChangeBackgroundColorComplete
+                            }
+                            onCancel={() => setShowBackgroundColorPicker(false)}
+                          />
+                        )}
+                      </Grid>
+                    </CustomTooltip>
+                  </Grid>
+                )}
 
               {/* Visibility */}
               <Grid item>

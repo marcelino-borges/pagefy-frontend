@@ -126,6 +126,7 @@ export const enum ButtonType {
   Icon = 3,
   Video = 4,
   Launch = 5,
+  TextOverImage = 6,
 }
 
 export interface IUserPagesState {

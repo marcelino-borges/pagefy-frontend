@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.20.0] - 2022-10-27
+
+- Feature: Implemented button type of TextOverImage
+
 ### [1.19.0] - 2022-10-27
 
 - Feature: Removed the deleteImage request from everywhere, but the gallery.

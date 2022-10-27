@@ -29,6 +29,7 @@ export const pt: IDictionary = {
   icon: "Ícone",
   video: "Vídeo",
   launch: "Lançamento",
+  textOverImage: "Texto sobre imagem",
   unknown: "Desconhecido",
   columns: "Colunas",
   rows: "Linhas",

@@ -28,6 +28,7 @@ import { PRIMARY_COLOR } from "./../../../styles/colors";
 import InternalLink from "../internal-link";
 import { Helmet } from "react-helmet";
 import { APP_ENVIROMENT } from "../../../constants";
+import TextOverImageComponent from "./component-types/text-over-image/index";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -155,6 +156,14 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
       case ButtonType.Launch:
         return (
           <LaunchComponent
+            pageId={page?._id}
+            component={component}
+            key={component._id}
+          />
+        );
+      case ButtonType.TextOverImage:
+        return (
+          <TextOverImageComponent
             pageId={page?._id}
             component={component}
             key={component._id}

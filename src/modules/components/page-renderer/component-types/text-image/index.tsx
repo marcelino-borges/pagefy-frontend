@@ -28,7 +28,11 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px 0px 0px ${DEFAULT_COMPONENT_RADIUS}px`,
+                borderRadius: `${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px 0px 0px ${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px`,
               }}
             ></Grid>
             <Grid
@@ -52,7 +56,11 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px ${DEFAULT_COMPONENT_RADIUS}px 0px 0px`,
+                borderRadius: `${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px ${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px 0px 0px`,
                 height: "50%",
               }}
             ></Grid>
@@ -82,7 +90,11 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px 0px 0px ${DEFAULT_COMPONENT_RADIUS}px`,
+                borderRadius: `${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px 0px 0px ${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px`,
               }}
             ></Grid>
             <Grid
@@ -108,7 +120,11 @@ const TextImageComponent = ({
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${DEFAULT_COMPONENT_RADIUS}px 0px 0px ${DEFAULT_COMPONENT_RADIUS}px`,
+                borderRadius: `${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px 0px 0px ${
+                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                }px`,
               }}
             ></Grid>
             <Grid container xs={6} justifyContent="center" alignItems="center">

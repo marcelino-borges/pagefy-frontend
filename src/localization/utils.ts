@@ -20,6 +20,8 @@ export const getLocalizedStringByComponentType = (type: ButtonType): string => {
       return strings.video;
     case ButtonType.Launch:
       return strings.launch;
+    case ButtonType.TextOverImage:
+      return strings.textOverImage;
     default:
       return strings.unknown;
   }

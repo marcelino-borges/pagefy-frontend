@@ -34,15 +34,16 @@ export const ComponentDetailsButton = styled(
 )(
   ({ isSelected, size, iconSize, fontSize, borderRadius, shadow }) => `
   padding: 8px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   border-radius: ${borderRadius !== undefined ? borderRadius : 8}px;
   color: grey;
   width: ${size || "100px"};
   height: ${size || "100px"};
   background-color: ${LIGHTER_GREY};
-  display: flex;
-  justify-content: center;
-  align-items: center;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: ${shadow};
   font-size: ${fontSize || "1em"};

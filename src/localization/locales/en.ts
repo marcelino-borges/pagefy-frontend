@@ -29,6 +29,7 @@ export const en: IDictionary = {
   icon: "Icon",
   video: "Video",
   launch: "Launch",
+  textOverImage: "Text over image",
   unknown: "Unknown",
   columns: "Columns",
   rows: "Rows",
