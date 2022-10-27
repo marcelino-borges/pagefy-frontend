@@ -395,6 +395,7 @@ export interface IDictionary {
   orUploadANewFile: string;
   orFromYourDevice: string;
   componentBorderRadius: string;
+  borders: string;
   shadow: string;
   customScripts: {
     insertCustomScript: string;

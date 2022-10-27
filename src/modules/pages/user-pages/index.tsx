@@ -14,7 +14,7 @@ import Footer from "../../components/footer";
 import { IUser } from "../../../store/user/types";
 import { canCreatePage } from "../../../utils/plan-enablements";
 import { showErrorToast } from "./../../../utils/toast/index";
-import ButtonScrollTop from "../../components/button-scroll-top";
+import ButtonScrollUp from "../../components/button-scroll-top";
 import { UPPER_MEDIUM_GREY } from "../../../styles/colors";
 
 const UserPages = () => {
@@ -86,7 +86,7 @@ const UserPages = () => {
             })}
         </Grid>
       </ThinWidthContent>
-      <ButtonScrollTop />
+      <ButtonScrollUp />
       <Footer />
     </>
   );

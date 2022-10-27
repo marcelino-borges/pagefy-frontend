@@ -403,7 +403,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
             onAddIcon();
           }}
         >
-          {strings.add}
+          {strings.create}
         </Button>
       </DialogActions>
       <WhatsappDialog

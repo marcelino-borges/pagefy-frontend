@@ -6,6 +6,8 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
+  IconButton,
+  MenuItem,
   TextField,
   useMediaQuery,
 } from "@mui/material";
@@ -18,7 +20,17 @@ import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
-import { RENDERED_PAGE_LAUNCH_COMPONENT_ROWS } from "../../../../constants";
+import {
+  ComponentBorderRadius,
+  ComponentShadowStyle,
+  RENDERED_PAGE_LAUNCH_COMPONENT_ROWS,
+} from "../../../../constants";
+import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../styles/colors";
+import CustomTooltip from "../../../components/tooltip";
+import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
+import ColorPicker from "./../../../components/color-picker/index";
+import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
+import { translateShadowStyleEnum } from "../../../../utils";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -40,17 +52,32 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const [dateTimeFieldError, setDateTimeFieldError] = useState<string>();
   const [launchTime, setLaunchTime] = useState<string>(defaultLaunchDate);
 
+  const [fontColor, setFontColor] = useState<string>("black");
+  const [backgroundColor, setBackgroundColor] = useState<string>(PRIMARY_COLOR);
+  const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
+    useState<boolean>(false);
+  const [showFontColorPicker, setShowFontColorPicker] =
+    useState<boolean>(false);
+  const [selectedBorder, setSelectedBorder] = useState<ComponentBorderRadius>(
+    ComponentBorderRadius.SQUARE
+  );
+  const [shadowStyle, setShadowStyle] = useState<ComponentShadowStyle>(
+    ComponentShadowStyle.NONE
+  );
+
   const clearStates = () => {
     setMessageFieldError(undefined);
     setUrlFieldError(undefined);
     setDateTimeFieldError(undefined);
     setMessage("");
+    setFontColor("black");
+    setBackgroundColor(PRIMARY_COLOR);
     setUrl("");
     setLaunchDate(defaultLaunchDate);
     setLaunchTime(defaultLaunchDate);
   };
 
-  const onAddVideo = () => {
+  const onCreateLaunch = () => {
     setMessageFieldError(undefined);
     setUrlFieldError(undefined);
     setDateTimeFieldError(undefined);
@@ -76,7 +103,12 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     const newComponent: IUserComponent = {
       text: message,
       url: url,
-      style: undefined,
+      style: {
+        backgroundColor,
+        color: fontColor,
+        borderRadius: selectedBorder.toString() + "px",
+        boxShadow: shadowStyle,
+      },
       visible: true,
       clicks: 0,
       layout: {
@@ -99,6 +131,16 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
 
   const handleLaunchTime = (newDate: any) => {
     setLaunchTime(moment(newDate).toISOString());
+  };
+
+  const handleChangeBackgroundColorComplete = (color: any) => {
+    setBackgroundColor(color.hex);
+    setShowBackgroundColorPicker(false);
+  };
+
+  const handleChangeFontColorComplete = (color: any) => {
+    setFontColor(color.hex);
+    setShowFontColorPicker(false);
   };
 
   return (
@@ -193,16 +235,127 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
               }}
             />
           </Grid>
+          <Grid container pt="16px">
+            <Grid item>
+              <CustomTooltip
+                disableInteractive
+                leaveDelay={0.1}
+                title={strings.backgroundColor}
+                placement="bottom"
+              >
+                <Grid item>
+                  <IconButton
+                    onClick={() => {
+                      setShowBackgroundColorPicker(!showBackgroundColorPicker);
+                    }}
+                  >
+                    <BackgroundColorIcon
+                      bucketColor={LIGHT_GREY}
+                      selectedColor={backgroundColor}
+                    />
+                  </IconButton>
+                  {showBackgroundColorPicker && (
+                    <ColorPicker
+                      color={backgroundColor}
+                      onChangeComplete={handleChangeBackgroundColorComplete}
+                      onCancel={() => setShowBackgroundColorPicker(false)}
+                    />
+                  )}
+                </Grid>
+              </CustomTooltip>
+            </Grid>
+            <Grid item pr="6px">
+              <CustomTooltip
+                disableInteractive
+                leaveDelay={0.1}
+                title={strings.fontColor}
+                placement="bottom"
+              >
+                <Grid item>
+                  <IconButton
+                    onClick={() => {
+                      setShowFontColorPicker(!showFontColorPicker);
+                    }}
+                    sx={{ padding: "11px" }}
+                  >
+                    <FontColorIcon
+                      bucketColor={LIGHT_GREY}
+                      selectedColor={fontColor}
+                    />
+                  </IconButton>
+                  {showFontColorPicker && (
+                    <ColorPicker
+                      color={fontColor}
+                      onChangeComplete={handleChangeFontColorComplete}
+                      onCancel={() => setShowFontColorPicker(false)}
+                    />
+                  )}
+                </Grid>
+              </CustomTooltip>
+            </Grid>
+            <Grid item pr="16px">
+              <TextField
+                select
+                label={strings.borders}
+                variant="outlined"
+                onChange={(e: any) => {
+                  setSelectedBorder(e.target.value as ComponentBorderRadius);
+                }}
+                value={selectedBorder}
+                sx={{ minWidth: "100px" }}
+              >
+                {Object.values(ComponentBorderRadius)
+                  .filter((v) => !isNaN(Number(v)))
+                  .map((border: string | ComponentBorderRadius) => {
+                    return (
+                      <MenuItem
+                        value={border as ComponentBorderRadius}
+                        key={border}
+                      >
+                        {border}
+                      </MenuItem>
+                    );
+                  })}
+              </TextField>
+            </Grid>
+            <Grid item>
+              <TextField
+                select
+                label={strings.shadow}
+                variant="outlined"
+                onChange={(e: any) => {
+                  setShadowStyle(e.target.value as ComponentShadowStyle);
+                }}
+                value={shadowStyle}
+                sx={{ minWidth: "100px" }}
+              >
+                {Object.values(ComponentShadowStyle).map(
+                  (shadow: string | ComponentShadowStyle) => {
+                    return (
+                      <MenuItem
+                        value={shadow as ComponentShadowStyle}
+                        key={shadow}
+                      >
+                        {translateShadowStyleEnum(
+                          shadow as ComponentShadowStyle
+                        )}
+                      </MenuItem>
+                    );
+                  }
+                )}
+              </TextField>
+            </Grid>
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>{strings.back}</Button>
         <Button
           onClick={() => {
-            onAddVideo();
+            onCreateLaunch();
           }}
         >
-          {strings.add}
+          {strings.create}
         </Button>
       </DialogActions>
     </Dialog>

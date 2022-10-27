@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
+import { ComponentShadowStyle } from "../../../../../constants";
 
 interface ITextOverImageComponentProps {
   component: IUserComponent;
@@ -29,12 +30,13 @@ const TextOverImageComponent = ({
         alignItems="center"
         style={{
           backgroundImage: `url(${component.mediaUrl})`,
-          backgroundSize: "100%",
+          backgroundSize: "100% 100%",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          borderRadius: component.style?.borderRadius,
+          borderRadius: component.style?.borderRadius || "0px",
           width: "100%",
           color: component.style?.color,
+          boxShadow: component.style?.boxShadow || ComponentShadowStyle.NONE,
         }}
       >
         {component.text}

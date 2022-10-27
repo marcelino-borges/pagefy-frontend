@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.22.0] - 2022-10-27
+
+- Feature: Implemented customization of BG, fontColor, shadow and borders when creating a Launch component
+
 ### [1.21.0] - 2022-10-27
 
 - Feature: Implemented Fixed Button to scroll up the screen

@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { ComponentShadowStyle } from "../../../../../constants";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import BaseComponentType from "../base";
@@ -20,7 +21,15 @@ const TextComponent = ({ component, pageId }: ITextComponentProps) => {
           incrementComponentClicks(pageId, component._id);
       }}
     >
-      <Grid container justifyContent="center" alignItems="center">
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{
+          ...component.style,
+          boxShadow: component.style?.boxShadow || ComponentShadowStyle.NONE,
+        }}
+      >
         {component.text}
       </Grid>
     </BaseComponentType>

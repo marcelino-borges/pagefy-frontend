@@ -238,80 +238,6 @@ const DraggableUserComponent = ({
     >
       {isDeleted && <DeleteContainer />}
 
-      <DeleteComponentConfirmationDialog />
-      <UploadImageDialog
-        existingImageUrl={component.style?.backgroundImage}
-        context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
-        openChooseFileDialog={openChooseFileDialog}
-        setOpenChooseFileDialog={setOpenChooseFileDialog}
-        chosenImage={chosenImage}
-        setChosenImage={setChosenImage}
-        acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={async (imageUrl?: string) => {
-          if (
-            userState === undefined ||
-            userState._id === undefined ||
-            component._id === undefined ||
-            pageId === undefined
-          ) {
-            return;
-          }
-
-          const clearLoadingFromState = () => {
-            dispatch(clearLoading());
-          };
-          if (chosenImage) {
-            dispatch(
-              uploadAndSetComponentImage(
-                chosenImage,
-                component._id,
-                pageId,
-                userState._id,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-          } else {
-            dispatch(
-              setComponentImage(
-                imageUrl || "",
-                component._id,
-                pageId,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-          }
-
-          setOpenChooseFileDialog(false);
-          setChosenImage(undefined);
-        }}
-        cancelDialog={() => {
-          setChosenImage(undefined);
-          setOpenChooseFileDialog(false);
-        }}
-      />
-      <DialogChooseAnimation
-        open={openChooseAnimationDialog}
-        onClose={() => {
-          setOpenChooseAnimationDialog(false);
-        }}
-        saveAnimation={(animation: IComponentAnimation) => {
-          if (pageId && component._id)
-            dispatch(setComponentAnimation(pageId, component._id, animation));
-        }}
-        existingAnimation={component.animation}
-      />
-      <DialogVisibleDate
-        open={openVisibleDateDialog}
-        onClose={() => {
-          setOpenVisibleDateDialog(false);
-        }}
-        setDateTime={(dateTime: string) => {
-          if (pageId && component._id)
-            dispatch(setComponentVisibleDate(pageId, component._id, dateTime));
-        }}
-      />
       <Container
         container
         item
@@ -392,7 +318,7 @@ const DraggableUserComponent = ({
           >
             {/* Label */}
             {component.text && component.text.length > 0 && (
-              <ContentRow container item alignItems="center" wrap="nowrap">
+              <ContentRow alignItems="center">
                 {isEdittingLabel ? (
                   <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
                     <LabelText item>
@@ -438,10 +364,7 @@ const DraggableUserComponent = ({
             {/* Video (Only in Video type) */}
             {component.url && component.type === ButtonType.Video && (
               <ContentRow
-                container
-                item
                 alignItems="center"
-                wrap="nowrap"
                 style={{
                   paddingLeft: "16px",
                   paddingTop: isSmallerThan400 ? "36px" : "24px",
@@ -470,56 +393,54 @@ const DraggableUserComponent = ({
 
             {/* URL */}
             {component.type !== ButtonType.Video && (
-              <ContentRow container item alignItems="center" wrap="nowrap">
-                <CustomTooltip title={component.url || ""}>
+              <CustomTooltip title={component.url || ""}>
+                <ContentRow alignItems="center" width="70%">
                   <UrlIconItem item>
-                    <LinkIcon />
+                    <LinkIcon fontSize="small" />
                   </UrlIconItem>
-                </CustomTooltip>
-                {isEdittingUrl ? (
-                  <Grid container item>
-                    <form
-                      onSubmit={handleSubmitUrl(onSubmitUrlForm)}
-                      style={{ width: "100%" }}
-                    >
-                      <LabelText item>
-                        <TransparentTextField
-                          autoFocus
-                          onChange={handleChangeUrl}
-                          value={values.url}
-                          fontWeight="300"
-                          color="#bfbfbf"
-                          fontStyle="italic"
-                          InputProps={{
-                            style: {
-                              width: "100%",
-                              margin: !isSmallerThan400 ? "0px 16px" : "0",
-                            },
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton
-                                  onClick={() => onSubmitUrlForm()}
-                                  edge="end"
-                                >
-                                  <SaveIcon
-                                    fontSize="medium"
-                                    color="disabled"
-                                  />
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                          fontSize={isSmallerThan600 ? "15px" : "18px"}
-                          onBlur={() => {
-                            onSubmitUrlForm();
-                            setIsEdittingUrl(false);
-                          }}
-                        />
-                      </LabelText>
-                    </form>
-                  </Grid>
-                ) : (
-                  <CustomTooltip title={component.url || ""}>
+                  {isEdittingUrl ? (
+                    <Grid container item>
+                      <form
+                        onSubmit={handleSubmitUrl(onSubmitUrlForm)}
+                        style={{ width: "100%" }}
+                      >
+                        <LabelText item>
+                          <TransparentTextField
+                            autoFocus
+                            onChange={handleChangeUrl}
+                            value={values.url}
+                            fontWeight="300"
+                            color="#bfbfbf"
+                            fontStyle="italic"
+                            InputProps={{
+                              style: {
+                                width: "100%",
+                                margin: !isSmallerThan400 ? "0px 16px" : "0",
+                              },
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    onClick={() => onSubmitUrlForm()}
+                                    edge="end"
+                                  >
+                                    <SaveIcon
+                                      fontSize="medium"
+                                      color="disabled"
+                                    />
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }}
+                            fontSize={isSmallerThan600 ? "15px" : "18px"}
+                            onBlur={() => {
+                              onSubmitUrlForm();
+                              setIsEdittingUrl(false);
+                            }}
+                          />
+                        </LabelText>
+                      </form>
+                    </Grid>
+                  ) : (
                     <UrlTextItem
                       item
                       onClick={() => {
@@ -527,16 +448,11 @@ const DraggableUserComponent = ({
                         setValues({ ...values, url: component.url || "" });
                       }}
                     >
-                      {component.url
-                        ? stringShortener(
-                            component.url,
-                            isSmallerThan600 ? 10 : 50
-                          )
-                        : ""}
+                      {component.url}
                     </UrlTextItem>
-                  </CustomTooltip>
-                )}
-              </ContentRow>
+                  )}
+                </ContentRow>
+              </CustomTooltip>
             )}
 
             {component.type !== ButtonType.Video &&
@@ -544,7 +460,7 @@ const DraggableUserComponent = ({
               component.type !== ButtonType.Launch &&
               component.mediaUrl &&
               component.mediaUrl.length > 0 && (
-                <ContentRow container item alignItems="center" wrap="nowrap">
+                <ContentRow alignItems="center">
                   <img
                     src={removeCssUrlWrapper(component.mediaUrl)}
                     alt="Component media"
@@ -882,6 +798,81 @@ const DraggableUserComponent = ({
       </Grid>
       <ToolsColumn isHoveringComponent={isHovering}></ToolsColumn>
       <DarkBG />
+
+      <DeleteComponentConfirmationDialog />
+      <UploadImageDialog
+        existingImageUrl={component.style?.backgroundImage}
+        context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
+        openChooseFileDialog={openChooseFileDialog}
+        setOpenChooseFileDialog={setOpenChooseFileDialog}
+        chosenImage={chosenImage}
+        setChosenImage={setChosenImage}
+        acceptedFiles={IMAGE_EXTENSIONS}
+        submitDialog={async (imageUrl?: string) => {
+          if (
+            userState === undefined ||
+            userState._id === undefined ||
+            component._id === undefined ||
+            pageId === undefined
+          ) {
+            return;
+          }
+
+          const clearLoadingFromState = () => {
+            dispatch(clearLoading());
+          };
+          if (chosenImage) {
+            dispatch(
+              uploadAndSetComponentImage(
+                chosenImage,
+                component._id,
+                pageId,
+                userState._id,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          } else {
+            dispatch(
+              setComponentImage(
+                imageUrl || "",
+                component._id,
+                pageId,
+                clearLoadingFromState,
+                clearLoadingFromState
+              )
+            );
+          }
+
+          setOpenChooseFileDialog(false);
+          setChosenImage(undefined);
+        }}
+        cancelDialog={() => {
+          setChosenImage(undefined);
+          setOpenChooseFileDialog(false);
+        }}
+      />
+      <DialogChooseAnimation
+        open={openChooseAnimationDialog}
+        onClose={() => {
+          setOpenChooseAnimationDialog(false);
+        }}
+        saveAnimation={(animation: IComponentAnimation) => {
+          if (pageId && component._id)
+            dispatch(setComponentAnimation(pageId, component._id, animation));
+        }}
+        existingAnimation={component.animation}
+      />
+      <DialogVisibleDate
+        open={openVisibleDateDialog}
+        onClose={() => {
+          setOpenVisibleDateDialog(false);
+        }}
+        setDateTime={(dateTime: string) => {
+          if (pageId && component._id)
+            dispatch(setComponentVisibleDate(pageId, component._id, dateTime));
+        }}
+      />
     </Parent>
   );
 };

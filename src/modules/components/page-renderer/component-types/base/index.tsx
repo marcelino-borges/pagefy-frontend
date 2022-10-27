@@ -3,18 +3,14 @@ import {
   IComponentLayout,
   IComponentAnimation,
 } from "../../../../../store/user-pages/types";
-import {
-  RENDERED_PAGE_COMPONENT_HEIGHT,
-  DEFAULT_COMPONENT_RADIUS,
-  ComponentShadowStyle,
-} from "../../../../../constants";
+import { RENDERED_PAGE_COMPONENT_HEIGHT } from "../../../../../constants";
 import { Root } from "./style";
 import CustomTooltip from "../../../tooltip";
 import { openExternalLink } from "../../../../../utils";
 
 interface IBaseComponentTypeProps {
   layout: IComponentLayout;
-  style: any;
+  style?: any;
   children: any;
   url: string | undefined;
   animation?: IComponentAnimation | undefined;
@@ -54,10 +50,8 @@ const BaseComponentType = ({
           container
           item
           style={{
-            ...style,
-            boxShadow: style.boxShadow || ComponentShadowStyle.NONE,
             minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
-            borderRadius: style.borderRadius || `${DEFAULT_COMPONENT_RADIUS}px`,
+            borderRadius: `${style?.borderRadius || 0}px`,
           }}
           {...rest}
         >

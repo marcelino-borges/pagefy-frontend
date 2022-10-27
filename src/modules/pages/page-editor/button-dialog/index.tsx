@@ -45,7 +45,6 @@ import {
   LIGHT_GREY,
   PRIMARY_COLOR,
   SECONDARY_COLOR,
-  TRANSPARENT,
 } from "../../../../styles/colors";
 import CustomTooltip from "../../../components/tooltip";
 
@@ -147,8 +146,8 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
     setSelectedBorder(ComponentBorderRadius.SQUARE);
     setShowStep2(false);
     setStep(0);
-    setFontColor(TRANSPARENT);
-    setBackgroundColor(TRANSPARENT);
+    setFontColor("black");
+    setBackgroundColor(PRIMARY_COLOR);
     setIsVisible(true);
     setShowBackgroundColorPicker(false);
     setShowFontColorPicker(false);
@@ -879,7 +878,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
             onSubmit();
           }}
         >
-          {step === 0 ? strings.next : strings.add}
+          {step === 0 ? strings.next : strings.create}
         </Button>
       </DialogActions>
       <WhatsappDialog

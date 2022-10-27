@@ -2,8 +2,9 @@ import Countdown, { zeroPad } from "react-countdown";
 import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import {
+  ComponentBorderRadius,
+  ComponentShadowStyle,
   RENDERED_PAGE_COMPONENT_HEIGHT,
-  DEFAULT_COMPONENT_RADIUS,
 } from "../../../../../constants";
 import BaseComponentType from "../base";
 import strings from "../../../../../localization";
@@ -126,12 +127,16 @@ const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
       <Grid
         container
         style={{
+          ...component.style,
           backgroundImage: `url(${component.mediaUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          borderRadius: `${DEFAULT_COMPONENT_RADIUS}px`,
+          borderRadius:
+            component.style?.borderRadius ||
+            `${ComponentBorderRadius.NORMAL_ROUNDED}px`,
           minHeight: component.layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
           padding: "16px",
+          boxShadow: component.style?.boxShadow || ComponentShadowStyle.NORMAL,
         }}
         direction="column"
         justifyContent="space-between"

@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
 import {
+  ComponentShadowStyle,
   RENDERED_PAGE_COMPONENT_HEIGHT,
-  DEFAULT_COMPONENT_RADIUS,
 } from "../../../../../constants";
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
@@ -30,8 +30,9 @@ const ImageComponent = ({ component, pageId }: IImageComponentProps) => {
           backgroundImage: `url(${component.mediaUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          borderRadius: `${DEFAULT_COMPONENT_RADIUS}px`,
+          borderRadius: `${component.style?.borderRadius || 0}px`,
           height: component.layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
+          boxShadow: component.style?.boxShadow || ComponentShadowStyle.NONE,
         }}
       ></Grid>
     </BaseComponentType>

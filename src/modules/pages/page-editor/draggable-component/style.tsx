@@ -1,11 +1,12 @@
 import { styled } from "@mui/system";
-import { Grid, IconButton } from "@mui/material";
+import { Grid, IconButton, Stack } from "@mui/material";
 import { DragIndicator } from "@mui/icons-material";
 import {
   LIGHTER_GREY,
   PRIMARY_COLOR,
   MEDIUM_GREY,
   LIGHTEST_GREY,
+  ACESSIBILITY_RED,
 } from "../../../../styles/colors";
 
 export const Parent = styled(Grid)`
@@ -29,7 +30,7 @@ export const DeleteContainer = styled(({ ...rest }: any) => <Grid {...rest} />)`
   width: 100%;
   height: 100%;
   position: absolute;
-  background-color: ${PRIMARY_COLOR};
+  background-color: ${ACESSIBILITY_RED};
   opacity: 0.7;
   border-radius: 15px;
   z-index: 20;
@@ -62,12 +63,13 @@ export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
   }
   &:active {
     cursor: grabbing !important;
-  }
+  }import { ACESSIBILITY_RED } from './../../../../styles/colors';
+
 `;
 
-export const ContentRow = styled(Grid)`
-  display: inline-flex;
-
+export const ContentRow = styled(({ children }: any) => (
+  <Stack direction="row">{children}</Stack>
+))`
   @media (max-width: 600px) {
     margin-left: 0px;
     .MuiGrid-item,
@@ -91,16 +93,18 @@ export const LabelText = styled(Grid)`
 
 export const UrlIconItem = styled(Grid)`
   color: ${LIGHTER_GREY};
-  cursor: pointer;
 `;
 
 export const UrlTextItem = styled(Grid)`
-  padding: 0px 16px;
-  font-size: 18px;
+  padding: 0px 8px;
+  padding-bottom: 12px;
+  font-size: 15px;
   color: ${MEDIUM_GREY};
   font-style: italic;
-  transform: translateY(-5px);
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 600px) {
     padding: 0px 4px;

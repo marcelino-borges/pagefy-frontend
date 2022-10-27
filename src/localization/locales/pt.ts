@@ -441,6 +441,7 @@ export const pt: IDictionary = {
   orUploadANewFile: "Ou envie uma nova imagem",
   orFromYourDevice: "Ou do seu dispositivo",
   componentBorderRadius: "Arredondamento das Bordas",
+  borders: "Bordas",
   shadow: "Sombra",
   customScripts: {
     insertCustomScript: "Insira um código personalizado",

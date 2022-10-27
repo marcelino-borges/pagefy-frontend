@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
@@ -69,7 +69,7 @@ import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
-import ButtonScrollTop from "../../components/button-scroll-top";
+import ButtonScrollUp from "../../components/button-scroll-top";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -866,7 +866,7 @@ const PageEditor = () => {
     </>
   );
 
-  const MiddleComponents = useCallback(() => {
+  const MiddleComponents = useMemo(() => {
     if (page && page.middleComponents) {
       return (
         <>
@@ -915,7 +915,7 @@ const PageEditor = () => {
         )}
         {page && page.middleComponents && page.middleComponents.length > 0 ? (
           <Grid container direction="column" ref={listContainer}>
-            <MiddleComponents />
+            {MiddleComponents}
           </Grid>
         ) : (
           <></>
@@ -924,7 +924,7 @@ const PageEditor = () => {
           <IconsComponent iconsList={page.bottomComponents} />
         )}
       </ThinWidthContent>
-      <ButtonScrollTop />
+      <ButtonScrollUp />
       <Footer />
       <Dialogs />
     </>

@@ -29,7 +29,7 @@ import InternalLink from "../internal-link";
 import { Helmet } from "react-helmet";
 import { APP_ENVIROMENT } from "../../../constants";
 import TextOverImageComponent from "./component-types/text-over-image/index";
-import ButtonScrollTop from "../button-scroll-top";
+import ButtonScrollUp from "../button-scroll-top";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -342,7 +342,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             </Grid>
           )}
       </PageRendererContent>
-      <ButtonScrollTop />
+      <ButtonScrollUp />
     </>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Root } from "./style";
 import { ArrowUpward } from "@mui/icons-material";
 
-const ButtonScrollTop = () => {
+const ButtonScrollUp = () => {
   const [hasScrolledDown, setHasScrolledDown] = useState(false);
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const ButtonScrollTop = () => {
   );
 };
 
-export default React.memo(ButtonScrollTop);
+export default React.memo(ButtonScrollUp);

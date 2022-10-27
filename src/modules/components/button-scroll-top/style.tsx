@@ -8,7 +8,7 @@ export const Root = styled(({ show, children, ...rest }: any) => (
 ))`
   border-radius: 50%;
   position: fixed;
-  bottom: 16px;
+  bottom: 86px;
   right: 16px;
   background-color: ${SECONDARY_COLOR};
   width: 56px;

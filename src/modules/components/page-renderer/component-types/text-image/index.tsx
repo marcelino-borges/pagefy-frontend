@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material";
 import { IUserComponent } from "../../../../../store/user-pages/types";
-import { DEFAULT_COMPONENT_RADIUS } from "../../../../../constants";
 import BaseComponentType from "../base";
 import { incrementComponentClicks } from "../../../../../store/page-renderer/actions";
+import { ComponentShadowStyle } from "../../../../../constants";
 
 interface ITextImageComponentProps {
   component: IUserComponent;
@@ -19,7 +19,15 @@ const TextImageComponent = ({
       if (rows === 1) {
         // 1C x 1R
         return (
-          <Grid container style={{ width: "100%" }}>
+          <Grid
+            container
+            style={{
+              ...component.style,
+              width: "100%",
+              boxShadow:
+                component.style?.boxShadow || ComponentShadowStyle.NONE,
+            }}
+          >
             <Grid
               container
               item
@@ -29,10 +37,8 @@ const TextImageComponent = ({
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderRadius: `${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px 0px 0px ${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px`,
+                  component.style?.borderRadius || 0
+                }px 0px 0px ${component.style?.borderRadius || 0}px`,
               }}
             ></Grid>
             <Grid
@@ -49,17 +55,24 @@ const TextImageComponent = ({
       } else {
         // 1C x 2R
         return (
-          <Grid container direction="column" style={{ width: "100%" }}>
+          <Grid
+            container
+            direction="column"
+            style={{
+              ...component.style,
+              width: "100%",
+              boxShadow:
+                component.style?.boxShadow || ComponentShadowStyle.NONE,
+            }}
+          >
             <Grid
               container
               style={{
                 backgroundImage: `url(${component.mediaUrl})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: `${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px ${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
+                borderRadius: `${component.style?.borderRadius || 0}px ${
+                  component.style?.borderRadius || 0
                 }px 0px 0px`,
                 height: "50%",
               }}
@@ -81,7 +94,15 @@ const TextImageComponent = ({
       // 2C x 1R
       if (rows === 1) {
         return (
-          <Grid container style={{ width: "100%" }}>
+          <Grid
+            container
+            style={{
+              ...component.style,
+              width: "100%",
+              boxShadow:
+                component.style?.boxShadow || ComponentShadowStyle.NONE,
+            }}
+          >
             <Grid
               container
               item
@@ -91,10 +112,8 @@ const TextImageComponent = ({
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderRadius: `${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px 0px 0px ${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px`,
+                  component.style?.borderRadius || 0
+                }px 0px 0px ${component.style?.borderRadius || 0}px`,
               }}
             ></Grid>
             <Grid
@@ -111,7 +130,15 @@ const TextImageComponent = ({
       } else {
         // 2C x 2R
         return (
-          <Grid container style={{ width: "100%" }}>
+          <Grid
+            container
+            style={{
+              ...component.style,
+              width: "100%",
+              boxShadow:
+                component.style?.boxShadow || ComponentShadowStyle.NONE,
+            }}
+          >
             <Grid
               container
               item
@@ -121,10 +148,8 @@ const TextImageComponent = ({
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderRadius: `${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px 0px 0px ${
-                  component.style?.borderRadius || DEFAULT_COMPONENT_RADIUS
-                }px`,
+                  component.style?.borderRadius || 0
+                }px 0px 0px ${component.style?.borderRadius || 0}px`,
               }}
             ></Grid>
             <Grid container xs={6} justifyContent="center" alignItems="center">
