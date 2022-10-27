@@ -69,6 +69,7 @@ import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
+import ButtonScrollTop from "../../components/button-scroll-top";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -714,7 +715,10 @@ const PageEditor = () => {
             )}
           </PageUrl>
         </Grid>
-        <CustomTooltip title={strings.create} disabled={isSmallerThan500}>
+        <CustomTooltip
+          title={strings.create}
+          disabled={isLargerThan800 || isSmallerThan500}
+        >
           <Grid
             item
             justifyContent="center"
@@ -727,7 +731,6 @@ const PageEditor = () => {
                 fullWidth
                 color="primary"
                 variant="contained"
-                sx={{ color: "white" }}
                 onClick={() => {
                   setOpenToolsDialog(true);
                 }}
@@ -923,6 +926,7 @@ const PageEditor = () => {
           <IconsComponent iconsList={page.bottomComponents} />
         )}
       </ThinWidthContent>
+      <ButtonScrollTop />
       <Footer />
       <Dialogs />
     </>

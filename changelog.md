@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.21.0] - 2022-10-27
+
+- Feature: Implemented Fixed Button to scroll up the screen
+
 ### [1.20.0] - 2022-10-27
 
 - Feature: Implemented button type of TextOverImage

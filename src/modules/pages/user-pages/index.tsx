@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Grid } from "@mui/material";
+import { Add } from "@mui/icons-material";
 import { IApplicationState } from "../../../store";
 import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
@@ -14,6 +15,7 @@ import { IUser } from "../../../store/user/types";
 import { canCreatePage } from "../../../utils/plan-enablements";
 import CustomTooltip from "../../components/tooltip";
 import { showErrorToast } from "./../../../utils/toast/index";
+import ButtonScrollTop from "../../components/button-scroll-top";
 
 const UserPages = () => {
   const userPagesState = useSelector(
@@ -51,7 +53,12 @@ const UserPages = () => {
         <Grid
           container
           justifyContent="center"
-          style={{ padding: "16px 0px 24px 0px" }}
+          padding="16px 0px 16px 0px"
+          mt="-16px"
+          mb="32px"
+          borderRadius="0px 0px 19px 19px"
+          bgcolor="white"
+          boxShadow="0px 4px 4px rgb(0 0 0 / 6%)"
         >
           <CustomTooltip
             title={
@@ -61,6 +68,7 @@ const UserPages = () => {
             }
           >
             <Button
+              variant="contained"
               onClick={() => {
                 if (!canCreatePage(profileState, pagesState.length)) {
                   showErrorToast(
@@ -71,6 +79,7 @@ const UserPages = () => {
                 setShowCreatePageDialog(true);
               }}
             >
+              <Add style={{ fontSize: "20px", marginRight: "4px" }} />
               {strings.createPage}
             </Button>
           </CustomTooltip>
@@ -84,6 +93,7 @@ const UserPages = () => {
             })}
         </Grid>
       </ThinWidthContent>
+      <ButtonScrollTop />
       <Footer />
     </>
   );
