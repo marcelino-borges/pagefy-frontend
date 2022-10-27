@@ -27,9 +27,7 @@ import { ACESSIBILITY_RED } from "../../../../styles/colors";
 import DialogConfirmation from "../../../components/dialog-confirmation";
 import UploadImageDialog from "../../../components/dialog-upload-image";
 import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
-import { clearLoading, setLoading } from "../../../../store/shared/actions";
-import { deleteImage } from "../../../../services/files";
-import { getFirebaseToken } from "../../../../utils/firebase-config";
+import { clearLoading } from "../../../../store/shared/actions";
 import CustomLink from "./../../../components/button-custom";
 import { getPlanNameByType } from "../../../../utils/stripe";
 
@@ -250,30 +248,12 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
         submitDialog={async (imageUrl?: string) => {
-          const token = await getFirebaseToken();
-          if (!token || !userProfile) return;
+          if (!userProfile) return;
+
           const clearLoadingFromState = () => {
             dispatch(clearLoading());
           };
 
-          // Delete previous image before uploading another one
-          if (
-            userProfile &&
-            userProfile._id &&
-            userProfile.profileImageUrl &&
-            userProfile.profileImageUrl.length > 0
-          ) {
-            dispatch(setLoading());
-            try {
-              await deleteImage(
-                userProfile.profileImageUrl,
-                userProfile._id,
-                token
-              );
-            } catch (e: any) {
-              console.log("Failed to delete image. Details: ", e.message);
-            }
-          }
           if (chosenImage) {
             dispatch(
               uploadAndSetUserProfileImage(

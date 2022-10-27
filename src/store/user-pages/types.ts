@@ -84,7 +84,7 @@ export interface IUserComponent {
   visible: boolean;
   clicks: number;
   layout: IComponentLayout;
-  type: ComponentType;
+  type: ButtonType;
   mediaUrl?: string;
   iconDetails?: IIconDetails;
   visibleDate?: string;
@@ -119,7 +119,7 @@ export interface IComponentStyle {
   boxShadow?: string;
 }
 
-export const enum ComponentType {
+export const enum ButtonType {
   Text = 0,
   Image = 1,
   TextImage = 2,

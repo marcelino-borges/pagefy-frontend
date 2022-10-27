@@ -5,9 +5,15 @@ export const Root = styled(
   ({ animation, duration, delay, infinite, ...rest }: any) => <Grid {...rest} />
 )`
   padding: 8px;
+  transition: transform 0.05s ease-in-out;
+  transform: scale(1);
   animation: ${(props) => props.duration || "1"}s
     ${(props) =>
       props.animation ? keyframes`${getAnimationByName(props.animation)}` : ""}
     ${(props) => props.delay || "0"}s
     ${(props) => (!!props.infinite ? "infinite" : "1")};
+
+  &:hover {
+    transform: scale(1.02);
+  }
 `;

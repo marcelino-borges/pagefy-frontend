@@ -7,7 +7,7 @@ import {
 } from "../../../store/page-renderer/actions";
 import PageRendererContent from "./page-renderer-content";
 import {
-  ComponentType,
+  ButtonType,
   IUserComponent,
   IUserPage,
 } from "../../../store/user-pages/types";
@@ -116,11 +116,11 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
     }
   }, [page, page?.bottomComponents]);
 
-  const renderComponentByType = (component: any) => {
-    const type: ComponentType = component.type;
+  const renderButtonByType = (component: any) => {
+    const type: ButtonType = component.type;
 
     switch (type) {
-      case ComponentType.Image:
+      case ButtonType.Image:
         return (
           <ImageComponent
             pageId={page?._id}
@@ -128,7 +128,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ComponentType.Text:
+      case ButtonType.Text:
         return (
           <TextComponent
             pageId={page?._id}
@@ -136,7 +136,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ComponentType.TextImage:
+      case ButtonType.TextImage:
         return (
           <TextImageComponent
             pageId={page?._id}
@@ -144,7 +144,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ComponentType.Video:
+      case ButtonType.Video:
         return (
           <VideoComponent
             pageId={page?._id}
@@ -152,7 +152,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ComponentType.Launch:
+      case ButtonType.Launch:
         return (
           <LaunchComponent
             pageId={page?._id}
@@ -298,7 +298,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
                           (!comp.visibleDate ||
                             new Date(comp.visibleDate) >= new Date())
                         ) {
-                          return renderComponentByType(comp);
+                          return renderButtonByType(comp);
                         }
                         return null;
                       })}

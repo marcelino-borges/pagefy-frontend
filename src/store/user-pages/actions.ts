@@ -267,28 +267,7 @@ export const deleteMiddleComponentFromPage =
     const updatedPagesList = pages.map((page: IUserPage) => {
       if (page._id === pageId && page.middleComponents) {
         const updatedComponents = page.middleComponents.filter(
-          (component: IUserComponent) => {
-            if (component._id === componentId) {
-              try {
-                if (component.mediaUrl && component.mediaUrl.length > 0)
-                  deleteImage(component.mediaUrl, userId);
-
-                if (
-                  component.style &&
-                  component.style.backgroundImage &&
-                  component.style.backgroundImage.length > 0
-                )
-                  deleteImage(component.style.backgroundImage, userId);
-              } catch (e: any) {
-                console.log(
-                  "Erro ao deletar imagens do componente. Detalhes: " +
-                    e.message
-                );
-              }
-              return false;
-            }
-            return true;
-          }
+          (component: IUserComponent) => component._id !== componentId
         );
         const updatedPage: IUserPage = {
           ...page,
@@ -354,21 +333,7 @@ export const deleteTopComponentFromPage =
     const updatedPagesList = pages.map((page: IUserPage) => {
       if (page._id === pageId && page.topComponents) {
         const updatedComponents = page.topComponents.filter(
-          (component: IUserComponent) => {
-            if (component._id === componentId) {
-              if (component.mediaUrl && component.mediaUrl.length > 0)
-                deleteImage(component.mediaUrl, userId);
-
-              if (
-                component.style &&
-                component.style.backgroundImage &&
-                component.style.backgroundImage.length > 0
-              )
-                deleteImage(component.style.backgroundImage, userId);
-              return false;
-            }
-            return true;
-          }
+          (component: IUserComponent) => component._id !== componentId
         );
         const updatedPage: IUserPage = {
           ...page,

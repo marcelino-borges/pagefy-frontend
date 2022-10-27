@@ -18,10 +18,7 @@ import { isUrlValid } from "../../../../utils/validators/url";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
 import YoutubeEmbed from "./../../../components/youtube-embed/index";
-import {
-  ComponentType,
-  IUserComponent,
-} from "../../../../store/user-pages/types";
+import { ButtonType, IUserComponent } from "../../../../store/user-pages/types";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import { getYoutubeIdFromUrl } from "../../../../utils";
 
@@ -82,7 +79,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         rows: 2,
         columns: 2,
       },
-      type: ComponentType.Video,
+      type: ButtonType.Video,
       mediaUrl: videoUrl,
       iconDetails: undefined,
     };

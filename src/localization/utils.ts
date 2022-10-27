@@ -1,26 +1,24 @@
 import strings from ".";
-import { ComponentType } from "../store/user-pages/types";
+import { ButtonType } from "../store/user-pages/types";
 
 /**
  * Gets the string correspondent to a component type
- * @param {ComponentType} type - Component's type
+ * @param {ButtonType} type - Component's type
  * @returns {string} A string with the component's name
  */
-export const getLocalizedStringByComponentType = (
-  type: ComponentType
-): string => {
+export const getLocalizedStringByComponentType = (type: ButtonType): string => {
   switch (type) {
-    case ComponentType.Image:
+    case ButtonType.Image:
       return strings.image;
-    case ComponentType.Text:
+    case ButtonType.Text:
       return strings.text;
-    case ComponentType.TextImage:
+    case ButtonType.TextImage:
       return strings.textImage;
-    case ComponentType.Icon:
+    case ButtonType.Icon:
       return strings.icon;
-    case ComponentType.Video:
+    case ButtonType.Video:
       return strings.video;
-    case ComponentType.Launch:
+    case ButtonType.Launch:
       return strings.launch;
     default:
       return strings.unknown;

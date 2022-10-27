@@ -35,7 +35,7 @@ import {
   isUrlValid,
 } from "../../../../utils/validators/url";
 import {
-  ComponentType,
+  ButtonType,
   IIconDetails,
   IUserComponent,
 } from "../../../../store/user-pages/types";
@@ -192,7 +192,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         rows: 1,
         columns: 1,
       },
-      type: ComponentType.Icon,
+      type: ButtonType.Icon,
       mediaUrl: undefined,
       iconDetails: {
         userFriendlyName: iconSelected.userFriendlyName,

@@ -65,7 +65,7 @@ const IconsComponent = ({
                     </div>
                   )}
                   <Icon
-                    id="app-icon"
+                    id={!isRenderer ? "app-icon-editor" : "app-icon-renderer"}
                     icon={iconComponent.iconDetails.icon}
                     style={{
                       fontSize: "46px",

@@ -11,13 +11,12 @@ import { LIGHTER_GREY } from "../../../../styles/colors";
 import UploadImageDialog from "../../dialog-upload-image";
 import { useState } from "react";
 import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
-import { deleteImage } from "../../../../services/files";
 import {
   setUserProfileImage,
   uploadAndSetUserProfileImage,
 } from "../../../../store/user/actions";
 import { getFirebaseToken } from "../../../../utils/firebase-config";
-import { clearLoading, setLoading } from "./../../../../store/shared/actions";
+import { clearLoading } from "./../../../../store/shared/actions";
 import SignInRegisterButtons from "../../signin-register-buttons";
 import React from "react";
 
@@ -133,24 +132,6 @@ const UserLoggedIn = () => {
             dispatch(clearLoading());
           };
 
-          // Delete previous image before uploading another one
-          if (
-            userState.profile &&
-            userState.profile._id &&
-            userState.profile.profileImageUrl &&
-            userState.profile.profileImageUrl.length > 0
-          ) {
-            dispatch(setLoading());
-            try {
-              await deleteImage(
-                userState.profile.profileImageUrl,
-                userState.profile._id,
-                token
-              );
-            } catch (e: any) {
-              console.log("Failed to delete image. Details: ", e.message);
-            }
-          }
           if (chosenImage) {
             dispatch(
               uploadAndSetUserProfileImage(

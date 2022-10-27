@@ -40,7 +40,15 @@ export const IconOverlaySpan = styled(
     font-size: 16px;
   }
 
-  &:hover #app-icon path {
+  & #app-icon-renderer {
+    transition: transform 0.1s ease-in-out;
+  }
+
+  &:hover #app-icon-renderer {
+    transform: scale(1.2);
+  }
+
+  &:hover #app-icon-editor path {
     color: ${ACESSIBILITY_RED};
     opacity: 0.5;
   }

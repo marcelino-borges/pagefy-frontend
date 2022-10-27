@@ -61,7 +61,7 @@ import {
   IMAGE_EXTENSIONS,
 } from "../../../../constants";
 import {
-  ComponentType,
+  ButtonType,
   IComponentAnimation,
   IUserComponent,
 } from "../../../../store/user-pages/types";
@@ -96,9 +96,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
   const { handleSubmit, register } = useForm();
 
-  const [selectedType, setSelectedType] = useState<ComponentType>(
-    ComponentType.Text
-  );
+  const [selectedType, setSelectedType] = useState<ButtonType>(ButtonType.Text);
   const [selectedColumnsCount, setSelectedColumnsCount] = useState<number>(1);
   const [selectedRowsCount, setSelectedRowsCount] = useState<number>(1);
   const [selectedBorder, setSelectedBorder] = useState<ComponentBorderRadius>(
@@ -143,7 +141,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
   const clearStates = () => {
     // Step 1 buttons
-    setSelectedType(ComponentType.Text);
+    setSelectedType(ButtonType.Text);
     setSelectedColumnsCount(1);
     setSelectedRowsCount(1);
     setSelectedBorder(ComponentBorderRadius.SQUARE);
@@ -202,7 +200,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
       }
 
       const newComponent: IUserComponent = {
-        text: selectedType !== ComponentType.Image ? text : undefined,
+        text: selectedType !== ButtonType.Image ? text : undefined,
         url,
         style: {
           backgroundColor,
@@ -263,12 +261,12 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
       isValid = false;
     }
 
-    if (selectedType !== ComponentType.Image && (!text || text.length < 1)) {
+    if (selectedType !== ButtonType.Image && (!text || text.length < 1)) {
       setErrorTextField(strings.textInComponentRequired);
       isValid = false;
     }
 
-    if (selectedType !== ComponentType.Text && !existingImage && !chosenImage) {
+    if (selectedType !== ButtonType.Text && !existingImage && !chosenImage) {
       showErrorToast(strings.imageInComponentRequired);
       isValid = false;
     }
@@ -369,8 +367,8 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
               <Grid item pr="24px">
                 <ComponentDetailsButton
                   size="60px"
-                  isSelected={selectedType === ComponentType.Text}
-                  onClick={() => setSelectedType(ComponentType.Text)}
+                  isSelected={selectedType === ButtonType.Text}
+                  onClick={() => setSelectedType(ButtonType.Text)}
                 >
                   <TextFieldsIcon style={{ fontSize: "40px" }} />
                 </ComponentDetailsButton>
@@ -380,8 +378,8 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
               <Grid item pr="24px">
                 <ComponentDetailsButton
                   size="60px"
-                  isSelected={selectedType === ComponentType.TextImage}
-                  onClick={() => setSelectedType(ComponentType.TextImage)}
+                  isSelected={selectedType === ButtonType.TextImage}
+                  onClick={() => setSelectedType(ButtonType.TextImage)}
                 >
                   <TextFieldsIcon
                     style={{ fontSize: "30px", marginBottom: "25px" }}
@@ -395,8 +393,8 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
               <Grid item>
                 <ComponentDetailsButton
                   size="60px"
-                  isSelected={selectedType === ComponentType.Image}
-                  onClick={() => setSelectedType(ComponentType.Image)}
+                  isSelected={selectedType === ButtonType.Image}
+                  onClick={() => setSelectedType(ButtonType.Image)}
                 >
                   <ImageIcon style={{ fontSize: "40px" }} />
                 </ComponentDetailsButton>
@@ -674,7 +672,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
               )}
 
               {/* Font Color */}
-              {selectedType !== ComponentType.Image && (
+              {selectedType !== ButtonType.Image && (
                 <Grid item>
                   <CustomTooltip
                     disableInteractive
@@ -707,7 +705,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
               {/* Background Color */}
 
-              {selectedType !== ComponentType.Image && (
+              {selectedType !== ButtonType.Image && (
                 <Grid item>
                   <CustomTooltip
                     disableInteractive

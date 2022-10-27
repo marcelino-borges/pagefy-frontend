@@ -58,7 +58,7 @@ import {
   setComponentImage,
 } from "../../../../store/user-pages/actions";
 import {
-  ComponentType,
+  ButtonType,
   IComponentAnimation,
   IUserComponent,
 } from "../../../../store/user-pages/types";
@@ -73,9 +73,7 @@ import DialogChooseAnimation from "../../../components/dialog-choose-animation";
 import DialogVisibleDate from "./../../../components/dialog-visible-date/index";
 import ColorPicker from "./../../../components/color-picker/index";
 import { MEDIUM_GREY } from "./../../../../styles/colors";
-import { getFirebaseToken } from "../../../../utils/firebase-config";
-import { clearLoading, setLoading } from "../../../../store/shared/actions";
-import { deleteImage } from "../../../../services/files";
+import { clearLoading } from "../../../../store/shared/actions";
 import { getLocalizedStringByComponentType } from "../../../../localization/utils";
 import { PlansTypes } from "../../../../store/user/types";
 import { showSuccessToast } from "../../../../utils/toast";
@@ -250,30 +248,13 @@ const DraggableUserComponent = ({
         setChosenImage={setChosenImage}
         acceptedFiles={IMAGE_EXTENSIONS}
         submitDialog={async (imageUrl?: string) => {
-          const token = await getFirebaseToken();
-
           if (
-            token === undefined ||
             userState === undefined ||
             userState._id === undefined ||
             component._id === undefined ||
             pageId === undefined
           ) {
             return;
-          }
-
-          if (
-            component.style &&
-            component.style.backgroundImage &&
-            component.style.backgroundImage.length > 0
-          ) {
-            const urlToDelete = component.style.backgroundImage
-              .replace("url", "")
-              .replaceAll("(", "")
-              .replaceAll(")", "");
-
-            dispatch(setLoading());
-            await deleteImage(urlToDelete, userState._id, token);
           }
 
           const clearLoadingFromState = () => {
@@ -455,7 +436,7 @@ const DraggableUserComponent = ({
             )}
 
             {/* Video (Only in Video type) */}
-            {component.url && component.type === ComponentType.Video && (
+            {component.url && component.type === ButtonType.Video && (
               <ContentRow
                 container
                 item
@@ -488,7 +469,7 @@ const DraggableUserComponent = ({
             )}
 
             {/* URL */}
-            {component.type !== ComponentType.Video && (
+            {component.type !== ButtonType.Video && (
               <ContentRow container item alignItems="center" wrap="nowrap">
                 <CustomTooltip title={component.url || ""}>
                   <UrlIconItem item>
@@ -558,9 +539,9 @@ const DraggableUserComponent = ({
               </ContentRow>
             )}
 
-            {component.type !== ComponentType.Video &&
-              component.type !== ComponentType.Text &&
-              component.type !== ComponentType.Launch &&
+            {component.type !== ButtonType.Video &&
+              component.type !== ButtonType.Text &&
+              component.type !== ButtonType.Launch &&
               component.mediaUrl &&
               component.mediaUrl.length > 0 && (
                 <ContentRow container item alignItems="center" wrap="nowrap">
@@ -650,8 +631,8 @@ const DraggableUserComponent = ({
             <ToolIconButton
               size="small"
               disabled={
-                component.type === ComponentType.Video ||
-                component.type === ComponentType.Image
+                component.type === ButtonType.Video ||
+                component.type === ButtonType.Image
               }
               transitionDuration="0.25s"
               isHoveringComponent={isHovering}
@@ -663,14 +644,14 @@ const DraggableUserComponent = ({
               <BackgroundColorIcon
                 style={{ transform: "scale(0.7)" }}
                 bucketColor={
-                  component.type === ComponentType.Video ||
-                  component.type === ComponentType.Image
+                  component.type === ButtonType.Video ||
+                  component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : "white"
                 }
                 selectedColor={
-                  component.type === ComponentType.Video ||
-                  component.type === ComponentType.Image
+                  component.type === ButtonType.Video ||
+                  component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : component.style?.backgroundColor
                 }
@@ -698,8 +679,8 @@ const DraggableUserComponent = ({
             <ToolIconButton
               size="small"
               disabled={
-                component.type === ComponentType.Video ||
-                component.type === ComponentType.Image
+                component.type === ButtonType.Video ||
+                component.type === ButtonType.Image
               }
               transitionDuration="0.3s"
               isHoveringComponent={isHovering}
@@ -711,14 +692,14 @@ const DraggableUserComponent = ({
               <FontColorIcon
                 style={{ transform: "scale(0.7)" }}
                 bucketColor={
-                  component.type === ComponentType.Video ||
-                  component.type === ComponentType.Image
+                  component.type === ButtonType.Video ||
+                  component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : "white"
                 }
                 selectedColor={
-                  component.type === ComponentType.Video ||
-                  component.type === ComponentType.Image
+                  component.type === ButtonType.Video ||
+                  component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : component.style?.color
                 }
@@ -746,8 +727,8 @@ const DraggableUserComponent = ({
             <ToolIconButton
               size="small"
               disabled={
-                component.type === ComponentType.Video ||
-                component.type === ComponentType.Launch
+                component.type === ButtonType.Video ||
+                component.type === ButtonType.Launch
               }
               hoveringWhite
               transitionDuration="0.35s"
@@ -778,8 +759,8 @@ const DraggableUserComponent = ({
             <ToolIconButton
               size="small"
               disabled={
-                component.type === ComponentType.Video ||
-                component.type === ComponentType.Launch ||
+                component.type === ButtonType.Video ||
+                component.type === ButtonType.Launch ||
                 userState?.plan === PlansTypes.FREE
               }
               hoveringWhite
@@ -807,8 +788,8 @@ const DraggableUserComponent = ({
             <ToolIconButton
               size="small"
               disabled={
-                component.type === ComponentType.Video ||
-                component.type === ComponentType.Launch ||
+                component.type === ButtonType.Video ||
+                component.type === ButtonType.Launch ||
                 userState?.plan === PlansTypes.FREE
               }
               hoveringWhite

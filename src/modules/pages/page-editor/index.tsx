@@ -63,9 +63,7 @@ import { getUser } from "../../../store/user/actions";
 import IconButton from "../../components/icon-button";
 import { getPageByUrl } from "../../../services/user-pages";
 import { showErrorToast, showSuccessToast } from "./../../../utils/toast";
-import { clearLoading, setLoading } from "../../../store/shared/actions";
-import { deleteImage } from "../../../services/files";
-import { getFirebaseToken } from "../../../utils/firebase-config";
+import { clearLoading } from "../../../store/shared/actions";
 import { LIGHT_GREY } from "../../../styles/colors";
 import PreviewPageDialog from "./preview-dialog";
 import Footer from "./../../components/footer";
@@ -291,13 +289,7 @@ const PageEditor = () => {
   }, [dispatch, page]);
 
   const savePageImage = async (imageUrl?: string) => {
-    const token = await getFirebaseToken();
-    if (!token || !page || !page._id) return;
-
-    if (page.pageImageUrl && page.pageImageUrl.length > 0) {
-      dispatch(setLoading());
-      deleteImage(page.pageImageUrl, page.userId, token);
-    }
+    if (!page || !page._id) return;
 
     const successCallback = (url: string) => {
       const pageToSave: IUserPage = {
@@ -340,21 +332,7 @@ const PageEditor = () => {
 
   const savePageBGImage = useCallback(
     async (imageUrl?: string) => {
-      const token = await getFirebaseToken();
-      if (!token || !page || !page._id) return;
-
-      if (
-        page.style &&
-        page.style.backgroundImage &&
-        page.style.backgroundImage?.length > 0
-      ) {
-        const urlToDelete = page.style.backgroundImage
-          .replace("url", "")
-          .replaceAll("(", "")
-          .replaceAll(")", "");
-        dispatch(setLoading());
-        deleteImage(urlToDelete, page.userId, token);
-      }
+      if (!page || !page._id) return;
 
       const successCallback = (url: string) => {
         const pageToSave: IUserPage = {
