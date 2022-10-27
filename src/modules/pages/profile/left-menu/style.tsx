@@ -5,9 +5,9 @@ import {
 } from "../../../../constants";
 import {
   LIGHTER_GREY,
-  LIGHTEST_GREY,
   LIGHT_GREY,
   PRIMARY_COLOR,
+  UPPER_MEDIUM_GREY,
 } from "../../../../styles/colors";
 
 export const Root = styled(Grid)`
@@ -40,7 +40,8 @@ export const MenuItem = styled(({ isSelected, children, ...rest }: any) => (
   box-shadow:  ${isSelected && "inset 10px 10px 10px rgba(0, 0, 0, 0.03)"};
 
   &:hover {
-    background-color: ${!isSelected && LIGHTEST_GREY};
+    color: ${!isSelected && UPPER_MEDIUM_GREY};
+    background-color: ${!isSelected && "white"};
     border-right: 3px solid ${!isSelected && LIGHTER_GREY};
   }
 `
