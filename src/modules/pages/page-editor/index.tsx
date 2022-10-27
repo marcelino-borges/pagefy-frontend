@@ -25,7 +25,7 @@ import {
   PageToolbar,
   PageName,
   PageUrl,
-  ToolbarBottomToolsStyled,
+  BottomToolbarRoot,
   EditPenIcon,
   ToolsMenuIcon,
 } from "./style";
@@ -382,14 +382,12 @@ const PageEditor = () => {
     [chosenImage, dispatch, page]
   );
 
-  const ToolbarBottomTools = useCallback(() => {
+  const BottomTooolbar = useCallback(() => {
     return (
-      <ToolbarBottomToolsStyled
+      <BottomToolbarRoot
         container
         justifyContent="space-around"
         alignItems="center"
-        pt="16px"
-        wrap="nowrap"
       >
         <CustomTooltip title={strings.toggleVisibility}>
           <Grid item>
@@ -601,7 +599,7 @@ const PageEditor = () => {
             )}
           </Grid>
         </CustomTooltip>
-      </ToolbarBottomToolsStyled>
+      </BottomToolbarRoot>
     );
   }, [
     isSmallerThan370,
@@ -904,7 +902,7 @@ const PageEditor = () => {
           />
         )}
         <ToolBar />
-        <ToolbarBottomTools />
+        <BottomTooolbar />
         {page && page.topComponents && page.topComponents.length > 0 && (
           <IconsComponent
             iconsList={page.topComponents}

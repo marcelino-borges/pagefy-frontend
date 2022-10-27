@@ -158,13 +158,14 @@ export const DeleteIcon = styled(Delete)`
   opacity: 0;
 `;
 
-export const ToolbarBottomToolsStyled = styled(Grid)`
+export const BottomToolbarRoot = styled(Grid)`
   width: 100%;
-  height: 80px;
+  min-height: 80px;
   background-color: ${LIGHTER_GREY};
   border-radius: 0px 0px 15px 15px;
   margin-top: -40px;
   margin-bottom: 24px;
+  padding-top: 16px;
   min-width: 250px;
 `;
 

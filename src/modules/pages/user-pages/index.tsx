@@ -13,9 +13,9 @@ import PrivateRouteChecker from "./../../components/private-route-checker/index"
 import Footer from "../../components/footer";
 import { IUser } from "../../../store/user/types";
 import { canCreatePage } from "../../../utils/plan-enablements";
-import CustomTooltip from "../../components/tooltip";
 import { showErrorToast } from "./../../../utils/toast/index";
 import ButtonScrollTop from "../../components/button-scroll-top";
+import { UPPER_MEDIUM_GREY } from "../../../styles/colors";
 
 const UserPages = () => {
   const userPagesState = useSelector(
@@ -53,36 +53,29 @@ const UserPages = () => {
         <Grid
           container
           justifyContent="center"
+          height="80px"
           padding="16px 0px 16px 0px"
           mt="-16px"
           mb="32px"
           borderRadius="0px 0px 19px 19px"
           bgcolor="white"
-          boxShadow="0px 4px 4px rgb(0 0 0 / 6%)"
+          boxShadow="0px 4px 4px rgba(0, 0, 0, 0.06)"
         >
-          <CustomTooltip
-            title={
-              canCreatePage(profileState, pagesState.length)
-                ? strings.createPage
-                : strings.plansBlockings.yourPlanDoesntAllowCreateNewPage
-            }
+          <Button
+            onClick={() => {
+              if (!canCreatePage(profileState, pagesState.length)) {
+                showErrorToast(
+                  strings.plansBlockings.yourPlanDoesntAllowCreateNewPage
+                );
+                return;
+              }
+              setShowCreatePageDialog(true);
+            }}
+            sx={{ color: UPPER_MEDIUM_GREY }}
           >
-            <Button
-              variant="contained"
-              onClick={() => {
-                if (!canCreatePage(profileState, pagesState.length)) {
-                  showErrorToast(
-                    strings.plansBlockings.yourPlanDoesntAllowCreateNewPage
-                  );
-                  return;
-                }
-                setShowCreatePageDialog(true);
-              }}
-            >
-              <Add style={{ fontSize: "20px", marginRight: "4px" }} />
-              {strings.createPage}
-            </Button>
-          </CustomTooltip>
+            <Add style={{ fontSize: "20px", marginRight: "4px" }} />
+            {strings.createPage}
+          </Button>
         </Grid>
 
         <Grid container>
