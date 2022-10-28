@@ -5,6 +5,7 @@ import {
   YOUTUBE_SHORT_URL_IDENTIFIER,
 } from "../constants";
 import strings from "../localization";
+import { ButtonType } from "../store/user-pages/types";
 
 /**
  * Shortens a string to the `maxSize` length
@@ -173,3 +174,25 @@ export const translateShadowStyleEnum = (
       return strings.tools.button.shadowStyles.none;
   }
 };
+
+export const isBgAndFontCustomizable = (type: ButtonType) =>
+  type !== ButtonType.Video &&
+  type !== ButtonType.Map &&
+  type !== ButtonType.Spotify &&
+  type !== ButtonType.Image;
+
+export const isImageType = (type: ButtonType) =>
+  type === ButtonType.Image ||
+  type === ButtonType.TextImage ||
+  type === ButtonType.TextOverImage;
+
+export const isUrlEditable = (type: ButtonType) =>
+  type !== ButtonType.Video &&
+  type !== ButtonType.Map &&
+  type !== ButtonType.Spotify;
+
+export const isButtonType = (type: ButtonType) =>
+  type === ButtonType.Text ||
+  type === ButtonType.Image ||
+  type === ButtonType.TextImage ||
+  type === ButtonType.TextOverImage;

@@ -37,7 +37,14 @@ import {
   DeleteContainer,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
-import { removeCssUrlWrapper, stringShortener } from "../../../../utils";
+import {
+  isBgAndFontCustomizable,
+  isButtonType,
+  isImageType,
+  isUrlEditable,
+  removeCssUrlWrapper,
+  stringShortener,
+} from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import strings from "../../../../localization";
 import TransparentTextField from "../../../components/transparent-textfield";
@@ -312,7 +319,8 @@ const DraggableUserComponent = ({
             sm={9}
             justifyContent="center"
             direction="column"
-            spacing={2}
+            gap="16px"
+            py="32px"
             wrap="nowrap"
             style={{
               maxHeight: isSmallerThan400 ? "100px" : "unset",
@@ -452,76 +460,70 @@ const DraggableUserComponent = ({
             )}
 
             {/* URL */}
-            {component.type !== ButtonType.Video &&
-              component.type !== ButtonType.Map &&
-              component.type !== ButtonType.Spotify && (
-                <CustomTooltip title={component.url || ""}>
-                  <ContentRow alignItems="center" width="70%">
-                    <UrlIconItem item>
-                      <LinkIcon fontSize="small" />
-                    </UrlIconItem>
-                    {isEdittingUrl ? (
-                      <Grid container item>
-                        <form
-                          onSubmit={handleSubmitUrl(onSubmitUrlForm)}
-                          style={{ width: "100%" }}
-                        >
-                          <LabelText item>
-                            <TransparentTextField
-                              autoFocus
-                              onChange={handleChangeUrl}
-                              value={values.url}
-                              fontWeight="300"
-                              color="#bfbfbf"
-                              fontStyle="italic"
-                              InputProps={{
-                                style: {
-                                  width: "100%",
-                                  margin: !isSmallerThan400 ? "0px 16px" : "0",
-                                },
-                                endAdornment: (
-                                  <InputAdornment position="end">
-                                    <IconButton
-                                      onClick={() => onSubmitUrlForm()}
-                                      edge="end"
-                                    >
-                                      <SaveIcon
-                                        fontSize="medium"
-                                        color="disabled"
-                                      />
-                                    </IconButton>
-                                  </InputAdornment>
-                                ),
-                              }}
-                              fontSize={isSmallerThan600 ? "15px" : "18px"}
-                              onBlur={() => {
-                                onSubmitUrlForm();
-                                setIsEdittingUrl(false);
-                              }}
-                            />
-                          </LabelText>
-                        </form>
-                      </Grid>
-                    ) : (
-                      <UrlTextItem
-                        item
-                        onClick={() => {
-                          setIsEdittingUrl(true);
-                          setValues({ ...values, url: component.url || "" });
-                        }}
+            {isUrlEditable(component.type) && (
+              <CustomTooltip title={component.url || ""}>
+                <ContentRow alignItems="center" width="70%">
+                  <UrlIconItem item>
+                    <LinkIcon fontSize="small" />
+                  </UrlIconItem>
+                  {isEdittingUrl ? (
+                    <Grid container item>
+                      <form
+                        onSubmit={handleSubmitUrl(onSubmitUrlForm)}
+                        style={{ width: "100%" }}
                       >
-                        {component.url}
-                      </UrlTextItem>
-                    )}
-                  </ContentRow>
-                </CustomTooltip>
-              )}
+                        <LabelText item>
+                          <TransparentTextField
+                            autoFocus
+                            onChange={handleChangeUrl}
+                            value={values.url}
+                            fontWeight="300"
+                            color="#bfbfbf"
+                            fontStyle="italic"
+                            InputProps={{
+                              style: {
+                                width: "100%",
+                                margin: !isSmallerThan400 ? "0px 16px" : "0",
+                              },
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    onClick={() => onSubmitUrlForm()}
+                                    edge="end"
+                                  >
+                                    <SaveIcon
+                                      fontSize="medium"
+                                      color="disabled"
+                                    />
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }}
+                            fontSize={isSmallerThan600 ? "15px" : "18px"}
+                            onBlur={() => {
+                              onSubmitUrlForm();
+                              setIsEdittingUrl(false);
+                            }}
+                          />
+                        </LabelText>
+                      </form>
+                    </Grid>
+                  ) : (
+                    <UrlTextItem
+                      item
+                      onClick={() => {
+                        setIsEdittingUrl(true);
+                        setValues({ ...values, url: component.url || "" });
+                      }}
+                    >
+                      {component.url}
+                    </UrlTextItem>
+                  )}
+                </ContentRow>
+              </CustomTooltip>
+            )}
 
-            {component.type !== ButtonType.Video &&
-              component.type !== ButtonType.Map &&
-              component.type !== ButtonType.Spotify &&
-              component.type !== ButtonType.Text &&
-              component.type !== ButtonType.Launch &&
+            {isImageType(component.type) &&
               component.mediaUrl &&
               component.mediaUrl.length > 0 && (
                 <ContentRow alignItems="center">
@@ -586,13 +588,13 @@ const DraggableUserComponent = ({
         </Grid>
       </Container>
 
-      {/* Tools column */}
+      {/* 3rd Column - Tools */}
       <Grid
         container
         item
         xs={2}
         md={1}
-        justifyContent="space-between"
+        justifyContent="center"
         alignItems="stretch"
         direction="column"
         style={{
@@ -600,208 +602,168 @@ const DraggableUserComponent = ({
         }}
       >
         {/* BG Color */}
-        <CustomTooltip
-          disabled={!isHovering || showBackgroundColorPicker}
-          disableInteractive
-          leaveDelay={0.1}
-          title={strings.backgroundColor}
-          placement={isLargerThan400 ? "right" : "bottom"}
-        >
-          <ToolGridItem item>
-            <ToolIconButton
-              size="small"
-              disabled={
-                component.type === ButtonType.Video ||
-                component.type === ButtonType.Map ||
-                component.type === ButtonType.Spotify ||
-                component.type === ButtonType.Image
-              }
-              transitionDuration="0.25s"
-              isHoveringComponent={isHovering}
-              onClick={() => {
-                setShowBackgroundColorPicker(!showBackgroundColorPicker);
-                setIsKeepToolsOpen(true);
-              }}
-            >
-              <BackgroundColorIcon
-                style={{ transform: "scale(0.7)" }}
-                bucketColor={
-                  component.type === ButtonType.Video ||
-                  component.type === ButtonType.Map ||
-                  component.type === ButtonType.Spotify ||
-                  component.type === ButtonType.Image
-                    ? "rgba(0, 0, 0, 0.26)"
-                    : "white"
-                }
-                selectedColor={
-                  component.type === ButtonType.Video ||
-                  component.type === ButtonType.Map ||
-                  component.type === ButtonType.Spotify ||
-                  component.type === ButtonType.Image
-                    ? "rgba(0, 0, 0, 0.26)"
-                    : component.style?.backgroundColor
-                }
-              />
-            </ToolIconButton>
-            {showBackgroundColorPicker && (
-              <ColorPicker
-                color={component.style?.backgroundColor}
-                onChangeComplete={handleChangeBackgroundColorComplete}
-                onCancel={() => setShowBackgroundColorPicker(false)}
-              />
-            )}
-          </ToolGridItem>
-        </CustomTooltip>
+        {isBgAndFontCustomizable(component.type) && (
+          <CustomTooltip
+            disabled={!isHovering || showBackgroundColorPicker}
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.backgroundColor}
+            placement={isLargerThan400 ? "right" : "bottom"}
+          >
+            <ToolGridItem item>
+              <ToolIconButton
+                size="small"
+                transitionDuration="0.25s"
+                isHoveringComponent={isHovering}
+                onClick={() => {
+                  setShowBackgroundColorPicker(!showBackgroundColorPicker);
+                  setIsKeepToolsOpen(true);
+                }}
+              >
+                <BackgroundColorIcon
+                  style={{ transform: "scale(0.7)" }}
+                  bucketColor="white"
+                  selectedColor={component.style?.backgroundColor}
+                />
+              </ToolIconButton>
+              {showBackgroundColorPicker && (
+                <ColorPicker
+                  color={component.style?.backgroundColor}
+                  onChangeComplete={handleChangeBackgroundColorComplete}
+                  onCancel={() => setShowBackgroundColorPicker(false)}
+                />
+              )}
+            </ToolGridItem>
+          </CustomTooltip>
+        )}
 
         {/* Font color picker */}
-        <CustomTooltip
-          disabled={!isHovering || showFontColorPicker}
-          disableInteractive
-          leaveDelay={0.1}
-          title={strings.fontColor}
-          placement={isLargerThan400 ? "right" : "bottom"}
-        >
-          <ToolGridItem item>
-            <ToolIconButton
-              size="small"
-              disabled={
-                component.type === ButtonType.Video ||
-                component.type === ButtonType.Map ||
-                component.type === ButtonType.Spotify ||
-                component.type === ButtonType.Image
-              }
-              transitionDuration="0.3s"
-              isHoveringComponent={isHovering}
-              onClick={() => {
-                setShowFontColorPicker(!showFontColorPicker);
-                setIsKeepToolsOpen(true);
-              }}
-            >
-              <FontColorIcon
-                style={{ transform: "scale(0.7)" }}
-                bucketColor={
-                  component.type === ButtonType.Video ||
-                  component.type === ButtonType.Map ||
-                  component.type === ButtonType.Spotify ||
-                  component.type === ButtonType.Image
-                    ? "rgba(0, 0, 0, 0.26)"
-                    : "white"
-                }
-                selectedColor={
-                  component.type === ButtonType.Video ||
-                  component.type === ButtonType.Map ||
-                  component.type === ButtonType.Spotify ||
-                  component.type === ButtonType.Image
-                    ? "rgba(0, 0, 0, 0.26)"
-                    : component.style?.color
-                }
-              />
-            </ToolIconButton>
-            {showFontColorPicker && (
-              <ColorPicker
-                color={component.style?.color}
-                onChangeComplete={handleChangeFontColorComplete}
-                onCancel={() => setShowFontColorPicker(false)}
-              />
-            )}
-          </ToolGridItem>
-        </CustomTooltip>
+        {isBgAndFontCustomizable(component.type) && (
+          <CustomTooltip
+            disabled={!isHovering || showFontColorPicker}
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.fontColor}
+            placement={isLargerThan400 ? "right" : "bottom"}
+          >
+            <ToolGridItem item>
+              <ToolIconButton
+                size="small"
+                transitionDuration="0.3s"
+                isHoveringComponent={isHovering}
+                onClick={() => {
+                  setShowFontColorPicker(!showFontColorPicker);
+                  setIsKeepToolsOpen(true);
+                }}
+              >
+                <FontColorIcon
+                  style={{ transform: "scale(0.7)" }}
+                  bucketColor="white"
+                  selectedColor={component.style?.color}
+                />
+              </ToolIconButton>
+              {showFontColorPicker && (
+                <ColorPicker
+                  color={component.style?.color}
+                  onChangeComplete={handleChangeFontColorComplete}
+                  onCancel={() => setShowFontColorPicker(false)}
+                />
+              )}
+            </ToolGridItem>
+          </CustomTooltip>
+        )}
 
         {/* Upload Image */}
-        <CustomTooltip
-          disabled={!isHovering}
-          disableInteractive
-          leaveDelay={0.1}
-          title={strings.uploadImage}
-          placement={isLargerThan400 ? "right" : "bottom"}
-        >
-          <ToolGridItem item>
-            <ToolIconButton
-              size="small"
-              disabled={
-                component.type === ButtonType.Video ||
-                component.type === ButtonType.Map ||
-                component.type === ButtonType.Spotify ||
-                component.type === ButtonType.Launch
-              }
-              hoveringWhite
-              transitionDuration="0.35s"
-              isHoveringComponent={isHovering}
-              onClick={() => {
-                setOpenChooseFileDialog(true);
-              }}
-            >
-              <ImageSearchIcon
-                color="inherit"
-                style={{
-                  transform: "scale(0.7)",
+        {isImageType(component.type) && (
+          <CustomTooltip
+            disabled={!isHovering}
+            disableInteractive
+            leaveDelay={0.1}
+            title={strings.uploadImage}
+            placement={isLargerThan400 ? "right" : "bottom"}
+          >
+            <ToolGridItem item>
+              <ToolIconButton
+                size="small"
+                hoveringWhite
+                transitionDuration="0.35s"
+                isHoveringComponent={isHovering}
+                onClick={() => {
+                  setOpenChooseFileDialog(true);
                 }}
-              />
-            </ToolIconButton>
-          </ToolGridItem>
-        </CustomTooltip>
+              >
+                <ImageSearchIcon
+                  color="inherit"
+                  style={{
+                    transform: "scale(0.7)",
+                  }}
+                />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
+        )}
 
         {/* Schedule visibility */}
-        <CustomTooltip
-          disabled={!isHovering}
-          disableInteractive
-          leaveDelay={0.1}
-          title={strings.scheduleComponentVisibleDate}
-          placement={isLargerThan400 ? "right" : "bottom"}
-        >
-          <ToolGridItem item>
-            <ToolIconButton
-              size="small"
-              disabled={
-                component.type === ButtonType.Video ||
-                component.type === ButtonType.Launch ||
-                component.type === ButtonType.Map ||
-                component.type === ButtonType.Spotify ||
-                userState?.plan === PlansTypes.FREE
-              }
-              hoveringWhite
-              transitionDuration="0.4s"
-              isHoveringComponent={isHovering}
-              onClick={() => {
-                if (userState?.plan === PlansTypes.FREE) return;
-                setOpenVisibleDateDialog(true);
-              }}
-            >
-              <TimerIcon style={{ transform: "scale(0.7)" }} />
-            </ToolIconButton>
-          </ToolGridItem>
-        </CustomTooltip>
+        {isButtonType(component.type) && (
+          <CustomTooltip
+            disabled={!isHovering}
+            disableInteractive
+            leaveDelay={0.1}
+            title={
+              userState?.plan === PlansTypes.FREE
+                ? strings.upgradeYourPlan
+                : strings.scheduleComponentVisibleDate
+            }
+            placement={isLargerThan400 ? "right" : "bottom"}
+          >
+            <ToolGridItem item>
+              <ToolIconButton
+                size="small"
+                disabled={userState?.plan === PlansTypes.FREE}
+                hoveringWhite
+                transitionDuration="0.4s"
+                isHoveringComponent={isHovering}
+                onClick={() => {
+                  if (userState?.plan === PlansTypes.FREE) return;
+                  setOpenVisibleDateDialog(true);
+                }}
+              >
+                <TimerIcon style={{ transform: "scale(0.7)" }} />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
+        )}
 
         {/* Choose animation */}
-        <CustomTooltip
-          disabled={!isHovering}
-          disableInteractive
-          leaveDelay={0.1}
-          title={strings.chooseAnimation}
-          placement={isLargerThan400 ? "right" : "bottom"}
-        >
-          <ToolGridItem item>
-            <ToolIconButton
-              size="small"
-              disabled={
-                component.type === ButtonType.Video ||
-                component.type === ButtonType.Launch ||
-                component.type === ButtonType.Map ||
-                component.type === ButtonType.Spotify ||
-                userState?.plan === PlansTypes.FREE
-              }
-              hoveringWhite
-              transitionDuration="0.4s"
-              isHoveringComponent={isHovering}
-              onClick={() => {
-                if (userState?.plan === PlansTypes.FREE) return;
-                setOpenChooseAnimationDialog(true);
-              }}
-            >
-              <ChooseAnimationIcon style={{ transform: "scale(0.7)" }} />
-            </ToolIconButton>
-          </ToolGridItem>
-        </CustomTooltip>
+        {isButtonType(component.type) && (
+          <CustomTooltip
+            disabled={!isHovering}
+            disableInteractive
+            leaveDelay={0.1}
+            title={
+              userState?.plan === PlansTypes.FREE
+                ? strings.upgradeYourPlan
+                : strings.chooseAnimation
+            }
+            placement={isLargerThan400 ? "right" : "bottom"}
+          >
+            <ToolGridItem item>
+              <ToolIconButton
+                size="small"
+                disabled={userState?.plan === PlansTypes.FREE}
+                hoveringWhite
+                transitionDuration="0.4s"
+                isHoveringComponent={isHovering}
+                onClick={() => {
+                  if (userState?.plan === PlansTypes.FREE) return;
+                  setOpenChooseAnimationDialog(true);
+                }}
+              >
+                <ChooseAnimationIcon style={{ transform: "scale(0.7)" }} />
+              </ToolIconButton>
+            </ToolGridItem>
+          </CustomTooltip>
+        )}
 
         {/* Toggle Visibility */}
         <CustomTooltip
