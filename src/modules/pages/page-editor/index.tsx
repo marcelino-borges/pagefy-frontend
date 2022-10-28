@@ -72,6 +72,7 @@ import { PlansTypes } from "../../../store/user/types";
 import ButtonScrollUp from "../../components/button-scroll-top";
 import MapsDialog from "./maps-dialog";
 import SpotifyDialog from "./spotify-dialog/index";
+import ProgressBarDialog from "./progress-bar-dialog";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -109,6 +110,8 @@ const PageEditor = () => {
   const [openToolsDialog, setOpenToolsDialog] = useState<boolean>(false);
   const [openMapDialog, setOpenMapDialog] = useState<boolean>(false);
   const [openSpotifyDialog, setOpenSpotifyDialog] = useState<boolean>(false);
+  const [openProgressBarDialog, setOpenProgressBarDialog] =
+    useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -286,6 +289,16 @@ const PageEditor = () => {
 
   const handleCloseSpotifyDialog = () => {
     setOpenSpotifyDialog(false);
+  };
+
+  const handleOpenProgressBarDialog = () => {
+    if (!page?._id) return;
+
+    setOpenProgressBarDialog(true);
+  };
+
+  const handleCloseProgressBarDialog = () => {
+    setOpenProgressBarDialog(false);
   };
 
   const handleChangeBackgroundColorComplete = useCallback(
@@ -868,6 +881,7 @@ const PageEditor = () => {
         handleOpenLaunchDialog={handleOpenLaunchDialog}
         handleOpenMapDialog={handleOpenMapDialog}
         handleOpenSpotifyDialog={handleOpenSpotifyDialog}
+        handleOpenProgressBarDialog={handleOpenProgressBarDialog}
       />
       <ButtonDialog
         open={openComponentDialog}
@@ -897,6 +911,11 @@ const PageEditor = () => {
       <SpotifyDialog
         open={openSpotifyDialog}
         handleClose={handleCloseSpotifyDialog}
+        pageId={page?._id}
+      />
+      <ProgressBarDialog
+        open={openProgressBarDialog}
+        handleClose={handleCloseProgressBarDialog}
         pageId={page?._id}
       />
     </>

@@ -18,13 +18,14 @@ import {
   Timer as TimerIcon,
   Save as SaveIcon,
   CopyAll as CopyAllIcon,
+  Percent as PercentIcon,
 } from "@mui/icons-material";
 import {
   Parent,
   Container,
   Overlay,
   LabelText,
-  UrlIconItem,
+  PrefixIconItem,
   UrlTextItem,
   ToolsColumn,
   ToolIconButton,
@@ -40,10 +41,10 @@ import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
   isBgAndFontCustomizable,
   isButtonType,
+  isClickableType,
   isImageType,
   isUrlEditable,
   removeCssUrlWrapper,
-  stringShortener,
 } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
 import strings from "../../../../localization";
@@ -63,9 +64,10 @@ import {
   setComponentVisibleDate,
   toggleComponentVisibility,
   setComponentImage,
+  setComponentProgressValue,
 } from "../../../../store/user-pages/actions";
 import {
-  ButtonType,
+  ComponentType,
   IComponentAnimation,
   IUserComponent,
 } from "../../../../store/user-pages/types";
@@ -105,6 +107,7 @@ const DraggableUserComponent = ({
 
   const { handleSubmit: handleSubmitLabel } = useForm();
   const { handleSubmit: handleSubmitUrl } = useForm();
+  const { handleSubmit: handleSubmitProgressValue } = useForm();
 
   const isLargerThan400 = useMediaQuery("(min-width: 400px)");
   const isSmallerThan400 = useMediaQuery("(max-width: 399px)");
@@ -114,6 +117,8 @@ const DraggableUserComponent = ({
   const [isKeepToolsOpen, setIsKeepToolsOpen] = useState<boolean>(false);
   const [isEdittingLabel, setIsEdittingLabel] = useState<boolean>(false);
   const [isEdittingUrl, setIsEdittingUrl] = useState<boolean>(false);
+  const [isEdittingProgressValue, setIsEdittingProgressValue] =
+    useState<boolean>(false);
   const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
     useState<boolean>(false);
   const [showFontColorPicker, setShowFontColorPicker] =
@@ -121,6 +126,7 @@ const DraggableUserComponent = ({
   const [values, setValues] = useState({
     label: component.text || "",
     url: component.url,
+    progressValue: component.progressValue || 0,
   });
   const [openChooseFileDialog, setOpenChooseFileDialog] = useState(false);
   const [openChooseAnimationDialog, setOpenChooseAnimationDialog] =
@@ -157,6 +163,21 @@ const DraggableUserComponent = ({
     setValues({ ...values, url: event.target.value });
   };
 
+  const handleChangeProgressValue = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let value: number = Number(event.target.value);
+
+    if (value > 100) {
+      value = 100;
+    } else if (value < 0) {
+      value = 0;
+    } else {
+      value = Number(event.target.value);
+    }
+    setValues({ ...values, progressValue: value });
+  };
+
   const onSubmitLabelForm = () => {
     if (!component._id || !pageId) return;
     setIsEdittingLabel(false);
@@ -167,6 +188,13 @@ const DraggableUserComponent = ({
     if (!component._id || !pageId || !values.url) return;
     setIsEdittingUrl(false);
     dispatch(setComponentUrl(pageId, component._id, values.url));
+  };
+  const onSubmitProgressValueForm = () => {
+    if (!component._id || !pageId || !values.url) return;
+    setIsEdittingProgressValue(false);
+    dispatch(
+      setComponentProgressValue(pageId, component._id, values.progressValue)
+    );
   };
 
   const deleteComponent = () => {
@@ -180,15 +208,14 @@ const DraggableUserComponent = ({
           pageId,
           () => {
             showSuccessToast(strings.successRemoveComponent);
+            setIsDeleted(false);
           },
           () => {
             showErrorToast(strings.errorRemoveComponent);
+            setIsDeleted(false);
           }
         )
       );
-      setTimeout(() => {
-        setIsDeleted(false);
-      }, 250);
     }, 250);
   };
 
@@ -310,6 +337,7 @@ const DraggableUserComponent = ({
           direction={isSmallerThan600 ? "column" : "row"}
           justifyContent="center"
           wrap="nowrap"
+          maxWidth="70%"
         >
           {/* 1st content column */}
           <Grid
@@ -319,7 +347,7 @@ const DraggableUserComponent = ({
             sm={9}
             justifyContent="center"
             direction="column"
-            gap="16px"
+            gap="12px"
             py="32px"
             wrap="nowrap"
             style={{
@@ -365,14 +393,14 @@ const DraggableUserComponent = ({
                       setValues({ ...values, label: component.text || "" });
                     }}
                   >
-                    {stringShortener(component.text, isLargerThan400 ? 50 : 20)}
+                    {component.text}
                   </LabelText>
                 )}
               </ContentRow>
             )}
 
             {/* Video (Only in Video type) */}
-            {component.url && component.type === ButtonType.Video && (
+            {component.url && component.type === ComponentType.Video && (
               <ContentRow
                 alignItems="center"
                 style={{
@@ -402,7 +430,7 @@ const DraggableUserComponent = ({
             )}
 
             {/* Map (Only in Map type) */}
-            {component.url && component.type === ButtonType.Map && (
+            {component.url && component.type === ComponentType.Map && (
               <ContentRow
                 alignItems="center"
                 style={{
@@ -431,7 +459,7 @@ const DraggableUserComponent = ({
             )}
 
             {/* Spotify (Only in Spotify type) */}
-            {component.url && component.type === ButtonType.Spotify && (
+            {component.url && component.type === ComponentType.Spotify && (
               <ContentRow
                 alignItems="center"
                 style={{
@@ -459,13 +487,81 @@ const DraggableUserComponent = ({
               </ContentRow>
             )}
 
+            {/* ProgressBar (Only in ProgressBar type) */}
+            {component.progressValue !== undefined &&
+              component.type === ComponentType.ProgressBar && (
+                <ContentRow
+                  alignItems="center"
+                  style={{
+                    paddingLeft: "16px",
+                    paddingTop: isSmallerThan400 ? "36px" : "24px",
+                  }}
+                >
+                  <PrefixIconItem item mr="8px">
+                    <PercentIcon fontSize="small" />
+                  </PrefixIconItem>
+                  {isEdittingProgressValue ? (
+                    <form
+                      onSubmit={handleSubmitProgressValue(
+                        onSubmitProgressValueForm
+                      )}
+                    >
+                      <LabelText item transform="unset">
+                        <TransparentTextField
+                          autoFocus
+                          InputProps={{
+                            inputProps: { min: 1, max: 100 },
+                            style: { maxWidth: "100px" },
+                            type: "number",
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  onClick={() => onSubmitProgressValueForm()}
+                                  edge="end"
+                                >
+                                  <SaveIcon
+                                    fontSize="medium"
+                                    color="disabled"
+                                  />
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                          onChange={handleChangeProgressValue}
+                          value={values.progressValue.toString()}
+                          fontSize={isSmallerThan600 ? "15px" : "18px"}
+                          onBlur={() => {
+                            onSubmitProgressValueForm();
+                            setIsEdittingProgressValue(false);
+                          }}
+                        />
+                      </LabelText>
+                    </form>
+                  ) : (
+                    <LabelText
+                      transform="unset"
+                      item
+                      onClick={() => {
+                        setIsEdittingProgressValue(true);
+                        setValues({
+                          ...values,
+                          progressValue: component.progressValue || 0,
+                        });
+                      }}
+                    >
+                      {component.progressValue.toString()}
+                    </LabelText>
+                  )}
+                </ContentRow>
+              )}
+
             {/* URL */}
-            {isUrlEditable(component.type) && (
+            {isUrlEditable(component.type) && component.url && (
               <CustomTooltip title={component.url || ""}>
                 <ContentRow alignItems="center" width="70%">
-                  <UrlIconItem item>
+                  <PrefixIconItem item>
                     <LinkIcon fontSize="small" />
-                  </UrlIconItem>
+                  </PrefixIconItem>
                   {isEdittingUrl ? (
                     <Grid container item>
                       <form
@@ -570,15 +666,17 @@ const DraggableUserComponent = ({
               icon={<RowsIcon />}
             />
 
-            <AnalyticsItem
-              tooltipKey={strings.clicks}
-              tooltipValue={
-                userState?.plan !== PlansTypes.FREE
-                  ? component.clicks
-                  : strings.upgradeYourPlan
-              }
-              icon={<ClicksCountIcon />}
-            />
+            {isClickableType(component.type) && (
+              <AnalyticsItem
+                tooltipKey={strings.clicks}
+                tooltipValue={
+                  userState?.plan !== PlansTypes.FREE
+                    ? component.clicks
+                    : strings.upgradeYourPlan
+                }
+                icon={<ClicksCountIcon />}
+              />
+            )}
             <AnalyticsItem
               tooltipKey={strings.type}
               tooltipValue={getLocalizedStringByComponentType(component.type)}

@@ -32,6 +32,7 @@ interface IToolsDialogProps {
   handleOpenLaunchDialog: () => void;
   handleOpenMapDialog: () => void;
   handleOpenSpotifyDialog: () => void;
+  handleOpenProgressBarDialog: () => void;
   handleClose: () => void;
   open: boolean;
 }
@@ -47,6 +48,7 @@ const ToolsDialog = ({
   handleOpenLaunchDialog,
   handleOpenMapDialog,
   handleOpenSpotifyDialog,
+  handleOpenProgressBarDialog,
 }: IToolsDialogProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -260,6 +262,40 @@ const ToolsDialog = ({
                         })
                     ) : (
                       <>{strings.tools.spotify.name}</>
+                    )}
+                  </ToolbarIconText>
+                )}
+              </ToolbarButton>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={3} py="16px">
+            <Grid container item direction="column" alignItems="center">
+              <ToolbarButton
+                onClick={() => {
+                  handleOpenProgressBarDialog();
+                  handleClose();
+                }}
+              >
+                <Icon icon="pajamas:progress" />
+
+                {!isSmallerThan370 && (
+                  <ToolbarIconText>
+                    {BREAK_TOOLBAR_TEXT &&
+                    strings.tools.progressBar.name.length >
+                      BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.progressBar.name.split(" ").length > 1 ? (
+                      strings.tools.progressBar.name
+                        .split(" ")
+                        .map((word: string) => {
+                          return (
+                            <span key={uuidv4()}>
+                              {word} <br />
+                            </span>
+                          );
+                        })
+                    ) : (
+                      <>{strings.tools.progressBar.name}</>
                     )}
                   </ToolbarIconText>
                 )}

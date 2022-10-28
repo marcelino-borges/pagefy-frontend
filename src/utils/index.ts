@@ -5,7 +5,7 @@ import {
   YOUTUBE_SHORT_URL_IDENTIFIER,
 } from "../constants";
 import strings from "../localization";
-import { ButtonType } from "../store/user-pages/types";
+import { ComponentType } from "../store/user-pages/types";
 
 /**
  * Shortens a string to the `maxSize` length
@@ -175,24 +175,33 @@ export const translateShadowStyleEnum = (
   }
 };
 
-export const isBgAndFontCustomizable = (type: ButtonType) =>
-  type !== ButtonType.Video &&
-  type !== ButtonType.Map &&
-  type !== ButtonType.Spotify &&
-  type !== ButtonType.Image;
+export const isBgAndFontCustomizable = (type: ComponentType) =>
+  type !== ComponentType.Video &&
+  type !== ComponentType.Map &&
+  type !== ComponentType.Spotify &&
+  type !== ComponentType.Image;
 
-export const isImageType = (type: ButtonType) =>
-  type === ButtonType.Image ||
-  type === ButtonType.TextImage ||
-  type === ButtonType.TextOverImage;
+export const isImageType = (type: ComponentType) =>
+  type === ComponentType.Image ||
+  type === ComponentType.TextImage ||
+  type === ComponentType.TextOverImage;
 
-export const isUrlEditable = (type: ButtonType) =>
-  type !== ButtonType.Video &&
-  type !== ButtonType.Map &&
-  type !== ButtonType.Spotify;
+export const isUrlEditable = (type: ComponentType) =>
+  type !== ComponentType.Video &&
+  type !== ComponentType.Map &&
+  type !== ComponentType.Spotify;
 
-export const isButtonType = (type: ButtonType) =>
-  type === ButtonType.Text ||
-  type === ButtonType.Image ||
-  type === ButtonType.TextImage ||
-  type === ButtonType.TextOverImage;
+export const isButtonType = (type: ComponentType) =>
+  type === ComponentType.Text ||
+  type === ComponentType.Image ||
+  type === ComponentType.TextImage ||
+  type === ComponentType.TextOverImage;
+
+export const isClickableType = (type: ComponentType) =>
+  type === ComponentType.Text ||
+  type === ComponentType.Image ||
+  type === ComponentType.TextImage ||
+  type === ComponentType.TextOverImage ||
+  type === ComponentType.Icon ||
+  type === ComponentType.Launch ||
+  type === ComponentType.ProgressBar;

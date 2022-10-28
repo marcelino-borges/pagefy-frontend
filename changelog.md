@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.24.0] - 2022-10-28
+
+- Feature: Implemented progress bar tool
+
 ### [1.23.0] - 2022-10-28
 
 - Feature: Implemented Maps and Spotify tools in the page editor

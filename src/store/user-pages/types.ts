@@ -13,6 +13,7 @@ export enum UserPagesActionTypes {
   //Components
   UPDATE_COMPONENT_LABEL = "@user-pages/UPDATE_COMPONENT_LABEL",
   UPDATE_COMPONENT_URL = "@user-pages/UPDATE_COMPONENT_URL",
+  UPDATE_COMPONENT_PROGRESS_VALUE = "@user-pages/UPDATE_COMPONENT_PROGRESS_VALUE",
   UPDATE_COMPONENT_BACKGROUND_COLOR = "@user-pages/UPDATE_COMPONENT_BACKGROUND_COLOR",
   UPDATE_COMPONENT_FONT_COLOR = "@user-pages/UPDATE_COMPONENT_FONT_COLOR",
   UPDATE_COMPONENT_ANIMATION = "@user-pages/UPDATE_COMPONENT_ANIMATION",
@@ -84,12 +85,13 @@ export interface IUserComponent {
   visible: boolean;
   clicks: number;
   layout: IComponentLayout;
-  type: ButtonType;
+  type: ComponentType;
   mediaUrl?: string;
   iconDetails?: IIconDetails;
   visibleDate?: string;
   launchDate?: string;
   animation?: IComponentAnimation;
+  progressValue?: number;
 }
 
 export interface IComponentAnimation {
@@ -119,7 +121,7 @@ export interface IComponentStyle {
   boxShadow?: string;
 }
 
-export const enum ButtonType {
+export const enum ComponentType {
   Text = 0,
   Image = 1,
   TextImage = 2,
@@ -129,6 +131,7 @@ export const enum ButtonType {
   TextOverImage = 6,
   Map = 7,
   Spotify = 8,
+  ProgressBar = 9,
 }
 
 export interface IUserPagesState {

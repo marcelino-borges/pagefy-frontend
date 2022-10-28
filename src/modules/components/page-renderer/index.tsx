@@ -7,7 +7,7 @@ import {
 } from "../../../store/page-renderer/actions";
 import PageRendererContent from "./page-renderer-content";
 import {
-  ButtonType,
+  ComponentType,
   IUserComponent,
   IUserPage,
 } from "../../../store/user-pages/types";
@@ -32,6 +32,7 @@ import TextOverImageComponent from "./component-types/text-over-image/index";
 import ButtonScrollUp from "../button-scroll-top";
 import MapComponent from "./component-types/map";
 import SpotifyComponent from "./component-types/spotify";
+import ProgressBarComponent from "./component-types/progress-bar";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -121,10 +122,10 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
   }, [page, page?.bottomComponents]);
 
   const renderButtonByType = (component: any) => {
-    const type: ButtonType = component.type;
+    const type: ComponentType = component.type;
 
     switch (type) {
-      case ButtonType.Image:
+      case ComponentType.Image:
         return (
           <ImageComponent
             pageId={page?._id}
@@ -132,7 +133,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.Text:
+      case ComponentType.Text:
         return (
           <TextComponent
             pageId={page?._id}
@@ -140,7 +141,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.TextImage:
+      case ComponentType.TextImage:
         return (
           <TextImageComponent
             pageId={page?._id}
@@ -148,7 +149,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.Video:
+      case ComponentType.Video:
         return (
           <VideoComponent
             pageId={page?._id}
@@ -156,7 +157,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.Launch:
+      case ComponentType.Launch:
         return (
           <LaunchComponent
             pageId={page?._id}
@@ -164,7 +165,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.TextOverImage:
+      case ComponentType.TextOverImage:
         return (
           <TextOverImageComponent
             pageId={page?._id}
@@ -172,7 +173,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.Map:
+      case ComponentType.Map:
         return (
           <MapComponent
             pageId={page?._id}
@@ -181,9 +182,18 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             key={component._id}
           />
         );
-      case ButtonType.Spotify:
+      case ComponentType.Spotify:
         return (
           <SpotifyComponent
+            pageId={page?._id}
+            component={component}
+            fontColor={page?.style?.color}
+            key={component._id}
+          />
+        );
+      case ComponentType.ProgressBar:
+        return (
+          <ProgressBarComponent
             pageId={page?._id}
             component={component}
             fontColor={page?.style?.color}

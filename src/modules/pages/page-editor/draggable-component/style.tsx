@@ -79,19 +79,25 @@ export const ContentRow = styled(({ children }: any) => (
   }
 `;
 
-export const LabelText = styled(Grid)`
+export const LabelText = styled(({ transform, children, ...rest }: any) => (
+  <Grid {...rest}>{children}</Grid>
+))`
   padding-right: 16px;
   font-size: 18px;
   font-weight: bold;
-  transform: translateY(-5px);
+  transform: ${({ transform }) => transform || "translateY(-5px)"};
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
 
   @media (max-width: 600px) {
     padding-right: 4px;
   }
 `;
 
-export const UrlIconItem = styled(Grid)`
+export const PrefixIconItem = styled(Grid)`
   color: ${LIGHTER_GREY};
 `;
 

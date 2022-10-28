@@ -211,6 +211,15 @@ export const setComponentUrl = (
   type: UserPagesActionTypes.UPDATE_COMPONENT_URL,
 });
 
+export const setComponentProgressValue = (
+  pageId: string,
+  componentId: string,
+  progressValue: number
+) => ({
+  payload: { pageId, componentId, progressValue },
+  type: UserPagesActionTypes.UPDATE_COMPONENT_PROGRESS_VALUE,
+});
+
 export const increaseComponentIndexInPage = (
   currentIndex: number,
   pageId: string

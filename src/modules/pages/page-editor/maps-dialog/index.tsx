@@ -13,7 +13,10 @@ import { DescriptionText } from "./styles";
 import { isUrlValid } from "../../../../utils/validators/url";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { ButtonType, IUserComponent } from "../../../../store/user-pages/types";
+import {
+  ComponentType,
+  IUserComponent,
+} from "../../../../store/user-pages/types";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import MapEmbed from "../../../components/map-embed";
 
@@ -61,7 +64,7 @@ const MapsDialog = ({ pageId, open, handleClose }: IMapsDialogProps) => {
         rows: 2,
         columns: 2,
       },
-      type: ButtonType.Map,
+      type: ComponentType.Map,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
     clearStates();

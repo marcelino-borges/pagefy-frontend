@@ -353,6 +353,44 @@ const pagesReducer = (
       };
     }
 
+    case UserPagesActionTypes.UPDATE_COMPONENT_PROGRESS_VALUE: {
+      const pageId = action.payload.pageId as string;
+      const componentId = action.payload.componentId as string;
+      const progressValue = action.payload.progressValue as number;
+      let pageToBeSaved;
+
+      const updatedPagesList = state.pages.map((page: IUserPage) => {
+        if (page._id === pageId && page.middleComponents) {
+          const updatedComponents = page.middleComponents.map(
+            (component: IUserComponent) => {
+              if (component._id === componentId) {
+                const updatedComponent: IUserComponent = {
+                  ...component,
+                  progressValue,
+                };
+                return updatedComponent;
+              }
+              return component;
+            }
+          );
+          const updatedPage: IUserPage = {
+            ...page,
+            middleComponents: updatedComponents,
+          };
+          pageToBeSaved = updatedPage;
+          return updatedPage;
+        }
+        return page;
+      });
+
+      return {
+        ...state,
+        pages: [...updatedPagesList],
+        pageBeingSaved: pageToBeSaved,
+        loading: false,
+      };
+    }
+
     case UserPagesActionTypes.UPDATE_PAGE_BACKGROUND_COLOR: {
       const pageId = action.payload.pageId as string;
       const newColor = action.payload.newColor as string;

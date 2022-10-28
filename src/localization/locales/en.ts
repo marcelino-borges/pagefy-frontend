@@ -37,6 +37,7 @@ export const en: IDictionary = {
   type: "Type",
   backgroundColor: "Background color",
   fontColor: "Font color",
+  fillColor: "Fill color",
   uploadImage: "Upload image",
   uploadBackgroundImage: "Upload background image",
   chooseEffect: "Choose effect",
@@ -82,6 +83,10 @@ export const en: IDictionary = {
     spotify: {
       name: "Spotify",
       textfieldSpotifyUrlLabel: "Spotify URL",
+    },
+    progressBar: {
+      name: "Progress Bar",
+      textfieldProgressLabel: "Progress value",
     },
   },
   removeIcon: "Remove Icon",

@@ -15,7 +15,10 @@ import strings from "../../../../localization/index";
 import { DescriptionText } from "./styles";
 import theme from "../../../../theme";
 import { useDispatch } from "react-redux";
-import { ButtonType, IUserComponent } from "../../../../store/user-pages/types";
+import {
+  ComponentType,
+  IUserComponent,
+} from "../../../../store/user-pages/types";
 import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
@@ -116,7 +119,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
         columns: 2,
       },
       launchDate: launch.toISOString(),
-      type: ButtonType.Launch,
+      type: ComponentType.Launch,
       mediaUrl: message,
       iconDetails: undefined,
     };

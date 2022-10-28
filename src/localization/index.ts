@@ -120,6 +120,7 @@ export interface IDictionary {
   type: string;
   backgroundColor: string;
   fontColor: string;
+  fillColor: string;
   uploadImage: string;
   uploadBackgroundImage: string;
   chooseEffect: string;
@@ -164,6 +165,10 @@ export interface IDictionary {
     spotify: {
       name: string;
       textfieldSpotifyUrlLabel: string;
+    };
+    progressBar: {
+      name: string;
+      textfieldProgressLabel: string;
     };
   };
   removeIcon: string;
