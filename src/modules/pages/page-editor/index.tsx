@@ -70,6 +70,8 @@ import Footer from "./../../components/footer";
 import CustomScriptDialog from "./custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
 import ButtonScrollUp from "../../components/button-scroll-top";
+import MapsDialog from "./maps-dialog";
+import SpotifyDialog from "./spotify-dialog/index";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -105,6 +107,8 @@ const PageEditor = () => {
   const [openCustomScriptDialog, setOpenCustomScriptDialog] =
     useState<boolean>(false);
   const [openToolsDialog, setOpenToolsDialog] = useState<boolean>(false);
+  const [openMapDialog, setOpenMapDialog] = useState<boolean>(false);
+  const [openSpotifyDialog, setOpenSpotifyDialog] = useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -262,6 +266,26 @@ const PageEditor = () => {
 
   const handleCloseLaunchDialog = () => {
     setOpenLaunchDialog(false);
+  };
+
+  const handleOpenMapDialog = () => {
+    if (!page?._id) return;
+
+    setOpenMapDialog(true);
+  };
+
+  const handleCloseMapDialog = () => {
+    setOpenMapDialog(false);
+  };
+
+  const handleOpenSpotifyDialog = () => {
+    if (!page?._id) return;
+
+    setOpenSpotifyDialog(true);
+  };
+
+  const handleCloseSpotifyDialog = () => {
+    setOpenSpotifyDialog(false);
   };
 
   const handleChangeBackgroundColorComplete = useCallback(
@@ -842,6 +866,8 @@ const PageEditor = () => {
         handleOpenIconsDialog={handleOpenIconsDialog}
         handleOpenVideoDialog={handleOpenVideoDialog}
         handleOpenLaunchDialog={handleOpenLaunchDialog}
+        handleOpenMapDialog={handleOpenMapDialog}
+        handleOpenSpotifyDialog={handleOpenSpotifyDialog}
       />
       <ButtonDialog
         open={openComponentDialog}
@@ -861,6 +887,16 @@ const PageEditor = () => {
       <LaunchDialog
         open={openLaunchDialog}
         handleClose={handleCloseLaunchDialog}
+        pageId={page?._id}
+      />
+      <MapsDialog
+        open={openMapDialog}
+        handleClose={handleCloseMapDialog}
+        pageId={page?._id}
+      />
+      <SpotifyDialog
+        open={openSpotifyDialog}
+        handleClose={handleCloseSpotifyDialog}
         pageId={page?._id}
       />
     </>

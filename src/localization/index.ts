@@ -157,6 +157,14 @@ export interface IDictionary {
     whatsapp: {
       name: string;
     };
+    map: {
+      name: string;
+      textfieldMapUrlLabel: string;
+    };
+    spotify: {
+      name: string;
+      textfieldSpotifyUrlLabel: string;
+    };
   };
   removeIcon: string;
   removeComponent: string;
@@ -208,6 +216,8 @@ export interface IDictionary {
   youtubeIdExample: string;
   youtubeIdInstructions: string;
   youtubeVideoId: string;
+  mapsInstructions: string;
+  spotifyInstructions: string;
   clickHere: string;
   step: string;
   share: string;

@@ -30,6 +30,8 @@ import { Helmet } from "react-helmet";
 import { APP_ENVIROMENT } from "../../../constants";
 import TextOverImageComponent from "./component-types/text-over-image/index";
 import ButtonScrollUp from "../button-scroll-top";
+import MapComponent from "./component-types/map";
+import SpotifyComponent from "./component-types/spotify";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -167,6 +169,24 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
           <TextOverImageComponent
             pageId={page?._id}
             component={component}
+            key={component._id}
+          />
+        );
+      case ButtonType.Map:
+        return (
+          <MapComponent
+            pageId={page?._id}
+            component={component}
+            fontColor={page?.style?.color}
+            key={component._id}
+          />
+        );
+      case ButtonType.Spotify:
+        return (
+          <SpotifyComponent
+            pageId={page?._id}
+            component={component}
+            fontColor={page?.style?.color}
             key={component._id}
           />
         );

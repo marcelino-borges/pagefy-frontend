@@ -13,10 +13,12 @@ import {
   InsertEmoticon as InsertIconIcon,
   YouTube as YouTubeIcon,
   RocketLaunch as LaunchIcon,
+  Map as MapIcon,
 } from "@mui/icons-material";
 import strings from "../../../../localization";
 import { v4 as uuidv4 } from "uuid";
 import DialogActions from "@mui/material/DialogActions/DialogActions";
+import { Icon } from "@iconify/react";
 
 const BREAK_TOOLBAR_TEXT = true;
 const BREAK_POINT_TOOLBAR_TEXT = 12;
@@ -28,6 +30,8 @@ interface IToolsDialogProps {
   handleOpenIconsDialog: () => void;
   handleOpenVideoDialog: () => void;
   handleOpenLaunchDialog: () => void;
+  handleOpenMapDialog: () => void;
+  handleOpenSpotifyDialog: () => void;
   handleClose: () => void;
   open: boolean;
 }
@@ -41,6 +45,8 @@ const ToolsDialog = ({
   handleOpenIconsDialog,
   handleOpenVideoDialog,
   handleOpenLaunchDialog,
+  handleOpenMapDialog,
+  handleOpenSpotifyDialog,
 }: IToolsDialogProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -189,6 +195,71 @@ const ToolsDialog = ({
                         })
                     ) : (
                       <>{strings.tools.launch.name}</>
+                    )}
+                  </ToolbarIconText>
+                )}
+              </ToolbarButton>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={3} py="16px">
+            <Grid container item direction="column" alignItems="center">
+              <ToolbarButton
+                onClick={() => {
+                  handleOpenMapDialog();
+                  handleClose();
+                }}
+              >
+                <MapIcon />
+
+                {!isSmallerThan370 && (
+                  <ToolbarIconText>
+                    {BREAK_TOOLBAR_TEXT &&
+                    strings.tools.map.name.length > BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.map.name.split(" ").length > 1 ? (
+                      strings.tools.map.name.split(" ").map((word: string) => {
+                        return (
+                          <span key={uuidv4()}>
+                            {word} <br />
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <>{strings.tools.map.name}</>
+                    )}
+                  </ToolbarIconText>
+                )}
+              </ToolbarButton>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={3} py="16px">
+            <Grid container item direction="column" alignItems="center">
+              <ToolbarButton
+                onClick={() => {
+                  handleOpenSpotifyDialog();
+                  handleClose();
+                }}
+              >
+                <Icon icon="akar-icons:spotify-fill" />
+
+                {!isSmallerThan370 && (
+                  <ToolbarIconText>
+                    {BREAK_TOOLBAR_TEXT &&
+                    strings.tools.spotify.name.length >
+                      BREAK_POINT_TOOLBAR_TEXT &&
+                    strings.tools.spotify.name.split(" ").length > 1 ? (
+                      strings.tools.spotify.name
+                        .split(" ")
+                        .map((word: string) => {
+                          return (
+                            <span key={uuidv4()}>
+                              {word} <br />
+                            </span>
+                          );
+                        })
+                    ) : (
+                      <>{strings.tools.spotify.name}</>
                     )}
                   </ToolbarIconText>
                 )}

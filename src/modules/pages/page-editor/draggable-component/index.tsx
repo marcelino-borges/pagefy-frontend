@@ -78,6 +78,8 @@ import { getLocalizedStringByComponentType } from "../../../../localization/util
 import { PlansTypes } from "../../../../store/user/types";
 import { showSuccessToast } from "../../../../utils/toast";
 import { showErrorToast } from "./../../../../utils/toast/index";
+import MapEmbed from "../../../components/map-embed";
+import SpotifyEmbed from "./../../../components/spotify-embed/index";
 
 export interface DraggableUserComponentProps {
   component: IUserComponent;
@@ -391,71 +393,133 @@ const DraggableUserComponent = ({
               </ContentRow>
             )}
 
-            {/* URL */}
-            {component.type !== ButtonType.Video && (
-              <CustomTooltip title={component.url || ""}>
-                <ContentRow alignItems="center" width="70%">
-                  <UrlIconItem item>
-                    <LinkIcon fontSize="small" />
-                  </UrlIconItem>
-                  {isEdittingUrl ? (
-                    <Grid container item>
-                      <form
-                        onSubmit={handleSubmitUrl(onSubmitUrlForm)}
-                        style={{ width: "100%" }}
-                      >
-                        <LabelText item>
-                          <TransparentTextField
-                            autoFocus
-                            onChange={handleChangeUrl}
-                            value={values.url}
-                            fontWeight="300"
-                            color="#bfbfbf"
-                            fontStyle="italic"
-                            InputProps={{
-                              style: {
-                                width: "100%",
-                                margin: !isSmallerThan400 ? "0px 16px" : "0",
-                              },
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    onClick={() => onSubmitUrlForm()}
-                                    edge="end"
-                                  >
-                                    <SaveIcon
-                                      fontSize="medium"
-                                      color="disabled"
-                                    />
-                                  </IconButton>
-                                </InputAdornment>
-                              ),
-                            }}
-                            fontSize={isSmallerThan600 ? "15px" : "18px"}
-                            onBlur={() => {
-                              onSubmitUrlForm();
-                              setIsEdittingUrl(false);
-                            }}
-                          />
-                        </LabelText>
-                      </form>
-                    </Grid>
-                  ) : (
-                    <UrlTextItem
-                      item
-                      onClick={() => {
-                        setIsEdittingUrl(true);
-                        setValues({ ...values, url: component.url || "" });
-                      }}
-                    >
-                      {component.url}
-                    </UrlTextItem>
-                  )}
-                </ContentRow>
-              </CustomTooltip>
+            {/* Map (Only in Map type) */}
+            {component.url && component.type === ButtonType.Map && (
+              <ContentRow
+                alignItems="center"
+                style={{
+                  paddingLeft: "16px",
+                  paddingTop: isSmallerThan400 ? "36px" : "24px",
+                }}
+              >
+                <MapEmbed
+                  mapUrl={component.url}
+                  width={
+                    !isSmallerThan600
+                      ? "250px"
+                      : !isSmallerThan400
+                      ? "180px"
+                      : "140px"
+                  }
+                  height={
+                    !isSmallerThan600
+                      ? "150px"
+                      : !isSmallerThan400
+                      ? "100px"
+                      : "80px"
+                  }
+                />
+              </ContentRow>
             )}
 
+            {/* Spotify (Only in Spotify type) */}
+            {component.url && component.type === ButtonType.Spotify && (
+              <ContentRow
+                alignItems="center"
+                style={{
+                  paddingLeft: "16px",
+                  paddingTop: isSmallerThan400 ? "36px" : "24px",
+                }}
+              >
+                <SpotifyEmbed
+                  url={component.url}
+                  width={
+                    !isSmallerThan600
+                      ? "250px"
+                      : !isSmallerThan400
+                      ? "180px"
+                      : "140px"
+                  }
+                  height={
+                    !isSmallerThan600
+                      ? "150px"
+                      : !isSmallerThan400
+                      ? "100px"
+                      : "80px"
+                  }
+                />
+              </ContentRow>
+            )}
+
+            {/* URL */}
             {component.type !== ButtonType.Video &&
+              component.type !== ButtonType.Map &&
+              component.type !== ButtonType.Spotify && (
+                <CustomTooltip title={component.url || ""}>
+                  <ContentRow alignItems="center" width="70%">
+                    <UrlIconItem item>
+                      <LinkIcon fontSize="small" />
+                    </UrlIconItem>
+                    {isEdittingUrl ? (
+                      <Grid container item>
+                        <form
+                          onSubmit={handleSubmitUrl(onSubmitUrlForm)}
+                          style={{ width: "100%" }}
+                        >
+                          <LabelText item>
+                            <TransparentTextField
+                              autoFocus
+                              onChange={handleChangeUrl}
+                              value={values.url}
+                              fontWeight="300"
+                              color="#bfbfbf"
+                              fontStyle="italic"
+                              InputProps={{
+                                style: {
+                                  width: "100%",
+                                  margin: !isSmallerThan400 ? "0px 16px" : "0",
+                                },
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      onClick={() => onSubmitUrlForm()}
+                                      edge="end"
+                                    >
+                                      <SaveIcon
+                                        fontSize="medium"
+                                        color="disabled"
+                                      />
+                                    </IconButton>
+                                  </InputAdornment>
+                                ),
+                              }}
+                              fontSize={isSmallerThan600 ? "15px" : "18px"}
+                              onBlur={() => {
+                                onSubmitUrlForm();
+                                setIsEdittingUrl(false);
+                              }}
+                            />
+                          </LabelText>
+                        </form>
+                      </Grid>
+                    ) : (
+                      <UrlTextItem
+                        item
+                        onClick={() => {
+                          setIsEdittingUrl(true);
+                          setValues({ ...values, url: component.url || "" });
+                        }}
+                      >
+                        {component.url}
+                      </UrlTextItem>
+                    )}
+                  </ContentRow>
+                </CustomTooltip>
+              )}
+
+            {component.type !== ButtonType.Video &&
+              component.type !== ButtonType.Map &&
+              component.type !== ButtonType.Spotify &&
               component.type !== ButtonType.Text &&
               component.type !== ButtonType.Launch &&
               component.mediaUrl &&
@@ -548,6 +612,8 @@ const DraggableUserComponent = ({
               size="small"
               disabled={
                 component.type === ButtonType.Video ||
+                component.type === ButtonType.Map ||
+                component.type === ButtonType.Spotify ||
                 component.type === ButtonType.Image
               }
               transitionDuration="0.25s"
@@ -561,12 +627,16 @@ const DraggableUserComponent = ({
                 style={{ transform: "scale(0.7)" }}
                 bucketColor={
                   component.type === ButtonType.Video ||
+                  component.type === ButtonType.Map ||
+                  component.type === ButtonType.Spotify ||
                   component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : "white"
                 }
                 selectedColor={
                   component.type === ButtonType.Video ||
+                  component.type === ButtonType.Map ||
+                  component.type === ButtonType.Spotify ||
                   component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : component.style?.backgroundColor
@@ -596,6 +666,8 @@ const DraggableUserComponent = ({
               size="small"
               disabled={
                 component.type === ButtonType.Video ||
+                component.type === ButtonType.Map ||
+                component.type === ButtonType.Spotify ||
                 component.type === ButtonType.Image
               }
               transitionDuration="0.3s"
@@ -609,12 +681,16 @@ const DraggableUserComponent = ({
                 style={{ transform: "scale(0.7)" }}
                 bucketColor={
                   component.type === ButtonType.Video ||
+                  component.type === ButtonType.Map ||
+                  component.type === ButtonType.Spotify ||
                   component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : "white"
                 }
                 selectedColor={
                   component.type === ButtonType.Video ||
+                  component.type === ButtonType.Map ||
+                  component.type === ButtonType.Spotify ||
                   component.type === ButtonType.Image
                     ? "rgba(0, 0, 0, 0.26)"
                     : component.style?.color
@@ -644,6 +720,8 @@ const DraggableUserComponent = ({
               size="small"
               disabled={
                 component.type === ButtonType.Video ||
+                component.type === ButtonType.Map ||
+                component.type === ButtonType.Spotify ||
                 component.type === ButtonType.Launch
               }
               hoveringWhite
@@ -677,6 +755,8 @@ const DraggableUserComponent = ({
               disabled={
                 component.type === ButtonType.Video ||
                 component.type === ButtonType.Launch ||
+                component.type === ButtonType.Map ||
+                component.type === ButtonType.Spotify ||
                 userState?.plan === PlansTypes.FREE
               }
               hoveringWhite
@@ -706,6 +786,8 @@ const DraggableUserComponent = ({
               disabled={
                 component.type === ButtonType.Video ||
                 component.type === ButtonType.Launch ||
+                component.type === ButtonType.Map ||
+                component.type === ButtonType.Spotify ||
                 userState?.plan === PlansTypes.FREE
               }
               hoveringWhite

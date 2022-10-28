@@ -168,7 +168,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
             onAddVideo();
           }}
         >
-          {strings.add}
+          {strings.create}
         </Button>
       </DialogActions>
     </Dialog>

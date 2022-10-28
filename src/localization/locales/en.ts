@@ -75,6 +75,14 @@ export const en: IDictionary = {
     whatsapp: {
       name: "Whatsapp",
     },
+    map: {
+      name: "Map",
+      textfieldMapUrlLabel: "Google Maps URL",
+    },
+    spotify: {
+      name: "Spotify",
+      textfieldSpotifyUrlLabel: "Spotify URL",
+    },
   },
   removeIcon: "Remove Icon",
   removeComponent: "Remove Component",
@@ -117,7 +125,7 @@ export const en: IDictionary = {
   hour: "Hour",
   time: "Time",
   urlRequired: "URL required",
-  textInComponentRequired: "Required for a text component",
+  textInComponentRequired: "Required for this component",
   imageInComponentRequired: "Choose an image to your component",
   selectAllOptions: "Select all the options!",
   videoUrl: "Video URL",
@@ -128,6 +136,10 @@ export const en: IDictionary = {
   youtubeVideoId: "Youtube video ID",
   youtubeIdInstructions:
     "Access the YouTube video you want to add to your page and copy it's URL to here",
+  mapsInstructions:
+    "Open the place you want in Google Maps, copy the URL of the browser where the map is open and paste here.",
+  spotifyInstructions:
+    'Open Spotify, find the playlist, artist, album or track you want, click on the "...", select "Share" and then "Copy link to XXX". Then past the URL here.',
   clickHere: "Click here",
   step: "Step",
   share: "Share",
