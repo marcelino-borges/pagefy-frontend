@@ -73,6 +73,7 @@ import ButtonScrollUp from "../../components/button-scroll-top";
 import MapsDialog from "./maps-dialog";
 import SpotifyDialog from "./spotify-dialog/index";
 import ProgressBarDialog from "./progress-bar-dialog";
+import CountersDialog from "./counters-dialog";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -112,6 +113,7 @@ const PageEditor = () => {
   const [openSpotifyDialog, setOpenSpotifyDialog] = useState<boolean>(false);
   const [openProgressBarDialog, setOpenProgressBarDialog] =
     useState<boolean>(false);
+  const [openCountersDialog, setOpenCountersDialog] = useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -299,6 +301,16 @@ const PageEditor = () => {
 
   const handleCloseProgressBarDialog = () => {
     setOpenProgressBarDialog(false);
+  };
+
+  const handleOpenCountersDialog = () => {
+    if (!page?._id) return;
+
+    setOpenCountersDialog(true);
+  };
+
+  const handleCloseCountersDialog = () => {
+    setOpenCountersDialog(false);
   };
 
   const handleChangeBackgroundColorComplete = useCallback(
@@ -882,6 +894,7 @@ const PageEditor = () => {
         handleOpenMapDialog={handleOpenMapDialog}
         handleOpenSpotifyDialog={handleOpenSpotifyDialog}
         handleOpenProgressBarDialog={handleOpenProgressBarDialog}
+        handleOpenCountersDialog={handleOpenCountersDialog}
       />
       <ButtonDialog
         open={openComponentDialog}
@@ -916,6 +929,11 @@ const PageEditor = () => {
       <ProgressBarDialog
         open={openProgressBarDialog}
         handleClose={handleCloseProgressBarDialog}
+        pageId={page?._id}
+      />
+      <CountersDialog
+        open={openCountersDialog}
+        handleClose={handleCloseCountersDialog}
         pageId={page?._id}
       />
     </>

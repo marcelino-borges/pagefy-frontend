@@ -92,6 +92,7 @@ export interface IUserComponent {
   launchDate?: string;
   animation?: IComponentAnimation;
   progressValue?: number;
+  counters?: ICounter[];
 }
 
 export interface IComponentAnimation {
@@ -132,6 +133,12 @@ export const enum ComponentType {
   Map = 7,
   Spotify = 8,
   ProgressBar = 9,
+  Counter = 10,
+}
+
+export interface ICounter {
+  number: number;
+  label: string;
 }
 
 export interface IUserPagesState {

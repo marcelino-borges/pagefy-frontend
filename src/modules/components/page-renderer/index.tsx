@@ -33,6 +33,7 @@ import ButtonScrollUp from "../button-scroll-top";
 import MapComponent from "./component-types/map";
 import SpotifyComponent from "./component-types/spotify";
 import ProgressBarComponent from "./component-types/progress-bar";
+import CountersComponent from "./component-types/counters";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -194,6 +195,15 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
       case ComponentType.ProgressBar:
         return (
           <ProgressBarComponent
+            pageId={page?._id}
+            component={component}
+            fontColor={page?.style?.color}
+            key={component._id}
+          />
+        );
+      case ComponentType.Counter:
+        return (
+          <CountersComponent
             pageId={page?._id}
             component={component}
             fontColor={page?.style?.color}

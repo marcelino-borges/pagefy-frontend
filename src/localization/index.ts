@@ -87,6 +87,8 @@ interface IPlanDetails {
 }
 
 export interface IDictionary {
+  activate: string;
+  inactivate: string;
   checkOurPlans: string;
   youAreSpecial: string;
   recurrency: {
@@ -169,6 +171,12 @@ export interface IDictionary {
     progressBar: {
       name: string;
       textfieldProgressLabel: string;
+    };
+    counters: {
+      name: string;
+      textfieldCounterLabel: string;
+      number: string;
+      label: string;
     };
   };
   removeIcon: string;

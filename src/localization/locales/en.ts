@@ -2,6 +2,8 @@ import { IDictionary } from "..";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const en: IDictionary = {
+  activate: "Activate",
+  inactivate: "Inactivate",
   checkOurPlans: "Check our plans",
   youAreSpecial: "You can be special too!",
   ok: "OK",
@@ -87,6 +89,12 @@ export const en: IDictionary = {
     progressBar: {
       name: "Progress Bar",
       textfieldProgressLabel: "Progress value",
+    },
+    counters: {
+      name: "Counters",
+      textfieldCounterLabel: "Counter",
+      number: "Number",
+      label: "Label",
     },
   },
   removeIcon: "Remove Icon",

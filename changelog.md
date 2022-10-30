@@ -16,7 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
-### [1.24.0] - 2022-10-28
+### [1.25.0] - 2022-10-30
+
+- Feature: Implemented counters
+
+### [1.24.0] - 2022-10-29
 
 - Feature: Implemented progress bar tool
 

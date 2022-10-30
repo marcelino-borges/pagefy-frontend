@@ -8,20 +8,16 @@ import {
   useTheme,
 } from "@mui/material";
 import { ToolbarButton, ToolbarIconText } from "../style";
-import {
-  Crop169 as CreateButtonIcon,
-  InsertEmoticon as InsertIconIcon,
-  YouTube as YouTubeIcon,
-  RocketLaunch as LaunchIcon,
-  Map as MapIcon,
-} from "@mui/icons-material";
 import strings from "../../../../localization";
 import { v4 as uuidv4 } from "uuid";
 import DialogActions from "@mui/material/DialogActions/DialogActions";
 import { Icon } from "@iconify/react";
 
-const BREAK_TOOLBAR_TEXT = true;
-const BREAK_POINT_TOOLBAR_TEXT = 12;
+interface ITool {
+  label: string;
+  iconifyId: string;
+  handleClick: () => void;
+}
 
 interface IToolsDialogProps {
   isSmallerThan600: boolean;
@@ -33,6 +29,7 @@ interface IToolsDialogProps {
   handleOpenMapDialog: () => void;
   handleOpenSpotifyDialog: () => void;
   handleOpenProgressBarDialog: () => void;
+  handleOpenCountersDialog: () => void;
   handleClose: () => void;
   open: boolean;
 }
@@ -42,16 +39,78 @@ const ToolsDialog = ({
   handleClose,
   isSmallerThan600,
   handleOpenComponentDialog,
-  isSmallerThan370,
   handleOpenIconsDialog,
   handleOpenVideoDialog,
   handleOpenLaunchDialog,
   handleOpenMapDialog,
   handleOpenSpotifyDialog,
   handleOpenProgressBarDialog,
+  handleOpenCountersDialog,
 }: IToolsDialogProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const ToolButton = ({ tool }: { tool: ITool }) => {
+    return (
+      <Grid item xs={3} py="16px">
+        <Grid container item direction="column">
+          <ToolbarButton
+            onClick={() => {
+              tool.handleClick();
+              handleClose();
+            }}
+          >
+            <Icon icon={tool.iconifyId} />
+
+            <ToolbarIconText>{tool.label}</ToolbarIconText>
+          </ToolbarButton>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  const tools: ITool[] = [
+    {
+      label: strings.tools.button.name,
+      iconifyId: "mdi:gesture-tap-button",
+      handleClick: handleOpenComponentDialog,
+    },
+    {
+      label: strings.tools.icon.name,
+      iconifyId: "fluent:emoji-sparkle-16-regular",
+      handleClick: handleOpenIconsDialog,
+    },
+    {
+      label: strings.tools.video.name,
+      iconifyId: "akar-icons:youtube-fill",
+      handleClick: handleOpenVideoDialog,
+    },
+    {
+      label: strings.tools.launch.name,
+      iconifyId: "ic:round-rocket-launch",
+      handleClick: handleOpenLaunchDialog,
+    },
+    {
+      label: strings.tools.map.name,
+      iconifyId: "clarity:map-solid",
+      handleClick: handleOpenMapDialog,
+    },
+    {
+      label: strings.tools.spotify.name,
+      iconifyId: "akar-icons:spotify-fill",
+      handleClick: handleOpenSpotifyDialog,
+    },
+    {
+      label: strings.tools.progressBar.name,
+      iconifyId: "pajamas:progress",
+      handleClick: handleOpenProgressBarDialog,
+    },
+    {
+      label: strings.tools.counters.name,
+      iconifyId: "fluent:number-row-24-regular",
+      handleClick: handleOpenCountersDialog,
+    },
+  ];
 
   return (
     <Dialog
@@ -71,237 +130,9 @@ const ToolsDialog = ({
           alignItems="flex-start"
           paddingTop={isSmallerThan600 ? "24px" : "0"}
         >
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenComponentDialog();
-                  handleClose();
-                }}
-              >
-                <CreateButtonIcon />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.button.name.length >
-                      BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.button.name.split(" ").length > 1 ? (
-                      strings.tools.button.name
-                        .split(" ")
-                        .map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                    ) : (
-                      <>{strings.tools.button.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column" alignItems="center">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenIconsDialog();
-                  handleClose();
-                }}
-              >
-                <InsertIconIcon />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.icon.name.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.icon.name.split(" ").length > 1 ? (
-                      strings.tools.icon.name.split(" ").map((word: string) => {
-                        return (
-                          <span key={uuidv4()}>
-                            {word} <br />
-                          </span>
-                        );
-                      })
-                    ) : (
-                      <>{strings.tools.icon.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column" alignItems="center">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenVideoDialog();
-                  handleClose();
-                }}
-              >
-                <YouTubeIcon />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.video.name.length >
-                      BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.video.name.split(" ").length > 1 ? (
-                      strings.tools.video.name
-                        .split(" ")
-                        .map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                    ) : (
-                      <>{strings.tools.video.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column" alignItems="center">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenLaunchDialog();
-                  handleClose();
-                }}
-              >
-                <LaunchIcon />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.launch.name.length >
-                      BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.launch.name.split(" ").length > 1 ? (
-                      strings.tools.launch.name
-                        .split(" ")
-                        .map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                    ) : (
-                      <>{strings.tools.launch.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column" alignItems="center">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenMapDialog();
-                  handleClose();
-                }}
-              >
-                <MapIcon />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.map.name.length > BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.map.name.split(" ").length > 1 ? (
-                      strings.tools.map.name.split(" ").map((word: string) => {
-                        return (
-                          <span key={uuidv4()}>
-                            {word} <br />
-                          </span>
-                        );
-                      })
-                    ) : (
-                      <>{strings.tools.map.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column" alignItems="center">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenSpotifyDialog();
-                  handleClose();
-                }}
-              >
-                <Icon icon="akar-icons:spotify-fill" />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.spotify.name.length >
-                      BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.spotify.name.split(" ").length > 1 ? (
-                      strings.tools.spotify.name
-                        .split(" ")
-                        .map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                    ) : (
-                      <>{strings.tools.spotify.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={3} py="16px">
-            <Grid container item direction="column" alignItems="center">
-              <ToolbarButton
-                onClick={() => {
-                  handleOpenProgressBarDialog();
-                  handleClose();
-                }}
-              >
-                <Icon icon="pajamas:progress" />
-
-                {!isSmallerThan370 && (
-                  <ToolbarIconText>
-                    {BREAK_TOOLBAR_TEXT &&
-                    strings.tools.progressBar.name.length >
-                      BREAK_POINT_TOOLBAR_TEXT &&
-                    strings.tools.progressBar.name.split(" ").length > 1 ? (
-                      strings.tools.progressBar.name
-                        .split(" ")
-                        .map((word: string) => {
-                          return (
-                            <span key={uuidv4()}>
-                              {word} <br />
-                            </span>
-                          );
-                        })
-                    ) : (
-                      <>{strings.tools.progressBar.name}</>
-                    )}
-                  </ToolbarIconText>
-                )}
-              </ToolbarButton>
-            </Grid>
-          </Grid>
+          {tools.map((tool: ITool) => (
+            <ToolButton tool={tool} key={uuidv4()} />
+          ))}
         </Grid>
       </DialogContent>
       <DialogActions>
