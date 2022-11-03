@@ -1,4 +1,4 @@
-import { Grid, Stack } from "@mui/material";
+import { Grid, Stack, useMediaQuery } from "@mui/material";
 import { ITestimonial } from "../../../../../store/testimonials/types";
 import RatingStars from "../rating-stars";
 import { BorderDiv, Root } from "./style";
@@ -16,7 +16,20 @@ const UserTestimonialCard = ({
   testimonial,
   onClick,
 }: IUserTestimonialCardProps) => {
+  const isSmallerThan600 = useMediaQuery("(max-width:600px)");
+  const isSmallerThan400 = useMediaQuery("(max-width:400px)");
+
   const [videoId, setVideoId] = useState<string | null>("");
+
+  const getVideoWidth = () => {
+    if (!isSmallerThan600) {
+      return 500;
+    } else if (isSmallerThan600 && !isSmallerThan400) {
+      return 300;
+    } else {
+      return 150;
+    }
+  };
 
   useEffect(() => {
     if (testimonial.videoUrl?.length) {
@@ -38,8 +51,8 @@ const UserTestimonialCard = ({
       {videoId && testimonial.videoUrl?.length && (
         <Grid container pt="24px">
           <YoutubeEmbed
-            width={`${500}px`}
-            height={`${(500 * 9) / 16}px`}
+            width={`${getVideoWidth()}px`}
+            height={`${(getVideoWidth() * 9) / 16}px`}
             embedId={videoId}
           />
         </Grid>
