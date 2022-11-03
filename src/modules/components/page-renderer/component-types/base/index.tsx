@@ -26,44 +26,40 @@ const BaseComponentType = ({
   onClick,
   ...rest
 }: IBaseComponentTypeProps) => {
-  const MainComponent = () => (
-    <Root
-      container
-      item
-      xs={6 * layout.columns}
-      animation={animation?.name}
-      duration={animation?.duration}
-      delay={animation?.startDelay}
-      infinite={animation?.infinite}
-      onClick={() => {
-        if (url) openExternalLink(url, window);
-        onClick();
-      }}
-    >
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ width: "100%", height: "100%" }}
-      >
-        <Grid
-          container
-          item
-          style={{
-            minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
-            borderRadius: `${style?.borderRadius || 0}px`,
-          }}
-          {...rest}
-        >
-          {children}
-        </Grid>
-      </a>
-    </Root>
-  );
-
   return (
     <CustomTooltip disabled={!url} title={url || ""}>
-      <MainComponent />
+      <Root
+        container
+        item
+        xs={6 * layout.columns}
+        animation={animation?.name}
+        duration={animation?.duration}
+        delay={animation?.startDelay}
+        infinite={animation?.infinite}
+        onClick={() => {
+          if (url) openExternalLink(url, window);
+          onClick();
+        }}
+      >
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ width: "100%", height: "100%" }}
+        >
+          <Grid
+            container
+            item
+            style={{
+              minHeight: layout.rows * RENDERED_PAGE_COMPONENT_HEIGHT,
+              borderRadius: `${style?.borderRadius || 0}px`,
+            }}
+            {...rest}
+          >
+            {children}
+          </Grid>
+        </a>
+      </Root>
     </CustomTooltip>
   );
 };

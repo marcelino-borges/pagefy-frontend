@@ -66,14 +66,18 @@ const UserTestimonials = () => {
         ]}
         increasingSize
       />
-      <Grid container pt="24px" pb="24px">
-        <Button
-          variant="contained"
-          onClick={() => setOpenCreateTestimonialDialog(true)}
-        >
-          {strings.testimonials.leaveTestimonial}
-        </Button>
-      </Grid>
+      {!userTestimonials.loading &&
+        (!userTestimonials.testimonials ||
+          userTestimonials.testimonials?.length === 0) && (
+          <Grid container pt="24px" pb="24px">
+            <Button
+              variant="contained"
+              onClick={() => setOpenCreateTestimonialDialog(true)}
+            >
+              {strings.testimonials.leaveTestimonial}
+            </Button>
+          </Grid>
+        )}
 
       {userTestimonials.loading && (
         <LoadingSpinner
@@ -85,11 +89,7 @@ const UserTestimonials = () => {
         />
       )}
       <Grid container gap="24px">
-        {!userTestimonials.loading && !userTestimonials.testimonials?.length ? (
-          <i>{strings.testimonials.noTestimonials}...</i>
-        ) : (
-          testimonials
-        )}
+        {testimonials}
       </Grid>
       <CreateTestimonialsDialog
         open={openCreateTestimonialDialog}

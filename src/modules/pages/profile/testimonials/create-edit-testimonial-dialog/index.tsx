@@ -98,7 +98,8 @@ const CreateTestimonialsDialog = ({
   }, [userTestimonials.error]);
 
   const onSubmitTestimonial = () => {
-    if (userTestimonials.loading) return;
+    if (userTestimonials.loading || userTestimonials.testimonials?.length)
+      return;
 
     setErrors(INITIAL_ERRORS);
 
@@ -341,7 +342,13 @@ const CreateTestimonialsDialog = ({
         <Button
           variant="contained"
           onClick={() => onSubmitTestimonial()}
-          disabled={!values.text}
+          disabled={
+            (existingTestimonial &&
+              existingTestimonial.testimonial === values.text &&
+              existingTestimonial.videoUrl === values.videoUrl &&
+              existingTestimonial.rating === values.rating) ||
+            !values.text
+          }
         >
           {existingTestimonial ? strings.save : strings.create}
         </Button>

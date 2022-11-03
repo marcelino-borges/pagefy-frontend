@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.27.0] - 2022-10-03
+
+- Feature: Counters animation increasing it's number with time on page renderer
+
 ### [1.26.0] - 2022-10-03
 
 - Feature: Testimonials implemented
