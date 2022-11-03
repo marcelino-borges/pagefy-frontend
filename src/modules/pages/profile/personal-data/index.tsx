@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Checkbox,
@@ -10,7 +10,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import strings from "../../../../localization";
 import { deleteUser } from "../../../../services/user";
-import { IApplicationState } from "../../../../store";
 import { signOut } from "../../../../store/auth/actions";
 import { IUser, PlansTypes } from "../../../../store/user/types";
 import { showErrorToast, showSuccessToast } from "../../../../utils/toast";
@@ -47,10 +46,6 @@ interface IPersonalDataProps {
 const PersonalData = ({ userProfile }: IPersonalDataProps) => {
   const dispatch = useDispatch();
 
-  const token: string | undefined = useSelector(
-    (state: IApplicationState) => state.auth.auth?.accessToken
-  );
-
   const [values, setValues] = useState<IUser>(INITIAL_STATE);
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] =
@@ -76,8 +71,8 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
   };
 
   const deleteUserFromFirebaseAndMongo = () => {
-    if (userProfile && userProfile._id && userProfile.authId && token) {
-      deleteUser(userProfile._id, userProfile.authId, token)
+    if (userProfile && userProfile._id && userProfile.authId) {
+      deleteUser(userProfile._id, userProfile.authId)
         .then(() => {
           showSuccessToast(strings.deleteAccountSuccess);
           dispatch(signOut());

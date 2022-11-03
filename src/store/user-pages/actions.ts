@@ -2,7 +2,6 @@ import { AxiosError, AxiosResponse } from "axios";
 import * as PagesService from "../../services/user-pages";
 import * as FilesService from "../../services/files";
 import { translateError } from "../../utils/api-errors-mapping";
-import { getFirebaseToken } from "../../utils/firebase-config";
 import { IAppResult, UserStorageFolder } from "../shared/types";
 import { IApplicationState } from "..";
 import {
@@ -13,7 +12,6 @@ import {
 } from "./types";
 import { IUser } from "../user/types";
 import { clearLoading } from "../shared/actions";
-import strings from "../../localization";
 
 export const getAllUserPages =
   (
@@ -24,14 +22,7 @@ export const getAllUserPages =
   async (dispatch: any) => {
     dispatch(getAllUserPagesLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
-    PagesService.getAllUserPages(userId, token)
+    PagesService.getAllUserPages(userId)
       .then((res: AxiosResponse) => {
         dispatch(getAllUserPagesSuccess(res.data));
 
@@ -73,14 +64,7 @@ export const createPage =
   async (dispatch: any) => {
     dispatch(createPageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
-    PagesService.createPage(page, token)
+    PagesService.createPage(page)
       .then((res: AxiosResponse) => {
         const newPage: IUserPage = res.data;
         dispatch(createPageSuccess(newPage));
@@ -127,15 +111,7 @@ export const updatePage =
   async (dispatch: any) => {
     dispatch(updatePageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback)
-        onErrorCallback(strings.generalErrors.internalError, undefined);
-      return;
-    }
-
-    PagesService.updatePage(page, token)
+    PagesService.updatePage(page)
       .then((res: AxiosResponse) => {
         const pageFromServer: IUserPage = res.data;
         dispatch(updatePageSuccess(pageFromServer));
@@ -264,9 +240,8 @@ export const deleteMiddleComponentFromPage =
     const user: IUser | undefined = state.user.profile;
     const pages: IUserPage[] | undefined = state.userPages.pages;
     const userId: string | undefined = user?._id;
-    const token = await getFirebaseToken();
 
-    if (!token || !userId || !pages) {
+    if (!userId || !pages) {
       if (onErrorCallback) onErrorCallback();
       return;
     }
@@ -294,7 +269,7 @@ export const deleteMiddleComponentFromPage =
       return;
     }
 
-    PagesService.updatePage(pageToUpdate, token)
+    PagesService.updatePage(pageToUpdate)
       .then(() => {
         dispatch(deleteMiddleComponentFromPageSuccess(updatedPagesList));
 
@@ -330,9 +305,8 @@ export const deleteTopComponentFromPage =
     const user: IUser | undefined = getState().user.profile;
     const pages: IUserPage[] | undefined = getState().userPages.pages;
     const userId: string | undefined = user?._id;
-    const token = await getFirebaseToken();
 
-    if (!token || !userId || !pages) {
+    if (!userId || !pages) {
       if (onErrorCallback) onErrorCallback();
       return;
     }
@@ -359,7 +333,7 @@ export const deleteTopComponentFromPage =
       return;
     }
 
-    PagesService.updatePage(pageToUpdate, token)
+    PagesService.updatePage(pageToUpdate)
       .then(() => {
         dispatch(deleteTopComponentFromPageSuccess(updatedPagesList));
 
@@ -440,14 +414,7 @@ export const deletePage =
   async (dispatch: any) => {
     dispatch(deletePageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
-    PagesService.deletePage(pageId, token)
+    PagesService.deletePage(pageId)
       .then(() => {
         dispatch(deletePageSuccess(pageId));
 
@@ -498,13 +465,6 @@ export const setPageImage =
   ) =>
   async (dispatch: any) => {
     dispatch(setPageImageLoading());
-
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
     dispatch(setPageImageSuccess(imageUrl, pageId));
 
     if (onSuccessCallback) onSuccessCallback(imageUrl);
@@ -520,18 +480,10 @@ export const uploadAndSetPageImage =
   async (dispatch: any) => {
     dispatch(setPageImageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
     FilesService.uploadImage(
       page.userId,
       image,
-      UserStorageFolder.UPLOADED_IMAGES,
-      token
+      UserStorageFolder.UPLOADED_IMAGES
     )
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
@@ -577,14 +529,7 @@ export const deleteImage = async (
 ) => {
   if (!url) return;
 
-  const token = await getFirebaseToken();
-
-  if (!token) {
-    if (onErrorCallback) onErrorCallback();
-    return;
-  }
-
-  FilesService.deleteImage(url, userId, token)
+  FilesService.deleteImage(url, userId)
     .then(() => {
       if (onSuccessCallback) onSuccessCallback();
     })
@@ -610,18 +555,10 @@ export const setPageBGImage =
   async (dispatch: any) => {
     dispatch(setPageBGImageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
     FilesService.uploadImage(
       page.userId,
       image,
-      UserStorageFolder.UPLOADED_IMAGES,
-      token
+      UserStorageFolder.UPLOADED_IMAGES
     )
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
@@ -667,13 +604,6 @@ export const setComponentImage =
   async (dispatch: any) => {
     dispatch(setComponentImageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
     dispatch(setComponentImageSuccess(pageId, componentId, imageUrl));
 
     if (onSuccessCallback) onSuccessCallback(imageUrl);
@@ -691,19 +621,7 @@ export const uploadAndSetComponentImage =
   async (dispatch: any) => {
     dispatch(setComponentImageLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
-    FilesService.uploadImage(
-      userId,
-      image,
-      UserStorageFolder.UPLOADED_IMAGES,
-      token
-    )
+    FilesService.uploadImage(userId, image, UserStorageFolder.UPLOADED_IMAGES)
       .then((res: AxiosResponse) => {
         const imageUrl = res.data;
         dispatch(setComponentImageSuccess(pageId, componentId, imageUrl));

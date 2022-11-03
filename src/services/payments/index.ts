@@ -1,60 +1,33 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { paymentsApi } from "../../config/axios";
 import { PlansTypes } from "../../store/user/types";
 
-const api = axios.create({
-  baseURL: `${process.env.REACT_APP_PAYMENTS_ENDPOINT}`,
-});
-
 export const getPaymentIntent = async (
-  paymentIntentId: string,
-  token: string
+  paymentIntentId: string
 ): Promise<AxiosResponse<any>> => {
-  return api.get(`/subscription/paymentintent/${paymentIntentId}`, {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  return paymentsApi.get(`/subscription/paymentintent/${paymentIntentId}`);
 };
 
 export const createSubscription = async (
   currency: string,
   recurrency: string,
-  planType: PlansTypes,
-  token: string
+  planType: PlansTypes
 ): Promise<AxiosResponse<any>> => {
-  return api.post(
-    `/subscription`,
-    {
-      currency,
-      recurrency,
-      planType,
-    },
-    {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }
-  );
+  return paymentsApi.post(`/subscription`, {
+    currency,
+    recurrency,
+    planType,
+  });
 };
 
 export const cancelSubscription = async (
-  subscriptionId: string,
-  token: string
+  subscriptionId: string
 ): Promise<AxiosResponse<any>> => {
-  return api.put(`/subscription/cancel/${subscriptionId}`, null, {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  return paymentsApi.put(`/subscription/cancel/${subscriptionId}`, null);
 };
 
 export const getUserSubscriptions = async (
-  userId: string,
-  token: string
+  userId: string
 ): Promise<AxiosResponse<any>> => {
-  return api.get(`/subscription/user/${userId}`, {
-    headers: {
-      Authorization: "Bearer " + token,
-    },
-  });
+  return paymentsApi.get(`/subscription/user/${userId}`);
 };

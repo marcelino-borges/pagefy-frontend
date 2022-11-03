@@ -6,45 +6,18 @@ import { AxiosError, AxiosResponse } from "axios";
 import { IAppResult, UserStorageFolder } from "../shared/types";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getAllUserPages } from "./../user-pages/actions";
-import { getFirebaseToken } from "../../utils/firebase-config";
-import { TOKEN_AUTH_ERROR } from "./../../constants/index";
 import { ISubscriptionCreationResult } from "./../purchase/types";
 
 export const getUser =
   (
     email: string,
-    token: string | null,
-    onSuccessCallback: any = null,
-    onErrorCallback: any = null
+    onSuccessCallback: ((user: IUser) => void) | null = null,
+    onErrorCallback: ((error: string) => void) | null = null
   ) =>
   async (dispatch: any) => {
-    let validToken;
-
-    if (!token) {
-      validToken = await getFirebaseToken();
-
-      if (!validToken) {
-        const error: IAppResult = {
-          message: TOKEN_AUTH_ERROR,
-          errorDetails: TOKEN_AUTH_ERROR,
-          statusCode: 0,
-        };
-        dispatch(getUserError(error));
-
-        if (error && error.errorDetails) {
-          const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
-        }
-
-        return;
-      }
-    } else {
-      validToken = token;
-    }
-
     dispatch(getUserLoading());
 
-    UserService.getUser(email, validToken)
+    UserService.getUser(email)
       .then((res: AxiosResponse) => {
         const user: IUser = res.data;
         dispatch(getUserSuccess(res.data));
@@ -85,27 +58,9 @@ export const getSubscriptions =
     onErrorCallback: any = null
   ) =>
   async (dispatch: any) => {
-    let validToken = await getFirebaseToken();
-
-    if (!validToken) {
-      const error: IAppResult = {
-        message: TOKEN_AUTH_ERROR,
-        errorDetails: TOKEN_AUTH_ERROR,
-        statusCode: 0,
-      };
-      dispatch(getUserError(error));
-
-      if (error && error.errorDetails) {
-        const translatedError = translateError(error.errorDetails);
-        if (onErrorCallback) onErrorCallback(translatedError);
-      }
-
-      return;
-    }
-
     dispatch(getSubscriptionsLoading());
 
-    PaymentService.getUserSubscriptions(userId, validToken)
+    PaymentService.getUserSubscriptions(userId)
       .then((res: AxiosResponse) => {
         const subscriptions: ISubscriptionCreationResult[] = res.data;
         dispatch(getSubscriptionsSuccess(subscriptions));
@@ -144,14 +99,7 @@ export const updateUser =
   async (dispatch: any) => {
     dispatch(updateUserLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (onErrorCallback) onErrorCallback();
-      return;
-    }
-
-    UserService.updateUser(user, token)
+    UserService.updateUser(user)
       .then((res: AxiosResponse) => {
         dispatch(updateUserSuccess(res.data));
 
@@ -193,9 +141,7 @@ export const setUserProfileImage =
     onErrorCallback: any = null
   ) =>
   async (dispatch: any) => {
-    const token = await getFirebaseToken();
-
-    if (!token || !user._id) {
+    if (!user._id) {
       if (onErrorCallback) onErrorCallback();
       return;
     }
@@ -224,19 +170,12 @@ export const uploadAndSetUserProfileImage =
     onErrorCallback: any = null
   ) =>
   async (dispatch: any) => {
-    const token = await getFirebaseToken();
-
-    if (!token || !user._id) {
+    if (!user._id) {
       if (onErrorCallback) onErrorCallback();
       return;
     }
 
-    FilesService.uploadImage(
-      user._id,
-      image,
-      UserStorageFolder.UPLOADED_IMAGES,
-      token
-    )
+    FilesService.uploadImage(user._id, image, UserStorageFolder.UPLOADED_IMAGES)
       .then((res: AxiosResponse) => {
         const urlImage: string = res.data;
 

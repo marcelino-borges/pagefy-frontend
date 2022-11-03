@@ -83,6 +83,20 @@ export const faqsPT: IFaq[] = [
     question: "Qual o arredondamento de um link da bio?",
     answer: <>6 pixels.</>,
   },
+  {
+    question: "Por que meu componente está invisível?",
+    answer: (
+      <>
+        Possivelmente seu componente está com algum erro que o impediu de ser
+        exibido corretamente. Tente apagar este componente da sua página e criar
+        outro. Caso você esteja tentando criar componentes especiais como
+        Spotify, Google Maps ou vídeo, possivelmente há algum problema na URL
+        que você inseriu durante sua criação. Estes componentes dependem da
+        corretude da URL para que os respectivos serviços (Google, YouTube e
+        Spotify) gerem o componente da maneira esperada.
+      </>
+    ),
+  },
 ];
 
 export const faqsEN: IFaq[] = [
@@ -165,5 +179,19 @@ export const faqsEN: IFaq[] = [
   {
     question: "What is the border radius of a link in my bio?",
     answer: <>6 pixels.</>,
+  },
+  {
+    question: "Why is my component invisible?",
+    answer: (
+      <>
+        Your component is probably with some error that has block it from being
+        properly rendered. Try to delete this component and create another one.
+        If you're trying to create special components like Spotify, Google Maps
+        or video (YouTube), it's possible that there is some error with the URL
+        you have inserted while creating it. These components depende exclusivly
+        on the URL correctness for the respective services (Google, YouTube and
+        Spotify) generate the component in the expected way.
+      </>
+    ),
   },
 ];

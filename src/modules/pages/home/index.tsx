@@ -131,8 +131,8 @@ const Home = () => {
           <Grid container direction="column" alignItems="center">
             <TriplePageTitle
               titles={[
-                strings.testimonialsTitle,
-                strings.testimonialsSubtitle,
+                strings.testimonials.testimonialsTitle,
+                strings.testimonials.testimonialsSubtitle,
                 "",
               ]}
               baseSize={2}

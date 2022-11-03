@@ -185,11 +185,13 @@ export interface IDictionary {
   iconName: string;
   back: string;
   cancel: string;
+  confirm: string;
   add: string;
   mountURL: string;
   searchIconMinCaracters: string;
   url: string;
   invalidUrl: string;
+  hasToBeYoutubeVideo: string;
   colorPicker: string;
   removeComponentConfirmation: string;
   removeIconConfirmation: string;
@@ -312,6 +314,7 @@ export interface IDictionary {
     invalidEmail: string;
     passwordMustAttendRequirements: string;
     invalidToken: string;
+    signInAgain: string;
   };
   generalErrors: {
     unknownError: string;
@@ -341,6 +344,7 @@ export interface IDictionary {
   nowChooseTheRecurrency: string;
   nowItsTimeToSubscribe: string;
   subscription: string;
+  noSubscriptions: string;
   subscriptionPayment: {
     succeeded: string;
     processing: string;
@@ -402,6 +406,7 @@ export interface IDictionary {
   legal: string;
   privacy: string;
   deleteAccount: string;
+  delete: string;
   deleteAccountSuccess: string;
   deleteAccountError: string;
   plansBlockings: {
@@ -411,8 +416,22 @@ export interface IDictionary {
   };
   ok: string;
   somethingWentWrong: string;
-  testimonialsTitle: string;
-  testimonialsSubtitle: string;
+  testimonials: {
+    testimonialsTitle: string;
+    testimonialsSubtitle: string;
+    userTestimonials: string;
+    testimonials: string;
+    userTestimonialsSubtitle: string;
+    noTestimonials: string;
+    createANewTestimonial: string;
+    editATestimonial: string;
+    zeroRatingDialogTitle: string;
+    zeroRatingDialogText: string;
+    deleteDialogTitle: string;
+    deleteDialogText: string;
+    leaveTestimonial: string;
+  };
+
   yourGallery: string;
   fromYourGalleryOrTemplates: string;
   orUploadANewFile: string;

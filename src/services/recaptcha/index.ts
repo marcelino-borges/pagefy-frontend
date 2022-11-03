@@ -1,15 +1,9 @@
-import axios, { AxiosResponse } from "axios";
-
-const api = axios.create({
-  baseURL: `${process.env.REACT_APP_REGISTRATION_ENDPOINT}`,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import { AxiosResponse } from "axios";
+import { registrationApi } from "../../config/axios";
 
 export const verifyRecaptcha = async (
   token: string
 ): Promise<AxiosResponse<any>> =>
-  await api.post(`/verify-recaptcha`, {
+  await registrationApi.post(`/verify-recaptcha`, {
     token,
   });

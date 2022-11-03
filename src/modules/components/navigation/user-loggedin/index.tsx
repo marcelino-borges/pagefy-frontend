@@ -15,7 +15,6 @@ import {
   setUserProfileImage,
   uploadAndSetUserProfileImage,
 } from "../../../../store/user/actions";
-import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { clearLoading } from "./../../../../store/shared/actions";
 import SignInRegisterButtons from "../../signin-register-buttons";
 import React from "react";
@@ -126,8 +125,7 @@ const UserLoggedIn = () => {
         context={[GalleryContext.USER_PROFILE]}
         existingImageUrl={userState.profile.profileImageUrl}
         submitDialog={async (imageUrl?: string) => {
-          const token = await getFirebaseToken();
-          if (!token || !userState.profile) return;
+          if (!userState.profile) return;
           const clearLoadingFromState = () => {
             dispatch(clearLoading());
           };

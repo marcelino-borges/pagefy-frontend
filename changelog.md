@@ -16,6 +16,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.26.0] - 2022-10-03
+
+- Feature: Testimonials implemented
+- Refactor: auth token added to all requests with axios interceptors
+- Refactor: auth error on the APIs now shows error toast from axios interceptors
+
 ### [1.25.0] - 2022-10-30
 
 - Feature: Implemented counters

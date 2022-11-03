@@ -1,15 +1,19 @@
 import { MenuItem, Root } from "./style";
-import PersonIcon from "@mui/icons-material/Person";
-import CardMembershipIcon from "@mui/icons-material/CardMembership";
-import CollectionsIcon from "@mui/icons-material/Collections";
 import { Stack, useMediaQuery } from "@mui/material";
 import CustomTooltip from "../../../components/tooltip";
 import strings from "../../../../localization";
 import { ProfileTab } from "../utils";
+import { Icon } from "@iconify/react";
 
 interface IProfileLeftMenuProps {
   setSelectedMenuItem: (tab: ProfileTab) => void;
   selectedMenuItem: ProfileTab;
+}
+
+interface IProfileItem {
+  menuType: ProfileTab;
+  icon: string;
+  text: string;
 }
 
 const ProfileLeftMenu = ({
@@ -18,50 +22,48 @@ const ProfileLeftMenu = ({
 }: IProfileLeftMenuProps) => {
   const isSmallerThanMD = useMediaQuery("(max-width: 903px)");
 
+  const items: IProfileItem[] = [
+    {
+      menuType: ProfileTab.PERSONAL,
+      icon: "bi:person-fill",
+      text: strings.personalData,
+    },
+    {
+      menuType: ProfileTab.FINANCE,
+      icon: "dashicons:money-alt",
+      text: strings.finance.title,
+    },
+    {
+      menuType: ProfileTab.GALLERY,
+      icon: "ooui:image-gallery",
+      text: strings.yourGallery,
+    },
+    {
+      menuType: ProfileTab.TESTIMONIALS,
+      icon: "fluent:person-feedback-16-filled",
+      text: strings.testimonials.testimonialsTitle,
+    },
+  ];
+
   return (
     <Root container item direction="column">
-      <MenuItem
-        onClick={() => setSelectedMenuItem(ProfileTab.PERSONAL)}
-        item
-        wrap="nowrap"
-        isSelected={selectedMenuItem === ProfileTab.PERSONAL}
-      >
-        <CustomTooltip title={strings.personalData} disabled={!isSmallerThanMD}>
-          <Stack direction="row" alignItems="center" gap="8px">
-            <PersonIcon />
-            {!isSmallerThanMD && strings.personalData}
-          </Stack>
-        </CustomTooltip>
-      </MenuItem>
-      <MenuItem
-        onClick={() => setSelectedMenuItem(ProfileTab.FINANCE)}
-        item
-        wrap="nowrap"
-        isSelected={selectedMenuItem === ProfileTab.FINANCE}
-      >
-        <CustomTooltip
-          title={strings.finance.title}
-          disabled={!isSmallerThanMD}
+      {items.map((item: IProfileItem) => (
+        <MenuItem
+          container
+          item
+          onClick={() => setSelectedMenuItem(item.menuType)}
+          wrap="nowrap"
+          isSelected={selectedMenuItem === item.menuType}
+          key={`${item.text} ${item.menuType.toString()}`}
         >
-          <Stack direction="row" alignItems="center" gap="8px">
-            <CardMembershipIcon />
-            {!isSmallerThanMD && strings.finance.title}
-          </Stack>
-        </CustomTooltip>
-      </MenuItem>
-      <MenuItem
-        onClick={() => setSelectedMenuItem(ProfileTab.GALLERY)}
-        item
-        wrap="nowrap"
-        isSelected={selectedMenuItem === ProfileTab.GALLERY}
-      >
-        <CustomTooltip title={strings.yourGallery} disabled={!isSmallerThanMD}>
-          <Stack direction="row" alignItems="center" gap="8px">
-            <CollectionsIcon />
-            {!isSmallerThanMD && strings.yourGallery}
-          </Stack>
-        </CustomTooltip>
-      </MenuItem>
+          <CustomTooltip title={item.text} disabled={!isSmallerThanMD}>
+            <Stack direction="row" alignItems="center" gap="8px">
+              <Icon icon={item.icon} />
+              {!isSmallerThanMD && item.text}
+            </Stack>
+          </CustomTooltip>
+        </MenuItem>
+      ))}
     </Root>
   );
 };

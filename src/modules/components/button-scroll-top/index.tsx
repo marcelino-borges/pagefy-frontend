@@ -4,11 +4,16 @@ import { ArrowUpward } from "@mui/icons-material";
 
 const ButtonScrollUp = () => {
   const [hasScrolledDown, setHasScrolledDown] = useState(false);
+  const scrollUp = () => {
+    setHasScrolledDown(window.scrollY > window.innerHeight / 2);
+  };
 
   useEffect(() => {
-    document.addEventListener("scroll", () => {
-      setHasScrolledDown(window.scrollY > window.innerHeight / 2);
-    });
+    document.addEventListener("scroll", scrollUp);
+
+    return () => {
+      document.removeEventListener("scroll", scrollUp);
+    };
   }, []);
 
   return (

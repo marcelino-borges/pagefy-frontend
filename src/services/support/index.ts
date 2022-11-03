@@ -1,18 +1,12 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
+import { registrationApi } from "../../config/axios";
 import { IUserContact } from "../../store/support/types";
-
-const api = axios.create({
-  baseURL: `${process.env.REACT_APP_REGISTRATION_ENDPOINT}`,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
 
 export const sendSupportEmail = async (
   userContact: IUserContact,
   recaptchaToken: string
 ): Promise<AxiosResponse<any>> =>
-  await api.post(
+  await registrationApi.post(
     `/contact`,
     {
       name: userContact.name,

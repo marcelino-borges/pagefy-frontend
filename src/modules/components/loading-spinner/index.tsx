@@ -7,6 +7,10 @@ interface ILoadingSpinnerProps {
   isFullPage?: boolean;
   m?: string;
   margin?: string;
+  w?: string;
+  width?: string;
+  h?: string;
+  height?: string;
 }
 
 const LoadingSpinner = ({
@@ -15,6 +19,10 @@ const LoadingSpinner = ({
   isFullPage = false,
   m,
   margin,
+  w,
+  width,
+  h,
+  height,
 }: ILoadingSpinnerProps) => {
   const Spinner = () => <CircularProgressIcon color={color} size={size} />;
 
@@ -26,7 +34,7 @@ const LoadingSpinner = ({
     );
   else
     return (
-      <Grid m={m} margin={margin}>
+      <Grid m={m} margin={margin} width={w || width} height={h || height}>
         <Spinner />
       </Grid>
     );

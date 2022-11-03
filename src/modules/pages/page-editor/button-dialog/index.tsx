@@ -69,7 +69,6 @@ import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
 import DialogChooseAnimation from "../../../components/dialog-choose-animation/index";
 import DialogVisibleDate from "../../../components/dialog-visible-date";
 import ColorPicker from "../../../components/color-picker/index";
-import { getFirebaseToken } from "../../../../utils/firebase-config";
 import { uploadImage } from "../../../../services/files";
 import { clearLoading, setLoading } from "../../../../store/shared/actions";
 import { IApplicationState } from "../../../../store";
@@ -180,10 +179,9 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
       if (!isStep2Valid()) {
         return;
       }
-      const token = await getFirebaseToken();
       let urlMedia: string | undefined = undefined;
 
-      if (token && userState && userState._id) {
+      if (userState && userState._id) {
         if (existingImage) {
           urlMedia = existingImage;
         } else if (chosenImage) {
@@ -192,8 +190,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
             await uploadImage(
               userState._id,
               chosenImage,
-              UserStorageFolder.UPLOADED_IMAGES,
-              token
+              UserStorageFolder.UPLOADED_IMAGES
             )
           ).data;
           dispatch(clearLoading());

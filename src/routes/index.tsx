@@ -11,7 +11,7 @@ import LoadingSpinner from "../modules/components/loading-spinner";
 import PageRenderer from "./../modules/components/page-renderer";
 import SignInPage from "../modules/pages/sign-in";
 import SignUpPage from "../modules/pages/sign-up";
-import "../utils/firebase-config";
+import "../config/firebase";
 import { updatePage } from "./../store/user-pages/actions";
 import Home from "./../modules/pages/home";
 import Faq from "../modules/pages/faq";

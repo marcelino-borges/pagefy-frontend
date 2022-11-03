@@ -8,8 +8,8 @@ export const sendSupportEmail =
   (
     userContact: IUserContact,
     recaptchaToken: string,
-    onSuccessCallback: any = null,
-    onErrorCallback: any = null
+    onSuccessCallback: ((result: SentUserContactResult) => void) | null = null,
+    onErrorCallback: ((error: string) => void) | null = null
   ) =>
   async (dispatch: any) => {
     dispatch(sendSupportEmailLoading());

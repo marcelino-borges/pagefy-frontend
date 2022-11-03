@@ -121,15 +121,14 @@ const SignUpPage = () => {
       dispatch(
         signUp(
           newUser,
-          async (user: IUser, token: string) => {
+          async (user: IUser) => {
             if (user._id) {
               if (!existingImageUrl && chosenImage) {
                 const imageUrl: string = (
                   await uploadImage(
                     user._id,
                     chosenImage,
-                    UserStorageFolder.UPLOADED_IMAGES,
-                    token
+                    UserStorageFolder.UPLOADED_IMAGES
                   )
                 ).data;
 
@@ -149,7 +148,7 @@ const SignUpPage = () => {
                 (_: string, auth: IUserAuth) => {
                   setSessionStorage("auth", JSON.stringify(auth));
                   dispatch(
-                    getUser(user.email, token, (user: IUser) => {
+                    getUser(user.email, (user: IUser) => {
                       setSessionStorage("user", JSON.stringify(user));
                       loadDashboardOrPurchase();
                     })

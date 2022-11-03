@@ -6,7 +6,7 @@ import { translateError } from "../../utils/api-errors-mapping";
 import strings from "../../localization";
 import { IAppResult } from "../shared/types";
 import { UserCredential } from "firebase/auth";
-import { getFirebaseToken } from "./../../utils/firebase-config/index";
+import { getFirebaseToken } from "../../config/firebase/index";
 import { IUser } from "../user/types";
 import { clearUserState, getUserSuccess } from "../user/actions";
 import { clearPageManagementState } from "../page-management/actions";
@@ -76,24 +76,15 @@ export const signUp =
       password: user.password,
     })
       .then(async (userCredential: UserCredential) => {
-        // Success creating user auth
-
-        const token = await getFirebaseToken();
-
-        if (!token) {
-          if (onErrorCallback) onErrorCallback();
-          return;
-        }
-
         let userToSave = {
           ...(user as IUser),
           authId: userCredential.user.uid,
         };
-        UserService.createUser(userToSave, token)
+        UserService.createUser(userToSave)
           .then((res: AxiosResponse) => {
             dispatch(signUpSuccess());
             dispatch(getUserSuccess(res.data));
-            if (onSuccessCallback) onSuccessCallback(res.data, token);
+            if (onSuccessCallback) onSuccessCallback(res.data);
           })
           .catch((error: AxiosError) => {
             AuthService.deleteUserAuth();

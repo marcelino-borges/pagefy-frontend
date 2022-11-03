@@ -2,7 +2,6 @@ import {
   cancelSubscription,
   createSubscription,
 } from "../../services/payments";
-import { getFirebaseToken } from "../../utils/firebase-config";
 import { PlansTypes } from "../user/types";
 import { AxiosError, AxiosResponse } from "axios";
 import {
@@ -10,7 +9,6 @@ import {
   ISubscriptionCreationResult,
   PurchaseTypes,
 } from "./types";
-import { TOKEN_AUTH_ERROR } from "./../../constants/index";
 
 export const setPlanTypeToSubscribe = (
   plan: PlansTypes,
@@ -30,16 +28,7 @@ export const startSubscription =
   async (dispatch: any) => {
     dispatch(startSubscriptionLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (errorCallback) errorCallback();
-
-      dispatch(createSubscriptionError(TOKEN_AUTH_ERROR));
-      return;
-    }
-
-    createSubscription(currency, recurrency, planType, token)
+    createSubscription(currency, recurrency, planType)
       .then((response: AxiosResponse) => {
         if (successCallback) successCallback();
 
@@ -83,16 +72,7 @@ export const cancelSubscriptionOnDatabase =
   async (dispatch: any) => {
     dispatch(startSubscriptionLoading());
 
-    const token = await getFirebaseToken();
-
-    if (!token) {
-      if (errorCallback) errorCallback(TOKEN_AUTH_ERROR);
-
-      dispatch(cancelSubscriptionError(TOKEN_AUTH_ERROR));
-      return;
-    }
-
-    cancelSubscription(subscriptionId, token)
+    cancelSubscription(subscriptionId)
       .then((response: AxiosResponse) => {
         if (successCallback) successCallback(response.data);
 

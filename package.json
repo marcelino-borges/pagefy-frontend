@@ -1,8 +1,8 @@
 {
   "name": "social-bio",
-  "version": "1.25.0",
+  "version": "1.26.0",
   "private": true,
-  "author": "Marcelino Borges",
+  "author": "Devbox",
   "engines": {
     "node": "16.x",
     "npm": "8.x"

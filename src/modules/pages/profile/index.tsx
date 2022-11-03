@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
 import { IUser } from "../../../store/user/types";
 import { GLOBAL_LIGHT_BG } from "../../../styles/colors";
+import UserTestimonials from "./testimonials";
 
 const Profile = () => {
   const [selectedMenu, setSelectedMenu] = useState<ProfileTab>(
@@ -42,6 +43,7 @@ const Profile = () => {
             <Finance userId={userProfile._id} />
           )}
           {selectedMenu === ProfileTab.GALLERY && <Gallery />}
+          {selectedMenu === ProfileTab.TESTIMONIALS && <UserTestimonials />}
         </ProfileContent>
       </Grid>
       <Footer />

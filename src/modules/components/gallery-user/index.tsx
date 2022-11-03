@@ -61,10 +61,6 @@ const UserGallery = ({
     (state: IApplicationState) => state.user.profile?._id
   );
 
-  const accessToken = useSelector(
-    (state: IApplicationState) => state.auth.auth?.accessToken
-  );
-
   const galleryRef = useRef<HTMLDivElement>(null);
 
   const addImages = (newImages: (IImageDetails | IGalleryListDivider)[]) => {
@@ -83,50 +79,50 @@ const UserGallery = ({
   };
 
   const getUserImages = async () => {
-    if (!userId || !accessToken) return;
+    if (!userId) return;
 
-    getAllUserImages(userId, accessToken).then((response: AxiosResponse) => {
+    getAllUserImages(userId).then((response: AxiosResponse) => {
       if (response.data) addImages(response.data);
     });
   };
 
   const getButtonsTemplates = async () => {
-    if (!userId || !accessToken) return;
+    if (!userId) return;
 
-    getAllButtonsTemplates(accessToken).then((response: AxiosResponse) => {
+    getAllButtonsTemplates().then((response: AxiosResponse) => {
       if (response.data) addImages(response.data);
     });
   };
 
   const getBackgroundsTemplates = async () => {
-    if (!userId || !accessToken) return;
+    if (!userId) return;
 
-    getAllBackgroundsTemplates(accessToken).then((response: AxiosResponse) => {
+    getAllBackgroundsTemplates().then((response: AxiosResponse) => {
       if (response.data) addImages(response.data);
     });
   };
 
   const getPageImagesTemplates = async () => {
-    if (!userId || !accessToken) return;
+    if (!userId) return;
 
-    getAllPagesImagesTemplates(accessToken).then((response: AxiosResponse) => {
+    getAllPagesImagesTemplates().then((response: AxiosResponse) => {
       if (response.data) addImages(response.data);
     });
   };
 
   const getUserProfileTemplates = async () => {
-    if (!userId || !accessToken) return;
+    if (!userId) return;
 
-    getAllUserProfileTemplates(accessToken).then((response: AxiosResponse) => {
+    getAllUserProfileTemplates().then((response: AxiosResponse) => {
       if (response.data) addImages(response.data);
     });
   };
 
   const deleteImageFromStorage = async (originalUrl: string) => {
-    if (!userId || !accessToken) return;
+    if (!userId) return;
 
     setIsLoadingImages(true);
-    deleteImage(originalUrl, userId, accessToken)
+    deleteImage(originalUrl, userId)
       .then(() => {
         showSuccessToast(strings.fileHandling.fileDeletedSuccessfully);
       })
@@ -142,7 +138,7 @@ const UserGallery = ({
     setImages([]);
     setIsLoadingImages(true);
 
-    if (!accessToken || !userId) {
+    if (!userId) {
       setIsLoadingImages(false);
       return;
     }

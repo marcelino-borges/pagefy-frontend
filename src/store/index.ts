@@ -20,6 +20,7 @@ import { IAuthState } from "./auth/types";
 import { ISharedState } from "./shared/types";
 import { IPurchaseState } from "./purchase/types";
 import { ISupportState } from "./support/types";
+import { ITestimonialState } from "./testimonials/types";
 
 // Reducers
 import userReducer from "./user/reducer";
@@ -30,6 +31,7 @@ import authReducer from "./auth/reducer";
 import sharedReducer from "./shared/reducer";
 import purchaseReducer from "./purchase/reducer";
 import supportReducer from "./support/reducer";
+import testimonialReducer from "./testimonials/reducer";
 
 export interface IApplicationState {
   auth: IAuthState;
@@ -40,6 +42,7 @@ export interface IApplicationState {
   shared: ISharedState;
   purchase: IPurchaseState;
   support: ISupportState;
+  testimonials: ITestimonialState;
 }
 
 let statesTransform = createTransform((inboundState: any, key: any) => {
@@ -73,6 +76,7 @@ const rootReducer = combineReducers({
   shared: sharedReducer,
   purchase: purchaseReducer,
   support: supportReducer,
+  testimonials: testimonialReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

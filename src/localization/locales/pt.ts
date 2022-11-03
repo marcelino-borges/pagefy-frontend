@@ -103,11 +103,13 @@ export const pt: IDictionary = {
   iconName: "Nome do ícone",
   back: "Voltar",
   cancel: "Cancelar",
+  confirm: "Confirmar",
   add: "Inserir",
   mountURL: "Montar URL",
   searchIconMinCaracters: "Busca precisa ter mais de 3 caracteres.",
   url: "URL",
   invalidUrl: "URL inválida",
+  hasToBeYoutubeVideo: "Precisa ser uma URL de um vídeo do YouTube",
   colorPicker: "Escolha outra cor",
   removeComponentConfirmation: "Deseja realmente remover este componente?",
   removeIconConfirmation: "Deseja realmente remover este ícone?",
@@ -236,6 +238,7 @@ export const pt: IDictionary = {
     passwordMustAttendRequirements:
       "Senha precisa atender aos requisitos mínimos.",
     invalidToken: "Erro de autenticação. Tente entrar novamente.",
+    signInAgain: "Por favor entre novamente.",
   },
   generalErrors: {
     errorSignUp: "Erro ao criar sua conta.",
@@ -354,6 +357,7 @@ export const pt: IDictionary = {
     "Agora falta apenas escolher uam recorrência (com ou sem desconto anual)",
   nowItsTimeToSubscribe: "Agora é hora de finalizar sua assinatura",
   subscription: "Assinatura",
+  noSubscriptions: "Sem assinaturas",
   subscriptionPayment: {
     succeeded: "Assinatura finalizada com sucesso!",
     processing: "Sua assinatura está sendo processada.",
@@ -449,6 +453,7 @@ export const pt: IDictionary = {
   legal: "Legal",
   privacy: "Privacidade",
   deleteAccount: "Excluir conta",
+  delete: "Excluir",
   deleteAccountSuccess: "Conta excluída com sucesso.",
   deleteAccountError: "Não foi possível excluir a conta.",
   plansBlockings: {
@@ -459,8 +464,23 @@ export const pt: IDictionary = {
       "Seu plano não permite agendar componentes",
   },
   somethingWentWrong: "Ops! Algo deu errado!",
-  testimonialsTitle: "O que falam",
-  testimonialsSubtitle: "Alguns feedbacks que recebemos sobre nosso serviço",
+  testimonials: {
+    testimonialsTitle: "O que falam",
+    testimonialsSubtitle: "Alguns feedbacks que recebemos sobre nosso serviço",
+    userTestimonials: "Meus depoimentos",
+    testimonials: "Depoimentos",
+    userTestimonialsSubtitle:
+      "Confira aqui todos os depoimentos que você enviou",
+    noTestimonials: "Sem depoimentos",
+    createANewTestimonial: "Criar depoimento",
+    editATestimonial: "Editar depoimento",
+    zeroRatingDialogTitle: "Confirmar avaliação",
+    deleteDialogTitle: "Confirmar exclusão",
+    zeroRatingDialogText:
+      "Deseja realmente avaliar o SocialBio com a nota 0 ou esqueceu de selecionar uma nota?",
+    deleteDialogText: "Deseja realmente excluir seu depoimento?",
+    leaveTestimonial: "Deixar depoimento",
+  },
   yourGallery: "Sua galeria",
   fromYourGalleryOrTemplates: "Da sua galeria ou dos nossos templates",
   orUploadANewFile: "Ou envie uma nova imagem",

@@ -1,5 +1,5 @@
 import { IUserCredentials } from "../../store/auth/types";
-import { firebaseAuth } from "../../utils/firebase-config/index";
+import { firebaseAuth } from "../../config/firebase/index";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,

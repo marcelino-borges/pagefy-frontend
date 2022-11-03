@@ -67,7 +67,7 @@ const SignInPage = () => {
     navigate(destination);
   };
 
-  const onSubmit = () => {
+  const onSubmitSignIn = () => {
     runAfterValidateRecaptcha(window, () => {
       const credentials: IUserCredentials = {
         email: String(values.email).trim(),
@@ -77,10 +77,10 @@ const SignInPage = () => {
       dispatch(
         signIn(
           credentials,
-          (token: string, auth: IUserAuth) => {
+          (auth: IUserAuth) => {
             setSessionStorage("auth", JSON.stringify(auth));
             dispatch(
-              getUser(credentials.email, token, (user: IUser) => {
+              getUser(credentials.email, (user: IUser) => {
                 setSessionStorage("user", JSON.stringify(user));
                 loadDashboardOrPurchase();
               })
@@ -102,7 +102,7 @@ const SignInPage = () => {
           {strings.accessAccount}
         </h2>
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmitSignIn)}
           style={{
             display: "flex",
             justifyContent: "center",

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import {
   Button,
   Dialog,
@@ -12,9 +14,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Remove as RemoveIcon } from "@mui/icons-material";
-import strings from "../../../../localization/index";
 import theme from "../../../../theme";
-import { useDispatch } from "react-redux";
+import strings from "../../../../localization/index";
 import {
   ComponentType,
   ICounter,
@@ -192,6 +193,7 @@ const CountersDialog = ({
               xs={12}
               wrap="nowrap"
               alignItems="center"
+              key={uuidv4()}
             >
               <CounterContainerLabel>
                 {`${strings.tools.counters.textfieldCounterLabel} ${index + 1}`}
