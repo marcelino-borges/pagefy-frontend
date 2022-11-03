@@ -465,7 +465,7 @@ export const pt: IDictionary = {
   },
   somethingWentWrong: "Ops! Algo deu errado!",
   testimonials: {
-    testimonialsTitle: "O que falam",
+    testimonialsTitle: "Depoimentos",
     testimonialsSubtitle: "Alguns feedbacks que recebemos sobre nosso serviço",
     userTestimonials: "Meus depoimentos",
     testimonials: "Depoimentos",
