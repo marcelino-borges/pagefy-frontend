@@ -97,8 +97,7 @@ const CreateTestimonialsDialog = ({
     }
   }, [userTestimonials.error]);
 
-  const onSubmitTestimonial = (event: any) => {
-    event.preventDefault();
+  const onSubmitTestimonial = () => {
     if (userTestimonials.loading) return;
 
     setErrors(INITIAL_ERRORS);
@@ -118,12 +117,12 @@ const CreateTestimonialsDialog = ({
     }
 
     if (existingTestimonial) updateExistingTestimonial();
-    else saveTestimonial();
+    else createNewTestimonial();
 
     setValues(INITIAL_FORM_VALUES);
   };
 
-  const saveTestimonial = () => {
+  const createNewTestimonial = () => {
     if (userTestimonials.loading) return;
     if (
       values.text &&
@@ -180,7 +179,7 @@ const CreateTestimonialsDialog = ({
           </Button>
           <Button
             onClick={() => {
-              saveTestimonial();
+              createNewTestimonial();
               setOpenZeroRatingConfirmation(false);
             }}
           >
@@ -225,6 +224,7 @@ const CreateTestimonialsDialog = ({
       fullWidth
       fullScreen={isSmallerThanSM}
       maxWidth="sm"
+      hidden={openDeleteConfirmation || openZeroRatingConfirmation}
     >
       <DialogTitle style={{ position: "relative" }}>
         {existingTestimonial
@@ -238,96 +238,94 @@ const CreateTestimonialsDialog = ({
         />
       </DialogTitle>
       <DialogContent>
-        <form onSubmit={onSubmitTestimonial}>
-          <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            mt="20px"
-            gap="24px"
-          >
-            <Grid container item>
-              <TextField
-                required
-                fullWidth
-                label={strings.text}
-                type="text"
-                variant="outlined"
-                multiline
-                minRows={3}
-                onChange={(e: any) => {
-                  setValues({
-                    ...values,
-                    text: e.target.value,
-                  });
-                }}
-                value={values.text}
-                sx={{ minWidth: "100px" }}
-              />
-            </Grid>
-
-            <Grid container item>
-              <TextField
-                fullWidth
-                error={!!errors.videoUrl}
-                helperText={errors.videoUrl}
-                label={strings.videoUrl}
-                type="text"
-                variant="outlined"
-                onChange={(e: any) => {
-                  setValues({
-                    ...values,
-                    videoUrl: e.target.value,
-                  });
-                }}
-                value={values.videoUrl}
-                sx={{ minWidth: "100px" }}
-              />
-            </Grid>
-            <Stack direction="row" alignItems="center">
-              {Array.from({ length: 5 }, (_: any, i: number) => i + 1).map(
-                (rating: number) => (
-                  <StarIcon
-                    key={uuidv4()}
-                    icon="dashicons:star-filled"
-                    fontSize="40px"
-                    style={{
-                      color:
-                        (values.intendedRating &&
-                          values.intendedRating >= rating) ||
-                        (values.intendedRating &&
-                          values.intendedRating >= rating) ||
-                        (!values.intendedRating &&
-                          values.rating &&
-                          values.rating >= rating)
-                          ? "#ffca38"
-                          : "",
-                    }}
-                    onMouseEnter={() => {
-                      setValues({ ...values, intendedRating: rating });
-                    }}
-                    onMouseLeave={() => {
-                      setValues({ ...values, intendedRating: undefined });
-                    }}
-                    onClick={() => {
-                      let ratingToSet = rating;
-                      if (rating === values.rating) ratingToSet = 0;
-
-                      setValues({
-                        ...values,
-                        rating: ratingToSet,
-                        intendedRating: undefined,
-                      });
-                    }}
-                  />
-                )
-              )}
-              <RatingValue>
-                {values.intendedRating || values.rating || "0"}
-              </RatingValue>
-            </Stack>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          mt="20px"
+          gap="24px"
+        >
+          <Grid container item>
+            <TextField
+              required
+              fullWidth
+              label={strings.text}
+              type="text"
+              variant="outlined"
+              multiline
+              minRows={3}
+              onChange={(e: any) => {
+                setValues({
+                  ...values,
+                  text: e.target.value,
+                });
+              }}
+              value={values.text}
+              sx={{ minWidth: "100px" }}
+            />
           </Grid>
-        </form>
+
+          <Grid container item>
+            <TextField
+              fullWidth
+              error={!!errors.videoUrl}
+              helperText={errors.videoUrl}
+              label={strings.videoUrl}
+              type="text"
+              variant="outlined"
+              onChange={(e: any) => {
+                setValues({
+                  ...values,
+                  videoUrl: e.target.value,
+                });
+              }}
+              value={values.videoUrl}
+              sx={{ minWidth: "100px" }}
+            />
+          </Grid>
+          <Stack direction="row" alignItems="center">
+            {Array.from({ length: 5 }, (_: any, i: number) => i + 1).map(
+              (rating: number) => (
+                <StarIcon
+                  key={uuidv4()}
+                  icon="dashicons:star-filled"
+                  fontSize="40px"
+                  style={{
+                    color:
+                      (values.intendedRating &&
+                        values.intendedRating >= rating) ||
+                      (values.intendedRating &&
+                        values.intendedRating >= rating) ||
+                      (!values.intendedRating &&
+                        values.rating &&
+                        values.rating >= rating)
+                        ? "#ffca38"
+                        : "",
+                  }}
+                  onMouseEnter={() => {
+                    setValues({ ...values, intendedRating: rating });
+                  }}
+                  onMouseLeave={() => {
+                    setValues({ ...values, intendedRating: undefined });
+                  }}
+                  onClick={() => {
+                    let ratingToSet = rating;
+                    if (rating === values.rating) ratingToSet = 0;
+
+                    setValues({
+                      ...values,
+                      rating: ratingToSet,
+                      intendedRating: undefined,
+                    });
+                  }}
+                />
+              )
+            )}
+            <RatingValue>
+              {values.intendedRating || values.rating || "0"}
+            </RatingValue>
+          </Stack>
+        </Grid>
       </DialogContent>
       <DialogActions>
         {existingTestimonial && (
@@ -340,7 +338,11 @@ const CreateTestimonialsDialog = ({
             {strings.delete}
           </DeleteButton>
         )}
-        <Button variant="contained" type="submit" disabled={!values.text}>
+        <Button
+          variant="contained"
+          onClick={() => onSubmitTestimonial()}
+          disabled={!values.text}
+        >
           {existingTestimonial ? strings.save : strings.create}
         </Button>
       </DialogActions>
