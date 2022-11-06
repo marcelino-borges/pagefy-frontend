@@ -7,18 +7,18 @@ import {
   DialogTitle,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import strings from "../../../../localization/index";
+import strings from "../../../../../localization";
 import { DescriptionText } from "./styles";
-import { isUrlValid } from "../../../../utils/validators/url";
-import theme from "../../../../theme";
+import { isUrlValid } from "../../../../../utils/validators/url";
 import { useDispatch } from "react-redux";
 import {
   ComponentType,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import SpotifyEmbed from "./../../../components/spotify-embed/index";
+} from "../../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
+import SpotifyEmbed from "./../../../../components/spotify-embed/index";
 
 interface ISpotifyDialogProps {
   pageId?: string;
@@ -28,6 +28,7 @@ interface ISpotifyDialogProps {
 
 const SpotifyDialog = ({ pageId, open, handleClose }: ISpotifyDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [urlError, setUrlError] = useState<string>("");

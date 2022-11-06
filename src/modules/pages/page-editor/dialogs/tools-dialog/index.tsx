@@ -7,8 +7,8 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { ToolbarButton, ToolbarIconText } from "../style";
-import strings from "../../../../localization";
+import { ToolbarButton, ToolbarIconText } from "../../style";
+import strings from "../../../../../localization";
 import { v4 as uuidv4 } from "uuid";
 import DialogActions from "@mui/material/DialogActions/DialogActions";
 import { Icon } from "@iconify/react";

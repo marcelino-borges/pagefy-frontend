@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Dialog,
@@ -6,12 +8,10 @@ import {
   DialogTitle,
   Grid,
 } from "@mui/material";
-import strings from "../../../../localization";
-import PageRenderer from "../../../components/page-renderer";
-import { useEffect } from "react";
-import { clearPageBeingRendered } from "../../../../store/page-renderer/actions";
-import { useDispatch } from "react-redux";
-import { IUserPage } from "../../../../store/user-pages/types";
+import strings from "../../../../../localization";
+import PageRenderer from "../../../../components/page-renderer";
+import { clearPageBeingRendered } from "../../../../../store/page-renderer/actions";
+import { IUserPage } from "../../../../../store/user-pages/types";
 
 interface IPreviewPageDialogProps {
   open: boolean;
@@ -19,7 +19,7 @@ interface IPreviewPageDialogProps {
   page: IUserPage;
 }
 
-const PreviewPageDialog = ({
+const PagePreviewDialog = ({
   open,
   onClose,
   page,
@@ -53,4 +53,4 @@ const PreviewPageDialog = ({
   );
 };
 
-export default PreviewPageDialog;
+export default PagePreviewDialog;

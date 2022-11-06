@@ -9,10 +9,10 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import strings from "./../../../../localization/index";
+import strings from "../../../../../localization";
+import { includesAnyInString } from "../../../../../utils";
+import { showErrorToast } from "../../../../../utils/toast";
 import { DescriptionText } from "./styles";
-import { includesAnyInString } from "../../../../utils";
-import { showErrorToast } from "./../../../../utils/toast/index";
 
 interface ICustomScriptDialogProps {
   existingHeaderScript?: string;

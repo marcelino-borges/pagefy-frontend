@@ -10,7 +10,7 @@ const CoockiesPoliciesPage = () => {
   return (
     <>
       <Navigation />
-      <ThinWidthContent>
+      <ThinWidthContent center>
         <TriplePageTitle
           titles={[strings.cookiesPolicies, strings.cookiesPoliciesSubtitle]}
           increasingSize

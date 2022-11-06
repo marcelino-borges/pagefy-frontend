@@ -382,7 +382,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             </Grid>
           )}
       </PageRendererContent>
-      <ButtonScrollUp />
+      {!isPagePreview && <ButtonScrollUp />}
     </>
   );
 };

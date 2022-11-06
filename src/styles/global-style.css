@@ -170,7 +170,6 @@ body {
   letter-spacing: .02em;
   font-weight: 300;
   font-size: 1em;
-  min-width: var(--min-site-width);
 }
 
 ::-webkit-scrollbar {
@@ -198,7 +197,7 @@ body {
 #root {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  width: 100%;
 }
 
 code {

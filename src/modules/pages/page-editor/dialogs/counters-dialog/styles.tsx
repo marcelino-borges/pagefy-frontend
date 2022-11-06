@@ -4,7 +4,7 @@ import {
   LIGHTER_GREY,
   LIGHT_GREY,
   PRIMARY_COLOR,
-} from "./../../../../styles/colors";
+} from "../../../../../styles/colors";
 
 export const CounterContainer = styled(({ ...rest }: any) => (
   <Grid {...rest} />

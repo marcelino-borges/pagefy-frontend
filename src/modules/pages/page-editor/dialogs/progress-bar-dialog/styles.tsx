@@ -1,6 +1,6 @@
 import { styled } from "@mui/system";
 import { Grid, Stack } from "@mui/material";
-import { GLOBAL_LIGHT_BG, LIGHT_GREY } from "../../../../styles/colors";
+import { GLOBAL_LIGHT_BG, LIGHT_GREY } from "../../../../../styles/colors";
 
 export const DescriptionText = styled(({ ...rest }: any) => <Grid {...rest} />)`
   margin-bottom: 36px;

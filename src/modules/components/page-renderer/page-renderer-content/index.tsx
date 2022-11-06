@@ -3,8 +3,12 @@ import { Root } from "./style";
 
 const PageRendererContent = ({ children, ...rest }: any) => {
   return (
-    <Root container justifyContent="center" {...rest}>
-      <Grid container item direction="column">
+    <Root container direction="column" alignItems="center" {...rest}>
+      <Grid
+        container
+        item
+        maxWidth="var(--max-site-width-page-renderer) !important"
+      >
         {children}
       </Grid>
     </Root>

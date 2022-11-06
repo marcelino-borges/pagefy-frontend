@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { Icon } from "@iconify/react";
+import { v4 as uuidv4 } from "uuid";
 import {
   Button,
   CircularProgress,
@@ -11,13 +15,14 @@ import {
   InputAdornment,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import {
   Search as SearchIcon,
   Clear as ClearIcon,
   WhatsApp as WhatsAppIcon,
 } from "@mui/icons-material";
-import strings from "./../../../../localization";
+import strings from "../../../../../localization";
 import {
   IconsResult,
   IconsSearchResultsArea,
@@ -26,28 +31,23 @@ import {
   ColorPickerOverlay,
   WhatsAppButton,
 } from "./styles";
-import { useForm } from "react-hook-form";
 import {
   isCalltoUrlValid,
   isFaxUrlValid,
   isMailtoUrlValid,
   isSmsUrlValid,
   isUrlValid,
-} from "../../../../utils/validators/url";
+} from "../../../../../utils/validators/url";
 import {
   ComponentType,
   IIconDetails,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import CustomTooltip from "../../../components/tooltip";
-import theme from "../../../../theme";
-import { useDispatch } from "react-redux";
-import { addTopComponentInPage } from "../../../../store/user-pages/actions";
-import icons, { IIconifyIcon } from "../../../../assets/icons/react-icons";
-import { Icon } from "@iconify/react";
-import ColorPicker from "./../../../components/color-picker/index";
-import { v4 as uuidv4 } from "uuid";
-import { isTelUrlValid } from "./../../../../utils/validators/url";
+} from "../../../../../store/user-pages/types";
+import CustomTooltip from "../../../../components/tooltip";
+import { addTopComponentInPage } from "../../../../../store/user-pages/actions";
+import icons, { IIconifyIcon } from "../../../../../assets/icons/react-icons";
+import ColorPicker from "./../../../../components/color-picker";
+import { isTelUrlValid } from "./../../../../../utils/validators/url";
 import WhatsappDialog from "../whatsapp-dialog";
 
 interface IIconsDialogProps {
@@ -58,6 +58,7 @@ interface IIconsDialogProps {
 
 const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { handleSubmit: handleSubmitSearch, register: registerSearch } =

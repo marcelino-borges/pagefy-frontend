@@ -10,7 +10,7 @@ const PrivacyPage = () => {
   return (
     <>
       <Navigation />
-      <ThinWidthContent>
+      <ThinWidthContent center>
         <TriplePageTitle
           titles={[strings.privacyPolicies, strings.privacyPoliciesSubtitle]}
           increasingSize

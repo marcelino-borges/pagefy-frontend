@@ -151,7 +151,7 @@ const PurchasePlanPage = () => {
     <>
       <PrivateRouteChecker />
       <Navigation />
-      <ThinWidthContent pb="100px">
+      <ThinWidthContent pb="100px" center>
         {showErrorOnPaymentElement && (
           <Grid
             container

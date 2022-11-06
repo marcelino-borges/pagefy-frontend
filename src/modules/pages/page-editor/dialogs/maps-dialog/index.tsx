@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Dialog,
@@ -7,18 +8,17 @@ import {
   DialogTitle,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import strings from "../../../../localization/index";
+import strings from "../../../../../localization";
 import { DescriptionText } from "./styles";
-import { isUrlValid } from "../../../../utils/validators/url";
-import theme from "../../../../theme";
-import { useDispatch } from "react-redux";
+import { isUrlValid } from "../../../../../utils/validators/url";
 import {
   ComponentType,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import MapEmbed from "../../../components/map-embed";
+} from "../../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
+import MapEmbed from "../../../../components/map-embed";
 
 interface IMapsDialogProps {
   pageId?: string;
@@ -28,6 +28,7 @@ interface IMapsDialogProps {
 
 const MapsDialog = ({ pageId, open, handleClose }: IMapsDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [urlError, setUrlError] = useState<string>("");

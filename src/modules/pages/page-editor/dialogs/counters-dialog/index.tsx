@@ -12,28 +12,28 @@ import {
   Stack,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Remove as RemoveIcon } from "@mui/icons-material";
-import theme from "../../../../theme";
-import strings from "../../../../localization/index";
+import strings from "../../../../../localization";
 import {
   ComponentType,
   ICounter,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../styles/colors";
-import ColorPicker from "../../../components/color-picker";
-import CustomTooltip from "../../../components/tooltip";
-import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
+} from "../../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
+import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../../styles/colors";
+import ColorPicker from "../../../../components/color-picker";
+import CustomTooltip from "../../../../components/tooltip";
+import BackgroundColorIcon from "../../../../../assets/icons/custom-icons/background-color";
 import {
   AddCounterButton,
   CounterContainer,
   CounterContainerLabel,
   CounterRemoveIcon,
 } from "./styles";
-import Counters from "../../../components/counters";
-import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
+import Counters from "../../../../components/counters";
+import FontColorIcon from "../../../../../assets/icons/custom-icons/font-color";
 
 interface ICountersDialogProps {
   pageId?: string;
@@ -52,6 +52,7 @@ const CountersDialog = ({
   handleClose,
 }: ICountersDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [labelError, setLabelError] = useState<string>("");

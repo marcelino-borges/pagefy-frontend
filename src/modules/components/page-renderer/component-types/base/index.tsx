@@ -45,7 +45,7 @@ const BaseComponentType = ({
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", color: "unset" }}
         >
           <Grid
             container

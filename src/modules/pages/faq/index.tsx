@@ -78,38 +78,36 @@ const Faq = () => {
   return (
     <>
       <Navigation />
-      <div style={{ marginTop: "20px" }}>
-        <ThinWidthContent>
-          <TriplePageTitle
-            increasingSize
-            titles={[
-              strings.faq.menu,
-              strings.faq.title,
-              strings.faq.description,
-            ]}
-            sizeGrowth={0.5}
-            marginTop="30px"
+      <ThinWidthContent center pb="100px">
+        <TriplePageTitle
+          increasingSize
+          titles={[
+            strings.faq.menu,
+            strings.faq.title,
+            strings.faq.description,
+          ]}
+          sizeGrowth={0.5}
+          marginTop="30px"
+        />
+        <span style={{ marginTop: "40px" }} />
+        {getLocalizedFaq().map((faq: IFaq, index: number) => (
+          <Accordion
+            position={
+              index === 0
+                ? "first"
+                : index === faqsPT.length - 1
+                ? "last"
+                : "middle"
+            }
+            expanded={expandedAccordion === faq.question}
+            onChange={handleChange(faq.question)}
+            title={faq.question}
+            content={faq.answer}
+            id={faq.question}
           />
-          <span style={{ marginTop: "40px" }} />
-          {getLocalizedFaq().map((faq: IFaq, index: number) => (
-            <Accordion
-              position={
-                index === 0
-                  ? "first"
-                  : index === faqsPT.length - 1
-                  ? "last"
-                  : "middle"
-              }
-              expanded={expandedAccordion === faq.question}
-              onChange={handleChange(faq.question)}
-              title={faq.question}
-              content={faq.answer}
-              id={faq.question}
-            />
-          ))}
-          <div style={{ marginTop: "50px" }}>{showSupportByPlanType()}</div>
-        </ThinWidthContent>
-      </div>
+        ))}
+        <div style={{ marginTop: "50px" }}>{showSupportByPlanType()}</div>
+      </ThinWidthContent>
       <Footer />
     </>
   );

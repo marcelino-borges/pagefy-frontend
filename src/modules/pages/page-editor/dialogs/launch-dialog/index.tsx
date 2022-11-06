@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Dialog,
@@ -10,16 +11,15 @@ import {
   MenuItem,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import strings from "../../../../localization/index";
+import strings from "../../../../../localization/index";
 import { DescriptionText } from "./styles";
-import theme from "../../../../theme";
-import { useDispatch } from "react-redux";
 import {
   ComponentType,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
+} from "../../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 import moment from "moment";
@@ -27,13 +27,13 @@ import {
   ComponentBorderRadius,
   ComponentShadowStyle,
   RENDERED_PAGE_LAUNCH_COMPONENT_ROWS,
-} from "../../../../constants";
-import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../styles/colors";
-import CustomTooltip from "../../../components/tooltip";
-import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
-import ColorPicker from "./../../../components/color-picker/index";
-import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
-import { translateShadowStyleEnum } from "../../../../utils";
+} from "../../../../../constants";
+import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../../styles/colors";
+import CustomTooltip from "../../../../components/tooltip";
+import BackgroundColorIcon from "../../../../../assets/icons/custom-icons/background-color";
+import ColorPicker from "../../../../components/color-picker";
+import FontColorIcon from "../../../../../assets/icons/custom-icons/font-color";
+import { translateShadowStyleEnum } from "../../../../../utils";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -45,6 +45,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const defaultLaunchDate = moment().toISOString();
 
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [message, setMessage] = useState<string>("");

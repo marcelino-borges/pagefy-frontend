@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, useMediaQuery } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { IApplicationState } from "../../../store";
 import Navigation from "../../components/navigation";
@@ -18,6 +18,8 @@ import ButtonScrollUp from "../../components/button-scroll-top";
 import { UPPER_MEDIUM_GREY } from "../../../styles/colors";
 
 const UserPages = () => {
+  const isSmallerThan900 = useMediaQuery("(max-width:900px)");
+
   const userPagesState = useSelector(
     (state: IApplicationState) => state.userPages
   );
@@ -45,9 +47,9 @@ const UserPages = () => {
       />
       <ThinWidthContent
         container
+        center
         direction="column"
         minHeight="70vh"
-        justifyContent="start"
         pb="100px"
       >
         <Grid
@@ -55,7 +57,7 @@ const UserPages = () => {
           justifyContent="center"
           height="80px"
           padding="16px 0px 16px 0px"
-          mt="-16px"
+          mt={isSmallerThan900 ? "-24px" : "-16px"}
           mb="32px"
           borderRadius="0px 0px 19px 19px"
           bgcolor="white"

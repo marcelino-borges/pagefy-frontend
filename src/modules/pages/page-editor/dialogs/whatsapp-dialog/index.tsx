@@ -7,10 +7,10 @@ import {
   DialogTitle,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import strings from "../../../../localization/index";
+import strings from "../../../../../localization";
 import { useForm } from "react-hook-form";
-import theme from "../../../../theme";
 
 interface IWhatsappDialogProps {
   open: boolean;
@@ -23,6 +23,7 @@ const WhatsappDialog = ({
   handleClose,
   onMountUrl,
 }: IWhatsappDialogProps) => {
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { handleSubmit } = useForm();

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Dialog,
@@ -10,6 +11,7 @@ import {
   IconButton,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import {
   TextFields as TextFieldsIcon,
@@ -29,15 +31,7 @@ import {
   HelpOutline as HelpCenterIcon,
   WbIncandescent as LightIcon,
 } from "@mui/icons-material";
-import strings from "../../../../localization/index";
-import {
-  ComponentDetailsButton,
-  LayoutPickerContainer,
-  LayoutPickerHeaderText,
-  SectionHeader,
-} from "./styles";
-import theme from "../../../../theme";
-import { useDispatch, useSelector } from "react-redux";
+import strings from "../../../../../localization";
 import {
   ACESSIBILITY_GREEN,
   ACESSIBILITY_RED,
@@ -45,12 +39,11 @@ import {
   LIGHT_GREY,
   PRIMARY_COLOR,
   SECONDARY_COLOR,
-} from "../../../../styles/colors";
-import CustomTooltip from "../../../components/tooltip";
-
-import FontColorIcon from "../../../../assets/icons/custom-icons/font-color";
-import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
-import UploadImageDialog from "../../../components/dialog-upload-image";
+} from "../../../../../styles/colors";
+import CustomTooltip from "../../../../components/tooltip";
+import FontColorIcon from "../../../../../assets/icons/custom-icons/font-color";
+import BackgroundColorIcon from "../../../../../assets/icons/custom-icons/background-color";
+import UploadImageDialog from "../../../../components/dialog-upload-image";
 import {
   ComponentBorderRadius,
   ComponentShadowStyle,
@@ -58,24 +51,30 @@ import {
   COMPONENT_MAX_ROWS,
   GalleryContext,
   IMAGE_EXTENSIONS,
-} from "../../../../constants";
+} from "../../../../../constants";
 import {
   ComponentType,
   IComponentAnimation,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { showErrorToast } from "../../../../utils/toast/index";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import DialogChooseAnimation from "../../../components/dialog-choose-animation/index";
-import DialogVisibleDate from "../../../components/dialog-visible-date";
-import ColorPicker from "../../../components/color-picker/index";
-import { uploadImage } from "../../../../services/files";
-import { clearLoading, setLoading } from "../../../../store/shared/actions";
-import { IApplicationState } from "../../../../store";
-import { UserStorageFolder } from "../../../../store/shared/types";
-import { PlansTypes } from "../../../../store/user/types";
+} from "../../../../../store/user-pages/types";
+import { showErrorToast } from "../../../../../utils/toast";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
+import DialogChooseAnimation from "../../../../components/dialog-choose-animation";
+import DialogVisibleDate from "../../../../components/dialog-visible-date";
+import ColorPicker from "../../../../components/color-picker";
+import { uploadImage } from "../../../../../services/files";
+import { clearLoading, setLoading } from "../../../../../store/shared/actions";
+import { IApplicationState } from "../../../../../store";
+import { UserStorageFolder } from "../../../../../store/shared/types";
+import { PlansTypes } from "../../../../../store/user/types";
 import WhatsappDialog from "../whatsapp-dialog";
-import { translateShadowStyleEnum } from "./../../../../utils/index";
+import { translateShadowStyleEnum } from "../../../../../utils";
+import {
+  ComponentDetailsButton,
+  LayoutPickerContainer,
+  LayoutPickerHeaderText,
+  SectionHeader,
+} from "./styles";
 
 interface IComponentDialogProps {
   pageId?: string;
@@ -85,6 +84,7 @@ interface IComponentDialogProps {
 
 const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const isSmallerThanXM = useMediaQuery(theme.breakpoints.down("xm"));
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Dialog,
@@ -9,20 +10,19 @@ import {
   Stack,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import strings from "../../../../localization/index";
-import theme from "../../../../theme";
-import { useDispatch } from "react-redux";
+import strings from "../../../../../localization/index";
 import {
   ComponentType,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import ProgressBar from "../../../components/progress-bar";
-import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../styles/colors";
-import ColorPicker from "../../../components/color-picker";
-import CustomTooltip from "../../../components/tooltip";
-import BackgroundColorIcon from "../../../../assets/icons/custom-icons/background-color";
+} from "../../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
+import ProgressBar from "../../../../components/progress-bar";
+import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../../styles/colors";
+import ColorPicker from "../../../../components/color-picker";
+import CustomTooltip from "../../../../components/tooltip";
+import BackgroundColorIcon from "../../../../../assets/icons/custom-icons/background-color";
 import { ProgressBarContainer, ProgressBarContainerLabel } from "./styles";
 
 interface IProgressBarDialogProps {
@@ -37,6 +37,7 @@ const ProgressBarDialog = ({
   handleClose,
 }: IProgressBarDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [labelError, setLabelError] = useState<string>("");

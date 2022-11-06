@@ -78,7 +78,7 @@ const Support = () => {
     <>
       <PrivateRouteChecker />
       <Navigation />
-      <ThinWidthContent>
+      <ThinWidthContent center>
         <TriplePageTitle
           titles={[strings.support, strings.supportDescription]}
           increasingSize

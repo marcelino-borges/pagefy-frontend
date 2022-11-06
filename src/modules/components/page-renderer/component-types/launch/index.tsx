@@ -22,96 +22,92 @@ interface ILaunchComponentProps {
 
 const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
-    if (!completed) {
-      return (
-        <Grid container direction="column" wrap="nowrap">
-          <Grid container item wrap="nowrap" alignItems="center">
-            <CountdownNumber
-              container
-              justifyContent="center"
-              alignItems="center"
-              item
-              xs={3}
-            >
-              {zeroPad(days)}
-            </CountdownNumber>
-            <CountdownSeparator item>:</CountdownSeparator>
-            <CountdownNumber
-              container
-              justifyContent="center"
-              alignItems="center"
-              item
-              xs={3}
-            >
-              {zeroPad(hours)}
-            </CountdownNumber>
+    return (
+      <Grid container direction="column" wrap="nowrap">
+        <Grid container item wrap="nowrap" alignItems="center">
+          <CountdownNumber
+            container
+            justifyContent="center"
+            alignItems="center"
+            item
+            xs={3}
+          >
+            {!completed ? zeroPad(days) : "00"}
+          </CountdownNumber>
+          <CountdownSeparator item>:</CountdownSeparator>
+          <CountdownNumber
+            container
+            justifyContent="center"
+            alignItems="center"
+            item
+            xs={3}
+          >
+            {!completed ? zeroPad(hours) : "00"}
+          </CountdownNumber>
 
-            <CountdownSeparator item>:</CountdownSeparator>
-            <CountdownNumber
-              container
-              justifyContent="center"
-              alignItems="center"
-              item
-              xs={3}
-            >
-              {zeroPad(minutes)}
-            </CountdownNumber>
+          <CountdownSeparator item>:</CountdownSeparator>
+          <CountdownNumber
+            container
+            justifyContent="center"
+            alignItems="center"
+            item
+            xs={3}
+          >
+            {!completed ? zeroPad(minutes) : "00"}
+          </CountdownNumber>
 
-            <CountdownSeparator item>:</CountdownSeparator>
-            <CountdownNumber
-              container
-              justifyContent="center"
-              alignItems="center"
-              item
-              xs={3}
-            >
-              {zeroPad(seconds)}
-            </CountdownNumber>
-          </Grid>
-
-          <Grid container item wrap="nowrap">
-            <CountdownOuterTexts
-              container
-              item
-              justifyContent="center"
-              alignItems="center"
-              xs={3}
-            >
-              {strings.days}
-            </CountdownOuterTexts>
-            <CountdownOuterTexts
-              container
-              item
-              justifyContent="center"
-              alignItems="center"
-              xs={3}
-            >
-              {strings.hours}
-            </CountdownOuterTexts>
-            <CountdownOuterTexts
-              container
-              item
-              justifyContent="center"
-              alignItems="center"
-              xs={3}
-            >
-              {strings.minutesAbbreviated}
-            </CountdownOuterTexts>
-            <CountdownOuterTexts
-              container
-              item
-              justifyContent="center"
-              alignItems="center"
-              xs={3}
-            >
-              {strings.secondsAbbreviated}
-            </CountdownOuterTexts>
-          </Grid>
+          <CountdownSeparator item>:</CountdownSeparator>
+          <CountdownNumber
+            container
+            justifyContent="center"
+            alignItems="center"
+            item
+            xs={3}
+          >
+            {!completed ? zeroPad(seconds) : "00"}
+          </CountdownNumber>
         </Grid>
-      );
-    }
 
-    return null;
+        <Grid container item wrap="nowrap">
+          <CountdownOuterTexts
+            container
+            item
+            justifyContent="center"
+            alignItems="center"
+            xs={3}
+          >
+            {strings.days}
+          </CountdownOuterTexts>
+          <CountdownOuterTexts
+            container
+            item
+            justifyContent="center"
+            alignItems="center"
+            xs={3}
+          >
+            {strings.hours}
+          </CountdownOuterTexts>
+          <CountdownOuterTexts
+            container
+            item
+            justifyContent="center"
+            alignItems="center"
+            xs={3}
+          >
+            {strings.minutesAbbreviated}
+          </CountdownOuterTexts>
+          <CountdownOuterTexts
+            container
+            item
+            justifyContent="center"
+            alignItems="center"
+            xs={3}
+          >
+            {strings.secondsAbbreviated}
+          </CountdownOuterTexts>
+        </Grid>
+      </Grid>
+    );
   };
 
   return (

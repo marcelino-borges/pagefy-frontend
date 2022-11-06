@@ -8,7 +8,6 @@ import {
 
 export const Root = styled(Grid)`
   min-height: calc(100vh - ${FOOTER_HEIGHT});
-  max-width: var(--max-site-width);
   padding: calc(${HEADER_HEIGHT_DESKTOP} + 16px) 32px 0px 32px;
 
   @media (max-width: 900px) {

@@ -9,21 +9,21 @@ import {
   InputAdornment,
   TextField,
   useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { Clear as ClearIcon } from "@mui/icons-material";
-import strings from "./../../../../localization/index";
+import strings from "./../../../../../localization";
 import { DescriptionText } from "./styles";
 import { useForm } from "react-hook-form";
-import { isUrlValid } from "../../../../utils/validators/url";
-import theme from "../../../../theme";
+import { isUrlValid } from "../../../../../utils/validators/url";
 import { useDispatch } from "react-redux";
-import YoutubeEmbed from "./../../../components/youtube-embed/index";
+import YoutubeEmbed from "./../../../../components/youtube-embed/";
 import {
   ComponentType,
   IUserComponent,
-} from "../../../../store/user-pages/types";
-import { addMiddleComponentInPage } from "../../../../store/user-pages/actions";
-import { getYoutubeIdFromUrl } from "../../../../utils";
+} from "../../../../../store/user-pages/types";
+import { addMiddleComponentInPage } from "../../../../../store/user-pages/actions";
+import { getYoutubeIdFromUrl } from "../../../../../utils";
 
 interface IIconsDialogProps {
   pageId?: string;
@@ -35,6 +35,7 @@ const MIN_VIDEO_ID_LENGTH = 6;
 
 const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { handleSubmit, register } = useForm();

@@ -10,7 +10,7 @@ const TermsPage = () => {
   return (
     <>
       <Navigation />
-      <ThinWidthContent>
+      <ThinWidthContent center>
         <TriplePageTitle
           titles={[strings.termsOfUse, strings.termsOfUseSubtitle]}
           increasingSize

@@ -78,7 +78,7 @@ const PaymentResult = () => {
     <>
       <PrivateRouteChecker />
       <Navigation />
-      <ThinWidthContent>
+      <ThinWidthContent center>
         {resultStatus ? (
           <div
             style={{

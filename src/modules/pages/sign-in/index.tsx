@@ -97,7 +97,7 @@ const SignInPage = () => {
   return (
     <>
       <Navigation />
-      <ThinWidthContent pb="50px">
+      <ThinWidthContent pb="50px" center>
         <h2 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.accessAccount}
         </h2>

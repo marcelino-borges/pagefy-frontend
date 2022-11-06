@@ -9,6 +9,7 @@ const ThinWidthContent = ({
   pb,
   pl,
   pr,
+  center = false,
   children,
   ...rest
 }: IWidthContentProps) => {
@@ -20,7 +21,10 @@ const ThinWidthContent = ({
   return (
     <Root
       container
-      justifyContent="center"
+      direction="column"
+      alignItems={center ? "center" : "flex-start"}
+      justifyContent="flex-start"
+      width="100%"
       {...rest}
       style={{
         paddingTop: pt,
@@ -29,7 +33,12 @@ const ThinWidthContent = ({
         paddingRight: pr,
       }}
     >
-      <Grid container item direction="column">
+      <Grid
+        container
+        maxWidth="var(--max-site-width) !important"
+        item
+        direction="column"
+      >
         {children}
       </Grid>
     </Root>

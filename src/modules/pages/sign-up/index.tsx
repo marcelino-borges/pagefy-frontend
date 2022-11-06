@@ -203,7 +203,7 @@ const SignUpPage = () => {
           setOpenUploadDialog(false);
         }}
       />
-      <ThinWidthContent pb="100px">
+      <ThinWidthContent pb="100px" center>
         <h1 style={{ textAlign: "center", marginBottom: "56px" }}>
           {strings.createYourAccount}
         </h1>

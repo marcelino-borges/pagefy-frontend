@@ -45,11 +45,11 @@ import {
   setPageImage,
 } from "../../../store/user-pages/actions";
 import DraggableUserComponent from "./draggable-component";
-import ToolsDialog from "./tools-dialog";
-import IconsDialog from "./icons-dialog";
-import ButtonDialog from "./button-dialog";
-import VideoDialog from "./video-dialog";
-import LaunchDialog from "./launch-dialog";
+import ToolsDialog from "./dialogs/tools-dialog";
+import IconsDialog from "./dialogs/icons-dialog";
+import ButtonDialog from "./dialogs/button-dialog";
+import VideoDialog from "./dialogs/video-dialog";
+import LaunchDialog from "./dialogs/launch-dialog";
 import UploadImageDialog from "../../components/dialog-upload-image";
 import Navigation from "./../../components/navigation";
 import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
@@ -65,18 +65,20 @@ import { getPageByUrl } from "../../../services/user-pages";
 import { showErrorToast, showSuccessToast } from "./../../../utils/toast";
 import { clearLoading } from "../../../store/shared/actions";
 import { LIGHT_GREY } from "../../../styles/colors";
-import PreviewPageDialog from "./preview-dialog";
+import PagePreviewDialog from "./dialogs/page-preview-dialog";
 import Footer from "./../../components/footer";
-import CustomScriptDialog from "./custom-script-dialog";
+import CustomScriptDialog from "./dialogs/custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
 import ButtonScrollUp from "../../components/button-scroll-top";
-import MapsDialog from "./maps-dialog";
-import SpotifyDialog from "./spotify-dialog/index";
-import ProgressBarDialog from "./progress-bar-dialog";
-import CountersDialog from "./counters-dialog";
+import MapsDialog from "./dialogs/maps-dialog";
+import SpotifyDialog from "./dialogs/spotify-dialog";
+import ProgressBarDialog from "./dialogs/progress-bar-dialog";
+import CountersDialog from "./dialogs/counters-dialog";
+import PagePreviewPhone from "./page-preview-phone";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
+  const isLargerThan1150 = useMediaQuery("(min-width:1150px)");
   const isLargerThan800 = useMediaQuery("(min-width:800px)");
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
   const isSmallerThan500 = useMediaQuery("(max-width:500px)");
@@ -962,11 +964,12 @@ const PageEditor = () => {
 
   return (
     <>
+      {isLargerThan1150 && <PagePreviewPhone page={page} />}
       <PrivateRouteChecker />
       <Navigation />
-      <ThinWidthContent pb="100px">
+      <ThinWidthContent center={!isLargerThan1150} pb="100px">
         {page && (
-          <PreviewPageDialog
+          <PagePreviewDialog
             page={page}
             open={openPreviewDialog}
             onClose={() => {
