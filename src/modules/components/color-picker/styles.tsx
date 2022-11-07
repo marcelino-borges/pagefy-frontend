@@ -3,7 +3,6 @@ import { styled } from "@mui/system";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 
 export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
-  z-index: 5000;
   position: fixed;
   width: 100%;
   height: 100%;

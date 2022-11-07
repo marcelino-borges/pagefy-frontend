@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
-import { PRIMARY_COLOR } from "../../../../styles/colors";
+import { SECONDARY_COLOR } from "../../../../styles/colors";
 import images from "../../../../assets/img";
+import { SECONDARY_COLOR_DARK } from "./../../../../styles/colors";
 
 const HEIGHT_FULLSCREEN = "100vh - 150px";
 const HEIGHT_SMALLER_1450 = "100vh - 300px";
@@ -13,6 +14,7 @@ export const FloatingPreviewContainer = styled("div")`
   width: calc((${HEIGHT_FULLSCREEN}) * 9 / 16);
   height: calc(${HEIGHT_FULLSCREEN});
   transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  z-index: 100;
 
   @media (max-width: 1450px) {
     width: calc((${HEIGHT_SMALLER_1450}) * 9 / 16);
@@ -72,18 +74,19 @@ export const ShowIcon = styled("div")`
   position: fixed;
   right: 16px;
   top: 116px;
-  background-color: ${PRIMARY_COLOR};
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  color: white;
+  background-color: ${SECONDARY_COLOR};
+  border-radius: 20px;
+  padding: 10px 16px;
+  gap: 8px;
+  color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
   &:hover {
-    background-color: #000000aa;
+    background-color: ${SECONDARY_COLOR_DARK};
+    color: white;
   }
 `;
 

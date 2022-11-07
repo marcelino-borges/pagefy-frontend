@@ -210,7 +210,7 @@ const ProgressBarDialog = ({
                   </IconButton>
                   {showBackgroundColorPicker && (
                     <ColorPicker
-                      color={barBgColor}
+                      initialColor={barBgColor}
                       onChangeComplete={handleChangeBackgroundColorComplete}
                       onCancel={() => setShowBackgroundColorPicker(false)}
                     />
@@ -244,7 +244,7 @@ const ProgressBarDialog = ({
                   </IconButton>
                   {showFillColorPicker && (
                     <ColorPicker
-                      color={barFillColor}
+                      initialColor={barFillColor}
                       onChangeComplete={handleChangeFillColorComplete}
                       onCancel={() => setShowFillColorPicker(false)}
                     />

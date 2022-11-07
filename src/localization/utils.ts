@@ -30,6 +30,8 @@ export const getLocalizedStringByComponentType = (
       return strings.tools.spotify.name;
     case ComponentType.ProgressBar:
       return strings.tools.progressBar.name;
+    case ComponentType.Counter:
+      return strings.tools.counters.name;
     default:
       return strings.unknown;
   }

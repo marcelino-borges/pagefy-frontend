@@ -260,7 +260,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   </IconButton>
                   {showBackgroundColorPicker && (
                     <ColorPicker
-                      color={backgroundColor}
+                      initialColor={backgroundColor}
                       onChangeComplete={handleChangeBackgroundColorComplete}
                       onCancel={() => setShowBackgroundColorPicker(false)}
                     />
@@ -289,7 +289,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   </IconButton>
                   {showFontColorPicker && (
                     <ColorPicker
-                      color={fontColor}
+                      initialColor={fontColor}
                       onChangeComplete={handleChangeFontColorComplete}
                       onCancel={() => setShowFontColorPicker(false)}
                     />

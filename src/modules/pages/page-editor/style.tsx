@@ -8,6 +8,16 @@ import {
   PRIMARY_COLOR_DARK,
 } from "./../../../styles/colors";
 
+const BOTTOM_LAYER = 0;
+
+export enum Layers {
+  DARK_BG = BOTTOM_LAYER,
+  TOOLS_COLUMN = BOTTOM_LAYER + 1,
+  TOOLS_GRID_ITEM = BOTTOM_LAYER + 2,
+  MAIN_CONTENT = BOTTOM_LAYER + 3,
+  OVERLAY = BOTTOM_LAYER + 4,
+}
+
 export const PageToolbar = styled(
   ({ fontWeight, color, fontSize, fontStyle, ...rest }: any) => (
     <Grid {...rest} />
@@ -22,7 +32,7 @@ export const PageToolbar = styled(
   margin-top: -24px;
   min-width: 250px;
   position: relative;
-  z-index: 100;
+  z-index: ${Layers};
 
   @media (max-width: 315px) {
     margin-top: 0px;

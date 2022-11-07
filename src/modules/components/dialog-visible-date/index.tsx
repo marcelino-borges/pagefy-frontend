@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import moment from "moment";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
@@ -15,7 +16,6 @@ import {
 } from "@mui/material";
 import strings from "../../../localization";
 import { DialogInstructions } from "./styles";
-import moment from "moment";
 
 interface IDialogVisibleDateProps {
   open: boolean;
@@ -173,4 +173,4 @@ const DialogVisibleDate = ({
   );
 };
 
-export default DialogVisibleDate;
+export default React.memo(DialogVisibleDate);

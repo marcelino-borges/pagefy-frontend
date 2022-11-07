@@ -715,7 +715,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                       </IconButton>
                       {showFontColorPicker && (
                         <ColorPicker
-                          color={fontColor}
+                          initialColor={fontColor}
                           onChangeComplete={handleChangeFontColorComplete}
                           onCancel={() => setShowFontColorPicker(false)}
                         />
@@ -751,7 +751,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                         </IconButton>
                         {showBackgroundColorPicker && (
                           <ColorPicker
-                            color={backgroundColor}
+                            initialColor={backgroundColor}
                             onChangeComplete={
                               handleChangeBackgroundColorComplete
                             }

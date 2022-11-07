@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Dialog,
@@ -58,4 +59,4 @@ const DialogConfirmation = ({
   </Dialog>
 );
 
-export default DialogConfirmation;
+export default React.memo(DialogConfirmation);

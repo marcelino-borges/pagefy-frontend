@@ -282,7 +282,7 @@ const CountersDialog = ({
                 </IconButton>
                 {showBackgroundColorPicker && (
                   <ColorPicker
-                    color={bgColor}
+                    initialColor={bgColor}
                     onChangeComplete={handleChangeBackgroundColorComplete}
                     onCancel={() => setShowBackgroundColorPicker(false)}
                   />
@@ -316,7 +316,7 @@ const CountersDialog = ({
                 </IconButton>
                 {showFontColorPicker && (
                   <ColorPicker
-                    color={fontColor}
+                    initialColor={fontColor}
                     onChangeComplete={handleChangeFillColorComplete}
                     onCancel={() => setShowFontColorPicker(false)}
                   />

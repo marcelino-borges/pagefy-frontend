@@ -22,7 +22,7 @@ import {
 } from "@mui/icons-material";
 import {
   Parent,
-  Container,
+  MainContent,
   Overlay,
   LabelText,
   PrefixIconItem,
@@ -36,6 +36,7 @@ import {
   DarkBG,
   ComponentArrowGridItem,
   DeleteContainer,
+  ToolsColumnAnimatedBG,
 } from "./style";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
@@ -243,19 +244,96 @@ const DraggableUserComponent = ({
     }
   };
 
-  const DeleteComponentConfirmationDialog = () => {
+  const Dialogs = () => {
     return (
-      <DialogConfirmation
-        open={openDeleteComponentConfirmation}
-        onClose={() => {
-          setOpenDeleteComponentConfirmation(false);
-        }}
-        onConfirmCallback={() => {
-          deleteComponent();
-        }}
-        title={strings.removeIcon}
-        message={strings.removeComponentConfirmation}
-      />
+      <>
+        <DialogConfirmation
+          open={openDeleteComponentConfirmation}
+          onClose={() => {
+            setOpenDeleteComponentConfirmation(false);
+          }}
+          onConfirmCallback={() => {
+            deleteComponent();
+          }}
+          title={strings.removeIcon}
+          message={strings.removeComponentConfirmation}
+        />
+        <UploadImageDialog
+          existingImageUrl={component.style?.backgroundImage}
+          context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
+          openChooseFileDialog={openChooseFileDialog}
+          setOpenChooseFileDialog={setOpenChooseFileDialog}
+          chosenImage={chosenImage}
+          setChosenImage={setChosenImage}
+          acceptedFiles={IMAGE_EXTENSIONS}
+          submitDialog={async (imageUrl?: string) => {
+            if (
+              userState === undefined ||
+              userState._id === undefined ||
+              component._id === undefined ||
+              pageId === undefined
+            ) {
+              return;
+            }
+
+            const clearLoadingFromState = () => {
+              dispatch(clearLoading());
+            };
+            if (chosenImage) {
+              dispatch(
+                uploadAndSetComponentImage(
+                  chosenImage,
+                  component._id,
+                  pageId,
+                  userState._id,
+                  clearLoadingFromState,
+                  clearLoadingFromState
+                )
+              );
+            } else {
+              dispatch(
+                setComponentImage(
+                  imageUrl || "",
+                  component._id,
+                  pageId,
+                  clearLoadingFromState,
+                  clearLoadingFromState
+                )
+              );
+            }
+
+            setOpenChooseFileDialog(false);
+            setChosenImage(undefined);
+          }}
+          cancelDialog={() => {
+            setChosenImage(undefined);
+            setOpenChooseFileDialog(false);
+          }}
+        />
+        <DialogChooseAnimation
+          open={openChooseAnimationDialog}
+          onClose={() => {
+            setOpenChooseAnimationDialog(false);
+          }}
+          saveAnimation={(animation: IComponentAnimation) => {
+            if (pageId && component._id)
+              dispatch(setComponentAnimation(pageId, component._id, animation));
+          }}
+          existingAnimation={component.animation}
+        />
+        <DialogVisibleDate
+          open={openVisibleDateDialog}
+          onClose={() => {
+            setOpenVisibleDateDialog(false);
+          }}
+          setDateTime={(dateTime: string) => {
+            if (pageId && component._id)
+              dispatch(
+                setComponentVisibleDate(pageId, component._id, dateTime)
+              );
+          }}
+        />
+      </>
     );
   };
 
@@ -274,17 +352,18 @@ const DraggableUserComponent = ({
     >
       {isDeleted && <DeleteContainer />}
 
-      <Container
+      <MainContent
         container
         item
-        isHoveringComponent={isHovering}
         direction="row"
         onMouseOver={() => setIsHovering(true)}
         xs={10}
         md={11}
         wrap="nowrap"
+        id="main-content"
       >
         <Overlay
+          id="overlay"
           style={{
             border: isHovering
               ? `1px solid ${PRIMARY_COLOR}`
@@ -295,13 +374,14 @@ const DraggableUserComponent = ({
         <Grid
           container
           item
-          xs={2}
+          xs={1}
           alignItems="flex-start"
           direction="column"
           justifyContent="space-between"
           style={{
             paddingLeft: "2px",
           }}
+          id="handler"
         >
           <ComponentArrowGridItem
             item
@@ -642,6 +722,7 @@ const DraggableUserComponent = ({
            * Analytics
            */}
           <AnalyticsGridContainer
+            id="analytics-container"
             container
             item
             xs={12}
@@ -684,10 +765,11 @@ const DraggableUserComponent = ({
             />
           </AnalyticsGridContainer>
         </Grid>
-      </Container>
+      </MainContent>
 
       {/* 3rd Column - Tools */}
-      <Grid
+
+      <ToolsColumn
         container
         item
         xs={2}
@@ -695,10 +777,12 @@ const DraggableUserComponent = ({
         justifyContent="center"
         alignItems="stretch"
         direction="column"
-        style={{
-          minWidth: "50px",
-        }}
+        id="tools-column"
       >
+        <ToolsColumnAnimatedBG
+          isHoveringComponent={isHovering}
+          id="tools-column-animated-bg"
+        />
         {/* BG Color */}
         {isBgAndFontCustomizable(component.type) && (
           <CustomTooltip
@@ -708,7 +792,7 @@ const DraggableUserComponent = ({
             title={strings.backgroundColor}
             placement={isLargerThan400 ? "right" : "bottom"}
           >
-            <ToolGridItem item>
+            <ToolGridItem item id="bg-color">
               <ToolIconButton
                 size="small"
                 transitionDuration="0.25s"
@@ -726,7 +810,7 @@ const DraggableUserComponent = ({
               </ToolIconButton>
               {showBackgroundColorPicker && (
                 <ColorPicker
-                  color={component.style?.backgroundColor}
+                  initialColor={component.style?.backgroundColor}
                   onChangeComplete={handleChangeBackgroundColorComplete}
                   onCancel={() => setShowBackgroundColorPicker(false)}
                 />
@@ -744,7 +828,7 @@ const DraggableUserComponent = ({
             title={strings.fontColor}
             placement={isLargerThan400 ? "right" : "bottom"}
           >
-            <ToolGridItem item>
+            <ToolGridItem item id="font-color-picker">
               <ToolIconButton
                 size="small"
                 transitionDuration="0.3s"
@@ -762,7 +846,7 @@ const DraggableUserComponent = ({
               </ToolIconButton>
               {showFontColorPicker && (
                 <ColorPicker
-                  color={component.style?.color}
+                  initialColor={component.style?.color}
                   onChangeComplete={handleChangeFontColorComplete}
                   onCancel={() => setShowFontColorPicker(false)}
                 />
@@ -780,7 +864,7 @@ const DraggableUserComponent = ({
             title={strings.uploadImage}
             placement={isLargerThan400 ? "right" : "bottom"}
           >
-            <ToolGridItem item>
+            <ToolGridItem item id="upload-image">
               <ToolIconButton
                 size="small"
                 hoveringWhite
@@ -814,7 +898,7 @@ const DraggableUserComponent = ({
             }
             placement={isLargerThan400 ? "right" : "bottom"}
           >
-            <ToolGridItem item>
+            <ToolGridItem item id="schedule-visibility">
               <ToolIconButton
                 size="small"
                 disabled={userState?.plan === PlansTypes.FREE}
@@ -845,7 +929,7 @@ const DraggableUserComponent = ({
             }
             placement={isLargerThan400 ? "right" : "bottom"}
           >
-            <ToolGridItem item>
+            <ToolGridItem item id="choose-animation">
               <ToolIconButton
                 size="small"
                 disabled={userState?.plan === PlansTypes.FREE}
@@ -871,7 +955,7 @@ const DraggableUserComponent = ({
           title={strings.toggleVisibility}
           placement={isLargerThan400 ? "right" : "bottom"}
         >
-          <ToolGridItem item>
+          <ToolGridItem item id="toggle-visibility">
             <ToolIconButton
               size="small"
               hoveringWhite
@@ -937,84 +1021,11 @@ const DraggableUserComponent = ({
             </ToolIconButton>
           </ToolGridItem>
         </CustomTooltip>
-      </Grid>
-      <ToolsColumn isHoveringComponent={isHovering}></ToolsColumn>
-      <DarkBG />
+      </ToolsColumn>
 
-      <DeleteComponentConfirmationDialog />
-      <UploadImageDialog
-        existingImageUrl={component.style?.backgroundImage}
-        context={[GalleryContext.BUTTONS, GalleryContext.BACKGROUND]}
-        openChooseFileDialog={openChooseFileDialog}
-        setOpenChooseFileDialog={setOpenChooseFileDialog}
-        chosenImage={chosenImage}
-        setChosenImage={setChosenImage}
-        acceptedFiles={IMAGE_EXTENSIONS}
-        submitDialog={async (imageUrl?: string) => {
-          if (
-            userState === undefined ||
-            userState._id === undefined ||
-            component._id === undefined ||
-            pageId === undefined
-          ) {
-            return;
-          }
+      <DarkBG id="dark-bg" />
 
-          const clearLoadingFromState = () => {
-            dispatch(clearLoading());
-          };
-          if (chosenImage) {
-            dispatch(
-              uploadAndSetComponentImage(
-                chosenImage,
-                component._id,
-                pageId,
-                userState._id,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-          } else {
-            dispatch(
-              setComponentImage(
-                imageUrl || "",
-                component._id,
-                pageId,
-                clearLoadingFromState,
-                clearLoadingFromState
-              )
-            );
-          }
-
-          setOpenChooseFileDialog(false);
-          setChosenImage(undefined);
-        }}
-        cancelDialog={() => {
-          setChosenImage(undefined);
-          setOpenChooseFileDialog(false);
-        }}
-      />
-      <DialogChooseAnimation
-        open={openChooseAnimationDialog}
-        onClose={() => {
-          setOpenChooseAnimationDialog(false);
-        }}
-        saveAnimation={(animation: IComponentAnimation) => {
-          if (pageId && component._id)
-            dispatch(setComponentAnimation(pageId, component._id, animation));
-        }}
-        existingAnimation={component.animation}
-      />
-      <DialogVisibleDate
-        open={openVisibleDateDialog}
-        onClose={() => {
-          setOpenVisibleDateDialog(false);
-        }}
-        setDateTime={(dateTime: string) => {
-          if (pageId && component._id)
-            dispatch(setComponentVisibleDate(pageId, component._id, dateTime));
-        }}
-      />
+      <Dialogs />
     </Parent>
   );
 };

@@ -327,7 +327,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     </SelectedIconButton>
                     {showColorPicker && (
                       <ColorPicker
-                        color={colorSelected}
+                        initialColor={colorSelected}
                         onChangeComplete={handleChangeColorComplete}
                         onCancel={() => setShowColorPicker(false)}
                       />

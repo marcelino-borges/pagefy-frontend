@@ -2,6 +2,7 @@ import { IDictionary } from "..";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const pt: IDictionary = {
+  hide: "Esconder",
   activate: "Ativar",
   inactivate: "Desativar",
   checkOurPlans: "Confira nossos planos",

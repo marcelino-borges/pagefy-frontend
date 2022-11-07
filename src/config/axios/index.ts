@@ -1,7 +1,10 @@
 import axios from "axios";
 import strings from "../../localization";
+import store from "../../store";
 import { getFirebaseToken } from "../firebase";
 import { showErrorToast } from "./../../utils/toast/index";
+import { IApplicationState } from "../../store";
+import getStorage from "redux-persist/es/storage/getStorage";
 
 const getConfig = async (config: any) => {
   const token = await getFirebaseToken();
@@ -21,7 +24,14 @@ const responseInterceptor = (error: any) => {
     error.response.status === 401 ||
     error.response.data.message === "401 Unauthorized"
   ) {
-    showErrorToast(strings.authErrors.invalidToken);
+    const storedAuth = getStorage("auth");
+    const storedUser = getStorage("user");
+
+    const currentStore: IApplicationState =
+      store.getState() as IApplicationState;
+
+    if (!currentStore.auth.auth?.accessToken && !storedAuth && !storedUser)
+      showErrorToast(strings.authErrors.invalidToken);
   }
 };
 

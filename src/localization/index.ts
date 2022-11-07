@@ -87,6 +87,7 @@ interface IPlanDetails {
 }
 
 export interface IDictionary {
+  hide: string;
   activate: string;
   inactivate: string;
   checkOurPlans: string;

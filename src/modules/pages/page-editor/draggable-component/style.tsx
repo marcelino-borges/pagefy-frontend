@@ -7,65 +7,72 @@ import {
   MEDIUM_GREY,
   LIGHTEST_GREY,
   ACESSIBILITY_RED,
+  PRIMARY_COLOR_DARK,
 } from "../../../../styles/colors";
+import { Layers } from "../style";
 
 export const Parent = styled(Grid)`
   position: relative;
   margin-bottom: 24px;
   min-width: 250px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 15px;
 `;
 
-export const Container = styled(({ isHoveringComponent, ...rest }: any) => (
-  <Grid {...rest} />
-))`
-  position: relative;
+export const MainContent = styled(Grid)`
   border-radius: 15px;
   min-height: 220px;
   background-color: white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.06);
-  z-index: 0;
+  z-index: ${Layers.MAIN_CONTENT};
 `;
 
-export const DeleteContainer = styled(({ ...rest }: any) => <Grid {...rest} />)`
+export const DeleteContainer = styled(Grid)`
   width: 100%;
   height: 100%;
   position: absolute;
   background-color: ${ACESSIBILITY_RED};
   opacity: 0.7;
   border-radius: 15px;
-  z-index: 20;
 `;
 
 export const Overlay = styled(({ isHoveringComponent, ...rest }: any) => (
   <Grid {...rest} />
-))`
-  border: ${(props) =>
-    props.isHoveringComponent
-      ? `1px solid ${PRIMARY_COLOR}`
-      : `1px solid rgba(0, 0, 0, 0)`};
+))(
+  ({ isHoveringComponent }) => `
+  border: ${
+    isHoveringComponent
+      ? `1px solid ${PRIMARY_COLOR_DARK}`
+      : `1px solid rgba(0, 0, 0, 0)`
+  };
   width: 100%;
   height: 100%;
   position: absolute;
   border-radius: 15px;
-  z-index: 10;
   pointer-events: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-`;
+  z-index: ${Layers.OVERLAY};
+`
+);
 
 export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
   <DragIndicator {...rest} />
-))`
+))(
+  ({ isHoveringComponent }) => `
   font-size: 30px;
-  color: ${(props) => (props.isHoveringComponent ? PRIMARY_COLOR : "#EBEBEB")};
+  color: ${isHoveringComponent ? PRIMARY_COLOR : "#EBEBEB"};
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
   &:hover {
     cursor: grab;
   }
+
   &:active {
     cursor: grabbing !important;
-  }import { ACESSIBILITY_RED } from './../../../../styles/colors';
+  }
 
-`;
+
+`
+);
 
 export const ContentRow = styled(({ children }: any) => (
   <Stack direction="row">{children}</Stack>
@@ -81,11 +88,12 @@ export const ContentRow = styled(({ children }: any) => (
 
 export const LabelText = styled(({ transform, children, ...rest }: any) => (
   <Grid {...rest}>{children}</Grid>
-))`
+))(
+  ({ transform }) => `
   padding-right: 16px;
   font-size: 18px;
   font-weight: bold;
-  transform: ${({ transform }) => transform || "translateY(-5px)"};
+  transform: ${transform || "translateY(-5px)"};
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -95,7 +103,8 @@ export const LabelText = styled(({ transform, children, ...rest }: any) => (
   @media (max-width: 600px) {
     padding-right: 4px;
   }
-`;
+`
+);
 
 export const PrefixIconItem = styled(Grid)`
   color: ${LIGHTER_GREY};
@@ -126,43 +135,32 @@ export const EditIconItem = styled(Grid)`
   }
 `;
 
-export const ToolsColumn = styled(({ isHoveringComponent, ...rest }: any) => (
-  <div {...rest} />
-))`
-  color: white;
-  background-color: ${PRIMARY_COLOR};
-  position: absolute;
-  z-index: -10;
-  top: ${(props) => (props.isHoveringComponent ? "0px" : "1px")};
-  right: ${(props) => (props.isHoveringComponent ? "0px" : "150px")};
-  box-shadow: ${(props) =>
-    props.isHoveringComponent
-      ? "10px 10px 25px rgba(0, 0, 0, 0.2)"
-      : "10px 10px 25px rgba(0, 0, 0, 0)"};
-  bottom: ${(props) => (props.isHoveringComponent ? "0px" : "1px")};
-  left: ${(props) => (props.isHoveringComponent ? "0px" : "1px")};
-  border-radius: 20px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+export const ToolsColumn = styled(Grid)`
+  z-index: ${Layers.TOOLS_COLUMN};
+  position: relative;
+  border-radius: 0px 15px 15px 0px;
+  min-wdth: 48px;
 `;
 
-export const DarkBG = styled(({ isHoveringComponent, ...rest }: any) => (
-  <div {...rest} />
-))`
-  color: white;
-  background-color: ${LIGHTER_GREY};
-  position: absolute;
-  z-index: -11;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 20px;
-`;
+export const ToolsColumnAnimatedBG = styled(
+  ({ isHoveringComponent, ...rest }: any) => <div {...rest} />
+)(
+  ({ isHoveringComponent }: any) => `
+background-color: ${PRIMARY_COLOR};
+border-radius: 0px 15px 15px 0px;
+transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+position: absolute;
+left: -16px;
+top: 0;
+width: ${isHoveringComponent ? "calc(100% + 16px)" : 0};
+height: 100%;
+`
+);
 
 export const ToolGridItem = styled(Grid)`
   margin: 0;
   padding: 0;
+  z-index: ${Layers.TOOLS_GRID_ITEM};
 `;
 
 export const ToolIconButton = styled(
@@ -173,30 +171,48 @@ export const ToolIconButton = styled(
     disabled,
     ...rest
   }: any) => <IconButton disabled={disabled} {...rest} />
-)`
+)(
+  ({ transitionDuration, isHoveringComponent, hoveringWhite }) => `
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  transition-delay: ${(props) =>
-      props.isHoveringComponent ? props.transitionDuration : "0s"},
+  transition-delay: ${isHoveringComponent ? transitionDuration : "0s"},
     0s;
   transition-property: visibility, background-color;
-  visibility: ${(props) =>
-    props.isHoveringComponent ? "visible" : "collapse"};
+  visibility: ${isHoveringComponent ? "visible" : "collapse"};
   text-align: center;
-  color: ${(props) =>
-    props.isHoveringComponent
-      ? props.hoveringWhite !== undefined
+  color: ${
+    isHoveringComponent
+      ? hoveringWhite !== undefined
         ? "white"
         : null
-      : "rgba(0, 0, 0, 0)"};
+      : "rgba(0, 0, 0, 0)"
+  };
+  margin-left: -16px;
+
+  svg {
+    margin-left: 16px;
+  }
 
   &.MuiButtonBase-root.MuiIconButton-root {
-    border-radius: 20px;
-    width: 100%;
+    border-radius: 0px 15px 15px 0px;
+    width: calc(100% + 16px);
   }
 
   &.MuiButtonBase-root.MuiIconButton-root:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: ${PRIMARY_COLOR_DARK};
   }
+`
+);
+
+export const DarkBG = styled("div")`
+  color: white;
+  background-color: ${LIGHTER_GREY};
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 15px;
+  z-index: ${Layers.DARK_BG};
 `;
 
 export const AnalyticsGridContainer = styled(Grid)`
@@ -215,13 +231,14 @@ export const AnalyticsGridItem = styled(Grid)`
 
 export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
   <Grid {...rest} />
-))`
+))(
+  ({ up, down }) => `
   padding: 8px 8px;
   cursor: pointer;
-  border-radius: ${(props) => {
-    if (props.up !== undefined) {
+  border-radius: ${() => {
+    if (up !== undefined) {
       return "15px 0px 15px 0px";
-    } else if (props.down !== undefined) {
+    } else if (down !== undefined) {
       return "0px 15px 0px 15px";
     } else {
       return "unset";
@@ -236,10 +253,9 @@ export const ComponentArrowGridItem = styled(({ up, down, ...rest }: any) => (
   &:active {
     background-color: ${LIGHTER_GREY};
   }
-`;
+`
+);
 
-export const DropzoneFileReady = styled(({ ...rest }: any) => (
-  <Grid {...rest} />
-))`
+export const DropzoneFileReady = styled(Grid)`
   color: #3dd381;
 `;

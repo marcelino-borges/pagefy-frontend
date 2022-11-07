@@ -8,7 +8,10 @@ import {
   ShowIcon,
   Iphone14Image,
 } from "./style";
-import { Close, Preview } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
+import CustomTooltip from "../../../components/tooltip";
+import strings from "../../../../localization";
+import { Icon } from "@iconify/react";
 
 interface IPagePreviewPhoneProps {
   page?: IUserPage;
@@ -23,15 +26,18 @@ const PagePreviewPhone = ({ page }: IPagePreviewPhoneProps) => {
     <>
       {!openPreview && (
         <ShowIcon onClick={() => setOpenPreview(true)}>
-          <Preview />
+          {strings.pagePreview}
+          <Icon icon="emojione-monotone:mobile-phone-with-arrow" width="28" />
         </ShowIcon>
       )}
       {openPreview && (
         <FloatingPreviewContainer>
           <Iphone14Image />
-          <CloseIcon onClick={() => setOpenPreview(false)}>
-            <Close />
-          </CloseIcon>
+          <CustomTooltip title={strings.hide}>
+            <CloseIcon onClick={() => setOpenPreview(false)}>
+              <Close />
+            </CloseIcon>
+          </CustomTooltip>
           <PageContainer style={{ ...page.style }}>
             <PageRenderer pageToRender={page} isPagePreview />
           </PageContainer>

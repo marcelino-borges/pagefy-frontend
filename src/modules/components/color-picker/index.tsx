@@ -4,15 +4,17 @@ import strings from "../../../localization";
 import { ColorPickerSpan, Container, Group, SubmitButton } from "./styles";
 
 interface IColorPickerProps {
-  color: any;
+  initialColor: any;
   onChangeComplete: any;
   onCancel: () => void;
+  id?: string;
 }
 
 const ColorPicker = ({
-  color: originalColor,
+  initialColor,
   onChangeComplete,
   onCancel,
+  id,
 }: IColorPickerProps) => {
   const [currentColor, setCurrentColor] = useState();
 
@@ -20,7 +22,7 @@ const ColorPicker = ({
     if (event.keyCode === 27) {
       onCancel();
     }
-    setCurrentColor(originalColor);
+    setCurrentColor(initialColor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -46,6 +48,7 @@ const ColorPicker = ({
       onClick={(event: any) => {
         event.preventDefault();
       }}
+      id={id}
     >
       <Container>
         <SketchPicker

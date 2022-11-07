@@ -4,11 +4,10 @@ import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
 import { Button, Grid, useMediaQuery } from "@mui/material";
 import {
-  Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
+  Public as PublicIcon,
+  PublicOff as PublicOffIcon,
   ImageSearch as ImageSearchIcon,
   Delete as DeleteIcon,
-  OpenInNew as OpenInNewIcon,
   Code,
   Add as AddIcon,
 } from "@mui/icons-material";
@@ -75,6 +74,7 @@ import SpotifyDialog from "./dialogs/spotify-dialog";
 import ProgressBarDialog from "./dialogs/progress-bar-dialog";
 import CountersDialog from "./dialogs/counters-dialog";
 import PagePreviewPhone from "./page-preview-phone";
+import { Icon } from "@iconify/react";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -448,12 +448,12 @@ const PageEditor = () => {
               hoverBackgroundColor={LIGHT_GREY}
             >
               {page?.isPublic ? (
-                <VisibilityIcon
+                <PublicIcon
                   color="primary"
                   fontSize={isSmallerThan370 ? "small" : "medium"}
                 />
               ) : (
-                <VisibilityOffIcon
+                <PublicOffIcon
                   fontSize={isSmallerThan370 ? "small" : "medium"}
                 />
               )}
@@ -482,7 +482,8 @@ const PageEditor = () => {
             </IconButton>
             {showBackgroundColorPicker && (
               <ColorPicker
-                color={page?.style?.backgroundColor || "white"}
+                id="bg-color-picker"
+                initialColor={page?.style?.backgroundColor || "white"}
                 onChangeComplete={handleChangeBackgroundColorComplete}
                 onCancel={() => setShowBackgroundColorPicker(false)}
               />
@@ -507,7 +508,8 @@ const PageEditor = () => {
             </IconButton>
             {showFontColorPicker && (
               <ColorPicker
-                color={page?.style?.color || "white"}
+                id="font-color-picker"
+                initialColor={page?.style?.color || "white"}
                 onChangeComplete={handleChangeFontColorComplete}
                 onCancel={() => setShowFontColorPicker(false)}
               />
@@ -626,13 +628,10 @@ const PageEditor = () => {
                 rel="noopener noreferrer"
               >
                 <IconButton
-                  onClick={() => {}}
                   size={isSmallerThan370 ? "small" : "medium"}
                   hoverBackgroundColor={LIGHT_GREY}
                 >
-                  <OpenInNewIcon
-                    fontSize={isSmallerThan370 ? "small" : "medium"}
-                  />
+                  <Icon icon="iconoir:open-in-browser" />
                 </IconButton>
               </Link>
             ) : (
@@ -643,9 +642,7 @@ const PageEditor = () => {
                 size={isSmallerThan370 ? "small" : "medium"}
                 hoverBackgroundColor={LIGHT_GREY}
               >
-                <OpenInNewIcon
-                  fontSize={isSmallerThan370 ? "small" : "medium"}
-                />
+                <Icon icon="iconoir:open-in-browser" />
               </IconButton>
             )}
           </Grid>
@@ -656,9 +653,7 @@ const PageEditor = () => {
     isSmallerThan370,
     page,
     showBackgroundColorPicker,
-    handleChangeBackgroundColorComplete,
     showFontColorPicker,
-    handleChangeFontColorComplete,
     openChooseFileBGDialog,
     chosenImage,
     userProfile?.plan,
@@ -964,9 +959,9 @@ const PageEditor = () => {
 
   return (
     <>
-      {isLargerThan1150 && <PagePreviewPhone page={page} />}
       <PrivateRouteChecker />
       <Navigation />
+      {isLargerThan1150 && <PagePreviewPhone page={page} />}
       <ThinWidthContent center={!isLargerThan1150} pb="100px">
         {page && (
           <PagePreviewDialog

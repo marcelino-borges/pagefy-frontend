@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -15,7 +16,6 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { IComponentAnimation } from "../../../store/user-pages/types";
 import { PRIMARY_COLOR } from "../../../styles/colors";
@@ -252,4 +252,4 @@ const DialogChooseAnimation = ({
   );
 };
 
-export default DialogChooseAnimation;
+export default React.memo(DialogChooseAnimation);

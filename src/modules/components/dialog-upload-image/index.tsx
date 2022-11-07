@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 import {
   Button,
   Dialog,
@@ -9,7 +10,6 @@ import {
   useTheme,
   Grid,
 } from "@mui/material";
-import { useDropzone } from "react-dropzone";
 import strings from "../../../localization";
 import { Check as CheckIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import { GalleryContext, MAXIMUM_FILE_SIZE } from "../../../constants";
@@ -214,4 +214,4 @@ const UploadImageDialog = ({
   );
 };
 
-export default UploadImageDialog;
+export default React.memo(UploadImageDialog);
