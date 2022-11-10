@@ -29,7 +29,7 @@ import InternalLink from "../internal-link";
 import { Helmet } from "react-helmet";
 import { APP_ENVIROMENT } from "../../../constants";
 import TextOverImageComponent from "./component-types/text-over-image/index";
-import ButtonScrollUp from "../button-scroll-top";
+import ButtonScrollUp from "../button-scroll-up";
 import MapComponent from "./component-types/map";
 import SpotifyComponent from "./component-types/spotify";
 import ProgressBarComponent from "./component-types/progress-bar";
@@ -164,6 +164,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             pageId={page?._id}
             component={component}
             key={component._id}
+            isPagePreview={isPagePreview}
           />
         );
       case ComponentType.TextOverImage:

@@ -509,4 +509,5 @@ export const pt: IDictionary = {
     },
   },
   phoneNumber: "Telefone",
+  color: "Cor",
 };

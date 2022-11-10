@@ -229,7 +229,7 @@ const DraggableUserComponent = ({
     if (component._id && pageId) {
       console.log("a");
       dispatch(
-        setComponentBackgroundColor(pageId, component._id, String(color.hex))
+        setComponentBackgroundColor(pageId, component._id, String(color))
       );
       setIsKeepToolsOpen(false);
       setShowBackgroundColorPicker(false);
@@ -238,7 +238,7 @@ const DraggableUserComponent = ({
 
   const handleChangeFontColorComplete = (color: any) => {
     if (component._id && pageId) {
-      dispatch(setComponentFontColor(pageId, component._id, String(color.hex)));
+      dispatch(setComponentFontColor(pageId, component._id, String(color)));
       setIsKeepToolsOpen(false);
       setShowFontColorPicker(false);
     }
@@ -811,7 +811,7 @@ const DraggableUserComponent = ({
               {showBackgroundColorPicker && (
                 <ColorPicker
                   initialColor={component.style?.backgroundColor}
-                  onChangeComplete={handleChangeBackgroundColorComplete}
+                  onChooseColor={handleChangeBackgroundColorComplete}
                   onCancel={() => setShowBackgroundColorPicker(false)}
                 />
               )}
@@ -847,7 +847,7 @@ const DraggableUserComponent = ({
               {showFontColorPicker && (
                 <ColorPicker
                   initialColor={component.style?.color}
-                  onChangeComplete={handleChangeFontColorComplete}
+                  onChooseColor={handleChangeFontColorComplete}
                   onCancel={() => setShowFontColorPicker(false)}
                 />
               )}

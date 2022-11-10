@@ -18,9 +18,14 @@ import { incrementComponentClicks } from "../../../../../store/page-renderer/act
 interface ILaunchComponentProps {
   component: IUserComponent;
   pageId?: string | undefined;
+  isPagePreview?: boolean;
 }
 
-const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
+const LaunchComponent = ({
+  component,
+  pageId,
+  isPagePreview,
+}: ILaunchComponentProps) => {
   const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
     return (
       <Grid container direction="column" wrap="nowrap">
@@ -29,6 +34,7 @@ const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
             container
             justifyContent="center"
             alignItems="center"
+            isPagePreview={isPagePreview}
             item
             xs={3}
           >
@@ -39,6 +45,7 @@ const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
             container
             justifyContent="center"
             alignItems="center"
+            isPagePreview={isPagePreview}
             item
             xs={3}
           >
@@ -50,6 +57,7 @@ const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
             container
             justifyContent="center"
             alignItems="center"
+            isPagePreview={isPagePreview}
             item
             xs={3}
           >
@@ -61,6 +69,7 @@ const LaunchComponent = ({ component, pageId }: ILaunchComponentProps) => {
             container
             justifyContent="center"
             alignItems="center"
+            isPagePreview={isPagePreview}
             item
             xs={3}
           >

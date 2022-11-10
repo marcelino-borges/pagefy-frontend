@@ -155,7 +155,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   };
 
   const handleChangeColorComplete = (color: any) => {
-    setColorSelected(String(color.hex));
+    setColorSelected(String(color));
     setShowColorPicker(false);
   };
 
@@ -328,7 +328,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                     {showColorPicker && (
                       <ColorPicker
                         initialColor={colorSelected}
-                        onChangeComplete={handleChangeColorComplete}
+                        onChooseColor={handleChangeColorComplete}
                         onCancel={() => setShowColorPicker(false)}
                       />
                     )}

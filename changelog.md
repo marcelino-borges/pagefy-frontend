@@ -16,11 +16,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
-### [1.27.0] - 2022-10-03
+### [1.28.0] - 2022-11-10
+
+- Feature: Floating phone page preview inside page editor.
+- Fix: Draggable component layers numbers
+- Fix: New color picker with fixed problems
+
+### [1.27.0] - 2022-11-03
 
 - Feature: Counters animation increasing it's number with time on page renderer
 
-### [1.26.0] - 2022-10-03
+### [1.26.0] - 2022-11-03
 
 - Feature: Testimonials implemented
 - Refactor: auth token added to all requests with axios interceptors

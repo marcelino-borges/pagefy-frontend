@@ -68,7 +68,7 @@ import { IApplicationState } from "../../../../../store";
 import { UserStorageFolder } from "../../../../../store/shared/types";
 import { PlansTypes } from "../../../../../store/user/types";
 import WhatsappDialog from "../whatsapp-dialog";
-import { translateShadowStyleEnum } from "../../../../../utils";
+import { clamp, translateShadowStyleEnum } from "../../../../../utils";
 import {
   ComponentDetailsButton,
   LayoutPickerContainer,
@@ -288,12 +288,12 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
-    setBackgroundColor(color.hex);
+    setBackgroundColor(color);
     setShowBackgroundColorPicker(false);
   };
 
   const handleChangeFontColorComplete = (color: any) => {
-    setFontColor(color.hex);
+    setFontColor(color);
     setShowFontColorPicker(false);
   };
 
@@ -470,14 +470,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                     value={selectedRowsCount}
                     onChange={(event: any) => {
                       const value: number = Number(event.target.value);
-
-                      if (value > COMPONENT_MAX_ROWS) {
-                        setSelectedRowsCount(COMPONENT_MAX_ROWS);
-                      } else if (value < 1) {
-                        setSelectedRowsCount(1);
-                      } else {
-                        setSelectedRowsCount(event.target.value);
-                      }
+                      setSelectedRowsCount(clamp(value, COMPONENT_MAX_ROWS, 1));
                     }}
                     InputProps={{
                       inputProps: { min: 1, max: COMPONENT_MAX_ROWS },
@@ -716,7 +709,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                       {showFontColorPicker && (
                         <ColorPicker
                           initialColor={fontColor}
-                          onChangeComplete={handleChangeFontColorComplete}
+                          onChooseColor={handleChangeFontColorComplete}
                           onCancel={() => setShowFontColorPicker(false)}
                         />
                       )}
@@ -752,9 +745,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
                         {showBackgroundColorPicker && (
                           <ColorPicker
                             initialColor={backgroundColor}
-                            onChangeComplete={
-                              handleChangeBackgroundColorComplete
-                            }
+                            onChooseColor={handleChangeBackgroundColorComplete}
                             onCancel={() => setShowBackgroundColorPicker(false)}
                           />
                         )}

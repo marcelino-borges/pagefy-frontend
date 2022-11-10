@@ -24,6 +24,7 @@ import ColorPicker from "../../../../components/color-picker";
 import CustomTooltip from "../../../../components/tooltip";
 import BackgroundColorIcon from "../../../../../assets/icons/custom-icons/background-color";
 import { ProgressBarContainer, ProgressBarContainerLabel } from "./styles";
+import { clamp } from "../../../../../utils";
 
 interface IProgressBarDialogProps {
   pageId?: string;
@@ -93,12 +94,12 @@ const ProgressBarDialog = ({
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
-    setBarBgColor(color.hex);
+    setBarBgColor(color);
     setShowBackgroundColorPicker(false);
   };
 
   const handleChangeFillColorComplete = (color: any) => {
-    setBarFillColor(color.hex);
+    setBarFillColor(color);
     setShowFillColorPicker(false);
   };
 
@@ -160,14 +161,7 @@ const ProgressBarDialog = ({
               value={progressValue}
               onChange={(event: any) => {
                 const value: number = Number(event.target.value);
-
-                if (value > 100) {
-                  setProgressValue(100);
-                } else if (value < 0) {
-                  setProgressValue(0);
-                } else {
-                  setProgressValue(event.target.value);
-                }
+                setProgressValue(clamp(value, 0, 100));
               }}
               InputProps={{
                 inputProps: { min: 1, max: 100 },
@@ -211,7 +205,7 @@ const ProgressBarDialog = ({
                   {showBackgroundColorPicker && (
                     <ColorPicker
                       initialColor={barBgColor}
-                      onChangeComplete={handleChangeBackgroundColorComplete}
+                      onChooseColor={handleChangeBackgroundColorComplete}
                       onCancel={() => setShowBackgroundColorPicker(false)}
                     />
                   )}
@@ -245,7 +239,7 @@ const ProgressBarDialog = ({
                   {showFillColorPicker && (
                     <ColorPicker
                       initialColor={barFillColor}
-                      onChangeComplete={handleChangeFillColorComplete}
+                      onChooseColor={handleChangeFillColorComplete}
                       onCancel={() => setShowFillColorPicker(false)}
                     />
                   )}

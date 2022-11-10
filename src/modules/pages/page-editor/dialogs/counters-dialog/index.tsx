@@ -110,12 +110,12 @@ const CountersDialog = ({
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
-    setBgColor(color.hex);
+    setBgColor(color);
     setShowBackgroundColorPicker(false);
   };
 
   const handleChangeFillColorComplete = (color: any) => {
-    setFontColor(color.hex);
+    setFontColor(color);
     setShowFontColorPicker(false);
   };
 
@@ -283,7 +283,7 @@ const CountersDialog = ({
                 {showBackgroundColorPicker && (
                   <ColorPicker
                     initialColor={bgColor}
-                    onChangeComplete={handleChangeBackgroundColorComplete}
+                    onChooseColor={handleChangeBackgroundColorComplete}
                     onCancel={() => setShowBackgroundColorPicker(false)}
                   />
                 )}
@@ -317,7 +317,7 @@ const CountersDialog = ({
                 {showFontColorPicker && (
                   <ColorPicker
                     initialColor={fontColor}
-                    onChangeComplete={handleChangeFillColorComplete}
+                    onChooseColor={handleChangeFillColorComplete}
                     onCancel={() => setShowFontColorPicker(false)}
                   />
                 )}

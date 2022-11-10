@@ -1,7 +1,8 @@
 import { Grid, styled } from "@mui/material";
 
-export const CountdownNumber = styled(({ ...rest }: any) => <Grid {...rest} />)`
-  font-size: 2.5em;
+export const CountdownNumber = styled(({ ...rest }: any) => <Grid {...rest} />)(
+  ({ isPagePreview }) => `
+  font-size: ${isPagePreview ? "1.5em" : "2em"};
   font-weight: 500;
   background-color: white;
   color: black;
@@ -19,7 +20,8 @@ export const CountdownNumber = styled(({ ...rest }: any) => <Grid {...rest} />)`
     font-size: 1em;
     margin: 2px;
   }
-`;
+`
+);
 
 export const CountdownSeparator = styled(({ ...rest }: any) => (
   <Grid {...rest} />

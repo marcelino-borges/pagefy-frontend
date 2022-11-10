@@ -1,48 +1,64 @@
-import { Button } from "@mui/material";
+import { Stack } from "@mui/material";
 import { styled } from "@mui/system";
-import { PRIMARY_COLOR } from "../../../styles/colors";
+import { LIGHTER_GREY, LIGHT_GREY } from "../../../styles/colors";
 
-export const ColorPickerSpan = styled(({ ...rest }: any) => <span {...rest} />)`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(1, 1, 1, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  transform: scale(1.3);
-`;
+export const ColorPickerStyleOverride = styled("span")`
+  & .react-colorful {
+    margin-top: 24px;
+    width: 100%;
+    height: 400px;
+  }
 
-export const Container = styled(({ ...rest }: any) => <div {...rest} />)`
-  width: 300px;
-  max-width: 70vw;
+  & .react-colorful__saturation {
+    border-radius: 0px;
+  }
 
-  & .sketch-picker {
-    width: calc(100% - 20px) !important;
-    max-width: 70vw;
-    border-radius: 4px 4px 0px 0px !important;
+  & .react-colorful__hue {
+    margin-top: 16px;
+    border-radius: 10px;
+  }
+
+  & .react-colorful__hue-pointer {
+  }
+
+  & .react-colorful__last-control {
+  }
+
+  & .react-colorful__interactive {
   }
 `;
 
-export const Group = styled(({ ...rest }: any) => <div {...rest} />)`
-  background-color: white;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  border-radius: 0px 0px 4px 4px;
-  transform: translateY(-1px);
+export const RGBContainer = styled(Stack)`
+  position: relative;
+  margin-top: 32px;
+  gap: 16px;
+  border: 2px dashed ${LIGHTER_GREY};
+  padding: 16px;
+  border-radius: 10px;
 `;
 
-export const SubmitButton = styled(({ ...rest }: any) => <Button {...rest} />)`
-  font-size: 0.6em;
-  z-index: 5010;
-  min-width: unset;
+export const RGBContainerLabel = styled(Stack)`
+  position: absolute;
+  color: ${LIGHT_GREY};
+  top: -12px;
+  left: 12px;
+  background-color: white;
+  font-size: 0.8em;
+  font-weight: 500;
+  padding: 4px;
+`;
+
+export const PalleteItem = styled("div")(
+  ({ color }) => `
+  width: 24px;
+  height: 24px;
+  background-color: ${color};
+  cursor: pointer;
+  border: 1px solid black;
 
   &:hover {
-    background-color: unset;
-    color: ${PRIMARY_COLOR};
+    transform: scale(1.2);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   }
-`;
+`
+);

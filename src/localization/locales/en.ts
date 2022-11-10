@@ -504,4 +504,5 @@ export const en: IDictionary = {
     },
   },
   phoneNumber: "Phone Number",
+  color: "Color",
 };

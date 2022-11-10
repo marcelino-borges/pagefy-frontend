@@ -68,7 +68,7 @@ import PagePreviewDialog from "./dialogs/page-preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./dialogs/custom-script-dialog";
 import { PlansTypes } from "../../../store/user/types";
-import ButtonScrollUp from "../../components/button-scroll-top";
+import ButtonScrollUp from "../../components/button-scroll-up";
 import MapsDialog from "./dialogs/maps-dialog";
 import SpotifyDialog from "./dialogs/spotify-dialog";
 import ProgressBarDialog from "./dialogs/progress-bar-dialog";
@@ -318,7 +318,7 @@ const PageEditor = () => {
   const handleChangeBackgroundColorComplete = useCallback(
     (color: any) => {
       if (page && page._id) {
-        dispatch(setPageBackgroundColor(page._id, String(color.hex)));
+        dispatch(setPageBackgroundColor(page._id, String(color)));
         setShowBackgroundColorPicker(false);
       }
     },
@@ -327,8 +327,9 @@ const PageEditor = () => {
 
   const handleChangeFontColorComplete = useCallback(
     (color: any) => {
+      console.log("fontcolor: " + color);
       if (page && page._id) {
-        dispatch(setPageFontColor(page._id, String(color.hex)));
+        dispatch(setPageFontColor(page._id, String(color)));
         setShowFontColorPicker(false);
       }
     },
@@ -461,6 +462,32 @@ const PageEditor = () => {
           </Grid>
         </CustomTooltip>
 
+        <CustomTooltip title={strings.fontColor}>
+          <Grid item>
+            <IconButton
+              hoverBackgroundColor={LIGHT_GREY}
+              size={isSmallerThan370 ? "small" : "medium"}
+              onClick={() => {
+                setShowFontColorPicker(!showFontColorPicker);
+              }}
+            >
+              <FontColorIcon
+                size={isSmallerThan370 ? 16 : 26}
+                bucketColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
+                selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
+              />
+            </IconButton>
+            {showFontColorPicker && (
+              <ColorPicker
+                id="font-color-picker"
+                initialColor={page?.style?.color || "white"}
+                onChooseColor={handleChangeFontColorComplete}
+                onCancel={() => setShowFontColorPicker(false)}
+              />
+            )}
+          </Grid>
+        </CustomTooltip>
+
         <CustomTooltip title={strings.backgroundColor}>
           <Grid item>
             <IconButton
@@ -484,34 +511,8 @@ const PageEditor = () => {
               <ColorPicker
                 id="bg-color-picker"
                 initialColor={page?.style?.backgroundColor || "white"}
-                onChangeComplete={handleChangeBackgroundColorComplete}
+                onChooseColor={handleChangeBackgroundColorComplete}
                 onCancel={() => setShowBackgroundColorPicker(false)}
-              />
-            )}
-          </Grid>
-        </CustomTooltip>
-
-        <CustomTooltip title={strings.fontColor}>
-          <Grid item>
-            <IconButton
-              hoverBackgroundColor={LIGHT_GREY}
-              size={isSmallerThan370 ? "small" : "medium"}
-              onClick={() => {
-                setShowFontColorPicker(!showFontColorPicker);
-              }}
-            >
-              <FontColorIcon
-                size={isSmallerThan370 ? 16 : 26}
-                bucketColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
-                selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
-              />
-            </IconButton>
-            {showFontColorPicker && (
-              <ColorPicker
-                id="font-color-picker"
-                initialColor={page?.style?.color || "white"}
-                onChangeComplete={handleChangeFontColorComplete}
-                onCancel={() => setShowFontColorPicker(false)}
               />
             )}
           </Grid>
@@ -653,7 +654,9 @@ const PageEditor = () => {
     isSmallerThan370,
     page,
     showBackgroundColorPicker,
+    handleChangeBackgroundColorComplete,
     showFontColorPicker,
+    handleChangeFontColorComplete,
     openChooseFileBGDialog,
     chosenImage,
     userProfile?.plan,

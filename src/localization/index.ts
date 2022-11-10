@@ -459,6 +459,7 @@ export interface IDictionary {
     };
   };
   phoneNumber: string;
+  color: string;
 }
 
 // Dictionaries

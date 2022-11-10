@@ -138,12 +138,12 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
-    setBackgroundColor(color.hex);
+    setBackgroundColor(color);
     setShowBackgroundColorPicker(false);
   };
 
   const handleChangeFontColorComplete = (color: any) => {
-    setFontColor(color.hex);
+    setFontColor(color);
     setShowFontColorPicker(false);
   };
 
@@ -261,7 +261,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   {showBackgroundColorPicker && (
                     <ColorPicker
                       initialColor={backgroundColor}
-                      onChangeComplete={handleChangeBackgroundColorComplete}
+                      onChooseColor={handleChangeBackgroundColorComplete}
                       onCancel={() => setShowBackgroundColorPicker(false)}
                     />
                   )}
@@ -290,7 +290,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
                   {showFontColorPicker && (
                     <ColorPicker
                       initialColor={fontColor}
-                      onChangeComplete={handleChangeFontColorComplete}
+                      onChooseColor={handleChangeFontColorComplete}
                       onCancel={() => setShowFontColorPicker(false)}
                     />
                   )}
