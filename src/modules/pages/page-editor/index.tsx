@@ -75,6 +75,10 @@ import ProgressBarDialog from "./dialogs/progress-bar-dialog";
 import CountersDialog from "./dialogs/counters-dialog";
 import PagePreviewPhone from "./page-preview-phone";
 import { Icon } from "@iconify/react";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
+
+type IdentifiedUserComponent = IUserComponent & { id: string };
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -116,6 +120,8 @@ const PageEditor = () => {
   const [openProgressBarDialog, setOpenProgressBarDialog] =
     useState<boolean>(false);
   const [openCountersDialog, setOpenCountersDialog] = useState<boolean>(false);
+  const [isDraggingComponent, setIsDraggingComponent] =
+    useState<boolean>(false);
 
   const { handleSubmit } = useForm();
 
@@ -939,26 +945,45 @@ const PageEditor = () => {
     </>
   );
 
+  const middleComponentsWithId = useMemo(
+    () =>
+      page?.middleComponents?.map((component: IUserComponent) => ({
+        ...component,
+        id: component._id || uuidv4(),
+      })) || [],
+    [page?.middleComponents]
+  );
+
   const MiddleComponents = useMemo(() => {
     if (page && page.middleComponents) {
       return (
-        <>
-          {page.middleComponents.map(
-            (component: IUserComponent, index: number) => (
-              <DraggableUserComponent
-                component={component}
-                index={index}
-                pageId={page?._id}
-                key={uuidv4()}
-              />
-            )
-          )}
-        </>
+        <DndContext>
+          <SortableContext items={middleComponentsWithId}>
+            {middleComponentsWithId.map(
+              (component: IdentifiedUserComponent, index: number) => {
+                if (isDraggingComponent) {
+                  return <></>;
+                }
+                return (
+                  <DraggableUserComponent
+                    id={component.id}
+                    component={component}
+                    index={index}
+                    pageId={page?._id}
+                    key={component.id}
+                    onMouseDown={() => setIsDraggingComponent(true)}
+                    onMouseUp={() => setIsDraggingComponent(false)}
+                  />
+                );
+              }
+            )}
+          </SortableContext>
+        </DndContext>
       );
     }
     return <></>;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page?.middleComponents]);
+  }, [page?.middleComponents, isDraggingComponent, middleComponentsWithId]);
 
   return (
     <>

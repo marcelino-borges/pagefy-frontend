@@ -90,19 +90,27 @@ import { showSuccessToast } from "../../../../utils/toast";
 import { showErrorToast } from "./../../../../utils/toast/index";
 import MapEmbed from "../../../components/map-embed";
 import SpotifyEmbed from "./../../../components/spotify-embed/index";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export interface DraggableUserComponentProps {
+  id: string;
   component: IUserComponent;
   index: number;
   pageId: string | undefined;
   onClick?: () => any;
+  onMouseDown?: () => any;
+  onMouseUp?: () => any;
 }
 
 const DraggableUserComponent = ({
+  id,
   component,
   index,
   pageId,
   onClick,
+  onMouseDown,
+  onMouseUp,
 }: DraggableUserComponentProps) => {
   const dispatch = useDispatch();
 
@@ -113,6 +121,9 @@ const DraggableUserComponent = ({
   const isLargerThan400 = useMediaQuery("(min-width: 400px)");
   const isSmallerThan400 = useMediaQuery("(max-width: 399px)");
   const isSmallerThan600 = useMediaQuery("(max-width: 600px)");
+
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: id });
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const [isKeepToolsOpen, setIsKeepToolsOpen] = useState<boolean>(false);
@@ -346,9 +357,18 @@ const DraggableUserComponent = ({
       onMouseLeave={() => {
         if (!isKeepToolsOpen) setIsHovering(false);
       }}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
       onClick={() => {
         if (onClick) onClick();
       }}
+      ref={setNodeRef}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      {...attributes}
+      {...listeners}
     >
       {isDeleted && <DeleteContainer />}
 
