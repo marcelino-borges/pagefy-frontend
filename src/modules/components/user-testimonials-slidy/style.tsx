@@ -51,9 +51,6 @@ export const UserPicture = styled(({ pictureUrl, children, ...rest }: any) => (
 );
 
 export const NavigationContainer = styled(Stack)`
-  position: absolute;
-  right: 32px;
-  bottom: 32px;
   gap: 16px;
 `;
 

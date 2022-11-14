@@ -95,6 +95,7 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
         card.current.style.transition = CARD_SLIDE_TRANSITION;
         card.current.style.visibility = "visible";
         card.current.style.transform = "translateX(0px)";
+        // card.scrollIntoView({ behavior: "smooth" });
         setIsSliding(false);
         setCardDirection(0);
       }, CARD_SLIDE_DURATION);
@@ -108,7 +109,6 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
           isLeft
           onClick={() => {
             setCardDirection(-1);
-            // changeDisplayedIndex(false);
           }}
         >
           <Icon icon="eva:arrow-ios-back-fill" />
@@ -116,7 +116,6 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
         <ArrowIcon
           onClick={() => {
             setCardDirection(1);
-            // changeDisplayedIndex(true);
           }}
         >
           <Icon icon="eva:arrow-ios-forward-fill" />
@@ -155,8 +154,8 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
             } ${
               (testimonialDisplayed.user as Partial<IUser>).lastName
             }`}</UserName>
+            <NavigationButtons />
           </Stack>
-          <NavigationButtons />
         </TestimonialCard>
       ) : (
         <>{strings.sorryThisIsNotAvailable}</>
