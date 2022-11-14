@@ -298,6 +298,9 @@ export interface IDictionary {
   signIn: string;
   signIn2: string;
   accessAccount: string;
+  fillDataToAccessAccount: string;
+  fillYourPersonalData: string;
+  welcomeBack: string;
   passwordRequirements: string;
   requiredPrivacyAccept: string;
   profile: string;
@@ -460,9 +463,31 @@ export interface IDictionary {
   };
   phoneNumber: string;
   color: string;
+  home2: {
+    mainHeader: string;
+    mainSubheader: string;
+    buttonCreateFreeAccount: string;
+    earnSubscriptionLifetime: string[];
+    areYouGonnaLoseIt: string;
+    tripleTitles: string[];
+    iconTextCards: {
+      title: string;
+      subtitle: string;
+    }[];
+    section1: {
+      title: string;
+      subtitle: string;
+      button: string[];
+    };
+    section2: {
+      title: string;
+      chips: string[];
+    };
+    section3: {
+      title: string;
+    };
+  };
 }
-
-// Dictionaries
 
 // Composed dictionaries
 

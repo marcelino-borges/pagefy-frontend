@@ -224,9 +224,12 @@ export const en: IDictionary = {
   signIn: "Sign In",
   signIn2: "Sign In",
   accessAccount: "Access your account",
+  welcomeBack: "Welcome back!",
+  fillDataToAccessAccount: "Fill your credentials to access your account!",
+  fillYourPersonalData: "Fill your personal data",
   emailExample: "email@example.com",
   passwordRequirements:
-    "Password requirements:  * Minimum 8 characters \n * At least 1 lowercase letter \n * At least 1 number",
+    "Password requirements: \n * Minimum 8 characters \n * At least 1 lowercase letter \n * At least 1 number",
 
   requiredPrivacyAccept: "You must accept terms and privacy to continue.",
   authErrors: {
@@ -505,4 +508,48 @@ export const en: IDictionary = {
   },
   phoneNumber: "Phone Number",
   color: "Color",
+  home2: {
+    mainHeader: "Everything you do. Simple and straight forward.",
+    mainSubheader: "Show the world the content only you know how to do.",
+    buttonCreateFreeAccount: "Create my free account",
+    earnSubscriptionLifetime: ["Earn a lifetime", "subscription"],
+    areYouGonnaLoseIt: "Are you gonna lose it?",
+    tripleTitles: [
+      "For you or your company",
+      "Exclusive interactive resources",
+    ],
+    iconTextCards: [
+      {
+        title: "Show your videos",
+        subtitle:
+          "Present your most important videos in a quicker and simpler way",
+      },
+      {
+        title: "Customize colors and layout",
+        subtitle:
+          "Create your bio with your style, set colors, images and components",
+      },
+      {
+        title: "Share wherever you want",
+        subtitle: "Show all your followers the amazing content you have!",
+      },
+    ],
+    section1: {
+      title: "The best way to share your content",
+      subtitle:
+        "Follow up analytics about your links, schedule events, show videos and guide your audience to the right content.",
+      button: ["Earn my lifetime", "subscription now!"],
+    },
+    section2: {
+      title: "Manage all your content from a single workspace.",
+      chips: [
+        "Platinum lifetime subscription",
+        "Unlimited team members",
+        "Cancel anytime",
+      ],
+    },
+    section3: {
+      title: "What do our customers talk about us?",
+    },
+  },
 };

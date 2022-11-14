@@ -26,6 +26,7 @@ import {
   Section3Title,
   Section3InnerContainer,
   Actress1Image,
+  Section3ShortLineWrapper,
 } from "./style";
 import CustomButton from "./../../../components/button-custom/index";
 import {
@@ -84,13 +85,8 @@ const Home2 = () => {
         >
           <Grid item maxWidth="30%">
             <Stack direction="column" gap="32px">
-              <MainHeader item>
-                Tudo o que você faz. Simples e direto.
-              </MainHeader>
-              <MainSubHeader item>
-                Mostre para o mundo o conteúdo que só você <br />
-                sabe fazer.
-              </MainSubHeader>
+              <MainHeader item>{strings.home2.mainHeader}</MainHeader>
+              <MainSubHeader item>{strings.home2.mainSubheader}</MainSubHeader>
               <Grid item>
                 <CustomButton
                   w="fit-content"
@@ -99,7 +95,7 @@ const Home2 = () => {
                   hoverBgColor={PRIMARY_COLOR_DARK}
                   to={routes.signUp}
                 >
-                  Criar minha conta grátis agora
+                  {strings.home2.buttonCreateFreeAccount}
                 </CustomButton>
               </Grid>
             </Stack>
@@ -128,9 +124,13 @@ const Home2 = () => {
                 </PinkBGCheckIcon>
               </Stack>
               <Stack direction="column">
-                <div style={{ fontWeight: "500" }}>Vai perder?</div>
+                <div style={{ fontWeight: "500" }}>
+                  {strings.home2.areYouGonnaLoseIt}
+                </div>
                 <div>
-                  Ganhe assinatura <strong>PREMIUM</strong> vitalícia
+                  {`${strings.home2.earnSubscriptionLifetime[0]} `}
+                  <strong>{strings.platinumPlan.name}</strong>
+                  {` ${strings.home2.earnSubscriptionLifetime[1]}`}
                 </div>
               </Stack>
             </SmallActressCard>
@@ -138,35 +138,26 @@ const Home2 = () => {
         </Grid>
 
         <Grid container mb="80px">
-          <TriplePageTitle
-            increasingSize
-            titles={[
-              "Para você ou para sua empresa",
-              "Recursos excelusivos e interativos",
-            ]}
-          />
+          <TriplePageTitle increasingSize titles={strings.home2.tripleTitles} />
         </Grid>
 
         <CardIconTexts
           cards={[
             {
               icon: <SpeakerIcon></SpeakerIcon>,
-              title: "Mostre seus vídeos",
-              subtitle:
-                "Apresente seus vídeos mais importantes de uma forma rápida e simples",
+              title: strings.home2.iconTextCards[0].title,
+              subtitle: strings.home2.iconTextCards[0].subtitle,
             },
 
             {
               icon: <PencilIcon></PencilIcon>,
-              title: "Customize cores e layout",
-              subtitle:
-                "Deixe sua bio com a sua cara, editre cores, imagens e componentes",
+              title: strings.home2.iconTextCards[1].title,
+              subtitle: strings.home2.iconTextCards[1].subtitle,
             },
             {
               icon: <ShareIcon></ShareIcon>,
-              title: "Compartilhe onde quiser",
-              subtitle:
-                "Mostre para todos os seus seguires o conteúdo incrível que você tem!",
+              title: strings.home2.iconTextCards[2].title,
+              subtitle: strings.home2.iconTextCards[2].subtitle,
             },
           ]}
         />
@@ -190,33 +181,24 @@ const Home2 = () => {
           alignItems={isSmallerThan900 ? "center" : "unset"}
           textAlign={isSmallerThan900 ? "center" : "unset"}
         >
-          <Section1Title>A melhor forma de compartilhar conteúdo</Section1Title>
-          <Section1Subtitle>
-            Acompanhe dados sobre seus links, agende eventos, mostre vídeos e
-            direcione seu público para o conteúdo certo.
-          </Section1Subtitle>
+          <Section1Title>{strings.home2.section1.title}</Section1Title>
+          <Section1Subtitle>{strings.home2.section1.subtitle}</Section1Subtitle>
           <CustomButton
             bgColor={COMPLEMENTARY_COLOR}
             fontColor="white"
             hoverBgColor={COMPLEMENTARY_COLOR_DARK}
             style={{ width: "fit-content" }}
           >
-            Ganhar minha assinatura PREMIUM vitalícia agora!
+            {`${strings.home2.section1.button[0]} `}
+            {strings.platinumPlan.name}
+            {` ${strings.home2.section1.button[1]}`}
           </CustomButton>
         </Stack>
       </Section1Container>
 
       <Section2Container direction="column">
-        <Section2Title>
-          Gerencie todo o seu conteúdo de um só lugar.
-        </Section2Title>
-        <Section2Chip
-          items={[
-            "Teste gratuito de 30 dias",
-            "Membros de equipe ilimitados",
-            "Cancelar a qualquer momento",
-          ]}
-        />
+        <Section2Title>{strings.home2.section2.title}</Section2Title>
+        <Section2Chip items={strings.home2.section2.chips} />
       </Section2Container>
 
       <PlansCards2 />
@@ -224,10 +206,10 @@ const Home2 = () => {
       <Section3Container direction="column" alignItems="center">
         <Section3BG />
         <Section3InnerContainer direction="column">
-          <Section3ShortLine />
-          <Section3Title>
-            O que nossos clientes falam sobre a gente?
-          </Section3Title>
+          <Section3ShortLineWrapper>
+            <Section3ShortLine />
+          </Section3ShortLineWrapper>
+          <Section3Title>{strings.home2.section3.title}</Section3Title>
         </Section3InnerContainer>
         <TestimonialsSlidy locale={strings.getLanguage()} />
       </Section3Container>

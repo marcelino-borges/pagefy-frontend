@@ -221,6 +221,9 @@ export const pt: IDictionary = {
   createYourAccount: "Crie sua conta",
   signUp: "Cadastrar",
   accessAccount: "Acesse sua conta",
+  welcomeBack: "Bem-vindo de volta!",
+  fillDataToAccessAccount: "Preencha suas credenciais para acessar sua conta!",
+  fillYourPersonalData: "Preencha seus dados pessoais",
   signIn: "Entre",
   signIn2: "Entrar",
   emailExample: "email@exemplo.com",
@@ -510,4 +513,49 @@ export const pt: IDictionary = {
   },
   phoneNumber: "Telefone",
   color: "Cor",
+  home2: {
+    mainHeader: "Tudo o que você faz. Simples e direto.",
+    mainSubheader: "Mostre para o mundo o conteúdo que só você sabe fazer.",
+    buttonCreateFreeAccount: "Criar minha conta grátis agora",
+    earnSubscriptionLifetime: ["GAnhe uma assinatura", "vitalícia"],
+    areYouGonnaLoseIt: "Vai perder?",
+    tripleTitles: [
+      "Para você ou para sua empresa",
+      "Recursos excelusivos e interativos",
+    ],
+    iconTextCards: [
+      {
+        title: "Mostre seus vídeos",
+        subtitle:
+          "Apresente seus vídeos mais importantes de uma forma rápida e simples",
+      },
+      {
+        title: "Customize cores e layout",
+        subtitle:
+          "Deixe sua bio com a sua cara, edite cores, imagens e componentes",
+      },
+      {
+        title: "Compartilhe onde quiser",
+        subtitle:
+          "Mostre para todos os seus seguires o conteúdo incrível que você tem!",
+      },
+    ],
+    section1: {
+      title: "A melhor forma de compartilhar seu conteúdo",
+      subtitle:
+        "Acompanhe dados sobre seus links, agende eventos, mostre vídeos e direcione seu público para o conteúdo certo.",
+      button: ["Ganhar minha assinatura", "vitalícia agora!"],
+    },
+    section2: {
+      title: "Gerencie todo o seu conteúdo de um só lugar.",
+      chips: [
+        "Assinatura Platinum vitalícia",
+        "Membros de equipe ilimitados",
+        "Cancelar a qualquer momento",
+      ],
+    },
+    section3: {
+      title: "O que nossos clientes falam sobre a gente?",
+    },
+  },
 };

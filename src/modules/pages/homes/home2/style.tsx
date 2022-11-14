@@ -32,6 +32,44 @@ export const PinkFloatingCircle = styled(Grid)`
   height: 100px;
   border-radius: 50%;
   background-color: ${COMPLEMENTARY_COLOR};
+  animation-name: PinkFloatingCircleAnimation;
+  animation-duration: 1s;
+  animation-delay: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+
+  @keyframes PinkFloatingCircleAnimation {
+    0% {
+      transform: translateX(0px);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    50% {
+      transform: translateX(-10px);
+      width: 120px;
+      height: 70px;
+      border-radius: 50px;
+    }
+    60% {
+      transform: translateX(0px);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+    70% {
+      transform: translateX(-8px);
+    }
+    80% {
+      transform: translateX(0px);
+    }
+    90% {
+      transform: translateX(-4px);
+    }
+    100% {
+      transform: translateX(0px);
+    }
+  }
 
   @media (max-width: 1143px) {
     display: none;
@@ -171,6 +209,47 @@ export const Section3BG = styled("div")`
     border-radius: 0px;
   }
 `;
+export const Section3ShortLineWrapper = styled("div")`
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+const getSection3ShortlineKeyframes = (smallerThan900: boolean) => `
+  @keyframes Section3ShortLineAnimation {
+    0% {
+      transform: translateX(0px);
+      width: 67px;
+      height: 8px;
+      border-radius: 4px;
+    }
+    25% {
+      width: 100px;
+      height: 6px;
+      border-radius: 8px;
+    }
+    50% {
+      transform: translateX(${
+        !smallerThan900 ? "calc(50vw - 70px)" : "calc(100vw - 134px)"
+      });
+      width: 67px;
+      height: 8px;
+      border-radius: 4px;
+    }
+    75% {
+      width: 100px;
+      height: 6px;
+      border-radius: 8px;
+    }
+    100% {
+      transform: translateX(0px);
+      width: 67px;
+      height: 8px;
+      border-radius: 4px;
+    }
+  }
+`;
 
 export const Section3ShortLine = styled("div")`
   width: 67px;
@@ -178,6 +257,18 @@ export const Section3ShortLine = styled("div")`
   background-color: ${COMPLEMENTARY_COLOR};
   border-radius: 4px;
   margin-bottom: 8px;
+  animation-name: Section3ShortLineAnimation;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+
+  @media (min-width: 901px) {
+    ${getSection3ShortlineKeyframes(false)}
+  }
+
+  @media (max-width: 900px) {
+    ${getSection3ShortlineKeyframes(true)}
+  }
 `;
 
 export const Section3Title = styled("div")`

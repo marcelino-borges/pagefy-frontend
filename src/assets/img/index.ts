@@ -10,6 +10,8 @@ import bg1home2 from "./home2/bg1-home2.png";
 import bg1home2Mobile from "./home2/bg1-home2-mobile.png";
 import actress1 from "./home2/actress1.png";
 import actress2 from "./home2/actress2.png";
+import banner1 from "./banner1.jpg";
+import banner2 from "./banner2.jpg";
 
 const images = {
   logoHeader,
@@ -24,6 +26,8 @@ const images = {
   bg1home2Mobile,
   actress1,
   actress2,
+  banner1,
+  banner2,
 };
 
 export default images;

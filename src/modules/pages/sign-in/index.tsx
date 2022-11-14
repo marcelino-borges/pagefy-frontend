@@ -4,7 +4,9 @@ import {
   Grid,
   IconButton,
   InputAdornment,
+  Stack,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
 import {
   Visibility as ShowPasswordIcon,
@@ -12,8 +14,6 @@ import {
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import Navigation from "../../components/navigation";
-import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
 import { signIn, signOut } from "../../../store/auth/actions";
@@ -28,8 +28,10 @@ import {
   setRecaptchaScript,
 } from "../../../utils/recaptcha-v3";
 import InternalLink from "../../components/internal-link";
-import Footer from "../../components/footer";
 import { IApplicationState } from "../../../store";
+import images from "../../../assets/img";
+import { Banner } from "./style";
+import Logos from "../../../assets/img/logos";
 
 const INITIAL_VALUES = {
   email: "",
@@ -38,6 +40,8 @@ const INITIAL_VALUES = {
 
 const SignInPage = () => {
   const dispatch = useDispatch();
+  const isSmallerThan800 = useMediaQuery("(max-width: 800px)");
+  const isSmallerThan300 = useMediaQuery("(max-width: 300px)");
 
   const { handleSubmit } = useForm();
 
@@ -95,78 +99,96 @@ const SignInPage = () => {
   };
 
   return (
-    <>
-      <Navigation />
-      <ThinWidthContent pb="50px" center>
-        <h2 style={{ textAlign: "center", marginBottom: "56px" }}>
-          {strings.accessAccount}
-        </h2>
-        <form
-          onSubmit={handleSubmit(onSubmitSignIn)}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Grid container maxWidth="400px">
-            <Grid container>
-              {/* Line 1 */}
-              <Grid container item p="24px">
-                <TextField
-                  label={strings.email}
-                  name="email"
-                  placeholder={strings.emailExample}
-                  type="text"
-                  fullWidth
-                  required
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  value={values.email}
-                />
-              </Grid>
+    <Stack
+      direction={isSmallerThan800 ? "column" : "row"}
+      alignItems="center"
+      height="100vh"
+      width="100%"
+      pb={isSmallerThan800 ? "150px" : "unset"}
+    >
+      <Banner image={images.banner1}>
+        <img
+          src={Logos.LogoHorizontalDarkBGPNG}
+          alt="SocialBio"
+          id="logo-signin"
+        />
+      </Banner>
 
-              {/* Line 2 */}
-              <Grid container item p="24px">
-                <TextField
-                  label={strings.password}
-                  name="password"
-                  type={showingPassword ? "text" : "password"}
-                  fullWidth
-                  required
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  value={values.password}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={() => setShowingPassword(!showingPassword)}
-                            edge="end"
-                          >
-                            {!showingPassword ? (
-                              <ShowPasswordIcon
-                                fontSize="medium"
-                                color="primary"
-                              />
-                            ) : (
-                              <HidePasswordIcon
-                                fontSize="medium"
-                                color="primary"
-                              />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      </>
-                    ),
-                  }}
-                />
-              </Grid>
+      <Grid
+        container
+        item
+        justifyContent="center"
+        width={isSmallerThan800 ? "100vw" : "50vw"}
+        pt={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"}
+      >
+        <Stack
+          direction="column"
+          width={isSmallerThan800 ? "100%" : "60%"}
+          px={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"}
+          maxWidth={isSmallerThan800 ? "400px" : "unset"}
+        >
+          <form
+            onSubmit={handleSubmit(onSubmitSignIn)}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <h2 style={{ marginBottom: "16px" }}>{strings.welcomeBack}</h2>
+            <div>{strings.fillDataToAccessAccount}</div>
+            {/* Line 1 */}
+            <Grid container item mt="24px">
+              <TextField
+                label={strings.email}
+                name="email"
+                placeholder={strings.emailExample}
+                type="text"
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.email}
+              />
+            </Grid>
+
+            {/* Line 2 */}
+            <Grid container item mt="24px">
+              <TextField
+                label={strings.password}
+                name="password"
+                type={showingPassword ? "text" : "password"}
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.password}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowingPassword(!showingPassword)}
+                          edge="end"
+                        >
+                          {!showingPassword ? (
+                            <ShowPasswordIcon
+                              fontSize="medium"
+                              color="primary"
+                            />
+                          ) : (
+                            <HidePasswordIcon
+                              fontSize="medium"
+                              color="primary"
+                            />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    </>
+                  ),
+                }}
+              />
             </Grid>
 
             {/* Last line - Buttons */}
-            <Grid container item justifyContent="center" p="36px">
-              <Button type="submit" variant="contained">
+            <Grid container item justifyContent="center" mt="24px">
+              <Button type="submit" variant="contained" fullWidth>
                 {strings.signIn}
               </Button>
             </Grid>
@@ -176,16 +198,16 @@ const SignInPage = () => {
               justifyContent="center"
               fontSize="0.9em"
               pt="12px"
+              mt="24px"
             >
               <InternalLink to={routes.signUp}>
                 {strings.noAccountYet}
               </InternalLink>
             </Grid>
-          </Grid>
-        </form>
-      </ThinWidthContent>
-      <Footer />
-    </>
+          </form>
+        </Stack>
+      </Grid>
+    </Stack>
   );
 };
 

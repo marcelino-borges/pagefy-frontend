@@ -16,6 +16,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.30.0] - 2022-11-14
+
+- Feature: New signin and signup pages
+
+### [1.29.0] - 2022-11-13
+
+- Feature: New homepage
+
 ### [1.28.0] - 2022-11-10
 
 - Feature: Floating phone page preview inside page editor.
