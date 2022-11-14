@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -152,236 +152,230 @@ const SignUpPage = () => {
   }
 
   return (
-    <>
-      <Stack
-        direction={isSmallerThan800 ? "column" : "row"}
-        alignItems="center"
-        height="100vh"
-        width="100%"
-        pb={isSmallerThan800 ? "150px" : "unset"}
-      >
-        <Banner image={images.banner2}>
+    <Stack
+      direction={isSmallerThan800 ? "column" : "row"}
+      alignItems="center"
+      minHeight="100vh"
+      width="100%"
+      pb={isSmallerThan800 ? "550px" : "unset"}
+    >
+      <Banner image={images.banner2}>
+        <Link to={routes.root}>
           <img
             src={Logos.LogoHorizontalDarkBGPNG}
             alt="SocialBio"
             id="logo-signin"
           />
-        </Banner>
+        </Link>
+      </Banner>
 
-        <Grid
-          container
-          item
-          justifyContent="center"
-          width={isSmallerThan800 ? "100vw" : "50vw"}
-          maxHeight={isSmallerThan800 ? "60vh" : "unset"}
-          pt={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"}
+      <Grid
+        container
+        item
+        justifyContent="center"
+        width={isSmallerThan800 ? "100vw" : "50vw"}
+        maxHeight={isSmallerThan800 ? "60vh" : "unset"}
+        pt={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "100px"}
+      >
+        <Stack
+          direction="column"
+          width={isSmallerThan800 ? "100%" : "60%"}
+          px={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"}
+          maxWidth={isSmallerThan800 ? "400px" : "unset"}
+          sx={{ overflowY: "auto" }}
         >
-          <Stack
-            direction="column"
-            width={isSmallerThan800 ? "100%" : "60%"}
-            px={
-              isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"
-            }
-            maxWidth={isSmallerThan800 ? "400px" : "unset"}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ width: "100%", height: "100%" }}
           >
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              style={{ width: "100%", height: "100%" }}
-            >
-              <h2 style={{ marginBottom: "16px" }}>
-                {strings.createYourAccount}
-              </h2>
-              <div>{strings.fillYourPersonalData}</div>
-              {/* Line 1 */}
-              <Grid container item mt="24px">
-                <TextField
-                  autoFocus
-                  label={strings.firstName}
-                  name="firstName"
-                  placeholder="John"
-                  type="text"
-                  fullWidth
-                  required
-                  variant="filled"
-                  onChange={handleInputChange}
-                  value={values.firstName}
-                />
-              </Grid>
-              <Grid container item mt="24px">
-                <TextField
-                  label={strings.lastName}
-                  name="lastName"
-                  type="text"
-                  placeholder="Doe"
-                  fullWidth
-                  required
-                  variant="filled"
-                  onChange={handleInputChange}
-                  value={values.lastName}
-                />
-              </Grid>
-              <Grid container item mt="24px">
-                <TextField
-                  label={strings.email}
-                  name="email"
-                  placeholder={strings.emailExample}
-                  type="text"
-                  fullWidth
-                  required
-                  variant="filled"
-                  onChange={handleInputChange}
-                  value={values.email}
-                />
-              </Grid>
-              <Grid container item mt="24px">
-                <TextField
-                  label={strings.password}
-                  name="password"
-                  type={showingPassword ? "text" : "password"}
-                  fullWidth
-                  required
-                  variant="filled"
-                  onChange={handleInputChange}
-                  value={values.password}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={() => setShowingPassword(!showingPassword)}
-                            edge="end"
-                          >
-                            {!showingPassword ? (
-                              <ShowPasswordIcon
-                                fontSize="medium"
-                                color="primary"
-                              />
-                            ) : (
-                              <HidePasswordIcon
-                                fontSize="medium"
-                                color="primary"
-                              />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      </>
-                    ),
-                  }}
-                />
-                <div
-                  style={{
-                    whiteSpace: "pre",
-                    fontSize: "0.7em",
-                    marginTop: "8px",
-                  }}
-                >
-                  {strings.passwordRequirements}
-                </div>
-              </Grid>
-              <Grid container item mt="24px">
-                <TextField
-                  label={strings.confirmPassword}
-                  name="confirmPassword"
-                  type={showingPassword ? "text" : "password"}
-                  fullWidth
-                  required
-                  variant="filled"
-                  onChange={handleInputChange}
-                  value={values.confirmPassword}
-                  InputProps={{
-                    endAdornment: (
-                      <>
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={() => setShowingPassword(!showingPassword)}
-                            edge="end"
-                          >
-                            {!showingPassword ? (
-                              <ShowPasswordIcon
-                                fontSize="medium"
-                                color="primary"
-                              />
-                            ) : (
-                              <HidePasswordIcon
-                                fontSize="medium"
-                                color="primary"
-                              />
-                            )}
-                          </IconButton>
-                        </InputAdornment>
-                      </>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid container item mt="24px">
-                <FormControlLabel
-                  label={strings.wishesCommunications}
-                  control={
-                    <Checkbox
-                      checked={receiveCommunications}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setReceiveCommunications(event.target.checked);
-                      }}
-                    />
-                  }
-                />
-                <FormControlLabel
-                  label={
+            <h2 style={{ marginBottom: "16px" }}>
+              {strings.createYourAccount}
+            </h2>
+            <div>{strings.fillYourPersonalData}</div>
+            {/* Line 1 */}
+            <Grid container item mt="24px">
+              <TextField
+                autoFocus
+                label={strings.firstName}
+                name="firstName"
+                placeholder="John"
+                type="text"
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.firstName}
+              />
+            </Grid>
+            <Grid container item mt="24px">
+              <TextField
+                label={strings.lastName}
+                name="lastName"
+                type="text"
+                placeholder="Doe"
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.lastName}
+              />
+            </Grid>
+            <Grid container item mt="24px">
+              <TextField
+                label={strings.email}
+                name="email"
+                placeholder={strings.emailExample}
+                type="text"
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.email}
+              />
+            </Grid>
+            <Grid container item mt="24px">
+              <TextField
+                label={strings.password}
+                name="password"
+                type={showingPassword ? "text" : "password"}
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.password}
+                InputProps={{
+                  endAdornment: (
                     <>
-                      {strings.agreeWith}{" "}
-                      <InternalLink to={routes.terms}>
-                        {strings.termsOfUse}
-                      </InternalLink>{" "}
-                      {strings.and}{" "}
-                      <InternalLink to={routes.privacy}>
-                        {strings.privacyPolicies}
-                      </InternalLink>
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowingPassword(!showingPassword)}
+                          edge="end"
+                        >
+                          {!showingPassword ? (
+                            <ShowPasswordIcon
+                              fontSize="medium"
+                              color="primary"
+                            />
+                          ) : (
+                            <HidePasswordIcon
+                              fontSize="medium"
+                              color="primary"
+                            />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
                     </>
-                  }
-                  control={
-                    <Checkbox
-                      checked={agreePrivacy}
-                      onChange={(
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        setAgreePrivacy(event.target.checked);
-                      }}
-                    />
-                  }
-                />
-              </Grid>
-
-              {/* Last line - Buttons */}
-              <Grid container item justifyContent="center" mt="24px">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  disabled={!agreePrivacy}
-                  fullWidth
-                >
-                  {strings.register}
-                </Button>
-              </Grid>
-              <Grid
-                container
-                item
-                justifyContent="center"
-                fontSize="0.9em"
-                pt="12px"
-                mt="24px"
+                  ),
+                }}
+              />
+              <div
+                style={{
+                  whiteSpace: "pre",
+                  fontSize: "0.7em",
+                  marginTop: "8px",
+                }}
               >
-                <InternalLink to={routes.signIn}>
-                  {strings.alreadyHaveAccount}
-                </InternalLink>
-              </Grid>
-            </form>
-          </Stack>
-        </Grid>
-      </Stack>
-    </>
+                {strings.passwordRequirements}
+              </div>
+            </Grid>
+            <Grid container item mt="24px">
+              <TextField
+                label={strings.confirmPassword}
+                name="confirmPassword"
+                type={showingPassword ? "text" : "password"}
+                fullWidth
+                required
+                variant="filled"
+                onChange={handleInputChange}
+                value={values.confirmPassword}
+                InputProps={{
+                  endAdornment: (
+                    <>
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setShowingPassword(!showingPassword)}
+                          edge="end"
+                        >
+                          {!showingPassword ? (
+                            <ShowPasswordIcon
+                              fontSize="medium"
+                              color="primary"
+                            />
+                          ) : (
+                            <HidePasswordIcon
+                              fontSize="medium"
+                              color="primary"
+                            />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    </>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid container item mt="24px">
+              <FormControlLabel
+                label={strings.wishesCommunications}
+                control={
+                  <Checkbox
+                    checked={receiveCommunications}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setReceiveCommunications(event.target.checked);
+                    }}
+                  />
+                }
+              />
+              <FormControlLabel
+                label={
+                  <>
+                    {strings.agreeWith}{" "}
+                    <InternalLink to={routes.terms}>
+                      {strings.termsOfUse}
+                    </InternalLink>{" "}
+                    {strings.and}{" "}
+                    <InternalLink to={routes.privacy}>
+                      {strings.privacyPolicies}
+                    </InternalLink>
+                  </>
+                }
+                control={
+                  <Checkbox
+                    checked={agreePrivacy}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setAgreePrivacy(event.target.checked);
+                    }}
+                  />
+                }
+              />
+            </Grid>
+
+            {/* Last line - Buttons */}
+            <Grid container item justifyContent="center" mt="24px">
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!agreePrivacy}
+                fullWidth
+              >
+                {strings.register}
+              </Button>
+            </Grid>
+            <Grid
+              container
+              item
+              justifyContent="center"
+              fontSize="0.9em"
+              mt="24px"
+            >
+              <InternalLink to={routes.signIn}>
+                {strings.alreadyHaveAccount}
+              </InternalLink>
+            </Grid>
+          </form>
+        </Stack>
+      </Grid>
+    </Stack>
   );
 };
 

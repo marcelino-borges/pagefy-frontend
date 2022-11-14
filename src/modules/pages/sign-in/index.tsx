@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -107,11 +107,13 @@ const SignInPage = () => {
       pb={isSmallerThan800 ? "150px" : "unset"}
     >
       <Banner image={images.banner1}>
-        <img
-          src={Logos.LogoHorizontalDarkBGPNG}
-          alt="SocialBio"
-          id="logo-signin"
-        />
+        <Link to={routes.root}>
+          <img
+            src={Logos.LogoHorizontalDarkBGPNG}
+            alt="SocialBio"
+            id="logo-signin"
+          />
+        </Link>
       </Banner>
 
       <Grid
