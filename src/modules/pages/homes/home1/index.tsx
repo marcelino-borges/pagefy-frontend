@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid, useMediaQuery } from "@mui/material";
-import Navigation from "../../components/navigation";
-import strings from "../../../localization";
-import routes from "./../../../routes/paths";
-import { clearLoading } from "../../../store/shared/actions";
-import FullWidthContent from "../../components/site-content/full-width";
-import homeImages, { IHomepageBanner } from "../../../assets/img/home/home";
-import { getRandomIntInRange } from "../../../utils";
-import { GLOBAL_LIGHT_BG, PRIMARY_COLOR } from "./../../../styles/colors";
-import Footer from "../../components/footer";
+import Navigation from "../../../components/navigation";
+import strings from "../../../../localization";
+import routes from "../../../../routes/paths";
+import { clearLoading } from "../../../../store/shared/actions";
+import FullWidthContent from "../../../components/site-content/full-width";
+import homeImages, { IHomepageBanner } from "../../../../assets/img/home/home";
+import { getRandomIntInRange } from "../../../../utils";
+import { GLOBAL_LIGHT_BG, PRIMARY_COLOR } from "../../../../styles/colors";
+import Footer from "../../../components/footer";
 import {
   BannerContainer,
   BannerOverlay,
@@ -20,15 +20,15 @@ import {
   TestimonialsSection,
 } from "./style";
 import { clearBackgroundImage, setBackgroundImage } from "./utils";
-import UserTestimonialCard from "../../components/user-testimonial-card";
-import TriplePageTitle from "../../components/page-title";
-import PlansCards from "../../components/plans-cards";
+import UserTestimonialCard from "../../../components/user-testimonial-card";
+import TriplePageTitle from "../../../components/page-title";
+import PlansCards1 from "../../../components/plans-cards1";
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
-} from "../../../constants";
+} from "../../../../constants";
 
-const Home = () => {
+const Home1 = () => {
   const dispatch = useDispatch();
 
   const [banner, setBanner] = useState<IHomepageBanner>(
@@ -104,7 +104,7 @@ const Home = () => {
         </Grid>
 
         {/* PLANS FEATURED CARDS */}
-        <PlansCards py="70px" />
+        <PlansCards1 py="70px" />
 
         {/* LAST SECTION */}
         <SignUpSection container direction="column">
@@ -182,4 +182,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Home1;

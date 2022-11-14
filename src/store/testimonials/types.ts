@@ -1,3 +1,5 @@
+import { IUser } from "../user/types";
+
 export enum TestimonialTypes {
   CREATE_TESTIMONIAL_LOADING = "@testimonials/CREATE_TESTIMONIAL_LOADING",
   CREATE_TESTIMONIAL_ERROR = "@testimonials/CREATE_TESTIMONIAL_ERROR",
@@ -10,6 +12,10 @@ export enum TestimonialTypes {
   GET_LAST_USER_TESTIMONIAL_LOADING = "@testimonials/GET_LAST_USER_TESTIMONIAL_LOADING",
   GET_LAST_USER_TESTIMONIAL_ERROR = "@testimonials/GET_LAST_USER_TESTIMONIAL_ERROR",
   GET_LAST_USER_TESTIMONIAL_SUCCESS = "@testimonials/GET_LAST_USER_TESTIMONIAL_SUCCESS",
+
+  GET_ALL_TESTIMONIALS_LOADING = "@testimonials/GET_ALL_TESTIMONIALS_LOADING",
+  GET_ALL_TESTIMONIALS_ERROR = "@testimonials/GET_ALL_TESTIMONIALS_ERROR",
+  GET_ALL_TESTIMONIALS_SUCCESS = "@testimonials/GET_ALL_TESTIMONIALS_SUCCESS",
 
   UPDATE_TESTIMONIAL_LOADING = "@testimonials/UPDATE_TESTIMONIAL_LOADING",
   UPDATE_TESTIMONIAL_ERROR = "@testimonials/UPDATE_TESTIMONIAL_ERROR",
@@ -24,7 +30,7 @@ export enum TestimonialTypes {
 
 export interface ITestimonial {
   _id?: string;
-  userId: string;
+  user: Partial<IUser> | string;
   testimonial: string;
   pictureUrl?: string;
   videoUrl?: string;
@@ -36,5 +42,6 @@ export interface ITestimonial {
 export interface ITestimonialState {
   loading: boolean;
   error?: any;
-  testimonials?: ITestimonial[];
+  userTestimonials?: ITestimonial[];
+  allTestimonials?: ITestimonial[];
 }

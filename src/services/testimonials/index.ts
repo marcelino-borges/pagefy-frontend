@@ -8,7 +8,7 @@ export const createTestimonial = async (
   return registrationApi.post(`/testimonials`, testimonial);
 };
 
-export const getAllTestimonials = async (
+export const getUserTestimonials = async (
   userId: string
 ): Promise<AxiosResponse<any>> => {
   return registrationApi.get(`/testimonials/all/user/${userId}`);
@@ -18,6 +18,15 @@ export const getLastTestimonial = async (
   userId: string
 ): Promise<AxiosResponse<any>> => {
   return registrationApi.get(`/testimonials/last/user/${userId}`);
+};
+
+export const getAllTestimonials = async (
+  count?: number,
+  locale?: string
+): Promise<AxiosResponse<any>> => {
+  return registrationApi.get(
+    `/testimonials?count=${count ?? 100}&locale=${locale}`
+  );
 };
 
 export const updateTestimonial = async (

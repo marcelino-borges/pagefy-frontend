@@ -3,13 +3,25 @@ import strings from "../../../localization";
 import routes from "../../../routes/paths";
 import { SignInButton, SignUpButton } from "./style";
 
-const SignInRegisterButtons = () => {
+interface ISignInRegisterButtonsProps {
+  signIn?: boolean;
+  signUp?: boolean;
+}
+
+const SignInRegisterButtons = ({
+  signIn = true,
+  signUp = false,
+}: ISignInRegisterButtonsProps) => {
   return (
     <Stack direction="row" pl="12px" alignItems="center" gap="16px">
-      <SignInButton to={routes.signIn}>{strings.signIn2}</SignInButton>
-      <SignUpButton to={routes.signUp}>
-        {strings.registerImperative}
-      </SignUpButton>
+      {signIn && (
+        <SignInButton to={routes.signIn}>{strings.signIn2}</SignInButton>
+      )}
+      {signUp && (
+        <SignUpButton to={routes.signUp}>
+          {strings.registerImperative}
+        </SignUpButton>
+      )}
     </Stack>
   );
 };

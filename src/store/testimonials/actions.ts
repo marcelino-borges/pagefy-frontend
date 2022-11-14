@@ -51,7 +51,7 @@ export const getAllUserTestimonials =
   async (dispatch: any) => {
     dispatch(getAllUserTestimonialsLoading());
 
-    TestimonialService.getAllTestimonials(userId)
+    TestimonialService.getUserTestimonials(userId)
       .then((res: AxiosResponse) => {
         const testimonials: ITestimonial[] = res.data;
         dispatch(getAllUserTestimonialsSuccess(testimonials));
@@ -161,4 +161,45 @@ const deleteTestimonialError = (error: string) => ({
 
 export const clearSupportState = () => ({
   type: TestimonialTypes.CLEAR_TESTIMONIAL_STATE,
+});
+
+export const getAllTestimonials =
+  (
+    count?: number,
+    locale?: string,
+    onSuccessCallback?: (testimonials: ITestimonial[]) => void,
+    onErrorCallback?: (error: any) => void
+  ) =>
+  async (dispatch: any) => {
+    dispatch(getAllTestimonialsLoading());
+
+    TestimonialService.getAllTestimonials(count, locale)
+      .then((res: AxiosResponse) => {
+        const testimonials: ITestimonial[] = res.data;
+        dispatch(getAllTestimonialsSuccess(testimonials));
+
+        if (onSuccessCallback) onSuccessCallback(testimonials);
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(getAllTestimonialsError(error.message));
+
+        if (error && error.errorDetails) {
+          if (onErrorCallback) onErrorCallback("");
+        }
+      });
+  };
+
+const getAllTestimonialsLoading = () => ({
+  type: TestimonialTypes.GET_ALL_TESTIMONIALS_LOADING,
+});
+
+const getAllTestimonialsSuccess = (testimonials: ITestimonial[]) => ({
+  payload: testimonials,
+  type: TestimonialTypes.GET_ALL_TESTIMONIALS_SUCCESS,
+});
+
+const getAllTestimonialsError = (error: string) => ({
+  payload: error,
+  type: TestimonialTypes.GET_ALL_TESTIMONIALS_ERROR,
 });

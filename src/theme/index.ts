@@ -48,9 +48,9 @@ let themeOptions: ThemeOptions = {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "19px",
+          borderRadius: "32px",
           minWidth: "120px",
-          padding: "8px 16px",
+          padding: "16px 24px",
           textTransform: "unset",
           fontSize: "0.9em",
           boxShadow: "none",

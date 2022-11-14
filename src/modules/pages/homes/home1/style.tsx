@@ -1,7 +1,6 @@
 import { Grid, styled } from "@mui/material";
-import { GLOBAL_LIGHT_BG } from "../../../styles/colors";
+import { GLOBAL_LIGHT_BG, PRIMARY_COLOR } from "../../../../styles/colors";
 import { Link } from "react-router-dom";
-import { PRIMARY_COLOR } from "./../../../styles/colors";
 
 export const FeaturedCardsContainer = styled("div")`
   display: flex;

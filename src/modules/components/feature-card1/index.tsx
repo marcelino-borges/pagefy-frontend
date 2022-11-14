@@ -6,28 +6,28 @@ import {
   FeaturedOverlayContainer,
   FeaturedOverlayText,
 } from "./style.";
-import { PRIMARY_COLOR } from "./../../../styles/colors";
+import { PRIMARY_COLOR } from "../../../styles/colors";
 import strings from "../../../localization";
-import customIcons from "./../../../assets/icons/custom-icons/index";
+import customIcons from "../../../assets/icons/custom-icons/index";
 
-interface IFeaturedCardProps {
+interface IFeaturedCard1Props {
   overTitle: string;
   title: string;
   children?: any;
   isFeatured?: boolean;
 }
 
-const FeaturedCard = ({
+const FeaturedCard1 = ({
   overTitle,
   title,
   isFeatured,
   children,
-}: IFeaturedCardProps) => {
+}: IFeaturedCard1Props) => {
   return (
     <CardRoot isFeatured={isFeatured !== undefined}>
       {isFeatured !== undefined && (
         <FeaturedOverlayContainer>
-          <FeaturedOverlayText>{strings.recomended}</FeaturedOverlayText>
+          <FeaturedOverlayText>{strings.recommended}</FeaturedOverlayText>
           <div>
             <FeaturedOverlayArrow src={customIcons.arrowIcon} />
           </div>
@@ -62,4 +62,4 @@ const FeaturedCard = ({
   );
 };
 
-export default FeaturedCard;
+export default FeaturedCard1;

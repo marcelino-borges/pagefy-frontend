@@ -337,7 +337,7 @@ export const pt: IDictionary = {
     zoomOutRight: "Zoom para longe e para a direita",
     zoomOutUp: "Zoom para longe e para cima",
   },
-  recomended: "Recomendado",
+  recommended: "Recomendado",
   checkout: "Prosseguir",
   createNowYour: "Crie agora sua",
   bio: "bio",
@@ -392,7 +392,7 @@ export const pt: IDictionary = {
   freePlan: {
     name: "Free",
     benefits: [
-      "CAdastre-se sem cartão de crédito",
+      "Cadastre-se sem cartão de crédito",
       "Crie uma bio única e atraente",
       "Crie botões ilimitados",
       "Crie ícones ilimitados",

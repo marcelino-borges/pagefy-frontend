@@ -4,7 +4,105 @@ import { ITestimonial, ITestimonialState, TestimonialTypes } from "./types";
 const initialState: ITestimonialState = {
   loading: false,
   error: undefined,
-  testimonials: [],
+  userTestimonials: [],
+  allTestimonials: [
+    {
+      user: {
+        _id: "01",
+        firstName: "Marcelino",
+        lastName: "Borges",
+        email: "botelho_gt@hotmail.com",
+        profileImageUrl:
+          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+      },
+      testimonial:
+        "Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal ",
+      pictureUrl: "",
+      videoUrl: "",
+      rating: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      user: {
+        _id: "02",
+        firstName: "Luana",
+        lastName: "Borges",
+        email: "botelho_gt@hotmail.com",
+        profileImageUrl:
+          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+      },
+      testimonial: "Muito legal",
+      pictureUrl: "",
+      videoUrl: "",
+      rating: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      user: {
+        _id: "03",
+        firstName: "Rafael",
+        lastName: "Schmitt",
+        email: "botelho_gt@hotmail.com",
+        profileImageUrl:
+          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+      },
+      testimonial: "Muito legal",
+      pictureUrl: "",
+      videoUrl: "",
+      rating: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      user: {
+        _id: "04",
+        firstName: "Neto",
+        lastName: "Torres",
+        email: "botelho_gt@hotmail.com",
+        profileImageUrl: "",
+      },
+      testimonial: "Muito legal",
+      pictureUrl: "",
+      videoUrl: "",
+      rating: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      user: {
+        _id: "04",
+        firstName: "Andrew",
+        lastName: "Noway",
+        email: "botelho_gt@hotmail.com",
+        profileImageUrl:
+          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+      },
+      testimonial: "Muito legal",
+      pictureUrl: "",
+      videoUrl: "",
+      rating: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      user: {
+        _id: "05",
+        firstName: "Ilza",
+        lastName: "Perrier",
+        email: "botelho_gt@hotmail.com",
+        profileImageUrl:
+          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+      },
+      testimonial: "Muito legal",
+      pictureUrl: "",
+      videoUrl: "",
+      rating: 5,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ],
 };
 
 const testimonialsReducer = (
@@ -17,21 +115,22 @@ const testimonialsReducer = (
     case TestimonialTypes.GET_LAST_USER_TESTIMONIAL_LOADING:
     case TestimonialTypes.UPDATE_TESTIMONIAL_LOADING:
     case TestimonialTypes.DELETE_TESTIMONIAL_LOADING:
+    case TestimonialTypes.GET_ALL_TESTIMONIALS_LOADING:
       return {
         ...state,
         loading: true,
       };
 
     case TestimonialTypes.CREATE_TESTIMONIAL_SUCCESS: {
-      if (state.testimonials) {
+      if (state.userTestimonials) {
         return {
           ...initialState,
-          testimonials: [action.payload, ...state.testimonials],
+          userTestimonials: [action.payload, ...state.userTestimonials],
         };
       } else {
         return {
           ...initialState,
-          testimonials: [action.payload],
+          userTestimonials: [action.payload],
         };
       }
     }
@@ -39,9 +138,10 @@ const testimonialsReducer = (
     case TestimonialTypes.UPDATE_TESTIMONIAL_SUCCESS: {
       const updatedItem: ITestimonial = action.payload;
 
-      if (!state.testimonials) return { ...state, testimonials: [updatedItem] };
+      if (!state.userTestimonials)
+        return { ...state, userTestimonials: [updatedItem] };
 
-      const updatedList: ITestimonial[] = state.testimonials.map(
+      const updatedList: ITestimonial[] = state.userTestimonials.map(
         (testimonial: ITestimonial) => {
           if (testimonial._id === updatedItem._id) {
             return updatedItem;
@@ -52,35 +152,42 @@ const testimonialsReducer = (
 
       return {
         ...initialState,
-        testimonials: updatedList,
+        userTestimonials: updatedList,
       };
     }
 
     case TestimonialTypes.DELETE_TESTIMONIAL_SUCCESS: {
       const id: string = action.payload;
 
-      if (!state.testimonials) return { ...state, testimonials: [] };
+      if (!state.userTestimonials) return { ...state, userTestimonials: [] };
 
-      const updatedList: ITestimonial[] = state.testimonials.filter(
+      const updatedList: ITestimonial[] = state.userTestimonials.filter(
         (testimonial: ITestimonial) => testimonial._id !== id
       );
 
       return {
         ...initialState,
-        testimonials: updatedList,
+        userTestimonials: updatedList,
       };
     }
+
+    case TestimonialTypes.GET_ALL_TESTIMONIALS_SUCCESS:
+      return {
+        ...initialState,
+        allTestimonials: action.payload,
+      };
 
     case TestimonialTypes.GET_ALL_USER_TESTIMONIALS_SUCCESS:
       return {
         ...initialState,
-        testimonials: action.payload,
+        userTestimonials: action.payload,
       };
 
     case TestimonialTypes.CREATE_TESTIMONIAL_ERROR:
     case TestimonialTypes.DELETE_TESTIMONIAL_ERROR:
     case TestimonialTypes.UPDATE_TESTIMONIAL_ERROR:
     case TestimonialTypes.GET_ALL_USER_TESTIMONIALS_ERROR:
+    case TestimonialTypes.GET_ALL_TESTIMONIALS_ERROR:
     case TestimonialTypes.GET_LAST_USER_TESTIMONIAL_ERROR: {
       return {
         ...state,

@@ -1,5 +1,5 @@
 import Navigation from "../../components/navigation";
-import PlansCards from "../../components/plans-cards";
+import PlansCards1 from "../../components/plans-cards1";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import FullWidthContent from "./../../components/site-content/full-width";
 import TriplePageTitle from "./../../components/page-title/index";
@@ -20,7 +20,7 @@ const PlansPage = () => {
           sizes={[1, 2, 1]}
           increasingSize
         />
-        <PlansCards px="0px" />
+        <PlansCards1 px="0px" />
       </FullWidthContent>
     </>
   );

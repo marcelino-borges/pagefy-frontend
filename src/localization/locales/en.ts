@@ -337,7 +337,7 @@ export const en: IDictionary = {
     zoomOutRight: "Zoom Out Right",
     zoomOutUp: "Zoom Out Up",
   },
-  recomended: "Recomended",
+  recommended: "Recommended",
   checkout: "Checkout",
   createNowYour: "Create now your",
   bio: "bio",

@@ -1,21 +1,17 @@
 import { styled } from "@mui/material";
 import { Link } from "react-router-dom";
-import {
-  PRIMARY_COLOR,
-  PRIMARY_COLOR_DARK,
-  SECONDARY_COLOR,
-} from "../../../styles/colors";
+import { PRIMARY_COLOR, PRIMARY_COLOR_DARK } from "../../../styles/colors";
 
 const basicButton = `
-padding: 8px 16px;
-border-radius: 19px;
+padding: 16px 24px;
+border-radius: 32px;
 font-size: 0.9em;
 width: 100px;
 text-align: center;`;
 
 export const SignInButton = styled(Link)`
-  border: 1px solid ${SECONDARY_COLOR};
-  color: ${SECONDARY_COLOR};
+  border: 1px solid ${PRIMARY_COLOR};
+  color: ${PRIMARY_COLOR};
   background-color: white;
   transition: color 0.25s, background-color 0.25s;
 
@@ -23,7 +19,7 @@ export const SignInButton = styled(Link)`
 
   &:hover {
     color: white;
-    background-color: ${SECONDARY_COLOR};
+    background-color: ${PRIMARY_COLOR_DARK};
   }
 `;
 

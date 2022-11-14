@@ -38,11 +38,11 @@ const UserTestimonials = () => {
   }, [userTestimonials.error]);
 
   const testimonials = useMemo(() => {
-    if (!userTestimonials.testimonials) return null;
+    if (!userTestimonials.userTestimonials) return null;
 
     return (
       <>
-        {userTestimonials.testimonials.map((testimonial: ITestimonial) => (
+        {userTestimonials.userTestimonials.map((testimonial: ITestimonial) => (
           <UserTestimonialCard
             testimonial={testimonial}
             key={testimonial._id}
@@ -54,7 +54,7 @@ const UserTestimonials = () => {
         ))}
       </>
     );
-  }, [userTestimonials.testimonials]);
+  }, [userTestimonials.userTestimonials]);
 
   return (
     <>
@@ -67,8 +67,8 @@ const UserTestimonials = () => {
         increasingSize
       />
       {!userTestimonials.loading &&
-        (!userTestimonials.testimonials ||
-          userTestimonials.testimonials?.length === 0) && (
+        (!userTestimonials.userTestimonials ||
+          userTestimonials.userTestimonials?.length === 0) && (
           <Grid container pt="24px" pb="24px">
             <Button
               variant="contained"

@@ -15,44 +15,46 @@ const DesktopHeader = () => {
       container
       item
       md={8}
-      justifyContent="flex-end"
+      justifyContent="center"
       direction="row"
       pr="32px"
       wrap="nowrap"
     >
-      <Grid item padding={2}>
-        <HeaderLinkDesktop
-          to={routes.root}
-          style={{
-            color: location.pathname === routes.root ? PRIMARY_COLOR : "",
-          }}
-        >
-          {strings.home}
-        </HeaderLinkDesktop>
-      </Grid>
-      <Grid item padding={2}>
-        <HeaderLinkDesktop
-          to={routes.pages}
-          style={{
-            color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
-          }}
-        >
-          {strings.pages}
-        </HeaderLinkDesktop>
-      </Grid>
-      <Grid item padding={2}>
-        <HeaderLinkDesktop
-          to={routes.faq}
-          style={{
-            color:
-              location.pathname === routes.faq ||
-              location.pathname === routes.support
-                ? PRIMARY_COLOR
-                : "",
-          }}
-        >
-          {strings.support}
-        </HeaderLinkDesktop>
+      <Grid container item padding={2} justifyContent="center">
+        <Grid item padding={2}>
+          <HeaderLinkDesktop
+            to={routes.root}
+            style={{
+              color: location.pathname === routes.root ? PRIMARY_COLOR : "",
+            }}
+          >
+            {strings.home}
+          </HeaderLinkDesktop>
+        </Grid>
+        <Grid item padding={2}>
+          <HeaderLinkDesktop
+            to={routes.pages}
+            style={{
+              color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
+            }}
+          >
+            {strings.pages}
+          </HeaderLinkDesktop>
+        </Grid>
+        <Grid item padding={2}>
+          <HeaderLinkDesktop
+            to={routes.faq}
+            style={{
+              color:
+                location.pathname === routes.faq ||
+                location.pathname === routes.support
+                  ? PRIMARY_COLOR
+                  : "",
+            }}
+          >
+            {strings.support}
+          </HeaderLinkDesktop>
+        </Grid>
       </Grid>
       <UserLoggedIn />
     </Grid>

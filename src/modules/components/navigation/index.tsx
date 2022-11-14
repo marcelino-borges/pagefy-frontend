@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Parent } from "./style";
 import routes from "./../../../routes/paths";
@@ -13,9 +13,18 @@ import {
 
 import DesktopHeader from "./desktop-menu";
 import MobileHeader from "./mobile-drawer";
-import React from "react";
 
-const Navigation = () => {
+type NavitationVariant =
+  | "fixed"
+  | "sticky"
+  | "rollTransparent"
+  | "rollNotTransparent";
+
+interface INavigationProps {
+  variant?: NavitationVariant;
+}
+
+const Navigation = ({ variant = "fixed" }: INavigationProps) => {
   const theme = useTheme();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
   const isSmallerThan420 = useMediaQuery("(max-width:420px)");
@@ -23,10 +32,48 @@ const Navigation = () => {
   const userState = useSelector((state: IApplicationState) => state.user);
 
   const [isShowingDrawer, setIsShowingDrawer] = useState(false);
+  const [transparent, setTransparent] = useState(true);
+  const [isFixed, setIsFixed] = useState(true);
 
   const toggleDrawer = () => {
     setIsShowingDrawer(!isShowingDrawer);
   };
+
+  const stickNavigation = () => {
+    if (window.scrollY > 50) {
+      setTransparent(false);
+      setIsFixed(true);
+    } else {
+      setTransparent(true);
+      setIsFixed(false);
+    }
+  };
+
+  useEffect(() => {
+    switch (variant) {
+      case "fixed":
+        setIsFixed(true);
+        setTransparent(false);
+        break;
+      case "sticky":
+        setIsFixed(false);
+        setTransparent(true);
+        document.addEventListener("scroll", stickNavigation);
+        break;
+      case "rollTransparent":
+        setIsFixed(false);
+        setTransparent(true);
+        break;
+      case "rollNotTransparent":
+        setIsFixed(false);
+        setTransparent(false);
+        break;
+    }
+
+    return () => {
+      document.removeEventListener("scroll", stickNavigation);
+    };
+  }, [variant]);
 
   useEffect(() => {
     if (!isSmallerThanMD) {
@@ -35,7 +82,13 @@ const Navigation = () => {
   }, [isSmallerThanMD]);
 
   return (
-    <Parent container alignItems="center" justifyContent="space-between">
+    <Parent
+      container
+      alignItems="center"
+      justifyContent="space-between"
+      transparent={transparent}
+      isFixed={isFixed}
+    >
       <Grid
         container
         item

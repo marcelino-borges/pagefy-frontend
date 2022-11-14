@@ -62,7 +62,7 @@ const Footer = () => {
               <InternalLink to={routes.faq}>FAQ</InternalLink>
             </Grid>
             <Grid item>
-              <InternalLink to={routes.support}>{strings.support}</InternalLink>
+              <InternalLink to={routes.faq}>{strings.support}</InternalLink>
             </Grid>
           </Grid>
           <Grid

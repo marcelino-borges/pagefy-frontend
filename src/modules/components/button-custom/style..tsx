@@ -7,6 +7,7 @@ export const CustomLink = styled(
     fontColor,
     hoverFontColor,
     hoverBgColor,
+    borderColor,
     w,
     h,
     p,
@@ -14,14 +15,16 @@ export const CustomLink = styled(
     fontWeight,
     width,
     height,
+    to,
     ...rest
-  }: any) => <Link {...rest} />
+  }: any) => <Link to={to} {...rest} />
 )(
   ({
     bgColor,
     fontColor,
     hoverFontColor,
     hoverBgColor,
+    borderColor,
     w,
     h,
     p,
@@ -39,7 +42,8 @@ export const CustomLink = styled(
   font-weight: ${fontWeight || "unset"};
   padding: ${p};
   margin: ${m};
-  border-radius: 8px;
+  border-radius: 32px;
+  ${borderColor ? `border: 1px solid ${borderColor};` : ""}
   text-decoration: none;
   font-weight: ${m};
   cursor: pointer;

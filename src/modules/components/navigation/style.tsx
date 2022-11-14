@@ -3,15 +3,22 @@ import { Grid, SwipeableDrawer } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Close, Menu } from "@mui/icons-material";
 
-export const Parent = styled(Grid)`
-  border-bottom: 1px solid #e9e9e9;
-  box-shadow: 0px 3px 6px 1px rgba(0, 0, 0, 0.03);
-  background-color: white;
+export const Parent = styled(
+  ({ block, transparent, isFixed, children, ...rest }: any) => (
+    <Grid {...rest}>{children}</Grid>
+  )
+)(
+  ({ transparent, isFixed }: any) => `
+  border-bottom: ${!transparent ? "1px solid #e9e9e9" : "unset"};
+  box-shadow: ${!transparent ? "0px 3px 6px 1px rgba(0, 0, 0, 0.03)" : "unset"};
+  background-color: ${!transparent ? "white" : "unset"};
   min-width: 320px;
   z-index: 1000;
-  position: fixed;
+  position: ${isFixed ? "fixed" : "absolute"};
   width: 101%;
-`;
+  transition: all 0.2s ease;
+`
+);
 
 export const HeaderLinkDesktop = styled(Link)`
   color: black;
@@ -26,6 +33,7 @@ export const HeaderLinkDesktop = styled(Link)`
     text-decoration: none;
   }
 
+  /*
   &:before {
     content: "";
     position: absolute;
@@ -42,7 +50,7 @@ export const HeaderLinkDesktop = styled(Link)`
   &:hover:before {
     visibility: visible;
     transform: scaleX(1);
-  }
+  }*/
 `;
 
 export const HamburguerMenuIcon = styled(Menu)`

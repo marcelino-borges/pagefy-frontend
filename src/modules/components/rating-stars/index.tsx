@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { LIGHT_GREY } from "../../../../../styles/colors";
-import { RatingValue, StarIcon } from "../style";
+import { COMPLEMENTARY_COLOR, LIGHT_GREY } from "../../../styles/colors";
+import { RatingValue, StarIcon } from "../../pages/profile/testimonials/style";
 import { Stack } from "@mui/material";
 
 interface IRatingStars {
@@ -20,9 +20,9 @@ const RatingStars = ({
         (num: number) => (
           <StarIcon
             key={uuidv4()}
-            icon="dashicons:star-filled"
+            icon="fa6-solid:star"
             style={{
-              color: rating >= num ? "#ffca38" : LIGHT_GREY,
+              color: rating >= num ? COMPLEMENTARY_COLOR : LIGHT_GREY,
               cursor: "unset",
               fontSize: `${size}px`,
             }}

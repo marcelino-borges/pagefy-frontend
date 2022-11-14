@@ -13,7 +13,6 @@ import SignInPage from "../modules/pages/sign-in";
 import SignUpPage from "../modules/pages/sign-up";
 import "../config/firebase";
 import { updatePage } from "./../store/user-pages/actions";
-import Home from "./../modules/pages/home";
 import Faq from "../modules/pages/faq";
 import { showSuccessToast } from "../utils/toast";
 import { showErrorToast } from "./../utils/toast/index";
@@ -27,6 +26,7 @@ import { GDPR_CONSENT_STORAGE_KEY } from "../constants";
 import PurchasePlanPage from "../modules/pages/purchase-plan";
 import PaymentResult from "../modules/pages/purchase-plan/payment-result/index";
 import PlansPage from "../modules/pages/plans";
+import Home2 from "../modules/pages/homes/home2";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ const AppRoutes = () => {
       )}
       {isLoading && <LoadingSpinner isFullPage />}
       <Routes>
-        <Route path={routes.root} element={<Home />} />
+        <Route path={routes.root} element={<Home2 />} />
         <Route path={routes.signIn} element={<SignInPage />} />
         <Route path={routes.signUp} element={<SignUpPage />} />
         <Route path={routes.pages} element={<UserPages />} />

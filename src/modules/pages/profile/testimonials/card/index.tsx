@@ -1,6 +1,6 @@
 import { Grid, Stack, useMediaQuery } from "@mui/material";
 import { ITestimonial } from "../../../../../store/testimonials/types";
-import RatingStars from "../rating-stars";
+import RatingStars from "../../../../components/rating-stars";
 import { BorderDiv, Root } from "./style";
 import moment from "moment";
 import YoutubeEmbed from "../../../../components/youtube-embed";

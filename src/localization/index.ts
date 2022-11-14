@@ -328,7 +328,7 @@ export interface IDictionary {
   };
   maximumFileSizeOf: string;
   animations: IAnimations;
-  recomended: string;
+  recommended: string;
   checkout: string;
   createNowYour: string;
   bio: string;

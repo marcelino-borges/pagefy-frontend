@@ -1,12 +1,13 @@
 import { CustomLink } from "./style.";
 
 interface ICustomButtonProps {
-  to?: any;
+  to?: string;
   onClick?: () => void;
   bgColor?: string;
   fontColor?: string;
   hoverBgColor?: string;
   hoverFontColor?: string;
+  borderColor?: string;
   w?: string;
   h?: string;
   p?: string;
@@ -26,9 +27,10 @@ const CustomButton = ({
   fontColor,
   hoverBgColor,
   hoverFontColor,
+  borderColor,
   w,
   h,
-  p = "8px",
+  p = "16px 24px",
   m = "0px",
   fontWeight = 600,
   width,
@@ -43,6 +45,7 @@ const CustomButton = ({
       fontColor={fontColor}
       hoverBgColor={hoverBgColor}
       hoverFontColor={hoverFontColor}
+      borderColor={borderColor}
       w={w}
       h={h}
       p={p}

@@ -7,6 +7,7 @@ import {
 } from "../../../../constants";
 
 export const Root = styled(Grid)`
+  position: relative;
   min-height: calc(100vh - ${FOOTER_HEIGHT});
   padding: calc(${HEADER_HEIGHT_DESKTOP} + 16px) 32px 0px 32px;
 

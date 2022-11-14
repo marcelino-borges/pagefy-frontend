@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { Grid } from "@mui/material";
 import strings from "../../../localization";
-import FeaturedCard from "../feature-card";
+import FeaturedCard1 from "../feature-card1";
 import { FeaturedCardsContainer } from "./style";
 import CustomButton from "../button-custom";
 import routes from "../../../routes/paths";
@@ -18,12 +18,12 @@ import { setPlanTypeToSubscribe } from "../../../store/purchase/actions";
 import { formatFloatingNumberFromInt } from "../../../utils";
 import { PRICES } from "../../../constants";
 
-interface IPlansCardsProps {
+interface IPlansCards1Props {
   px?: string;
   py?: string;
 }
 
-const PlansCards = ({ px, py }: IPlansCardsProps) => {
+const PlansCards1 = ({ px, py }: IPlansCards1Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ const PlansCards = ({ px, py }: IPlansCardsProps) => {
         paddingBottom: py,
       }}
     >
-      <FeaturedCard
+      <FeaturedCard1
         overTitle={strings.plan}
         title={strings.freePlan.name.toUpperCase()}
       >
@@ -74,8 +74,8 @@ const PlansCards = ({ px, py }: IPlansCardsProps) => {
             {strings.signUp}
           </CustomButton>
         </Grid>
-      </FeaturedCard>
-      <FeaturedCard
+      </FeaturedCard1>
+      <FeaturedCard1
         isFeatured
         overTitle={strings.plan}
         title={strings.vipPlan.name.toUpperCase()}
@@ -123,8 +123,8 @@ const PlansCards = ({ px, py }: IPlansCardsProps) => {
             /{strings.year}
           </i>
         </Grid>
-      </FeaturedCard>
-      <FeaturedCard
+      </FeaturedCard1>
+      <FeaturedCard1
         overTitle={strings.plan}
         title={strings.platinumPlan.name.toUpperCase()}
       >
@@ -174,9 +174,9 @@ const PlansCards = ({ px, py }: IPlansCardsProps) => {
             /{strings.year}
           </i>
         </Grid>
-      </FeaturedCard>
+      </FeaturedCard1>
     </FeaturedCardsContainer>
   );
 };
 
-export default PlansCards;
+export default PlansCards1;

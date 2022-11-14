@@ -98,7 +98,7 @@ const CreateTestimonialsDialog = ({
   }, [userTestimonials.error]);
 
   const onSubmitTestimonial = () => {
-    if (userTestimonials.loading || userTestimonials.testimonials?.length)
+    if (userTestimonials.loading || userTestimonials.userTestimonials?.length)
       return;
 
     setErrors(INITIAL_ERRORS);
@@ -132,7 +132,7 @@ const CreateTestimonialsDialog = ({
       values.rating !== undefined
     ) {
       const testimonial: ITestimonial = {
-        userId: userProfile._id,
+        user: userProfile._id,
         testimonial: values.text,
         pictureUrl: userProfile.profileImageUrl,
         videoUrl: values.videoUrl,
