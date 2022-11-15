@@ -32,6 +32,7 @@ const PlansCards2 = ({ px, py }: IPlansCards2Props) => {
     price: string | undefined,
     currency: string | undefined
   ) => {
+    console.log("planSelected: " + planSelected);
     dispatch(setPlanTypeToSubscribe(planSelected, price, currency));
     let destination = routes.signUp;
     if (userState.profile) destination = routes.purchasePlan;

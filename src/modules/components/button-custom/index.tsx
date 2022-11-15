@@ -21,7 +21,7 @@ interface ICustomButtonProps {
 }
 
 const CustomButton = ({
-  to,
+  to = "#",
   onClick,
   bgColor,
   fontColor,

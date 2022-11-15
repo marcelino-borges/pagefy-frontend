@@ -23,6 +23,7 @@ import CustomButton from "../../../components/button-custom";
 import { StripePaymentElement } from "./style";
 import ExternalLink from "./../../../components/external-link/index";
 import { getPlanNameByType, getRecurrency } from "../../../../utils/stripe";
+import { Icon } from "@iconify/react";
 
 interface IPaymentElementProps {
   planType: PlansTypes;
@@ -121,20 +122,25 @@ const PaymentElement = ({
 
   return (
     <>
-      <Grid mb="32px" textAlign="end">
+      <Grid mb="32px" mt="32px" textAlign="left">
         <CustomButton
           bgColor="unset"
           fontColor={LIGHT_GREY}
           hoverBgColor="unset"
           fontWeight={400}
+          w="fit-content"
           p="0px"
           hoverFontColor={PRIMARY_COLOR}
-          style={{ marginLeft: 0, marginRight: 0, marginBottom: "32px" }}
+          style={{
+            marginLeft: "-8px",
+            marginBottom: "32px",
+            fontSize: "0.8em",
+          }}
           onClick={() => {
             changeToRecurrency();
           }}
         >
-          {"< "}
+          <Icon icon="ic:round-keyboard-arrow-left" fontSize="20px" />
           {strings.subscriptionPayment.changeRecurrency}
         </CustomButton>
       </Grid>
@@ -192,7 +198,24 @@ const PaymentElement = ({
             }
           />
         </Grid>
-        <Grid container justifyContent="center" pt="48px">
+        <Grid
+          container
+          pt="50px"
+          pb="16px"
+          fontSize="0.7em"
+          justifyContent="center"
+          alignItems="center"
+          wrap="nowrap"
+        >
+          <Grid pr="8px">
+            <LockIcon fontSize="small" />
+          </Grid>
+          <Grid>
+            {`${strings.subscriptionPayment.trustWarning}`}&nbsp;
+            <ExternalLink to="https://stripe.com">Stripe</ExternalLink>
+          </Grid>
+        </Grid>
+        <Grid container justifyContent="center">
           <Button
             disabled={!canSubmit || !agreePrivacy || isProcessingPayment}
             type="submit"
@@ -206,21 +229,6 @@ const PaymentElement = ({
               "Submit"
             )}
           </Button>
-        </Grid>
-        <Grid
-          container
-          pt="16px"
-          fontSize="0.7em"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid pr="8px">
-            <LockIcon fontSize="small" />
-          </Grid>
-          <Grid>
-            {`${strings.subscriptionPayment.trustWarning}`}&nbsp;
-            <ExternalLink to="https://stripe.com">Stripe</ExternalLink>
-          </Grid>
         </Grid>
       </form>
     </>

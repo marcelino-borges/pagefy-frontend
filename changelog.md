@@ -16,6 +16,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.30.2] - 2022-11-14
+
+- Refactor: Purchase pages with banner half page layouts
+- Fix: User loggedin out of alignment
+- Fix: Home2 buttons not opening pages
+- Fix: logo with dark border for light BG
+
 ### [1.30.0] - 2022-11-14
 
 - Feature: New signin and signup pages

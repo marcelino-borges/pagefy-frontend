@@ -1,4 +1,5 @@
-import { Link, styled } from "@mui/material";
+import { styled } from "@mui/material";
+import { Link } from "react-router-dom";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 
 export const CustomLink = styled(

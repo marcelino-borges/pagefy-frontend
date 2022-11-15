@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navigation from "../../components/navigation";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import { loadStripe } from "@stripe/stripe-js";
 import { ALLOW_PURCHASE, PRICES, STRIPE_PUBLIC_KEY } from "../../../constants";
@@ -31,16 +30,15 @@ import {
 } from "../../../store/purchase/actions";
 import { useNavigate } from "react-router-dom";
 import routes from "./../../../routes/paths";
-import ThinWidthContent from "../../components/site-content/thin-width";
 import { formatFloatingNumberFromInt } from "../../../utils";
 import { ACESSIBILITY_RED, PRIMARY_COLOR } from "./../../../styles/colors";
 import { Elements } from "@stripe/react-stripe-js";
 import { getCurrencyPrefix } from "./utils";
 import { setCurrency } from "./../../../store/purchase/actions";
-import Footer from "../../components/footer";
 import ReportIcon from "@mui/icons-material/Report";
 import { getPlanNameByType } from "../../../utils/stripe";
 import { showInfoToast } from "./../../../utils/toast/index";
+import BannerHalfLayout from "../../components/site-content/banner-half-layout";
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
@@ -150,8 +148,7 @@ const PurchasePlanPage = () => {
   return (
     <>
       <PrivateRouteChecker />
-      <Navigation />
-      <ThinWidthContent pb="100px" center>
+      <BannerHalfLayout>
         {showErrorOnPaymentElement && (
           <Grid
             container
@@ -339,6 +336,8 @@ const PurchasePlanPage = () => {
                 color="primary"
                 onClick={validateAndCheckout}
                 style={{ minWidth: "200px" }}
+                fullWidth
+                disabled={!selectedRecurrency}
               >
                 {isCreatingSubscription ? (
                   <LoadingSpinner color="grey" size={20} m="0px 0px 0px 32px" />
@@ -364,7 +363,7 @@ const PurchasePlanPage = () => {
                     fonts: [
                       {
                         family: "Montserrat",
-                        src: "url(.src/assets/fonts/montserrat/Montserrat-VariableFont_wght.otf)",
+                        src: "url(./src/assets/fonts/montserrat/Montserrat-VariableFont_wght.otf)",
                         weight: "400",
                       },
                     ],
@@ -399,8 +398,7 @@ const PurchasePlanPage = () => {
               )}
           </PaymentElementContainer>
         )}
-      </ThinWidthContent>
-      <Footer />
+      </BannerHalfLayout>
     </>
   );
 };

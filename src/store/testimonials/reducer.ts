@@ -20,8 +20,8 @@ const initialState: ITestimonialState = {
       pictureUrl: "",
       videoUrl: "",
       rating: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     },
     {
       user: {
@@ -36,8 +36,8 @@ const initialState: ITestimonialState = {
       pictureUrl: "",
       videoUrl: "",
       rating: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     },
     {
       user: {
@@ -52,8 +52,8 @@ const initialState: ITestimonialState = {
       pictureUrl: "",
       videoUrl: "",
       rating: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     },
     {
       user: {
@@ -67,8 +67,8 @@ const initialState: ITestimonialState = {
       pictureUrl: "",
       videoUrl: "",
       rating: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     },
     {
       user: {
@@ -83,8 +83,8 @@ const initialState: ITestimonialState = {
       pictureUrl: "",
       videoUrl: "",
       rating: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     },
     {
       user: {
@@ -99,8 +99,8 @@ const initialState: ITestimonialState = {
       pictureUrl: "",
       videoUrl: "",
       rating: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
     },
   ],
 };

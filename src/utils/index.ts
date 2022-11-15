@@ -211,3 +211,6 @@ export const clamp = (value: number, min: number, max: number) => {
   else if (value > max) return max;
   else return value;
 };
+
+export const getRandomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min)) + min;

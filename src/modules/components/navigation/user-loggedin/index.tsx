@@ -72,6 +72,8 @@ const UserLoggedIn = () => {
         container={!!isSmallerThanMD ? true : undefined}
         item
         justifyContent="center"
+        my="auto"
+        mb={isSmallerThanMD ? "16px" : "auto"}
       >
         <ProfileEditableAvatar
           imageUrl={userState.profile?.profileImageUrl}

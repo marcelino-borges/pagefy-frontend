@@ -1,12 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Grid,
   IconButton,
   InputAdornment,
-  Stack,
   TextField,
-  useMediaQuery,
 } from "@mui/material";
 import {
   Visibility as ShowPasswordIcon,
@@ -29,9 +27,7 @@ import {
 } from "../../../utils/recaptcha-v3";
 import InternalLink from "../../components/internal-link";
 import { IApplicationState } from "../../../store";
-import images from "../../../assets/img";
-import { Banner } from "./style";
-import Logos from "../../../assets/img/logos";
+import BannerHalfLayout from "../../components/site-content/banner-half-layout";
 
 const INITIAL_VALUES = {
   email: "",
@@ -40,8 +36,6 @@ const INITIAL_VALUES = {
 
 const SignInPage = () => {
   const dispatch = useDispatch();
-  const isSmallerThan800 = useMediaQuery("(max-width: 800px)");
-  const isSmallerThan300 = useMediaQuery("(max-width: 300px)");
 
   const { handleSubmit } = useForm();
 
@@ -99,117 +93,78 @@ const SignInPage = () => {
   };
 
   return (
-    <Stack
-      direction={isSmallerThan800 ? "column" : "row"}
-      alignItems="center"
-      height="100vh"
-      width="100%"
-      pb={isSmallerThan800 ? "150px" : "unset"}
-    >
-      <Banner image={images.banner1}>
-        <Link to={routes.root}>
-          <img
-            src={Logos.LogoHorizontalDarkBGPNG}
-            alt="SocialBio"
-            id="logo-signin"
-          />
-        </Link>
-      </Banner>
-
-      <Grid
-        container
-        item
-        justifyContent="center"
-        width={isSmallerThan800 ? "100vw" : "50vw"}
-        pt={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"}
+    <BannerHalfLayout>
+      <form
+        onSubmit={handleSubmit(onSubmitSignIn)}
+        style={{ width: "100%", height: "100%" }}
       >
-        <Stack
-          direction="column"
-          width={isSmallerThan800 ? "100%" : "60%"}
-          px={isSmallerThan800 ? (isSmallerThan300 ? "16px" : "32px") : "unset"}
-          maxWidth={isSmallerThan800 ? "400px" : "unset"}
+        <h2 style={{ marginBottom: "16px" }}>{strings.welcomeBack}</h2>
+        <div>{strings.fillDataToAccessAccount}</div>
+        {/* Line 1 */}
+        <Grid container item mt="24px">
+          <TextField
+            label={strings.email}
+            name="email"
+            placeholder={strings.emailExample}
+            type="text"
+            fullWidth
+            required
+            variant="filled"
+            onChange={handleInputChange}
+            value={values.email}
+          />
+        </Grid>
+
+        {/* Line 2 */}
+        <Grid container item mt="24px">
+          <TextField
+            label={strings.password}
+            name="password"
+            type={showingPassword ? "text" : "password"}
+            fullWidth
+            required
+            variant="filled"
+            onChange={handleInputChange}
+            value={values.password}
+            InputProps={{
+              endAdornment: (
+                <>
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowingPassword(!showingPassword)}
+                      edge="end"
+                    >
+                      {!showingPassword ? (
+                        <ShowPasswordIcon fontSize="medium" color="primary" />
+                      ) : (
+                        <HidePasswordIcon fontSize="medium" color="primary" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                </>
+              ),
+            }}
+          />
+        </Grid>
+
+        {/* Last line - Buttons */}
+        <Grid container item justifyContent="center" mt="24px">
+          <Button type="submit" variant="contained" fullWidth>
+            {strings.signIn}
+          </Button>
+        </Grid>
+        <Grid
+          container
+          item
+          justifyContent="center"
+          fontSize="0.9em"
+          pt="12px"
+          mt="24px"
         >
-          <form
-            onSubmit={handleSubmit(onSubmitSignIn)}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <h2 style={{ marginBottom: "16px" }}>{strings.welcomeBack}</h2>
-            <div>{strings.fillDataToAccessAccount}</div>
-            {/* Line 1 */}
-            <Grid container item mt="24px">
-              <TextField
-                label={strings.email}
-                name="email"
-                placeholder={strings.emailExample}
-                type="text"
-                fullWidth
-                required
-                variant="filled"
-                onChange={handleInputChange}
-                value={values.email}
-              />
-            </Grid>
-
-            {/* Line 2 */}
-            <Grid container item mt="24px">
-              <TextField
-                label={strings.password}
-                name="password"
-                type={showingPassword ? "text" : "password"}
-                fullWidth
-                required
-                variant="filled"
-                onChange={handleInputChange}
-                value={values.password}
-                InputProps={{
-                  endAdornment: (
-                    <>
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowingPassword(!showingPassword)}
-                          edge="end"
-                        >
-                          {!showingPassword ? (
-                            <ShowPasswordIcon
-                              fontSize="medium"
-                              color="primary"
-                            />
-                          ) : (
-                            <HidePasswordIcon
-                              fontSize="medium"
-                              color="primary"
-                            />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    </>
-                  ),
-                }}
-              />
-            </Grid>
-
-            {/* Last line - Buttons */}
-            <Grid container item justifyContent="center" mt="24px">
-              <Button type="submit" variant="contained" fullWidth>
-                {strings.signIn}
-              </Button>
-            </Grid>
-            <Grid
-              container
-              item
-              justifyContent="center"
-              fontSize="0.9em"
-              pt="12px"
-              mt="24px"
-            >
-              <InternalLink to={routes.signUp}>
-                {strings.noAccountYet}
-              </InternalLink>
-            </Grid>
-          </form>
-        </Stack>
-      </Grid>
-    </Stack>
+          <InternalLink to={routes.signUp}>{strings.noAccountYet}</InternalLink>
+        </Grid>
+      </form>
+    </BannerHalfLayout>
   );
 };
 

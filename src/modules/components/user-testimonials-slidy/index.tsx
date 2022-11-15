@@ -104,7 +104,7 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
 
   const NavigationButtons = () => {
     return (
-      <NavigationContainer direction="row">
+      <NavigationContainer direction="row" ml="auto">
         <ArrowIcon
           isLeft
           onClick={() => {

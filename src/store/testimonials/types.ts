@@ -35,8 +35,8 @@ export interface ITestimonial {
   pictureUrl?: string;
   videoUrl?: string;
   rating: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }
 
 export interface ITestimonialState {

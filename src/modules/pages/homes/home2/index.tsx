@@ -188,6 +188,7 @@ const Home2 = () => {
             fontColor="white"
             hoverBgColor={COMPLEMENTARY_COLOR_DARK}
             style={{ width: "fit-content" }}
+            to={routes.signUp}
           >
             {`${strings.home2.section1.button[0]} `}
             {strings.platinumPlan.name}
