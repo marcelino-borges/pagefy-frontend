@@ -48,7 +48,6 @@ import strings from "../../../../localization";
 
 const Home2 = () => {
   const isSmallerThan900 = useMediaQuery("(max-width: 900px");
-  const isSmallerThan1143 = useMediaQuery("(max-width: 1143px");
 
   const Section2Chip = ({ items }: { items: string[] }) => (
     <Stack
@@ -73,17 +72,14 @@ const Home2 = () => {
         <ImageBackground
           src={isSmallerThan900 ? images.bg1home2Mobile : images.bg1home2}
         />
-        <Grid
-          container
-          direction={isSmallerThan1143 ? "column" : "row"}
-          justifyContent="space-between"
-          alignItems="center"
+        <Stack
+          direction={isSmallerThan900 ? "column" : "row"}
           mt="50px"
-          gap="32px"
           pt={isSmallerThan900 ? HEADER_HEIGHT_MOBILE : HEADER_HEIGHT_DESKTOP}
           mb="150px"
+          gap="32px"
         >
-          <Grid item maxWidth="30%">
+          <Grid pt={isSmallerThan900 ? "0px" : "30px"}>
             <Stack direction="column" gap="32px">
               <MainHeader item>{strings.home2.mainHeader}</MainHeader>
               <MainSubHeader item>{strings.home2.mainSubheader}</MainSubHeader>
@@ -101,10 +97,9 @@ const Home2 = () => {
             </Stack>
           </Grid>
           <Grid
-            item
-            borderRadius="50%"
             position="relative"
             pr={isSmallerThan900 ? "0px" : "32px"}
+            minWidth="50%"
           >
             <Actress1Image src={images.actress1} alt="Actress" />
             <PinkFloatingCircle />
@@ -135,7 +130,7 @@ const Home2 = () => {
               </Stack>
             </SmallActressCard>
           </Grid>
-        </Grid>
+        </Stack>
 
         <Grid container mb="80px">
           <TriplePageTitle increasingSize titles={strings.home2.tripleTitles} />
@@ -202,7 +197,12 @@ const Home2 = () => {
         <Section2Chip items={strings.home2.section2.chips} />
       </Section2Container>
 
-      <PlansCards2 />
+      <PlansCards2
+        pt={isSmallerThan900 ? "50px" : "100px"}
+        pb="100px"
+        pl="24px"
+        pr="24px"
+      />
 
       <Section3Container direction="column" alignItems="center">
         <Section3BG />

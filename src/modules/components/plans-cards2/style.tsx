@@ -5,10 +5,11 @@ export const FeaturedCardsContainer = styled("div")`
   display: flex;
   flex-direction: row;
   background-color: ${GLOBAL_LIGHT_BG};
-  padding: 100px 32px;
+  gap: 0px;
 
   @media (max-width: 900px) {
     flex-wrap: wrap;
+    gap: 50px;
   }
 `;
 

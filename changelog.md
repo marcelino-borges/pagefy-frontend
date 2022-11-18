@@ -16,6 +16,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.30.4] - 2022-11-18
+
+- Fix: Home 2 plans cards paddings, gaps
+- Fix: Home 2 Section 1 removed space-between and replaced it by a responsive Stack
+
 ### [1.30.2] - 2022-11-14
 
 - Refactor: Purchase pages with banner half page layouts

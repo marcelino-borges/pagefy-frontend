@@ -17,11 +17,18 @@ import { PRIMARY_COLOR_DARK } from "./../../../styles/colors";
 import { Icon } from "@iconify/react";
 
 interface IPlansCards2Props {
-  px?: string;
-  py?: string;
+  pl?: string;
+  pr?: string;
+  pt?: string;
+  pb?: string;
 }
 
-const PlansCards2 = ({ px, py }: IPlansCards2Props) => {
+const PlansCards2 = ({
+  pl = "0px",
+  pr = "0px",
+  pt = "0px",
+  pb = "0px",
+}: IPlansCards2Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,7 +39,6 @@ const PlansCards2 = ({ px, py }: IPlansCards2Props) => {
     price: string | undefined,
     currency: string | undefined
   ) => {
-    console.log("planSelected: " + planSelected);
     dispatch(setPlanTypeToSubscribe(planSelected, price, currency));
     let destination = routes.signUp;
     if (userState.profile) destination = routes.purchasePlan;
@@ -51,10 +57,10 @@ const PlansCards2 = ({ px, py }: IPlansCards2Props) => {
   return (
     <FeaturedCardsContainer
       style={{
-        paddingLeft: px,
-        paddingRight: px,
-        paddingTop: py,
-        paddingBottom: py,
+        paddingLeft: pl,
+        paddingRight: pr,
+        paddingTop: pt,
+        paddingBottom: pb,
       }}
     >
       {/*
