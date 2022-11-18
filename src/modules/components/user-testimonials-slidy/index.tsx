@@ -36,7 +36,7 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
   const [isSliding, setIsSliding] = useState(false);
 
   useEffect(() => {
-    // dispatch(getAllTestimonials(undefined, locale));
+    dispatch(getAllTestimonials(undefined, locale));
   }, [dispatch, locale]);
 
   const testimonialDisplayed = useMemo(
@@ -158,7 +158,7 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
           </Stack>
         </TestimonialCard>
       ) : (
-        <>{strings.sorryThisIsNotAvailable}</>
+        <>{strings.soon}</>
       )}
     </TestimonialsContainer>
   );

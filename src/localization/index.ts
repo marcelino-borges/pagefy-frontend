@@ -383,6 +383,7 @@ export interface IDictionary {
   purchase: string;
   andWinAVipPlanFor: string;
   sorryThisIsNotAvailable: string;
+  soon: string;
   faq: {
     menu: string;
     title: string;

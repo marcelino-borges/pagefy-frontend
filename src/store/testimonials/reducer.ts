@@ -5,104 +5,103 @@ const initialState: ITestimonialState = {
   loading: false,
   error: undefined,
   userTestimonials: [],
-  allTestimonials: [
-    {
-      user: {
-        _id: "01",
-        firstName: "Marcelino",
-        lastName: "Borges",
-        email: "botelho_gt@hotmail.com",
-        profileImageUrl:
-          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
-      },
-      testimonial:
-        "Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal ",
-      pictureUrl: "",
-      videoUrl: "",
-      rating: 5,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    },
-    {
-      user: {
-        _id: "02",
-        firstName: "Luana",
-        lastName: "Borges",
-        email: "botelho_gt@hotmail.com",
-        profileImageUrl:
-          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
-      },
-      testimonial: "Muito legal",
-      pictureUrl: "",
-      videoUrl: "",
-      rating: 5,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    },
-    {
-      user: {
-        _id: "03",
-        firstName: "Rafael",
-        lastName: "Schmitt",
-        email: "botelho_gt@hotmail.com",
-        profileImageUrl:
-          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
-      },
-      testimonial: "Muito legal",
-      pictureUrl: "",
-      videoUrl: "",
-      rating: 5,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    },
-    {
-      user: {
-        _id: "04",
-        firstName: "Neto",
-        lastName: "Torres",
-        email: "botelho_gt@hotmail.com",
-        profileImageUrl: "",
-      },
-      testimonial: "Muito legal",
-      pictureUrl: "",
-      videoUrl: "",
-      rating: 5,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    },
-    {
-      user: {
-        _id: "04",
-        firstName: "Andrew",
-        lastName: "Noway",
-        email: "botelho_gt@hotmail.com",
-        profileImageUrl:
-          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
-      },
-      testimonial: "Muito legal",
-      pictureUrl: "",
-      videoUrl: "",
-      rating: 5,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    },
-    {
-      user: {
-        _id: "05",
-        firstName: "Ilza",
-        lastName: "Perrier",
-        email: "botelho_gt@hotmail.com",
-        profileImageUrl:
-          "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
-      },
-      testimonial: "Muito legal",
-      pictureUrl: "",
-      videoUrl: "",
-      rating: 5,
-      createdAt: new Date().toString(),
-      updatedAt: new Date().toString(),
-    },
-  ],
+  allTestimonials: [],
+  // {
+  //   user: {
+  //     _id: "01",
+  //     firstName: "Marcelino",
+  //     lastName: "Borges",
+  //     email: "botelho_gt@hotmail.com",
+  //     profileImageUrl:
+  //       "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+  //   },
+  //   testimonial:
+  //     "Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal Muito legal ",
+  //   pictureUrl: "",
+  //   videoUrl: "",
+  //   rating: 5,
+  //   createdAt: new Date().toString(),
+  //   updatedAt: new Date().toString(),
+  // },
+  // {
+  //   user: {
+  //     _id: "02",
+  //     firstName: "Luana",
+  //     lastName: "Borges",
+  //     email: "botelho_gt@hotmail.com",
+  //     profileImageUrl:
+  //       "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+  //   },
+  //   testimonial: "Muito legal",
+  //   pictureUrl: "",
+  //   videoUrl: "",
+  //   rating: 5,
+  //   createdAt: new Date().toString(),
+  //   updatedAt: new Date().toString(),
+  // },
+  // {
+  //   user: {
+  //     _id: "03",
+  //     firstName: "Rafael",
+  //     lastName: "Schmitt",
+  //     email: "botelho_gt@hotmail.com",
+  //     profileImageUrl:
+  //       "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+  //   },
+  //   testimonial: "Muito legal",
+  //   pictureUrl: "",
+  //   videoUrl: "",
+  //   rating: 5,
+  //   createdAt: new Date().toString(),
+  //   updatedAt: new Date().toString(),
+  // },
+  // {
+  //   user: {
+  //     _id: "04",
+  //     firstName: "Neto",
+  //     lastName: "Torres",
+  //     email: "botelho_gt@hotmail.com",
+  //     profileImageUrl: "",
+  //   },
+  //   testimonial: "Muito legal",
+  //   pictureUrl: "",
+  //   videoUrl: "",
+  //   rating: 5,
+  //   createdAt: new Date().toString(),
+  //   updatedAt: new Date().toString(),
+  // },
+  // {
+  //   user: {
+  //     _id: "04",
+  //     firstName: "Andrew",
+  //     lastName: "Noway",
+  //     email: "botelho_gt@hotmail.com",
+  //     profileImageUrl:
+  //       "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+  //   },
+  //   testimonial: "Muito legal",
+  //   pictureUrl: "",
+  //   videoUrl: "",
+  //   rating: 5,
+  //   createdAt: new Date().toString(),
+  //   updatedAt: new Date().toString(),
+  // },
+  // {
+  //   user: {
+  //     _id: "05",
+  //     firstName: "Ilza",
+  //     lastName: "Perrier",
+  //     email: "botelho_gt@hotmail.com",
+  //     profileImageUrl:
+  //       "https://storage.googleapis.com/socialbio-dev.appspot.com/users/63335cc8dd69510054ef0ef4/uploaded-images/63335cc8dd69510054ef0ef4_20221021214453454.jpg",
+  //   },
+  //   testimonial: "Muito legal",
+  //   pictureUrl: "",
+  //   videoUrl: "",
+  //   rating: 5,
+  //   createdAt: new Date().toString(),
+  //   updatedAt: new Date().toString(),
+  // },
 };
 
 const testimonialsReducer = (
