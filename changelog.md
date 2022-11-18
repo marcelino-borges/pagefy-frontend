@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.31.0] - 2022-11-18
+
+- Feature: Implemented profile gallery
+
 ### [1.30.4] - 2022-11-18
 
 - Fix: Home 2 plans cards paddings, gaps

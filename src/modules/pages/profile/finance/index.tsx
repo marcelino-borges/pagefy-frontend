@@ -22,8 +22,8 @@ import { formatToDateOnly } from "../../../../utils/dates";
 import TriplePageTitle from "../../../components/page-title";
 import strings from "../../../../localization";
 import {
+  COMPLEMENTARY_COLOR,
   PRIMARY_COLOR,
-  SECONDARY_COLOR_LIGHTER,
 } from "./../../../../styles/colors";
 
 interface IFinanceProps {
@@ -62,89 +62,85 @@ const Finance = ({ userId }: IFinanceProps) => {
 
   return (
     <>
-      {errorMessage || (
-        <>
-          <TriplePageTitle
-            titles={[strings.finance.title, strings.finance.subtitle, ""]}
-            increasingSize
-          />
-          <TableContainer component={Paper} style={{ marginTop: "50px" }}>
-            <Table>
-              <TableHead>
-                <TableRow
-                  style={{
-                    borderBottom: "2px solid " + SECONDARY_COLOR_LIGHTER,
-                  }}
-                >
+      <TriplePageTitle
+        titles={[strings.finance.title, strings.finance.subtitle, ""]}
+        increasingSize
+      />
+      {subscriptions?.length && !errorMessage && (
+        <TableContainer component={Paper} style={{ marginTop: "50px" }}>
+          <Table>
+            <TableHead>
+              <TableRow
+                style={{
+                  borderBottom: "2px solid " + COMPLEMENTARY_COLOR,
+                }}
+              >
+                <TableCell>
+                  {strings.finance.profileTableHeaders.plan}
+                </TableCell>
+                {!isSmallerThan500 && (
                   <TableCell>
-                    {strings.finance.profileTableHeaders.plan}
+                    {strings.finance.profileTableHeaders.startDate}
                   </TableCell>
-                  {!isSmallerThan500 && (
-                    <TableCell>
-                      {strings.finance.profileTableHeaders.startDate}
-                    </TableCell>
-                  )}
-                  <TableCell>
-                    {strings.finance.profileTableHeaders.endDate}
-                  </TableCell>
-                  <TableCell>
-                    {strings.finance.profileTableHeaders.status}
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {subscriptions?.length &&
-                  subscriptions
-                    .sort(
-                      (
-                        a: ISubscriptionCreationResult,
-                        b: ISubscriptionCreationResult
-                      ) => {
-                        const aUpdate = new Date(a.updatedAt).getTime();
-                        const bUpdate = new Date(b.updatedAt).getTime();
+                )}
+                <TableCell>
+                  {strings.finance.profileTableHeaders.endDate}
+                </TableCell>
+                <TableCell>
+                  {strings.finance.profileTableHeaders.status}
+                </TableCell>
+              </TableRow>
+            </TableHead>
 
-                        return bUpdate - aUpdate;
-                      }
-                    )
-                    .map(
-                      (
-                        subscription: ISubscriptionCreationResult,
-                        index: number
-                      ) => (
-                        <InteractiveRow
-                          key={subscription.subscriptionId}
-                          onClick={() =>
-                            setSubscriptionToShowDetails(subscription)
-                          }
-                          index={index}
+            <TableBody>
+              {subscriptions
+                .sort(
+                  (
+                    a: ISubscriptionCreationResult,
+                    b: ISubscriptionCreationResult
+                  ) => {
+                    const aUpdate = new Date(a.updatedAt).getTime();
+                    const bUpdate = new Date(b.updatedAt).getTime();
+
+                    return bUpdate - aUpdate;
+                  }
+                )
+                .map(
+                  (
+                    subscription: ISubscriptionCreationResult,
+                    index: number
+                  ) => (
+                    <InteractiveRow
+                      key={subscription.subscriptionId}
+                      onClick={() => setSubscriptionToShowDetails(subscription)}
+                      index={index}
+                    >
+                      <TableCell>
+                        {getPlanNameByPriceId(subscription.priceId)}
+                      </TableCell>
+                      {!isSmallerThan500 && (
+                        <TableCell>
+                          {formatToDateOnly(subscription.subscriptionStart)}
+                        </TableCell>
+                      )}
+                      <TableCell>
+                        {formatToDateOnly(subscription.subscriptionEnd)}
+                      </TableCell>
+                      <TableCell>
+                        <span
+                          style={{
+                            color: getStatusColor(subscription.status),
+                          }}
                         >
-                          <TableCell>
-                            {getPlanNameByPriceId(subscription.priceId)}
-                          </TableCell>
-                          {!isSmallerThan500 && (
-                            <TableCell>
-                              {formatToDateOnly(subscription.subscriptionStart)}
-                            </TableCell>
-                          )}
-                          <TableCell>
-                            {formatToDateOnly(subscription.subscriptionEnd)}
-                          </TableCell>
-                          <TableCell>
-                            <span
-                              style={{
-                                color: getStatusColor(subscription.status),
-                              }}
-                            >
-                              {translateStatus(subscription.status)}
-                            </span>
-                          </TableCell>
-                        </InteractiveRow>
-                      )
-                    )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </>
+                          {translateStatus(subscription.status)}
+                        </span>
+                      </TableCell>
+                    </InteractiveRow>
+                  )
+                )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
       {subscriptionToShowDetails && (
         <SubscriptionDetailsDialog

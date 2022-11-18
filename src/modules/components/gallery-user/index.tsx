@@ -28,6 +28,7 @@ import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
 import { GalleryContext } from "../../../constants";
 import { showErrorToast, showSuccessToast } from "../../../utils/toast";
+import { IGalleryListDivider } from "./types";
 
 const SCROLL_STEP = 200;
 const SCROLL_DELAY = 200;
@@ -36,13 +37,6 @@ interface IUserGalleryProps {
   onClickImage?: (imageUrl: string) => void;
   title?: string;
   context?: GalleryContext[];
-}
-
-interface IGalleryListDivider {
-  width?: string;
-  height?: string;
-  bgColor?: string;
-  marginX?: string;
 }
 
 const UserGallery = ({
@@ -269,7 +263,7 @@ const UserGallery = ({
                   if (onClickImage && (image as IImageDetails)?.original)
                     onClickImage((image as IImageDetails)?.original);
                 }}
-              />{" "}
+              />
               <DeleteIcon
                 onClick={() => {
                   if (!(image as IImageDetails)?.isSystemOwned)

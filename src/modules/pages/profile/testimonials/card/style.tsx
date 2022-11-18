@@ -1,5 +1,5 @@
 import { Grid, styled } from "@mui/material";
-import { SECONDARY_COLOR } from "../../../../../styles/colors";
+import { PRIMARY_COLOR } from "../../../../../styles/colors";
 
 export const Root = styled(Grid)`
   padding: 16px;
@@ -10,7 +10,7 @@ export const Root = styled(Grid)`
 
   &:hover .borderDiv {
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.03);
-    border: 1px solid ${SECONDARY_COLOR};
+    border: 1px solid ${PRIMARY_COLOR};
   }
 `;
 

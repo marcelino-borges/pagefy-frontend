@@ -6,7 +6,7 @@ import TriplePageTitle from "../../../components/page-title";
 import { IApplicationState } from "../../../../store";
 import { getAllUserTestimonials } from "../../../../store/testimonials/actions";
 import LoadingSpinner from "../../../components/loading-spinner";
-import { SECONDARY_COLOR } from "../../../../styles/colors";
+import { PRIMARY_COLOR } from "../../../../styles/colors";
 import { ITestimonial } from "../../../../store/testimonials/types";
 import UserTestimonialCard from "./card";
 import { showErrorToast } from "./../../../../utils/toast";
@@ -80,13 +80,9 @@ const UserTestimonials = () => {
         )}
 
       {userTestimonials.loading && (
-        <LoadingSpinner
-          m="auto"
-          color={SECONDARY_COLOR}
-          w="100%"
-          h="100%"
-          size={40}
-        />
+        <Grid container pt="32px">
+          <LoadingSpinner m="auto" color={PRIMARY_COLOR} w="100%" h="100%" />
+        </Grid>
       )}
       <Grid container pt="24px" gap="24px">
         {testimonials}

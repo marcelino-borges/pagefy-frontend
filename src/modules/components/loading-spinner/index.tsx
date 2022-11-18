@@ -15,7 +15,7 @@ interface ILoadingSpinnerProps {
 
 const LoadingSpinner = ({
   color = "white",
-  size = 60,
+  size = 40,
   isFullPage = false,
   m,
   margin,

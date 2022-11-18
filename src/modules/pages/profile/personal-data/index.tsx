@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   Grid,
   TextField,
+  useMediaQuery,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import strings from "../../../../localization";
@@ -45,6 +46,7 @@ interface IPersonalDataProps {
 
 const PersonalData = ({ userProfile }: IPersonalDataProps) => {
   const dispatch = useDispatch();
+  const isSmallerThan600 = useMediaQuery("(max-width: 600px)");
 
   const [values, setValues] = useState<IUser>(INITIAL_STATE);
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
@@ -84,12 +86,17 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
   };
   return (
     <>
-      <TriplePageTitle
-        titles={[strings.profile, strings.profileSubtitle, ""]}
-        increasingSize
-      />
-      <Grid container direction="column" justifyContent="center" mt="50px">
-        <Grid container item justifyContent="center" pb="50px">
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        px={isSmallerThan600 ? "8px" : "15vw"}
+      >
+        <TriplePageTitle
+          titles={[strings.profile, strings.profileSubtitle, ""]}
+          increasingSize
+        />
+        <Grid container item justifyContent="center" pb="50px" mt="50px">
           <ProfileEditableAvatar
             imageUrl={profileImageTemporaryUrl}
             onClick={() => setOpenUploadDialog(true)}

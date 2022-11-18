@@ -3,7 +3,6 @@ import { styled } from "@mui/material";
 import { LIGHT_GREY } from "../../../../styles/colors";
 
 export const StarIcon = styled(Icon)`
-  font-size: 40px;
   color: ${LIGHT_GREY};
   cursor: pointer;
 `;

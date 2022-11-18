@@ -27,6 +27,7 @@ import { v4 as uuidv4 } from "uuid";
 import { isUrlValid } from "../../../../../utils/validators/url";
 import { showErrorToast } from "../../../../../utils/toast/index";
 import { DeleteButton } from "./style";
+import { COMPLEMENTARY_COLOR } from "../../../../../styles/colors";
 
 interface IValues {
   text: string;
@@ -290,8 +291,8 @@ const CreateTestimonialsDialog = ({
               (rating: number) => (
                 <StarIcon
                   key={uuidv4()}
-                  icon="dashicons:star-filled"
-                  fontSize="40px"
+                  icon="fa6-solid:star"
+                  fontSize="30px"
                   style={{
                     color:
                       (values.intendedRating &&
@@ -301,7 +302,7 @@ const CreateTestimonialsDialog = ({
                       (!values.intendedRating &&
                         values.rating &&
                         values.rating >= rating)
-                        ? "#ffca38"
+                        ? COMPLEMENTARY_COLOR
                         : "",
                   }}
                   onMouseEnter={() => {

@@ -4,7 +4,11 @@ import {
   ArrowForwardIosRounded,
   Delete,
 } from "@mui/icons-material";
-import { PRIMARY_COLOR, PRIMARY_COLOR_DARK } from "./../../../styles/colors";
+import {
+  ACESSIBILITY_RED,
+  PRIMARY_COLOR,
+  PRIMARY_COLOR_DARK,
+} from "./../../../styles/colors";
 
 const HEIGHT = 150;
 const BASIC_ARROW = `
@@ -135,14 +139,18 @@ export const DeleteIcon = styled(Delete)`
   color: black;
   display: none;
   z-index: 10;
-  bottom: 30px;
-  right: 4px;
+  top: 0px;
+  left: 0px;
+  transform: translate(
+    calc(${HEIGHT / 2}px - 16px),
+    calc(${HEIGHT / 2}px - 16px)
+  );
   background-color: #ffffff80;
   border-radius: 50%;
   padding: 4px;
 
   &:hover {
-    color: ${PRIMARY_COLOR};
+    color: ${ACESSIBILITY_RED};
     background-color: #ffffff;
   }
 `;
