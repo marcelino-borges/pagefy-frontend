@@ -45,6 +45,8 @@ export const en: IDictionary = {
   uploadBackgroundImage: "Upload background image",
   chooseEffect: "Choose effect",
   toggleVisibility: "Toggle visibility",
+  makePagePublic: "Make page visible to your audience",
+  makePagePrivate: "Make page invisible to your audience",
   remove: "Remove",
   removeExisting: "Remove Existing",
   tools: {

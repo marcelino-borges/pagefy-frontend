@@ -128,6 +128,8 @@ export interface IDictionary {
   uploadBackgroundImage: string;
   chooseEffect: string;
   toggleVisibility: string;
+  makePagePublic: string;
+  makePagePrivate: string;
   remove: string;
   removeExisting: string;
   duplicate: string;

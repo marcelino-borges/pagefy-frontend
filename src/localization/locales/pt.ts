@@ -45,6 +45,8 @@ export const pt: IDictionary = {
   uploadBackgroundImage: "Enviar imagem de fundo",
   chooseEffect: "Escolher efeito",
   toggleVisibility: "Mudar visibilidade",
+  makePagePublic: "Tornar página visível ao público",
+  makePagePrivate: "Tornar página invisível ao público",
   remove: "Remover",
   removeExisting: "Remover existente",
   tools: {

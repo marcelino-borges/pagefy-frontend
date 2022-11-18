@@ -3,7 +3,6 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import strings from "../../../../localization";
 import routes from "../../../../routes/paths";
-import { PRIMARY_COLOR } from "../../../../styles/colors";
 import { HeaderLinkDesktop } from "../style";
 import UserLoggedIn from "../user-loggedin";
 

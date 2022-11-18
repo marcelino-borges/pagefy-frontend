@@ -441,7 +441,11 @@ const PageEditor = () => {
         justifyContent="space-around"
         alignItems="center"
       >
-        <CustomTooltip title={strings.toggleVisibility}>
+        <CustomTooltip
+          title={
+            page?.isPublic ? strings.makePagePrivate : strings.makePagePublic
+          }
+        >
           <Grid item>
             <IconButton
               size={isSmallerThan370 ? "small" : "medium"}
