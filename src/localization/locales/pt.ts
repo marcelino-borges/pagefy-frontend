@@ -520,7 +520,7 @@ export const pt: IDictionary = {
     mainHeader: "Tudo o que você faz. Simples e direto.",
     mainSubheader: "Mostre para o mundo o conteúdo que só você sabe fazer.",
     buttonCreateFreeAccount: "Criar minha conta grátis agora",
-    earnSubscriptionLifetime: ["GAnhe uma assinatura", "vitalícia"],
+    earnSubscriptionLifetime: ["Ganhe uma assinatura", "vitalícia"],
     areYouGonnaLoseIt: "Vai perder?",
     tripleTitles: [
       "Para você ou para sua empresa",
