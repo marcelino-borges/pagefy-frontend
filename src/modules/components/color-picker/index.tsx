@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-// import { ColorPicker as ReactColorPicker, useColor } from "react-color-palette";
 import strings from "../../../localization";
 import {
   ColorPickerStyleOverride,
@@ -42,11 +41,14 @@ const ColorPicker = ({
   const { r, g, b } = hexToRgb(initialColor);
   const [colorRGB, setColorRGB] = useState({ r, g, b });
 
-  const escFunction = useCallback((event: any) => {
-    if (event.keyCode === 27) {
-      onCancel();
-    }
-  }, []);
+  const escFunction = useCallback(
+    (event: any) => {
+      if (event.keyCode === 27) {
+        onCancel();
+      }
+    },
+    [onCancel]
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", escFunction);

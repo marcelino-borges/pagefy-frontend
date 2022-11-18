@@ -37,10 +37,10 @@ const Accordion = ({
           aria-controls={id + "-content"}
           id={id + "-header"}
         >
-          <Typography>{title}</Typography>
+          <Typography whiteSpace="pre-wrap">{title}</Typography>
         </CustomAccordionSummary>
         <CustomAccordionDetails position={position}>
-          <Typography>{content}</Typography>
+          <Typography whiteSpace="pre-wrap">{content}</Typography>
         </CustomAccordionDetails>
       </CustomAccordion>
     </div>

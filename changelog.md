@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix: Navigation menu with light bg when in respective route
 - Fix: Removed mock data for testimonials
 - Fix: Fixed slidy testimonials user picture into home 2
+- Fix: Faqs now come from database
 
 ### [1.30.2] - 2022-11-14
 
