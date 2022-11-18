@@ -88,7 +88,7 @@ const UserTestimonials = () => {
           size={40}
         />
       )}
-      <Grid container gap="24px">
+      <Grid container pt="24px" gap="24px">
         {testimonials}
       </Grid>
       <CreateTestimonialsDialog

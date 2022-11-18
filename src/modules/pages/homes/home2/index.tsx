@@ -212,7 +212,7 @@ const Home2 = () => {
           </Section3ShortLineWrapper>
           <Section3Title>{strings.home2.section3.title}</Section3Title>
         </Section3InnerContainer>
-        <TestimonialsSlidy locale={strings.getLanguage()} />
+        <TestimonialsSlidy language={strings.getLanguage()} />
       </Section3Container>
 
       <Footer />

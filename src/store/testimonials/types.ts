@@ -35,6 +35,7 @@ export interface ITestimonial {
   pictureUrl?: string;
   videoUrl?: string;
   rating: number;
+  language?: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 }

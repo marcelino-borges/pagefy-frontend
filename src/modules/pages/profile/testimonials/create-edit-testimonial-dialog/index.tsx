@@ -137,6 +137,7 @@ const CreateTestimonialsDialog = ({
         pictureUrl: userProfile.profileImageUrl,
         videoUrl: values.videoUrl,
         rating: values.rating,
+        language: strings.getLanguage(),
       };
       dispatch(createTestimonial(testimonial));
       setValues(INITIAL_FORM_VALUES);

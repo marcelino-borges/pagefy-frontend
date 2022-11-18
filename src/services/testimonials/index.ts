@@ -22,10 +22,10 @@ export const getLastTestimonial = async (
 
 export const getAllTestimonials = async (
   count?: number,
-  locale?: string
+  language?: string
 ): Promise<AxiosResponse<any>> => {
   return registrationApi.get(
-    `/testimonials?count=${count ?? 100}&locale=${locale}`
+    `/testimonials?count=${count ?? 100}&language=${language}`
   );
 };
 

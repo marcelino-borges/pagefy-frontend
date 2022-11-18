@@ -166,14 +166,14 @@ export const clearSupportState = () => ({
 export const getAllTestimonials =
   (
     count?: number,
-    locale?: string,
+    language?: string,
     onSuccessCallback?: (testimonials: ITestimonial[]) => void,
     onErrorCallback?: (error: any) => void
   ) =>
   async (dispatch: any) => {
     dispatch(getAllTestimonialsLoading());
 
-    TestimonialService.getAllTestimonials(count, locale)
+    TestimonialService.getAllTestimonials(count, language)
       .then((res: AxiosResponse) => {
         const testimonials: ITestimonial[] = res.data;
         dispatch(getAllTestimonialsSuccess(testimonials));

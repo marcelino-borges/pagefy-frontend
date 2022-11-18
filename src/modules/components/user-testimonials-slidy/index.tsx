@@ -21,10 +21,10 @@ import { Icon } from "@iconify/react";
 import strings from "../../../localization";
 
 interface ITestimonialsSlidyProps {
-  locale?: string;
+  language?: string;
 }
 
-const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
+const TestimonialsSlidy = ({ language = "en" }: ITestimonialsSlidyProps) => {
   const dispatch = useDispatch();
   const allTestimonials = useSelector(
     (state: IApplicationState) => state.testimonials.allTestimonials
@@ -36,8 +36,8 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
   const [isSliding, setIsSliding] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllTestimonials(undefined, locale));
-  }, [dispatch, locale]);
+    dispatch(getAllTestimonials(undefined, language));
+  }, [dispatch, language]);
 
   const testimonialDisplayed = useMemo(
     () => allTestimonials?.length && allTestimonials[displayedCardIndex],
@@ -137,18 +137,16 @@ const TestimonialsSlidy = ({ locale = "en" }: ITestimonialsSlidyProps) => {
             mt="16px"
             gap="16px"
           >
-            {testimonialDisplayed.pictureUrl ||
-              ((testimonialDisplayed.user as Partial<IUser>)
-                .profileImageUrl && (
-                <UserPicture
-                  pictureUrl={
-                    testimonialDisplayed.pictureUrl ||
-                    (testimonialDisplayed.user as Partial<IUser>)
-                      .profileImageUrl
-                  }
-                  style={{}}
-                />
-              ))}
+            {(testimonialDisplayed.pictureUrl ||
+              (testimonialDisplayed.user as Partial<IUser>)
+                .profileImageUrl) && (
+              <UserPicture
+                pictureUrl={
+                  testimonialDisplayed.pictureUrl ||
+                  (testimonialDisplayed.user as Partial<IUser>).profileImageUrl
+                }
+              />
+            )}
             <UserName>{`${
               (testimonialDisplayed.user as Partial<IUser>).firstName
             } ${
