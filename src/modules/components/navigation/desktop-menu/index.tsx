@@ -24,9 +24,7 @@ const DesktopHeader = () => {
         <Grid item padding={2}>
           <HeaderLinkDesktop
             to={routes.root}
-            style={{
-              color: location.pathname === routes.root ? PRIMARY_COLOR : "",
-            }}
+            isLocation={location.pathname === routes.root}
           >
             {strings.home}
           </HeaderLinkDesktop>
@@ -34,9 +32,7 @@ const DesktopHeader = () => {
         <Grid item padding={2}>
           <HeaderLinkDesktop
             to={routes.pages}
-            style={{
-              color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
-            }}
+            isLocation={location.pathname === routes.pages}
           >
             {strings.pages}
           </HeaderLinkDesktop>
@@ -44,13 +40,10 @@ const DesktopHeader = () => {
         <Grid item padding={2}>
           <HeaderLinkDesktop
             to={routes.faq}
-            style={{
-              color:
-                location.pathname === routes.faq ||
-                location.pathname === routes.support
-                  ? PRIMARY_COLOR
-                  : "",
-            }}
+            isLocation={
+              location.pathname === routes.faq ||
+              location.pathname === routes.support
+            }
           >
             {strings.support}
           </HeaderLinkDesktop>

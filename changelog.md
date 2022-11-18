@@ -20,6 +20,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 - Fix: Home 2 plans cards paddings, gaps
 - Fix: Home 2 Section 1 removed space-between and replaced it by a responsive Stack
+- Fix: navigation menu with light bg when in respective route
 
 ### [1.30.2] - 2022-11-14
 

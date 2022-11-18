@@ -2,6 +2,7 @@ import { styled } from "@mui/system";
 import { Grid, SwipeableDrawer } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Close, Menu } from "@mui/icons-material";
+import { PRIMARY_COLOR } from "../../../styles/colors";
 
 export const Parent = styled(
   ({ block, transparent, isFixed, children, ...rest }: any) => (
@@ -20,7 +21,27 @@ export const Parent = styled(
 `
 );
 
-export const HeaderLinkDesktop = styled(Link)`
+const HeaderLinkDesktopInner = styled(
+  ({ isLocation, children, ...rest }: any) => <div {...rest}>{children}</div>
+)(
+  ({ isLocation }: any) => `
+  border-radius: 10px;
+  padding: 4px;
+  display: inherit;
+  background-color: ${isLocation ? `${PRIMARY_COLOR}30` : ""};
+`
+);
+
+export const HeaderLinkDesktop = styled(
+  ({ isLocation, children, ...rest }: any) => (
+    <Link {...rest}>
+      <HeaderLinkDesktopInner isLocation={isLocation}>
+        {children}
+      </HeaderLinkDesktopInner>
+    </Link>
+  )
+)(
+  ({ isLocation }: any) => `
   color: black;
   padding-bottom: 41px; /* distance from text to underline when hover */
   transition: all 0.2s ease-in-out;
@@ -29,7 +50,7 @@ export const HeaderLinkDesktop = styled(Link)`
   text-align: center;
 
   &:hover {
-    color: var(--primary);
+    ${!isLocation ? `color: ${PRIMARY_COLOR}` : ""};
     text-decoration: none;
   }
 
@@ -51,7 +72,8 @@ export const HeaderLinkDesktop = styled(Link)`
     visibility: visible;
     transform: scaleX(1);
   }*/
-`;
+`
+);
 
 export const HamburguerMenuIcon = styled(Menu)`
   color: var(--primary);
