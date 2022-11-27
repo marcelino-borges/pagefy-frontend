@@ -2,13 +2,13 @@ import { AxiosResponse } from "axios";
 import { registrationApi } from "../../config/axios";
 import { IUser } from "../../store/user/types";
 
-export const getUser = async (email: string): Promise<AxiosResponse<any>> =>
+export const getUser = async (email: string): Promise<AxiosResponse<IUser>> =>
   await registrationApi.get(`/user?email=${email}`);
 
-export const createUser = async (user: IUser): Promise<AxiosResponse<any>> =>
+export const createUser = async (user: IUser): Promise<AxiosResponse<IUser>> =>
   await registrationApi.post("/user", user);
 
-export const updateUser = async (user: IUser): Promise<AxiosResponse<any>> =>
+export const updateUser = async (user: IUser): Promise<AxiosResponse<IUser>> =>
   await registrationApi.put("/user", user);
 
 export const deleteUser = async (

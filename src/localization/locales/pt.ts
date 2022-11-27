@@ -245,6 +245,9 @@ export const pt: IDictionary = {
       "Senha precisa atender aos requisitos mínimos.",
     invalidToken: "Erro de autenticação. Tente entrar novamente.",
     signInAgain: "Por favor entre novamente.",
+    notAllowed: "Não permitido.",
+    accountExistsWithDifferentCredential:
+      "Conta existe, porém possui outro método de entrar. Tente novamente com o método correto.",
   },
   generalErrors: {
     errorSignUp: "Erro ao criar sua conta.",
@@ -561,4 +564,5 @@ export const pt: IDictionary = {
       title: "O que nossos clientes falam sobre a gente?",
     },
   },
+  signInWith: "Entre com",
 };

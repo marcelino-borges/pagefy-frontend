@@ -86,16 +86,16 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
   };
   return (
     <>
+      <TriplePageTitle
+        titles={[strings.profile, strings.profileSubtitle, ""]}
+        increasingSize
+      />
       <Grid
         container
         direction="column"
         justifyContent="center"
-        px={isSmallerThan600 ? "8px" : "15vw"}
+        px={isSmallerThan600 ? "8px" : "25vw"}
       >
-        <TriplePageTitle
-          titles={[strings.profile, strings.profileSubtitle, ""]}
-          increasingSize
-        />
         <Grid container item justifyContent="center" pb="50px" mt="50px">
           <ProfileEditableAvatar
             imageUrl={profileImageTemporaryUrl}
@@ -196,6 +196,7 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
           <Grid container item pt="32px" justifyContent="center">
             <Button
               variant="contained"
+              fullWidth
               onClick={() => {
                 dispatch(
                   updateUser(

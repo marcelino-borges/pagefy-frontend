@@ -245,6 +245,9 @@ export const en: IDictionary = {
       "Password must attend minimum requirements.",
     invalidToken: "Authentication error. Try to sign in again.",
     signInAgain: "Please sign in again",
+    notAllowed: "Not allowed",
+    accountExistsWithDifferentCredential:
+      "Account exists, but it has another sign in method. Try again with the right sign in method.",
   },
   generalErrors: {
     errorSignUp: "Error creating your account.",
@@ -555,4 +558,5 @@ export const en: IDictionary = {
       title: "What do our customers talk about us?",
     },
   },
+  signInWith: "Sign in with",
 };

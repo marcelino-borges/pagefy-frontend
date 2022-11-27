@@ -9,6 +9,9 @@ const apiErrors: any = {
   "auth/invalid-email": strings.authErrors.invalidEmail,
   "auth/weak-password": strings.authErrors.weakPassword,
   "auth/invalid-token": strings.authErrors.invalidToken,
+  "auth/operation-not-allowed": strings.authErrors.notAllowed,
+  "auth/account-exists-with-different-credential":
+    strings.authErrors.accountExistsWithDifferentCredential,
   "User has no subscriptions.":
     strings.subscriptionPayment.youHaveNoFinanceHistory,
 };

@@ -93,6 +93,9 @@ const CreatePageDialog = ({ open, onClose, title }: ICreatePageDialogProps) => {
       topComponents: [],
       middleComponents: [],
       bottomComponents: [],
+      style: {
+        backgroundColor: "white",
+      },
     };
 
     dispatch(

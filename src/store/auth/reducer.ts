@@ -13,12 +13,20 @@ const authReducer = (
 ): IAuthState => {
   switch (action.type) {
     case AuthActionTypes.SIGNIN_LOADING:
+    case AuthActionTypes.SIGNIN_GOOGLE_LOADING:
+    case AuthActionTypes.SIGNIN_FACEBOOK_LOADING:
+    case AuthActionTypes.SIGNIN_MICROSOFT_LOADING:
+    case AuthActionTypes.SIGNIN_APPLE_LOADING:
       return {
         ...state,
         loading: true,
         error: undefined,
       };
     case AuthActionTypes.SIGNIN_SUCCESS:
+    case AuthActionTypes.SIGNIN_GOOGLE_SUCCESS:
+    case AuthActionTypes.SIGNIN_FACEBOOK_SUCCESS:
+    case AuthActionTypes.SIGNIN_MICROSOFT_SUCCESS:
+    case AuthActionTypes.SIGNIN_APPLE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -26,6 +34,10 @@ const authReducer = (
         auth: action.payload,
       };
     case AuthActionTypes.SIGNIN_ERROR:
+    case AuthActionTypes.SIGNIN_GOOGLE_ERROR:
+    case AuthActionTypes.SIGNIN_FACEBOOK_ERROR:
+    case AuthActionTypes.SIGNIN_MICROSOFT_ERROR:
+    case AuthActionTypes.SIGNIN_APPLE_ERROR:
       return {
         ...state,
         loading: false,

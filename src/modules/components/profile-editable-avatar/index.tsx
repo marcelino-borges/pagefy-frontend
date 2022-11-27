@@ -21,6 +21,7 @@ interface IProfileEditableAvatarProps {
   badgeBgSize?: string | undefined;
   badgeIconSize?: string | undefined;
   noUserIconSize?: string | undefined;
+  isEditable?: boolean;
 }
 
 const ProfileEditableAvatar = ({
@@ -36,16 +37,19 @@ const ProfileEditableAvatar = ({
   badgeBgSize,
   badgeIconSize = "20px",
   noUserIconSize = "48px",
+  isEditable = true,
 }: IProfileEditableAvatarProps) => {
   return (
     <Badge
       overlap="circular"
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      onClick={onClick}
+      onClick={isEditable === true ? onClick : undefined}
       badgeContent={
-        <AvatarEditBadge size={badgeBgSize}>
-          <EditPenIcon style={{ fontSize: badgeIconSize, color: "white" }} />
-        </AvatarEditBadge>
+        isEditable === true && (
+          <AvatarEditBadge size={badgeBgSize}>
+            <EditPenIcon style={{ fontSize: badgeIconSize, color: "white" }} />
+          </AvatarEditBadge>
+        )
       }
     >
       <PageAvatar
@@ -56,6 +60,7 @@ const ProfileEditableAvatar = ({
         maxHeight={maxHeight}
         minWidth={minWidth}
         minHeight={minHeight}
+        isEditable={isEditable}
         sx={{ bgcolor: MEDIUM_GREY }}
       >
         {text && text.length > 1 ? (

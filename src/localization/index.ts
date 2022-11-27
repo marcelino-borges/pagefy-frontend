@@ -321,6 +321,8 @@ export interface IDictionary {
     passwordMustAttendRequirements: string;
     invalidToken: string;
     signInAgain: string;
+    notAllowed: string;
+    accountExistsWithDifferentCredential: string;
   };
   generalErrors: {
     unknownError: string;
@@ -490,6 +492,7 @@ export interface IDictionary {
       title: string;
     };
   };
+  signInWith: string;
 }
 
 // Composed dictionaries

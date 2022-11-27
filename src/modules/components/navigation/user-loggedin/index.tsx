@@ -85,6 +85,7 @@ const UserLoggedIn = () => {
           badgeBgSize="22px"
           badgeIconSize="15px"
           noUserIconSize="36px"
+          isEditable={false}
         />
       </Grid>
       <Stack

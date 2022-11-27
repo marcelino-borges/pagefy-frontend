@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { Grid, styled } from "@mui/material";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 
 export const Banner = styled(({ image, children, ...rest }: any) => (
@@ -36,4 +36,12 @@ export const Banner = styled(({ image, children, ...rest }: any) => (
 
 export const PrimaryColoredText = styled("span")`
   color: ${PRIMARY_COLOR};
+`;
+
+export const LoginProviderContainer = styled(Grid)`
+  font-size: 2.5em;
+
+  svg {
+    cursor: pointer;
+  }
 `;

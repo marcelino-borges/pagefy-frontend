@@ -124,6 +124,7 @@ export const ArrowBackIcon = styled(ArrowBackIosNewRounded)`
   left: 0;
   border-radius: 6px 0px 0px 6px;
 `;
+
 export const ArrowForwardIcon = styled(ArrowForwardIosRounded)`
   ${BASIC_ARROW}
   right: 0;

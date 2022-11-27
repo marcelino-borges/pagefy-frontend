@@ -26,6 +26,7 @@ const userReducer = (
   switch (action.type) {
     case UserActionTypes.UPLOAD_USER_LOADING:
     case UserActionTypes.GET_USER_LOADING:
+    case UserActionTypes.GET_USER_OR_CREATE_LOADING:
     case UserActionTypes.GET_SUBSCRIPTIONS_LOADING:
       return {
         ...state,
@@ -34,6 +35,7 @@ const userReducer = (
 
     case UserActionTypes.UPLOAD_USER_SUCCESS:
     case UserActionTypes.GET_USER_SUCCESS:
+    case UserActionTypes.GET_USER_OR_CREATE_SUCCESS:
       return {
         ...state,
         profile: action.payload,
@@ -43,6 +45,7 @@ const userReducer = (
 
     case UserActionTypes.UPLOAD_USER_ERROR:
     case UserActionTypes.GET_USER_ERROR:
+    case UserActionTypes.GET_USER_OR_CREATE_ERROR:
     case UserActionTypes.GET_SUBSCRIPTIONS_ERROR:
       return {
         ...state,

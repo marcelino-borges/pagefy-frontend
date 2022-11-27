@@ -32,18 +32,28 @@ export const PageAvatar = styled(
     maxHeight,
     minWidth,
     minHeight,
+    isEditable,
     ...rest
   }: any) => <Avatar {...rest} />
-)`
-  height: ${({ height }) => height};
-  width: ${({ width }) => width};
-  max-width: ${({ maxWidth }) => maxWidth};
-  max-height: ${({ maxHeight }) => maxHeight};
-  min-width: ${({ minWidth }) => minWidth};
-  min-height: ${({ minHeight }) => minHeight};
+)(
+  ({
+    width,
+    height,
+    maxWidth,
+    maxHeight,
+    minWidth,
+    minHeight,
+    isEditable = true,
+  }) => `
+  height: ${height};
+  width: ${width};
+  max-width: ${maxWidth};
+  max-height: ${maxHeight};
+  min-width: ${minWidth};
+  min-height: ${minHeight};
   font-size: 2em;
   position: relative;
-  cursor: pointer;
+  cursor: ${isEditable ? "pointer" : ""};
 
   &:hover .MuiAvatar-root {
     display: flex;
@@ -53,7 +63,8 @@ export const PageAvatar = styled(
     display: flex;
     background-color: ${PRIMARY_COLOR};
   }
-`;
+`
+);
 
 export const AvatarOverlay = styled(({ ...rest }: any) => <div {...rest} />)`
   font-size: 2em;

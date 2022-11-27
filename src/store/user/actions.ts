@@ -1,5 +1,6 @@
 import { IUser, UserActionTypes } from "./../user/types";
 import * as UserService from "./../../services/user";
+import * as AuthService from "./../../services/firebase-auth";
 import * as PaymentService from "./../../services/payments";
 import * as FilesService from "./../../services/files";
 import { AxiosError, AxiosResponse } from "axios";
@@ -49,6 +50,39 @@ export const getUserSuccess = (user: IUser) => ({
 const getUserError = (e: IAppResult) => ({
   payload: e,
   type: UserActionTypes.GET_USER_ERROR,
+});
+
+export const getUserOrCreate =
+  (
+    user: IUser,
+    onSuccessCallback?: (user: IUser) => void,
+    onErrorCallback?: (error: string) => void
+  ) =>
+  async (dispatch: any) => {
+    dispatch(getUserOrCreateLoading());
+
+    const userFound = (await UserService.getUser(user.email))?.data;
+
+    if (userFound) {
+      dispatch(getUserSuccess(userFound));
+
+      if (onSuccessCallback) onSuccessCallback(user);
+      if (user._id) dispatch(getAllUserPages(user._id));
+    } else {
+      UserService.createUser(user)
+        .then((res: AxiosResponse) => {
+          dispatch(getUserSuccess(res.data));
+          if (onSuccessCallback) onSuccessCallback(res.data);
+        })
+        .catch((error: AxiosError) => {
+          AuthService.deleteUserAuth();
+          if (onErrorCallback) onErrorCallback(error.message);
+        });
+    }
+  };
+
+const getUserOrCreateLoading = () => ({
+  type: UserActionTypes.GET_USER_LOADING,
 });
 
 export const getSubscriptions =

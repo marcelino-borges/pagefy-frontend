@@ -14,11 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import { signIn, signOut } from "../../../store/auth/actions";
+import {
+  signIn,
+  signInWithProvider,
+  signOut,
+} from "../../../store/auth/actions";
 import routes from "../../../routes/paths";
 import { IUserAuth, IUserCredentials } from "../../../store/auth/types";
 import { showErrorToast } from "../../../utils/toast";
-import { getUser } from "../../../store/user/actions";
+import { getUser, getUserOrCreate } from "../../../store/user/actions";
 import { IUser } from "../../../store/user/types";
 import { setSessionStorage } from "../../../utils/storage";
 import {
@@ -28,6 +32,14 @@ import {
 import InternalLink from "../../components/internal-link";
 import { IApplicationState } from "../../../store";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
+import { Icon } from "@iconify/react";
+import { LoginProviderContainer } from "./style";
+import CustomTooltip from "./../../components/tooltip/index";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  OAuthProvider,
+} from "firebase/auth";
 
 const INITIAL_VALUES = {
   email: "",
@@ -65,7 +77,7 @@ const SignInPage = () => {
     navigate(destination);
   };
 
-  const onSubmitSignIn = () => {
+  const onSubmitSignInCredentials = () => {
     runAfterValidateRecaptcha(window, () => {
       const credentials: IUserCredentials = {
         email: String(values.email).trim(),
@@ -92,10 +104,34 @@ const SignInPage = () => {
     });
   };
 
+  const onSignInWithProvider = (
+    provider: GoogleAuthProvider | FacebookAuthProvider | OAuthProvider
+  ) => {
+    runAfterValidateRecaptcha(window, () => {
+      dispatch(
+        signInWithProvider(
+          provider,
+          (_: string, auth: IUserAuth, user: IUser) => {
+            setSessionStorage("auth", JSON.stringify(auth));
+            dispatch(
+              getUserOrCreate(user, (user: IUser) => {
+                setSessionStorage("user", JSON.stringify(user));
+                loadDashboardOrPurchase();
+              })
+            );
+          },
+          (errorTranslated: any) => {
+            showErrorToast(errorTranslated);
+          }
+        )
+      );
+    });
+  };
+
   return (
     <BannerHalfLayout>
       <form
-        onSubmit={handleSubmit(onSubmitSignIn)}
+        onSubmit={handleSubmit(onSubmitSignInCredentials)}
         style={{ width: "100%", height: "100%" }}
       >
         <h2 style={{ marginBottom: "16px" }}>{strings.welcomeBack}</h2>
@@ -153,13 +189,54 @@ const SignInPage = () => {
             {strings.signIn}
           </Button>
         </Grid>
+        <Grid container item justifyContent="center" fontSize="0.9em" mt="36px">
+          {strings.signInWith}:
+        </Grid>
+        <Grid
+          container
+          item
+          justifyContent="center"
+          alignItems="center"
+          fontSize="0.9em"
+          pt="12px"
+          gap="24px"
+        >
+          <LoginProviderContainer item>
+            <CustomTooltip title="Google">
+              <Icon
+                icon="logos:google-icon"
+                onClick={() => onSignInWithProvider(new GoogleAuthProvider())}
+              />
+            </CustomTooltip>
+          </LoginProviderContainer>
+          <LoginProviderContainer item>
+            <CustomTooltip title="Facebook">
+              <Icon
+                icon="uiw:facebook"
+                color="#4267B2"
+                onClick={() => onSignInWithProvider(new FacebookAuthProvider())}
+              />
+            </CustomTooltip>
+          </LoginProviderContainer>
+          <LoginProviderContainer item>
+            <CustomTooltip title="Microsoft">
+              <Icon
+                icon="logos:microsoft-icon"
+                fontSize="0.9em"
+                onClick={() =>
+                  onSignInWithProvider(new OAuthProvider("microsoft.com"))
+                }
+              />
+            </CustomTooltip>
+          </LoginProviderContainer>
+        </Grid>
         <Grid
           container
           item
           justifyContent="center"
           fontSize="0.9em"
           pt="12px"
-          mt="24px"
+          mt="12px"
         >
           <InternalLink to={routes.signUp}>{strings.noAccountYet}</InternalLink>
         </Grid>

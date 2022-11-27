@@ -1,18 +1,24 @@
+import { AxiosError, AxiosResponse } from "axios";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  OAuthProvider,
+  UserCredential,
+} from "firebase/auth";
 import { AuthActionTypes, IUserAuth, IUserCredentials } from "./types";
 import * as AuthService from "../../services/firebase-auth";
 import * as UserService from "../../services/user";
-import { AxiosError, AxiosResponse } from "axios";
 import { translateError } from "../../utils/api-errors-mapping";
 import strings from "../../localization";
 import { IAppResult } from "../shared/types";
-import { UserCredential } from "firebase/auth";
 import { getFirebaseToken } from "../../config/firebase/index";
-import { IUser } from "../user/types";
+import { IUser, PlansTypes } from "../user/types";
 import { clearUserState, getUserSuccess } from "../user/actions";
 import { clearPageManagementState } from "../page-management/actions";
 import { clearUserPagesState } from "../user-pages/actions";
 import { FirebaseError } from "firebase/app";
 import { clearStorage } from "../../utils/storage";
+import { showErrorToast } from "./../../utils/toast/index";
 
 export const signIn =
   (
@@ -76,11 +82,11 @@ export const signUp =
       password: user.password,
     })
       .then(async (userCredential: UserCredential) => {
-        let userToSave = {
+        let userToCreate = {
           ...(user as IUser),
           authId: userCredential.user.uid,
         };
-        UserService.createUser(userToSave)
+        UserService.createUser(userToCreate)
           .then((res: AxiosResponse) => {
             dispatch(signUpSuccess());
             dispatch(getUserSuccess(res.data));
@@ -154,3 +160,103 @@ export const clearAllStates = () => (dispatch: any) => {
   dispatch(clearUserState());
   dispatch(clearUserPagesState());
 };
+
+export const signInWithProvider =
+  (
+    provider: GoogleAuthProvider | FacebookAuthProvider | OAuthProvider,
+    onSuccessCallback:
+      | ((token: string, auth: IUserAuth, userData: IUser) => void)
+      | null = null,
+    onErrorCallback: ((error?: string) => void) | null = null
+  ) =>
+  (dispatch: any) => {
+    dispatch(signInWithProviderLoading());
+    AuthService.signInWithProvider(provider)
+      .then(async (result: UserCredential) => {
+        let credential;
+
+        if (provider instanceof GoogleAuthProvider)
+          credential = GoogleAuthProvider.credentialFromResult(result);
+        else if (provider instanceof FacebookAuthProvider)
+          credential = FacebookAuthProvider.credentialFromResult(result);
+        else if (provider instanceof OAuthProvider)
+          credential = OAuthProvider.credentialFromResult(result);
+
+        const email = result.user.email;
+        const [firstName, lastName] = result.user.displayName
+          ? result.user.displayName.split(" ")
+          : ["Name", "Lastname"];
+
+        const dispatchError = () => {
+          dispatch(signInWithProviderError(strings.generalErrors.errorSignIn));
+          showErrorToast(strings.generalErrors.errorSignIn);
+          if (onErrorCallback)
+            onErrorCallback(strings.generalErrors.errorSignIn);
+        };
+
+        if (!credential) {
+          dispatchError();
+          return;
+        }
+
+        const token = credential.accessToken;
+
+        if (!email || !token) {
+          AuthService.deleteUserAuth();
+          dispatchError();
+          return;
+        }
+
+        const user = result.user;
+
+        const auth: IUserAuth = {
+          accessToken: token,
+          uid: user.uid,
+        };
+
+        const userData: IUser = {
+          email,
+          firstName,
+          lastName,
+          authId: user.uid,
+          plan: PlansTypes.PLATINUM,
+          receiveCommunications: true,
+          agreePrivacy: true,
+        };
+
+        dispatch(signInWithProviderSuccess(auth));
+        console.log("4");
+
+        if (onSuccessCallback) onSuccessCallback(token, auth, userData);
+      })
+      .catch((error: FirebaseError) => {
+        const errorCode: string = error.code;
+        dispatch(signInWithProviderError(errorCode));
+
+        let errorToShow = strings.generalErrors.errorSignUp;
+
+        if (errorCode) {
+          const translatedError = translateError(errorCode);
+
+          if (translatedError) {
+            errorToShow = translatedError;
+          }
+        }
+
+        if (onErrorCallback) onErrorCallback(errorToShow);
+      });
+  };
+
+const signInWithProviderLoading = () => ({
+  type: AuthActionTypes.SIGNIN_GOOGLE_LOADING,
+});
+
+const signInWithProviderSuccess = (auth: IUserAuth) => ({
+  payload: auth,
+  type: AuthActionTypes.SIGNIN_GOOGLE_SUCCESS,
+});
+
+const signInWithProviderError = (error: any) => ({
+  payload: error,
+  type: AuthActionTypes.SIGNIN_GOOGLE_ERROR,
+});

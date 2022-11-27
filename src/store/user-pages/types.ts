@@ -67,7 +67,7 @@ export interface IUserPage {
   pageImageUrl?: string;
   isPublic: boolean;
   views: number;
-  style?: IComponentStyle;
+  style?: IHtmlStyle;
   topComponents?: IUserComponent[];
   middleComponents?: IUserComponent[];
   bottomComponents?: IUserComponent[];
@@ -81,7 +81,7 @@ export interface IUserComponent {
   _id?: string;
   text?: string;
   url?: string;
-  style?: IComponentStyle;
+  style?: IHtmlStyle;
   visible: boolean;
   clicks: number;
   layout: IComponentLayout;
@@ -112,7 +112,7 @@ export interface IIconDetails {
   icon: string;
 }
 
-export interface IComponentStyle {
+export interface IHtmlStyle {
   backgroundColor?: string;
   backgroundImage?: string;
   backgroundSize?: string;
