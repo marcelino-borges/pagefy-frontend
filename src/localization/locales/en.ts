@@ -55,6 +55,10 @@ export const en: IDictionary = {
       dialogTitle: "Create a Button",
       typeHelpText:
         "Your button may be only of a single type. It may have only text with no image, both text and image or only image. Text over image will put the image as background and the text in an absolute position over it.",
+      typeTextOnly: "Button containing only text.",
+      typeTextAndImage: "Button containing text and image.",
+      typeImageOnly: "Button containing only image.",
+      typeTextOverImage: "Button containing a text over an image.",
       columnsHelpText:
         "Every page may be divided in up to two sections (columns) and your button may occupy one (half) or two of them (full).",
       rowsHelpText: `Your button may occupy the space of one to 8 rows. Multiply the amount of rows by ${RENDERED_PAGE_COMPONENT_HEIGHT} and you will have the total height of your button (in pixels).`,

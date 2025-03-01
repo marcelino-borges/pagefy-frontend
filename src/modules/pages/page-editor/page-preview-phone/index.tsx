@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IUserPage } from "../../../../store/user-pages/types";
 import PageRenderer from "../../../components/page-renderer";
 import {
@@ -19,8 +19,13 @@ interface IPagePreviewPhoneProps {
 
 const PagePreviewPhone = ({ page }: IPagePreviewPhoneProps) => {
   const [openPreview, setOpenPreview] = useState(true);
+  const [pageToRender, setPageToRender] = useState<IUserPage>();
 
-  if (!page) return <></>;
+  useEffect(() => {
+    setPageToRender(page);
+  }, [page]);
+
+  if (!pageToRender) return <></>;
 
   return (
     <>
@@ -38,8 +43,8 @@ const PagePreviewPhone = ({ page }: IPagePreviewPhoneProps) => {
               <Close />
             </CloseIcon>
           </CustomTooltip>
-          <PageContainer style={{ ...page.style }}>
-            <PageRenderer pageToRender={page} isPagePreview />
+          <PageContainer style={{ ...pageToRender.style }}>
+            <PageRenderer pageToRender={pageToRender} isPagePreview />
           </PageContainer>
         </FloatingPreviewContainer>
       )}

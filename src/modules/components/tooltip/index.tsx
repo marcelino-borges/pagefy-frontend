@@ -35,7 +35,7 @@ const CustomTooltip = ({
       disableInteractive={disableInteractive !== undefined}
       placement={placement || "bottom"}
     >
-      {children}
+      <div>{children}</div>
     </Tooltip>
   );
 };

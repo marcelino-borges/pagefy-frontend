@@ -53,10 +53,16 @@ import WhatsappDialog from "../whatsapp-dialog";
 interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
-const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
+const IconsDialog = ({
+  pageId,
+  open,
+  handleClose,
+  onUpdatePage,
+}: IIconsDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -202,6 +208,7 @@ const IconsDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
     };
     clearSearchAndStates();
     dispatch(addTopComponentInPage(newComponent, pageId));
+    onUpdatePage();
     handleClose();
   };
 

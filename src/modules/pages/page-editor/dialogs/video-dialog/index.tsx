@@ -28,12 +28,18 @@ import { getYoutubeIdFromUrl } from "../../../../../utils";
 interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
 const MIN_VIDEO_ID_LENGTH = 6;
 
-const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
+const VideoDialog = ({
+  pageId,
+  open,
+  handleClose,
+  onUpdatePage,
+}: IIconsDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -88,6 +94,7 @@ const VideoDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       iconDetails: undefined,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
+    onUpdatePage();
     clearStates();
     handleClose();
   };

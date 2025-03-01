@@ -38,10 +38,16 @@ import { translateShadowStyleEnum } from "../../../../../utils";
 interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
-const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
+const LaunchDialog = ({
+  pageId,
+  open,
+  handleClose,
+  onUpdatePage,
+}: IIconsDialogProps) => {
   const defaultLaunchDate = moment().toISOString();
 
   const dispatch = useDispatch();
@@ -125,6 +131,7 @@ const LaunchDialog = ({ pageId, open, handleClose }: IIconsDialogProps) => {
       iconDetails: undefined,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
+    onUpdatePage();
     clearStates();
     handleClose();
   };

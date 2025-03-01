@@ -139,6 +139,10 @@ export interface IDictionary {
       name: string;
       dialogTitle: string;
       typeHelpText: string;
+      typeTextOnly: string;
+      typeTextAndImage: string;
+      typeImageOnly: string;
+      typeTextOverImage: string;
       columnsHelpText: string;
       rowsHelpText: string;
       borderRadiusHelpText: string;

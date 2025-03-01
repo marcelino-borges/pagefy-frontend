@@ -38,7 +38,8 @@ import FontColorIcon from "../../../../../assets/icons/custom-icons/font-color";
 interface ICountersDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
 const BLANK_COUNTER: ICounter = {
@@ -50,6 +51,7 @@ const CountersDialog = ({
   pageId,
   open,
   handleClose,
+  onUpdatePage,
 }: ICountersDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -105,6 +107,7 @@ const CountersDialog = ({
       counters,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
+    onUpdatePage();
     clearStates();
     handleClose();
   };

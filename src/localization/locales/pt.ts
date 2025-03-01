@@ -55,6 +55,10 @@ export const pt: IDictionary = {
       dialogTitle: "Crie um botão",
       typeHelpText:
         "Seu botão pode ser de apenas um tipo. Pode ter apenas texto, sem imagem; pode ter tanto texto quanto imagem; ou pode ter apenas imagem. Texto sobre imagem irá colocar a imagem como plano de fundo e o texto com posição absoluta sobre o fundo.",
+      typeTextOnly: "Botão contendo apenas um texto.",
+      typeTextAndImage: "Botão contendo texto e imagem.",
+      typeImageOnly: "Botão contendo apenas uma imagem.",
+      typeTextOverImage: "Botão contendo um texto sobre uma imagem.",
       columnsHelpText:
         "Toda página pode ser dividida em até duas seções (colunas) e seu botão poderá ocupar uma (metade) ou duas delas (completo).",
       rowsHelpText: `Seu botão pode ocupar o espaço de um até 8 linhas. Multiplique o total de linhas por ${RENDERED_PAGE_COMPONENT_HEIGHT} e você terá a altura total do seu botão (em pixels).`,

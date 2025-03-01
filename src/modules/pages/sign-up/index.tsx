@@ -76,59 +76,59 @@ const SignUpPage = () => {
   };
 
   const onSubmit = () => {
-    runAfterValidateRecaptcha(window, () => {
-      if (!agreePrivacy) {
-        showErrorToast(strings.requiredPrivacyAccept);
-        return;
-      }
+    // runAfterValidateRecaptcha(window, () => {
+    if (!agreePrivacy) {
+      showErrorToast(strings.requiredPrivacyAccept);
+      return;
+    }
 
-      const newUser = {
-        firstName: capitalizeOnlyFirstLetter(String(values.firstName).trim()),
-        lastName: capitalizeOnlyFirstLetter(String(values.lastName).trim()),
-        email: String(values.email).trim(),
-        password: values.password,
-        confirmPassword: values.confirmPassword,
-        receiveCommunications,
-        agreePrivacy,
-        plan: PlansTypes.FREE,
-      };
+    const newUser = {
+      firstName: capitalizeOnlyFirstLetter(String(values.firstName).trim()),
+      lastName: capitalizeOnlyFirstLetter(String(values.lastName).trim()),
+      email: String(values.email).trim().toLowerCase(),
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+      receiveCommunications,
+      agreePrivacy,
+      plan: PlansTypes.FREE,
+    };
 
-      if (!newUser.email.match(EMAIL_REGEX)) {
-        showErrorToast(strings.authErrors.invalidEmail);
-        return;
-      }
+    if (!newUser.email.match(EMAIL_REGEX)) {
+      showErrorToast(strings.authErrors.invalidEmail);
+      return;
+    }
 
-      if (!newUser.password.match(PASSWORD_REGEX)) {
-        showErrorToast(strings.authErrors.passwordMustAttendRequirements);
-        return;
-      }
+    if (!newUser.password.match(PASSWORD_REGEX)) {
+      showErrorToast(strings.authErrors.passwordMustAttendRequirements);
+      return;
+    }
 
-      dispatch(
-        signUp(
-          newUser,
-          async (user: IUser) => {
-            dispatch(
-              signIn(
-                { email: values.email, password: values.password },
-                (_: string, auth: IUserAuth) => {
-                  setSessionStorage("auth", JSON.stringify(auth));
-                  dispatch(
-                    getUser(user.email, (user: IUser) => {
-                      setSessionStorage("user", JSON.stringify(user));
-                      loadDashboardOrPurchase();
-                    })
-                  );
-                  loadDashboardOrPurchase();
-                }
-              )
-            );
-          },
-          (errorTranslated: any) => {
-            showErrorToast(errorTranslated);
-          }
-        )
-      );
-    });
+    dispatch(
+      signUp(
+        newUser,
+        async (user: IUser) => {
+          dispatch(
+            signIn(
+              { email: values.email, password: values.password },
+              (_: string, auth: IUserAuth) => {
+                setSessionStorage("auth", JSON.stringify(auth));
+                dispatch(
+                  getUser(user.email, (user: IUser) => {
+                    setSessionStorage("user", JSON.stringify(user));
+                    loadDashboardOrPurchase();
+                  })
+                );
+                loadDashboardOrPurchase();
+              }
+            )
+          );
+        },
+        (errorTranslated: any) => {
+          showErrorToast(errorTranslated);
+        }
+      )
+    );
+    // });
   };
 
   if (!ALLOW_SIGNUP) {

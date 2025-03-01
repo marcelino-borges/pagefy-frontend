@@ -1,12 +1,15 @@
-export const PRIMARY_COLOR_LIGHTER = "#96f2cc";
-export const PRIMARY_COLOR = "#65C29B";
-export const PRIMARY_COLOR_DARK = "#50a380";
-export const SECONDARY_COLOR_LIGHTEST = "#c5f1fc";
-export const SECONDARY_COLOR_LIGHTER = "#86d6eb";
-export const SECONDARY_COLOR = "#3CB6D6";
-export const SECONDARY_COLOR_DARK = "#196c82";
-export const COMPLEMENTARY_COLOR = "#F9627D";
-export const COMPLEMENTARY_COLOR_DARK = "#bf4158";
+export const PRIMARY_COLOR_LIGHTER = "#6456D1";
+export const PRIMARY_COLOR = "#4335A7";
+export const PRIMARY_COLOR_DARK = "#231878";
+
+export const SECONDARY_COLOR_DARK = "#53A8D6";
+export const SECONDARY_COLOR = "#80C4E9";
+export const SECONDARY_COLOR_LIGHTER = "#A3DAF7";
+export const SECONDARY_COLOR_LIGHTEST = "#C4EAFF";
+
+export const COMPLEMENTARY_COLOR = "#FF7F3E";
+export const COMPLEMENTARY_COLOR_DARK = "#D9652B";
+
 export const GLOBAL_LIGHT_BG = "#F7F9FC";
 export const UPPER_MEDIUM_GREY = "#999999";
 export const MEDIUM_GREY = "#b9b9b9";

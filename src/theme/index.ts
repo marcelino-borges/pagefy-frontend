@@ -49,11 +49,14 @@ let themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           borderRadius: "32px",
-          minWidth: "120px",
           padding: "16px 24px",
           textTransform: "unset",
           fontSize: "0.9em",
           boxShadow: "none",
+          paddingTop: "8px",
+          paddingBottom: "8px",
+          paddingLeft: "16px",
+          paddingRight: "16px",
           "&:hover": {
             color: "white",
             backgroundColor: PRIMARY_COLOR_DARK,

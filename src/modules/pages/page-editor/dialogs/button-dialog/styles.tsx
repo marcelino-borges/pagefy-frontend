@@ -19,6 +19,8 @@ export const SectionHeader = styled((props: any) => <Grid {...props} />)`
   color: ${LIGHT_GREY};
   font-weight: 500;
   width: 100%;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const ComponentDetailsButton = styled(
@@ -91,9 +93,9 @@ export const LayoutPickerContainer = styled(
 `;
 
 export const LayoutPickerHeaderText = styled(({ ...rest }: any) => (
-  <span {...rest} />
+  <div {...rest} />
 ))`
-  position: absolute;
-  top: -2px;
   margin-left: 8px;
+  display: flex;
+  flex-direction: row;
 `;

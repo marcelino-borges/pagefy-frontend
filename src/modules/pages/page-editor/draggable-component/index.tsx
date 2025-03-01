@@ -96,6 +96,7 @@ export interface DraggableUserComponentProps {
   index: number;
   pageId: string | undefined;
   onClick?: () => any;
+  onUpdatePage: () => any;
 }
 
 const DraggableUserComponent = ({
@@ -103,6 +104,7 @@ const DraggableUserComponent = ({
   index,
   pageId,
   onClick,
+  onUpdatePage,
 }: DraggableUserComponentProps) => {
   const dispatch = useDispatch();
 
@@ -223,25 +225,22 @@ const DraggableUserComponent = ({
   const toggleVisibility = () => {
     if (!component._id || !pageId) return;
     dispatch(toggleComponentVisibility(pageId, component._id));
+    onUpdatePage();
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
-    if (component._id && pageId) {
-      console.log("a");
-      dispatch(
-        setComponentBackgroundColor(pageId, component._id, String(color))
-      );
-      setIsKeepToolsOpen(false);
-      setShowBackgroundColorPicker(false);
-    }
+    if (!component._id || !pageId) return;
+
+    dispatch(setComponentBackgroundColor(pageId, component._id, String(color)));
+    setIsKeepToolsOpen(false);
+    setShowBackgroundColorPicker(false);
   };
 
   const handleChangeFontColorComplete = (color: any) => {
-    if (component._id && pageId) {
-      dispatch(setComponentFontColor(pageId, component._id, String(color)));
-      setIsKeepToolsOpen(false);
-      setShowFontColorPicker(false);
-    }
+    if (!component._id || !pageId) return;
+    dispatch(setComponentFontColor(pageId, component._id, String(color)));
+    setIsKeepToolsOpen(false);
+    setShowFontColorPicker(false);
   };
 
   const Dialogs = () => {
@@ -254,6 +253,7 @@ const DraggableUserComponent = ({
           }}
           onConfirmCallback={() => {
             deleteComponent();
+            onUpdatePage();
           }}
           title={strings.removeIcon}
           message={strings.removeComponentConfirmation}
@@ -279,6 +279,7 @@ const DraggableUserComponent = ({
             const clearLoadingFromState = () => {
               dispatch(clearLoading());
             };
+
             if (chosenImage) {
               dispatch(
                 uploadAndSetComponentImage(
@@ -300,6 +301,7 @@ const DraggableUserComponent = ({
                   clearLoadingFromState
                 )
               );
+              onUpdatePage();
             }
 
             setOpenChooseFileDialog(false);
@@ -316,8 +318,10 @@ const DraggableUserComponent = ({
             setOpenChooseAnimationDialog(false);
           }}
           saveAnimation={(animation: IComponentAnimation) => {
-            if (pageId && component._id)
-              dispatch(setComponentAnimation(pageId, component._id, animation));
+            if (!pageId || !component._id) return;
+
+            dispatch(setComponentAnimation(pageId, component._id, animation));
+            onUpdatePage();
           }}
           existingAnimation={component.animation}
         />
@@ -327,10 +331,10 @@ const DraggableUserComponent = ({
             setOpenVisibleDateDialog(false);
           }}
           setDateTime={(dateTime: string) => {
-            if (pageId && component._id)
-              dispatch(
-                setComponentVisibleDate(pageId, component._id, dateTime)
-              );
+            if (!pageId || !component._id) return;
+
+            dispatch(setComponentVisibleDate(pageId, component._id, dateTime));
+            onUpdatePage();
           }}
         />
       </>
@@ -987,13 +991,15 @@ const DraggableUserComponent = ({
               transitionDuration="0.5s"
               isHoveringComponent={isHovering}
               onClick={() => {
-                if (pageId)
-                  dispatch(
-                    addMiddleComponentInPage(
-                      { ...component, visible: false, _id: undefined },
-                      pageId
-                    )
-                  );
+                if (!pageId) return;
+
+                dispatch(
+                  addMiddleComponentInPage(
+                    { ...component, visible: false, _id: undefined },
+                    pageId
+                  )
+                );
+                onUpdatePage();
               }}
             >
               <CopyAllIcon style={{ transform: "scale(0.7)" }} />

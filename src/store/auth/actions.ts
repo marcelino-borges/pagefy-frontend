@@ -18,7 +18,6 @@ import { clearPageManagementState } from "../page-management/actions";
 import { clearUserPagesState } from "../user-pages/actions";
 import { FirebaseError } from "firebase/app";
 import { clearStorage } from "../../utils/storage";
-import { showErrorToast } from "./../../utils/toast/index";
 
 export const signIn =
   (
@@ -189,7 +188,6 @@ export const signInWithProvider =
 
         const dispatchError = () => {
           dispatch(signInWithProviderError(strings.generalErrors.errorSignIn));
-          showErrorToast(strings.generalErrors.errorSignIn);
           if (onErrorCallback)
             onErrorCallback(strings.generalErrors.errorSignIn);
         };

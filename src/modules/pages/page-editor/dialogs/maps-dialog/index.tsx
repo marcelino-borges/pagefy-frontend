@@ -23,10 +23,16 @@ import MapEmbed from "../../../../components/map-embed";
 interface IMapsDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
-const MapsDialog = ({ pageId, open, handleClose }: IMapsDialogProps) => {
+const MapsDialog = ({
+  pageId,
+  open,
+  handleClose,
+  onUpdatePage,
+}: IMapsDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -68,6 +74,7 @@ const MapsDialog = ({ pageId, open, handleClose }: IMapsDialogProps) => {
       type: ComponentType.Map,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
+    onUpdatePage();
     clearStates();
     handleClose();
   };

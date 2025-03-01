@@ -23,10 +23,16 @@ import SpotifyEmbed from "./../../../../components/spotify-embed/index";
 interface ISpotifyDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
-const SpotifyDialog = ({ pageId, open, handleClose }: ISpotifyDialogProps) => {
+const SpotifyDialog = ({
+  pageId,
+  open,
+  handleClose,
+  onUpdatePage,
+}: ISpotifyDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -68,6 +74,7 @@ const SpotifyDialog = ({ pageId, open, handleClose }: ISpotifyDialogProps) => {
       type: ComponentType.Spotify,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
+    onUpdatePage();
     clearStates();
     handleClose();
   };

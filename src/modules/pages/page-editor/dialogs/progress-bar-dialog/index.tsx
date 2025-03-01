@@ -29,13 +29,15 @@ import { clamp } from "../../../../../utils";
 interface IProgressBarDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
 const ProgressBarDialog = ({
   pageId,
   open,
   handleClose,
+  onUpdatePage,
 }: IProgressBarDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -89,6 +91,7 @@ const ProgressBarDialog = ({
       type: ComponentType.ProgressBar,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
+    onUpdatePage();
     clearStates();
     handleClose();
   };

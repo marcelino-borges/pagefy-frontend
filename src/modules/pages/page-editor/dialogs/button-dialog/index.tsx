@@ -79,10 +79,16 @@ import {
 interface IComponentDialogProps {
   pageId?: string;
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
+  onUpdatePage: () => void;
 }
 
-const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
+const ButtonDialog = ({
+  pageId,
+  open,
+  handleClose,
+  onUpdatePage,
+}: IComponentDialogProps) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -222,6 +228,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
       if (pageId) {
         dispatch(addMiddleComponentInPage(newComponent, pageId));
+        onUpdatePage();
       }
       handleClose();
       clearStates();
@@ -299,7 +306,7 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
 
   const Section = ({ title, icon, error, helpText }: any) => (
     <SectionHeader item>
-      {icon}
+      <div>{icon}</div>
       <LayoutPickerHeaderText>
         {title}
         <CustomTooltip title={helpText}>
@@ -364,62 +371,70 @@ const ButtonDialog = ({ pageId, open, handleClose }: IComponentDialogProps) => {
             >
               {/* Only text */}
               <Grid item pr="24px">
-                <ComponentDetailsButton
-                  size="60px"
-                  isSelected={selectedType === ComponentType.Text}
-                  onClick={() => setSelectedType(ComponentType.Text)}
-                >
-                  <TextFieldsIcon style={{ fontSize: "40px" }} />
-                </ComponentDetailsButton>
+                <CustomTooltip title={strings.tools.button.typeTextOnly}>
+                  <ComponentDetailsButton
+                    size="60px"
+                    isSelected={selectedType === ComponentType.Text}
+                    onClick={() => setSelectedType(ComponentType.Text)}
+                  >
+                    <TextFieldsIcon style={{ fontSize: "40px" }} />
+                  </ComponentDetailsButton>
+                </CustomTooltip>
               </Grid>
 
               {/* Image & Text */}
               <Grid item pr="24px">
-                <ComponentDetailsButton
-                  size="60px"
-                  isSelected={selectedType === ComponentType.TextImage}
-                  onClick={() => setSelectedType(ComponentType.TextImage)}
-                >
-                  <ImageIcon
-                    style={{ fontSize: "30px", marginBottom: "25px" }}
-                  />
-                  +
-                  <TextFieldsIcon
-                    style={{ fontSize: "30px", marginTop: "30px" }}
-                  />
-                </ComponentDetailsButton>
+                <CustomTooltip title={strings.tools.button.typeTextAndImage}>
+                  <ComponentDetailsButton
+                    size="60px"
+                    isSelected={selectedType === ComponentType.TextImage}
+                    onClick={() => setSelectedType(ComponentType.TextImage)}
+                  >
+                    <ImageIcon
+                      style={{ fontSize: "30px", marginBottom: "25px" }}
+                    />
+                    +
+                    <TextFieldsIcon
+                      style={{ fontSize: "30px", marginTop: "30px" }}
+                    />
+                  </ComponentDetailsButton>
+                </CustomTooltip>
               </Grid>
 
               {/* Only image */}
               <Grid item pr="24px">
-                <ComponentDetailsButton
-                  size="60px"
-                  isSelected={selectedType === ComponentType.Image}
-                  onClick={() => setSelectedType(ComponentType.Image)}
-                >
-                  <ImageIcon style={{ fontSize: "40px" }} />
-                </ComponentDetailsButton>
+                <CustomTooltip title={strings.tools.button.typeImageOnly}>
+                  <ComponentDetailsButton
+                    size="60px"
+                    isSelected={selectedType === ComponentType.Image}
+                    onClick={() => setSelectedType(ComponentType.Image)}
+                  >
+                    <ImageIcon style={{ fontSize: "40px" }} />
+                  </ComponentDetailsButton>
+                </CustomTooltip>
               </Grid>
 
               {/* Text over image */}
               <Grid item>
-                <ComponentDetailsButton
-                  size="60px"
-                  isSelected={selectedType === ComponentType.TextOverImage}
-                  onClick={() => setSelectedType(ComponentType.TextOverImage)}
-                >
-                  <ImageIcon
-                    style={{ fontSize: "70px", position: "absolute" }}
-                  />
-                  <TextFieldsIcon
-                    style={{
-                      fontSize: "30px",
-                      position: "absolute",
-                      color: LIGHTER_GREY,
-                      marginBottom: "12px",
-                    }}
-                  />
-                </ComponentDetailsButton>
+                <CustomTooltip title={strings.tools.button.typeTextOverImage}>
+                  <ComponentDetailsButton
+                    size="60px"
+                    isSelected={selectedType === ComponentType.TextOverImage}
+                    onClick={() => setSelectedType(ComponentType.TextOverImage)}
+                  >
+                    <ImageIcon
+                      style={{ fontSize: "70px", position: "absolute" }}
+                    />
+                    <TextFieldsIcon
+                      style={{
+                        fontSize: "30px",
+                        position: "absolute",
+                        color: LIGHTER_GREY,
+                        marginBottom: "12px",
+                      }}
+                    />
+                  </ComponentDetailsButton>
+                </CustomTooltip>
               </Grid>
             </Grid>
 
