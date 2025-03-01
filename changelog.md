@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.5.0] - 2025-03-01
+
+- Feature: app icons rebranded
+
 ### [1.4.0] - 2025-03-01
 
 - Feature: rebranding whole app; changed name to Pagefy
