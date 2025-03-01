@@ -27,10 +27,7 @@ import { getUser } from "./../../../store/user/actions";
 import { capitalizeOnlyFirstLetter } from "../../../utils";
 import { setSessionStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
-import {
-  runAfterValidateRecaptcha,
-  setRecaptchaScript,
-} from "../../../utils/recaptcha-v3";
+import { setRecaptchaScript } from "../../../utils/recaptcha-v3";
 import InternalLink from "../../components/internal-link";
 import { IApplicationState } from "../../../store";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
