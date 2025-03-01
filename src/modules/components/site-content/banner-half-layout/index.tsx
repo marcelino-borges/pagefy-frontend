@@ -30,7 +30,7 @@ const BannerHalfLayout = ({ children }: any) => {
         <Link to={routes.root}>
           <img
             src={Logos.LogoHorizontalDarkBGBorderPNG}
-            alt="SocialBio"
+            alt="Pagefy"
             id="logo-signin"
           />
         </Link>

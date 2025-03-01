@@ -4,13 +4,13 @@ const PrivacyEN = () => (
 
     <p>
       {" "}
-      Socialbio (“we,” “our,” or “us”) is committed to protecting your privacy.
+      Pagefy (“we,” “our,” or “us”) is committed to protecting your privacy.
       This Privacy Policy explains how your personal information is collected,
-      used, and disclosed by Socialbio.
+      used, and disclosed by Pagefy.
     </p>
     <p>
       This Privacy Policy applies to our website, and its associated subdomains
-      (collectively, our “Service”) alongside our application, Socialbio. By
+      (collectively, our “Service”) alongside our application, Pagefy. By
       accessing or using our Service, you signify that you have read,
       understood, and agree to our collection, storage, use, and disclosure of
       your personal information as described in this Privacy Policy and our
@@ -30,23 +30,22 @@ const PrivacyEN = () => (
         </li>
         <li>
           Company: when this policy mentions “Company,” “we,” “us,” or “our,” it
-          refers to Socialbio.me, Belfield Crescent, Farranshone, Limerick,
-          Ireland that is responsible for your information under this Privacy
-          Policy.
+          refers to pagefy.me, Belfield Crescent, Farranshone, Limerick, Ireland
+          that is responsible for your information under this Privacy Policy.
         </li>
         <li>
-          Country: where Socialbio or the owners/founders of Socialbio are
-          based, in this case is Ireland
+          Country: where Pagefy or the owners/founders of Pagefy are based, in
+          this case is Ireland
         </li>
         <li>
           Customer: refers to the company, organization or person that signs up
-          to use the Socialbio Service to manage the relationships with your
+          to use the Pagefy Service to manage the relationships with your
           consumers or service users.
         </li>
         <li>
           Device: any internet connected device such as a phone, tablet,
-          computer or any other device that can be used to visit Socialbio and
-          use the services.
+          computer or any other device that can be used to visit Pagefy and use
+          the services.
         </li>
         <li>
           IP address: Every device connected to the Internet is assigned a
@@ -56,8 +55,8 @@ const PrivacyEN = () => (
           Internet.
         </li>
         <li>
-          Personnel: refers to those individuals who are employed by Socialbio
-          or are under contract to perform a service on behalf of one of the
+          Personnel: refers to those individuals who are employed by Pagefy or
+          are under contract to perform a service on behalf of one of the
           parties.
         </li>
         <li>
@@ -67,8 +66,8 @@ const PrivacyEN = () => (
           identifiability of a natural person.
         </li>
         <li>
-          Service: refers to the service provided by Socialbio as described in
-          the relative terms (if available) and on this platform.
+          Service: refers to the service provided by Pagefy as described in the
+          relative terms (if available) and on this platform.
         </li>
         <li>
           Third-party service: refers to advertisers, contest sponsors,
@@ -76,11 +75,11 @@ const PrivacyEN = () => (
           or whose products or services we think may interest you.
         </li>
         <li>
-          Website: Socialbio's site, which can be accessed via this URL:
-          https://www.socialbio.me
+          Website: Pagefy's site, which can be accessed via this URL:
+          https://www.pagefy.me
         </li>
         <li>
-          You: a person or entity that is registered with Socialbio to use the
+          You: a person or entity that is registered with Pagefy to use the
           Services.
         </li>
       </ul>
@@ -126,10 +125,10 @@ const PrivacyEN = () => (
       </ul>
     </p>
 
-    <h1>When does Socialbio use end user information from third parties?</h1>
+    <h1>When does Pagefy use end user information from third parties?</h1>
     <p>
-      Socialbio will collect End User Data necessary to provide the Socialbio
-      services to our customers.
+      Pagefy will collect End User Data necessary to provide the Pagefy services
+      to our customers.
     </p>
     <p>
       End users may voluntarily provide us with information they have made
@@ -140,12 +139,12 @@ const PrivacyEN = () => (
       and changing your privacy settings.
     </p>
 
-    <h1>When does Socialbio use customer information from third parties?</h1>
+    <h1>When does Pagefy use customer information from third parties?</h1>
     <p>
       We receive some information from the third parties when you contact us.
       For example, when you submit your email address to us to show interest in
-      becoming a Socialbio customer, we receive information from a third party
-      that provides automated fraud detection services to Socialbio. We also
+      becoming a Pagefy customer, we receive information from a third party that
+      provides automated fraud detection services to Pagefy. We also
       occasionally collect information that is made publicly available on social
       media websites. You can control how much of your information social media
       websites make public by visiting these websites and changing your privacy
@@ -196,7 +195,7 @@ const PrivacyEN = () => (
       Where and when is information collected from customers and end users?
     </h1>
     <p>
-      Socialbio will collect personal information that you submit to us. We may
+      Pagefy will collect personal information that you submit to us. We may
       also receive personal information about you from third parties as
       described above.
     </p>
@@ -224,8 +223,8 @@ const PrivacyEN = () => (
 
     <h1>How Long Do We Keep Your Information?</h1>
     <p>
-      We keep your information only so long as we need it to provide Socialbio
-      to you and fulfill the purposes described in this policy. This is also the
+      We keep your information only so long as we need it to provide Pagefy to
+      you and fulfill the purposes described in this policy. This is also the
       case for anyone that we share your information with and who carries out
       services on our behalf. When we no longer need to use your information and
       there is no need for us to keep it to comply with our legal or regulatory
@@ -245,25 +244,25 @@ const PrivacyEN = () => (
       confidential. After a transaction, your private information (credit cards,
       social security numbers, financials, etc.) is never kept on file. We
       cannot, however, ensure or warrant the absolute security of any
-      information you transmit to Socialbio or guarantee that your information
-      on the Service may not be accessed, disclosed, altered, or destroyed by a
+      information you transmit to Pagefy or guarantee that your information on
+      the Service may not be accessed, disclosed, altered, or destroyed by a
       breach of any of our physical, technical, or managerial safeguards.
     </p>
 
     <h1>Could my information be transferred to other countries?</h1>
     <p>
-      Socialbio is incorporated in Ireland. Information collected via our
-      website, through direct interactions with you, or from use of our help
-      services may be transferred from time to time to our offices or personnel,
-      or to third parties, located throughout the world, and may be viewed and
-      hosted anywhere in the world, including countries that may not have laws
-      of general applicability regulating the use and transfer of such data. To
-      the fullest extent allowed by applicable law, by using any of the above,
-      you voluntarily consent to the trans-border transfer and hosting of such
+      Pagefy is incorporated in Ireland. Information collected via our website,
+      through direct interactions with you, or from use of our help services may
+      be transferred from time to time to our offices or personnel, or to third
+      parties, located throughout the world, and may be viewed and hosted
+      anywhere in the world, including countries that may not have laws of
+      general applicability regulating the use and transfer of such data. To the
+      fullest extent allowed by applicable law, by using any of the above, you
+      voluntarily consent to the trans-border transfer and hosting of such
       information.
     </p>
 
-    <h1>Is the information collected through the Socialbio Service secure?</h1>
+    <h1>Is the information collected through the Pagefy Service secure?</h1>
     <p>
       We take precautions to protect the security of your information. We have
       physical, electronic, and managerial procedures to help safeguard, prevent
@@ -281,9 +280,9 @@ const PrivacyEN = () => (
     <h1>Can I update or correct my information?</h1>
     <p>
       The rights you have to request updates or corrections to the information
-      Socialbio collects depend on your relationship with Socialbio. Personnel
-      may update or correct their information as detailed in our internal
-      company employment policies.
+      Pagefy collects depend on your relationship with Pagefy. Personnel may
+      update or correct their information as detailed in our internal company
+      employment policies.
     </p>
     <p>
       Customers have the right to request the restriction of certain uses and
@@ -320,7 +319,7 @@ const PrivacyEN = () => (
     </p>
     <h1>Personnel</h1>
     <p>
-      If you are a Socialbio worker or applicant, we collect information you
+      If you are a Pagefy worker or applicant, we collect information you
       voluntarily provide to us. We use the information collected for Human
       Resources purposes in order to administer benefits to workers and screen
       applicants.
@@ -338,12 +337,12 @@ const PrivacyEN = () => (
     <p>
       We reserve the right to transfer information to a third party in the event
       of a sale, merger or other transfer of all or substantially all of the
-      assets of Socialbio or any of its Corporate Affiliates (as defined
-      herein), or that portion of Socialbio or any of its Corporate Affiliates
-      to which the Service relates, or in the event that we discontinue our
-      business or file a petition or have filed against us a petition in
-      bankruptcy, reorganization or similar proceeding, provided that the third
-      party agrees to adhere to the terms of this Privacy Policy.
+      assets of Pagefy or any of its Corporate Affiliates (as defined herein),
+      or that portion of Pagefy or any of its Corporate Affiliates to which the
+      Service relates, or in the event that we discontinue our business or file
+      a petition or have filed against us a petition in bankruptcy,
+      reorganization or similar proceeding, provided that the third party agrees
+      to adhere to the terms of this Privacy Policy.
     </p>
 
     <h1>Affiliates</h1>
@@ -351,10 +350,10 @@ const PrivacyEN = () => (
       We may disclose information (including personal information) about you to
       our Corporate Affiliates. For purposes of this Privacy Policy, "Corporate
       Affiliate" means any person or entity which directly or indirectly
-      controls, is controlled by or is under common control with Socialbio,
-      whether by ownership or otherwise. Any information relating to you that we
-      provide to our Corporate Affiliates will be treated by those Corporate
-      Affiliates in accordance with the terms of this Privacy Policy.
+      controls, is controlled by or is under common control with Pagefy, whether
+      by ownership or otherwise. Any information relating to you that we provide
+      to our Corporate Affiliates will be treated by those Corporate Affiliates
+      in accordance with the terms of this Privacy Policy.
     </p>
 
     <h1>Governing Law</h1>
@@ -372,8 +371,8 @@ const PrivacyEN = () => (
       also be subject to other local, state, national, or international laws.
     </p>
     <p>
-      By using Socialbio or contacting us directly, you signify your acceptance
-      of this Privacy Policy. If you do not agree to this Privacy Policy, you
+      By using Pagefy or contacting us directly, you signify your acceptance of
+      this Privacy Policy. If you do not agree to this Privacy Policy, you
       should not engage with our website, or use our services. Continued use of
       the website, direct engagement with us, or following the posting of
       changes to this Privacy Policy that do not significantly affect the use or
@@ -392,8 +391,8 @@ const PrivacyEN = () => (
     <h1>Links to Other Websites</h1>
     <p>
       This Privacy Policy applies only to the Services. The Services may contain
-      links to other websites not operated or controlled by Socialbio. We are
-      not responsible for the content, accuracy or opinions expressed in such
+      links to other websites not operated or controlled by Pagefy. We are not
+      responsible for the content, accuracy or opinions expressed in such
       websites, and such websites are not investigated, monitored or checked for
       accuracy or completeness by us. Please remember that when you use a link
       to go from the Services to another website, our Privacy Policy is no
@@ -404,8 +403,8 @@ const PrivacyEN = () => (
     </p>
     <h1>Cookies</h1>
     <p>
-      Socialbio uses "Cookies" to identify the areas of our website that you
-      have visited. A Cookie is a small piece of data stored on your computer or
+      Pagefy uses "Cookies" to identify the areas of our website that you have
+      visited. A Cookie is a small piece of data stored on your computer or
       mobile device by your web browser. We use Cookies to enhance the
       performance and functionality of our website but are non-essential to
       their use. However, without these cookies, certain functionality like
@@ -473,11 +472,11 @@ const PrivacyEN = () => (
       links to third-party websites or services ("Third- Party Services").
     </p>
     <p>
-      You acknowledge and agree that Socialbio shall not be responsible for any
+      You acknowledge and agree that Pagefy shall not be responsible for any
       Third-Party Services, including their accuracy, completeness, timeliness,
       validity, copyright compliance, legality, decency, quality or any other
-      aspect thereof. Socialbio does not assume and shall not have any liability
-      or responsibility to you or any other person or entity for any Third-Party
+      aspect thereof. Pagefy does not assume and shall not have any liability or
+      responsibility to you or any other person or entity for any Third-Party
       Services.
     </p>
     <p>
@@ -605,9 +604,9 @@ const PrivacyEN = () => (
       individuals' personal data that they collect and process. It also raises
       the stakes for compliance by increasing enforcement and imposing greater
       fines for breach. Beyond these facts it's simply the right thing to do. At
-      Socialbio we strongly believe that your data privacy is very important and
-      we already have solid security and privacy practices in place that go
-      beyond the requirements of this new regulation.
+      Pagefy we strongly believe that your data privacy is very important and we
+      already have solid security and privacy practices in place that go beyond
+      the requirements of this new regulation.
     </p>
 
     <h1>
@@ -615,7 +614,7 @@ const PrivacyEN = () => (
     </h1>
     <p>
       We are committed to helping our customers meet the data subject rights
-      requirements of GDPR. Socialbio processes or stores all personal data in
+      requirements of GDPR. Pagefy processes or stores all personal data in
       fully vetted, DPA compliant vendors. We do store all conversation and
       personal data for up to 6 years unless your account is deleted. In which
       case, we dispose of all data in accordance with our Terms of Service and
@@ -710,7 +709,7 @@ const PrivacyEN = () => (
     <h1>Contact Us</h1>
     <p>Don't hesitate to contact us if you have any questions.</p>
     <ul>
-      <li>Via this Link: https://socialbio.me/public/faq</li>
+      <li>Via this Link: https://pagefy.me/public/faq</li>
     </ul>
   </>
 );

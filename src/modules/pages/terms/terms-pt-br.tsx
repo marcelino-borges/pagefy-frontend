@@ -4,43 +4,43 @@ const TermsOfUsePTBR = () => (
 
     <h2>Termos Gerais</h2>
     <p>
-      Ao acessar e fazer um pedido com a Socialbio, você confirma que concorda e
+      Ao acessar e fazer um pedido com a Pagefy, você confirma que concorda e
       está vinculado aos termos de serviço contidos nos Termos e Condições
       abaixo. Esses termos se aplicam a todo o site e qualquer e-mail ou outro
-      tipo de comunicação entre você e a Socialbio.
+      tipo de comunicação entre você e a Pagefy.
     </p>
     <p>
-      Em nenhuma circunstância a equipe da Socialbio será responsável por danos
+      Em nenhuma circunstância a equipe da Pagefy será responsável por danos
       diretos, indiretos, especiais, incidentais ou consequentes, incluindo, mas
       não se limitando a, perda de dados ou lucro, decorrentes do uso, ou da
       impossibilidade de uso, dos materiais neste site, mesmo que a equipe da
-      Socialbio ou um representante autorizado tenha sido informado da
+      Pagefy ou um representante autorizado tenha sido informado da
       possibilidade de tais danos. Se o uso de materiais deste site resultar na
       necessidade de manutenção, reparo ou correção de equipamentos ou dados,
       você assume todos os custos.
     </p>
     <p>
-      A Socialbio não será responsável por qualquer resultado que possa ocorrer
+      A Pagefy não será responsável por qualquer resultado que possa ocorrer
       durante o uso de nossos recursos. Reservamos o direito de alterar preços e
       revisar a política de uso dos recursos a qualquer momento.
     </p>
     <h2>Licença</h2>
     <p>
-      A Socialbio concede a você uma licença revogável, não exclusiva, não
+      A Pagefy concede a você uma licença revogável, não exclusiva, não
       transferível e limitada para baixar, instalar e usar o site estritamente
       de acordo com os termos deste Contrato.
     </p>
     <p>
-      Estes Termos e Condições são um contrato entre você e a Socialbio
-      (referida nestes Termos e Condições como "Socialbio", "nós", "nos" ou
-      "nosso"), o provedor do site da Socialbio e dos serviços acessíveis a
-      partir do site da Socialbio (coletivamente referidos nestes Termos e
-      Condições como "Serviço da Socialbio").
+      Estes Termos e Condições são um contrato entre você e a Pagefy (referida
+      nestes Termos e Condições como "Pagefy", "nós", "nos" ou "nosso"), o
+      provedor do site da Pagefy e dos serviços acessíveis a partir do site da
+      Pagefy (coletivamente referidos nestes Termos e Condições como "Serviço da
+      Pagefy").
     </p>
     <p>
       Você concorda em ficar vinculado a estes Termos e Condições. Se você não
       concordar com estes Termos e Condições, por favor, não use o Serviço da
-      Socialbio. Nestes Termos e Condições, "você" se refere tanto a você como
+      Pagefy. Nestes Termos e Condições, "você" se refere tanto a você como
       indivíduo quanto à entidade que você representa. Se você violar qualquer
       um destes Termos e Condições, reservamos o direito de cancelar sua conta
       ou bloquear o acesso à sua conta sem aviso prévio.
@@ -61,22 +61,22 @@ const TermsOfUsePTBR = () => (
       </li>
       <li>
         Empresa: quando esta política menciona "Empresa", "nós", "nos" ou
-        "nosso", refere-se à Socialbio.me, Belfield Crescent, Farranshone,
+        "nosso", refere-se à pagefy.me, Belfield Crescent, Farranshone,
         Limerick, Irlanda, responsável pelas suas informações sob estes Termos e
         Condições.
       </li>
       <li>
-        País: onde a Socialbio ou os proprietários/fundadores da Socialbio estão
+        País: onde a Pagefy ou os proprietários/fundadores da Pagefy estão
         sediados, neste caso, é IE.
       </li>
       <li>
         Dispositivo: qualquer dispositivo conectado à internet, como um
         telefone, tablet, computador ou qualquer outro dispositivo que possa ser
-        usado para visitar a Socialbio e usar os serviços.
+        usado para visitar a Pagefy e usar os serviços.
       </li>
       <li>
-        Serviço: refere-se ao serviço fornecido pela Socialbio, conforme
-        descrito nos termos relativos (se disponíveis) e nesta plataforma.
+        Serviço: refere-se ao serviço fornecido pela Pagefy, conforme descrito
+        nos termos relativos (se disponíveis) e nesta plataforma.
       </li>
       <li>
         Serviço de terceiros: refere-se a anunciantes, patrocinadores de
@@ -85,12 +85,10 @@ const TermsOfUsePTBR = () => (
         interessar a você.
       </li>
       <li>
-        Site: site da Socialbio, acessível por este URL:
-        https://www.socialbio.me
+        Site: site da Pagefy, acessível por este URL: https://www.pagefy.me
       </li>
       <li>
-        Você: uma pessoa ou entidade registrada na Socialbio para usar os
-        Serviços.
+        Você: uma pessoa ou entidade registrada na Pagefy para usar os Serviços.
       </li>
     </ul>
 
@@ -108,23 +106,23 @@ const TermsOfUsePTBR = () => (
       </li>
       <li>
         Remover, alterar ou obscurecer qualquer aviso de propriedade (incluindo
-        qualquer aviso de direito autoral ou marca registrada) da Socialbio ou
-        de suas afiliadas, parceiros, fornecedores ou licenciantes do site.
+        qualquer aviso de direito autoral ou marca registrada) da Pagefy ou de
+        suas afiliadas, parceiros, fornecedores ou licenciantes do site.
       </li>
     </ul>
     <h2>Política de Devolução e Reembolso</h2>
     <p>
-      Obrigado por comprar na Socialbio. Agradecemos o fato de você gostar de
+      Obrigado por comprar na Pagefy. Agradecemos o fato de você gostar de
       comprar os produtos que desenvolvemos. Também queremos garantir que você
       tenha uma experiência recompensadora enquanto explora, avalia e compra
       nossos produtos.
     </p>
     <p>
       Como em qualquer experiência de compra, existem termos e condições que se
-      aplicam a transações na Socialbio. Seremos o mais breves possível,
-      conforme permitido por nossos advogados. O principal a lembrar é que, ao
-      fazer um pedido ou uma compra na Socialbio, você concorda com os termos,
-      juntamente com a Política de Privacidade da Socialbio.
+      aplicam a transações na Pagefy. Seremos o mais breves possível, conforme
+      permitido por nossos advogados. O principal a lembrar é que, ao fazer um
+      pedido ou uma compra na Pagefy, você concorda com os termos, juntamente
+      com a Política de Privacidade da Pagefy.
     </p>
     <p>
       Se, por algum motivo, você não estiver completamente satisfeito com
@@ -133,11 +131,11 @@ const TermsOfUsePTBR = () => (
     </p>
     <p>
       Estas são as diretrizes que governam a Política de Devolução e Reembolso
-      da Socialbio.
+      da Pagefy.
     </p>
     <h3>1. Cancelamento de Pedidos</h3>
     <p>
-      Como regra geral, todos os pedidos feitos na Socialbio são processados
+      Como regra geral, todos os pedidos feitos na Pagefy são processados
       imediatamente, portanto, não podemos cancelar pedidos após a compra.
     </p>
     <p>
@@ -146,7 +144,7 @@ const TermsOfUsePTBR = () => (
     </p>
     <h3>2. Reembolsos</h3>
     <p>
-      A Socialbio oferece uma política de reembolso para produtos digitais
+      A Pagefy oferece uma política de reembolso para produtos digitais
       danificados ou com defeito. Se você acredita que seu produto digital está
       danificado ou com defeito, entre em contato conosco por e-mail em até 7
       dias após a compra, informando o problema e incluindo detalhes para que
@@ -158,7 +156,7 @@ const TermsOfUsePTBR = () => (
       dias após a compra.
     </p>
     <p>
-      A decisão de reembolsar é, em última instância, a critério da Socialbio.
+      A decisão de reembolsar é, em última instância, a critério da Pagefy.
       Podemos solicitar que você forneça evidências do defeito, danos ou má
       qualidade do produto digital ao considerar seu pedido de reembolso.
     </p>
@@ -174,9 +172,9 @@ const TermsOfUsePTBR = () => (
 
     <h2>Política de Privacidade</h2>
     <p>
-      A sua privacidade é importante para nós. É política da Socialbio respeitar
-      a sua privacidade em relação a qualquer informação sua que possamos
-      coletar no site Socialbio, e outros sites que possuímos e operamos.
+      A sua privacidade é importante para nós. É política da Pagefy respeitar a
+      sua privacidade em relação a qualquer informação sua que possamos coletar
+      no site Pagefy, e outros sites que possuímos e operamos.
     </p>
     <p>
       Solicitamos informações pessoais apenas quando realmente precisamos delas
@@ -229,7 +227,7 @@ const TermsOfUsePTBR = () => (
     <h2>Contato</h2>
     <p>
       Se você tiver alguma dúvida sobre estes Termos, entre em contato conosco
-      pelo e-mail: support@socialbio.me
+      pelo e-mail: support@pagefy.me
     </p>
   </>
 );

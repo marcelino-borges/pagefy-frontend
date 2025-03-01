@@ -240,8 +240,8 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
 
             return (
               (APP_ENVIROMENT === "PROD"
-                ? "https://socialbio.me"
-                : "https://socialbio-frontend-dev.me") + urlNormalized
+                ? "https://pagefy.me"
+                : "https://pagefy-frontend-dev.me") + urlNormalized
             );
           })()}
         />
@@ -374,7 +374,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
                   >
                     <img
                       src={Logos.LogoHorizontalLightBgPng}
-                      alt="Socialbio.me"
+                      alt="pagefy.me"
                       width="150px"
                     />
                   </Grid>

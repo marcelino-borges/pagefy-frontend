@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.4.0] - 2025-03-01
+
+- Feature: rebranding whole app; changed name to Pagefy
+
 ### [1.312.0] - 2022-11-27
 
 - Feature: sign in with providers: Google, Facebook and Microsoft

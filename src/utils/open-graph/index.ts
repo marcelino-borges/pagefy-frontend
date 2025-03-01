@@ -2,13 +2,11 @@ import { APP_ENVIROMENT } from "../../constants";
 import { IUserPage } from "../../store/user-pages/types";
 
 export const createOpenGraphTags = (pageToRender: IUserPage, document: any) => {
-  //<meta property="og:title" content="The Rock" />
   let metaTitle = document.createElement("meta");
   metaTitle.setAttribute("property", "og:title");
   metaTitle.setAttribute("content", pageToRender.name);
   document.getElementsByTagName("head")[0].appendChild(metaTitle);
 
-  //<meta property="og:url" content="https://www.imdb.com/title/tt0117500/" />
   let metaUrl = document.createElement("meta");
   metaUrl.setAttribute("property", "og:url");
   let urlNormalized = "";
@@ -19,8 +17,8 @@ export const createOpenGraphTags = (pageToRender: IUserPage, document: any) => {
   metaUrl.setAttribute(
     "content",
     (APP_ENVIROMENT === "PROD"
-      ? "https://socialbio.me"
-      : "https://socialbio-frontend-dev.me") + urlNormalized
+      ? "https://pagefy.me"
+      : "https://pagefy-frontend-dev.me") + urlNormalized
   );
   document.getElementsByTagName("head")[0].appendChild(metaUrl);
 
@@ -84,8 +82,8 @@ export const getOpenGraphTags = (
   metaUrl.setAttribute(
     "content",
     (APP_ENVIROMENT === "PROD"
-      ? "https://socialbio.me"
-      : "https://socialbio-frontend-dev.me") + urlNormalized
+      ? "https://pagefy.me"
+      : "https://pagefy-frontend-dev.me") + urlNormalized
   );
   tags.push(metaUrl);
 

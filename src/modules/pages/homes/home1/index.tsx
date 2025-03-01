@@ -81,7 +81,7 @@ const Home1 = () => {
               </Grid>
               <Grid container alignItems="baseline">
                 <Grid fontSize="1.5em" color={PRIMARY_COLOR} pr="4px">
-                  {strings.bio.toUpperCase()}
+                  {strings.page.toUpperCase()}
                 </Grid>
                 <Grid>{strings.forYourSocialMedia}</Grid>
               </Grid>
@@ -109,7 +109,7 @@ const Home1 = () => {
         {/* LAST SECTION */}
         <SignUpSection container direction="column">
           <CreateYourBio item>
-            {strings.createNowYour} {strings.bio}
+            {strings.createNowYour} {strings.page}
             <br />
             {strings.or} {strings.landingPage}
             <br />
@@ -146,7 +146,7 @@ const Home1 = () => {
                 "https://firebasestorage.googleapis.com/v0/b/socialbio-41362.appspot.com/o/users%2F632a0e935b549e00541d0dca%2Fuploaded-images%2F632a0e935b549e00541d0dca_20220929224637090.jpg?alt=media&token=b62fc3f1-afd1-415b-b68a-08a784aef174"
               }
               testimonial={
-                "Desde que comecei a utilizar a Socialbio minha vida mudou completamente, pois consegui dar um pontapé da minha visibilidade na internet."
+                "Desde que comecei a utilizar a Pagefy minha vida mudou completamente, pois consegui dar um pontapé da minha visibilidade na internet."
               }
               userName={"Marcelino Borges"}
               userProfession={"Engenheiro"}
@@ -157,7 +157,7 @@ const Home1 = () => {
                 "https://firebasestorage.googleapis.com/v0/b/socialbio-41362.appspot.com/o/users%2F6334a75bc4f9bf00556bb03f%2Fuploaded-images%2F6334a75bc4f9bf00556bb03f_20220930100913209.jpg?alt=media&token=63c4725d-72f0-45b8-a678-f3c95148bada"
               }
               testimonial={
-                "A Socialbio fez a diferença para meus clientes. Agora posso criar bios de forma muito mais fácil e ágil!"
+                "A Pagefy fez a diferença para meus clientes. Agora posso criar bios de forma muito mais fácil e ágil!"
               }
               userName={"Neto Torres"}
               userProfession={"Designer"}

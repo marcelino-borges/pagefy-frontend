@@ -342,7 +342,7 @@ export interface IDictionary {
   recommended: string;
   checkout: string;
   createNowYour: string;
-  bio: string;
+  page: string;
   forYourSocialMedia: string;
   landingPage: string;
   forYourProductOrBusiness: string;

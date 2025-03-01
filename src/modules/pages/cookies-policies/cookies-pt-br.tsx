@@ -17,13 +17,13 @@ const CookiesPoliciesPTBR = () => (
       </li>
       <li>
         Empresa: quando esta política menciona "Empresa", "nós", "nos" ou
-        "nosso", refere-se à Socialbio, que é responsável por suas informações
-        sob esta Política de Cookies.
+        "nosso", refere-se à Pagefy, que é responsável por suas informações sob
+        esta Política de Cookies.
       </li>
       <li>
         Dispositivo: qualquer dispositivo conectado à internet, como um
         telefone, tablet, computador ou qualquer outro dispositivo que pode ser
-        usado para visitar a Socialbio e usar os serviços.
+        usado para visitar a Pagefy e usar os serviços.
       </li>
       <li>
         Dados Pessoais: qualquer informação que, direta ou indiretamente, em
@@ -32,8 +32,8 @@ const CookiesPoliciesPTBR = () => (
         natural.
       </li>
       <li>
-        Serviço: refere-se ao serviço fornecido pela Socialbio, conforme
-        descrito nos termos relativos (se disponíveis) e nesta plataforma.
+        Serviço: refere-se ao serviço fornecido pela Pagefy, conforme descrito
+        nos termos relativos (se disponíveis) e nesta plataforma.
       </li>
       <li>
         Serviço de terceiros: refere-se a anunciantes, patrocinadores de
@@ -41,18 +41,18 @@ const CookiesPoliciesPTBR = () => (
         nosso conteúdo ou cujos produtos ou serviços achamos que podem
         interessar você.
       </li>
-      <li>Site: site, acessível via este URL: https://socialbio.me</li>
+      <li>Site: site, acessível via este URL: https://pagefy.me</li>
     </ul>
 
     <h1>Introdução</h1>
     <p>
-      Esta Política de Cookies explica como a Socialbio e suas afiliadas
-      (coletivamente "Socialbio", "nós", "nos" e "nossos") usam cookies e
+      Esta Política de Cookies explica como a Pagefy e suas afiliadas
+      (coletivamente "Pagefy", "nós", "nos" e "nossos") usam cookies e
       tecnologias semelhantes para reconhecê-lo quando você visita nosso site,
-      incluindo, sem limitação, https://socialbio.me e quaisquer URLs
-      relacionados, versões móveis ou localizadas e domínios/subdomínios
-      relacionados ("Sites"). Ela explica o que são essas tecnologias e por que
-      as usamos, bem como as opções de como controlá-las.
+      incluindo, sem limitação, https://pagefy.me e quaisquer URLs relacionados,
+      versões móveis ou localizadas e domínios/subdomínios relacionados
+      ("Sites"). Ela explica o que são essas tecnologias e por que as usamos,
+      bem como as opções de como controlá-las.
     </p>
 
     <h1>O que é um cookie?</h1>
@@ -86,12 +86,11 @@ const CookiesPoliciesPTBR = () => (
       </li>
       <li>Facilitar a adaptação da publicidade online aos seus interesses.</li>
       <li>
-        Você: uma pessoa ou entidade registrada na Socialbio para usar os
-        Serviços.
+        Você: uma pessoa ou entidade registrada na Pagefy para usar os Serviços.
       </li>
     </ul>
 
-    <h1>Que tipo de cookies a Socialbio utiliza?</h1>
+    <h1>Que tipo de cookies a Pagefy utiliza?</h1>
     <p>
       Os cookies podem ser cookies de sessão ou cookies persistentes. Um cookie
       de sessão expira automaticamente quando você fecha seu navegador. Um
@@ -165,7 +164,7 @@ const CookiesPoliciesPTBR = () => (
     <h1>Cookies de Terceiros</h1>
     <p>
       Alguns cookies definidos em nosso site não são definidos em uma base de
-      primeira parte pela Socialbio. Os Sites podem incorporar conteúdo de
+      primeira parte pela Pagefy. Os Sites podem incorporar conteúdo de
       terceiros para servir anúncios. Esses provedores de serviços de terceiros
       podem definir seus próprios cookies em seu navegador da web. Os provedores
       de serviços de terceiros controlam muitos dos cookies de desempenho e
@@ -238,7 +237,7 @@ const CookiesPoliciesPTBR = () => (
       Cookies.
     </p>
     <ul>
-      <li>Via este Link: https://www.socialbio.me/faq</li>
+      <li>Via este Link: https://www.pagefy.me/faq</li>
     </ul>
   </>
 );

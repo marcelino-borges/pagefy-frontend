@@ -16,12 +16,12 @@ const CookiesPoliciesEN = () => (
       </li>
       <li>
         Company: when this policy mentions “Company,” “we,” “us,” or “our,” it
-        refers to Socialbio, that is responsible for your information under this
+        refers to Pagefy, that is responsible for your information under this
         Cookie Policy.
       </li>
       <li>
         Device: any internet connected device such as a phone, tablet, computer
-        or any other device that can be used to visit Socialbio and use the
+        or any other device that can be used to visit Pagefy and use the
         services.
       </li>
       <li>
@@ -31,7 +31,7 @@ const CookiesPoliciesEN = () => (
         person.
       </li>
       <li>
-        Service: refers to the service provided by Socialbio as described in the
+        Service: refers to the service provided by Pagefy as described in the
         relative terms (if available) and on this platform.{" "}
       </li>
       <li>
@@ -40,7 +40,7 @@ const CookiesPoliciesEN = () => (
         or whose products or services we think may interest you.
       </li>
       <li>
-        Website: site, which can be accessed via this URL: https://socialbio.me
+        Website: site, which can be accessed via this URL: https://pagefy.me
       </li>
     </ul>
     <p>
@@ -53,11 +53,11 @@ const CookiesPoliciesEN = () => (
 
     <h1>Introduction</h1>
     <p>
-      This Cookie Policy explains how Socialbio and its affiliates (collectively
-      "Socialbio", "we", "us", and "ours"), use cookies and similar technologies
-      to recognize you when you visit our website, including without limitation
-      https://socialbio.me and any related URLs, mobile or localized versions
-      and related domains / sub-domains ("Websites"). It explains what these
+      This Cookie Policy explains how Pagefy and its affiliates (collectively
+      "Pagefy", "we", "us", and "ours"), use cookies and similar technologies to
+      recognize you when you visit our website, including without limitation
+      https://pagefy.me and any related URLs, mobile or localized versions and
+      related domains / sub-domains ("Websites"). It explains what these
       technologies are and why we use them, as well as the choices for how to
       control them.
     </p>
@@ -97,12 +97,12 @@ const CookiesPoliciesEN = () => (
         To facilitate the tailoring of online advertising to your interests.
       </li>
       <li>
-        You: a person or entity that is registered with Socialbio to use the
+        You: a person or entity that is registered with Pagefy to use the
         Services.
       </li>
     </ul>
 
-    <h1>What type of cookies does Socialbio use?</h1>
+    <h1>What type of cookies does Pagefy use?</h1>
     <p>
       Cookies can either be session cookies or persistent cookies. A session
       cookie expires automatically when you close your browser. A persistent
@@ -170,7 +170,7 @@ const CookiesPoliciesEN = () => (
     <h1>Third Party Cookies</h1>
     <p>
       Some cookies that have been set on our website are not set on a first
-      party basis by Socialbio. The Websites can be embedded with content from
+      party basis by Pagefy. The Websites can be embedded with content from
       third parties to serve advertising. These third party service providers
       may set their own cookies on your web browser. Third party service
       providers control many of the performance and functionality, advertising,
@@ -239,7 +239,7 @@ const CookiesPoliciesEN = () => (
       Cookie Policy.
     </p>
     <ul>
-      <li>Via this Link: https://www.socialbio.me/faq</li>
+      <li>Via this Link: https://www.pagefy.me/faq</li>
     </ul>
   </>
 );

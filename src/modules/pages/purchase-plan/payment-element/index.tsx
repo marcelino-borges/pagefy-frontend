@@ -99,8 +99,8 @@ const PaymentElement = ({
 
     let returnUrl =
       (APP_ENVIROMENT === "DEV"
-        ? "https://socialbio-frontend-dev.onrender.com"
-        : "https://socialbio.me") + routes.purchaseSuccess;
+        ? "https://pagefy-frontend-dev.onrender.com"
+        : "https://pagefy.me") + routes.purchaseSuccess;
 
     const { error } = await stripe.confirmPayment({
       elements,
