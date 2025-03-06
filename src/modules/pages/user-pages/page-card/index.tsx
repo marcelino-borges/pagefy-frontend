@@ -184,7 +184,7 @@ const PageCard = ({ page }: IPageCardProps) => {
             <Grid container item wrap="nowrap">
               <ViewsIcon />
               <PageDataKey>{strings.views}: </PageDataKey>
-              {userState?.plan === PlansTypes.PLATINUM
+              {userState?.plan === PlansTypes.BOOST
                 ? page.views
                 : strings.upgradeYourPlan}
             </Grid>

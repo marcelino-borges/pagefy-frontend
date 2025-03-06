@@ -100,6 +100,7 @@ export interface IDictionary {
     year: string;
   };
   home: string;
+  plans: string;
   pages: string;
   theme: string;
   statistics: string;
@@ -286,6 +287,7 @@ export interface IDictionary {
   password: string;
   confirmPassword: string;
   email: string;
+  subscribe: string;
   agreeWith: string;
   privacyPolicies: string;
   privacyPoliciesSubtitle: string;
@@ -359,6 +361,7 @@ export interface IDictionary {
   noSubscriptions: string;
   subscriptionPayment: {
     succeeded: string;
+    paymentCancelled: string;
     processing: string;
     failed: string;
     declined: string;
@@ -378,6 +381,7 @@ export interface IDictionary {
       succeeded: string;
     };
     amountPaid: string;
+    clickHereToSeeInvoice: string;
   };
   upgradeYourPlan: string;
   plan: string;
@@ -497,6 +501,8 @@ export interface IDictionary {
     };
   };
   signInWith: string;
+  congratulations: string;
+  accessDashboard: string;
 }
 
 // Composed dictionaries

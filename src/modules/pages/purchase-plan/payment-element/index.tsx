@@ -15,7 +15,6 @@ import {
 import LoadingSpinner from "../../../components/loading-spinner";
 import routes from "../../../../routes/paths";
 import { IApplicationState } from "../../../../store";
-import { APP_ENVIROMENT } from "./../../../../constants";
 import { getCurrencyPrefix, translateErrorMessage } from "./../utils";
 import InternalLink from "../../../components/internal-link";
 import { showErrorToast } from "./../../../../utils/toast";
@@ -97,10 +96,7 @@ const PaymentElement = ({
 
     setIsProcessingPayment(true);
 
-    let returnUrl =
-      (APP_ENVIROMENT === "DEV"
-        ? "https://pagefy-frontend-dev.onrender.com"
-        : "https://pagefy.me") + routes.purchaseSuccess;
+    let returnUrl = process.env.REACT_APP_DOMAIN_URL + routes.purchaseSuccess;
 
     const { error } = await stripe.confirmPayment({
       elements,

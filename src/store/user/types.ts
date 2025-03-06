@@ -31,8 +31,8 @@ export interface IUser {
 
 export enum PlansTypes {
   FREE = 0,
-  VIP = 1,
-  PLATINUM = 2,
+  NEON = 1,
+  BOOST = 2,
 }
 
 export interface IUserState {

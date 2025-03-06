@@ -1,12 +1,12 @@
 import { styled } from "@mui/material";
 
-export const Banner = styled(({ image, children, ...rest }: any) => (
+export const Banner = styled(({ children, ...rest }: any) => (
   <div {...rest}>{children}</div>
 ))(
-  ({ image }) => `
+  ({ image, bgPosition }) => `
   background-image: url(${image});
   background-size: cover;
-  background-position: 50% 0;
+  background-position: ${bgPosition ?? "50% 0%"};
   width: 50vw;
   height: 100%;
 

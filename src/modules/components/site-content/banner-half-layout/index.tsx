@@ -5,18 +5,29 @@ import images from "../../../../assets/img";
 import routes from "../../../../routes/paths";
 import Logos from "../../../../assets/img/logos";
 import { getRandomInt } from "../../../../utils";
-import { useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { useState } from "react";
 
-const BannerHalfLayout = ({ children }: any) => {
+interface BannerHalfLayoutProps {
+  bannerIndexToUse?: number;
+  bgPosition?: string;
+}
+
+const BannerHalfLayout = ({
+  children,
+  bannerIndexToUse,
+  bgPosition,
+}: PropsWithChildren<BannerHalfLayoutProps>) => {
   const isSmallerThan800 = useMediaQuery("(max-width: 800px)");
   const isSmallerThan300 = useMediaQuery("(max-width: 300px)");
-  const [bannerIndex, setBannerIndex] = useState(0);
+  const [bannerIndex, setBannerIndex] = useState(bannerIndexToUse ?? 0);
 
   useEffect(() => {
-    const randomIndex = getRandomInt(0, images.verticalBanners.length);
-    setBannerIndex(randomIndex);
-  }, []);
+    if (bannerIndexToUse === undefined) {
+      const randomIndex = getRandomInt(0, images.verticalBanners.length);
+      setBannerIndex(randomIndex);
+    }
+  }, [bannerIndexToUse]);
 
   return (
     <Stack
@@ -26,7 +37,10 @@ const BannerHalfLayout = ({ children }: any) => {
       width="100%"
       pb={isSmallerThan800 ? "150px" : "unset"}
     >
-      <Banner image={images.verticalBanners[bannerIndex]}>
+      <Banner
+        image={images.verticalBanners[bannerIndex]}
+        bgPosition={bgPosition}
+      >
         <Link to={routes.root}>
           <img
             src={Logos.LogoHorizontalDarkBGBorderPNG}

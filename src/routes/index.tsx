@@ -27,6 +27,8 @@ import PurchasePlanPage from "../modules/pages/purchase-plan";
 import PaymentResult from "../modules/pages/purchase-plan/payment-result/index";
 import PlansPage from "../modules/pages/plans";
 import Home2 from "../modules/pages/homes/home2";
+import CheckoutSuccess from "../modules/pages/checkout-success";
+import CheckoutCancel from "../modules/pages/checkout-cancel";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -105,6 +107,8 @@ const AppRoutes = () => {
         <Route path={routes.purchasePlan} element={<PurchasePlanPage />} />
         <Route path={routes.purchaseSuccess} element={<PaymentResult />} />
         <Route path={routes.plans} element={<PlansPage />} />
+        <Route path={routes.checkoutSuccess} element={<CheckoutSuccess />} />
+        <Route path={routes.checkoutCancel} element={<CheckoutCancel />} />
         <Route
           path="*"
           element={

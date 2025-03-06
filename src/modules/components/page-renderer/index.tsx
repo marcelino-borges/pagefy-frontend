@@ -27,7 +27,6 @@ import LoadingSpinner from "../loading-spinner";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 import InternalLink from "../internal-link";
 import { Helmet } from "react-helmet";
-import { APP_ENVIROMENT } from "../../../constants";
 import TextOverImageComponent from "./component-types/text-over-image/index";
 import ButtonScrollUp from "../button-scroll-up";
 import MapComponent from "./component-types/map";
@@ -238,11 +237,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
             if (url[0] !== "/") urlNormalized = "/" + url;
             else urlNormalized = url;
 
-            return (
-              (APP_ENVIROMENT === "PROD"
-                ? "https://pagefy.me"
-                : "https://pagefy-frontend-dev.me") + urlNormalized
-            );
+            return process.env.REACT_APP_DOMAIN_URL + urlNormalized;
           })()}
         />
         <meta property="og:image" content={imageUrl || ""} />

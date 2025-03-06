@@ -1,6 +1,25 @@
 import { AxiosResponse } from "axios";
 import { paymentsApi } from "../../config/axios";
 import { PlansTypes } from "../../store/user/types";
+import { CheckoutSession } from "../../store/checkout";
+
+export const getAllPlans = async (): Promise<AxiosResponse<any>> => {
+  return paymentsApi.get("/plans");
+};
+
+export const createCheckoutSession = async (
+  priceId: string
+): Promise<AxiosResponse<CheckoutSession>> => {
+  return paymentsApi.post(`/checkout`, {
+    priceId,
+  });
+};
+
+export const getCheckoutSessionById = async (
+  sessionId: string
+): Promise<AxiosResponse<CheckoutSession>> => {
+  return paymentsApi.get(`/checkout/session/${sessionId}`);
+};
 
 export const getPaymentIntent = async (
   paymentIntentId: string

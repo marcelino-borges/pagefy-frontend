@@ -1,3 +1,5 @@
+import { PlansTypes } from "../store/user/types";
+
 export const LETTER_WIDTH = 15;
 export const IMAGE_EXTENSIONS = "image/gif,image/jpeg,image/png,image/webp";
 export const YOUTUBE_EMBED_PREFIX = "https://www.youtube.com/embed/";
@@ -173,4 +175,9 @@ export const PRICES = {
       year: 39990,
     },
   },
+};
+
+export const PLANS = {
+  neon: "Neon",
+  boost: "Boost",
 };

@@ -15,6 +15,8 @@ const routes = {
   privacy: "/public/privacy",
   terms: "/public/terms",
   cookies: "/public/cookies",
+  checkoutSuccess: "/checkout/success",
+  checkoutCancel: "/checkout/cancel",
 };
 
 export default routes;

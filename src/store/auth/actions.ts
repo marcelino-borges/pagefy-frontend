@@ -217,7 +217,7 @@ export const signInWithProvider =
           firstName,
           lastName,
           authId: user.uid,
-          plan: PlansTypes.PLATINUM,
+          plan: PlansTypes.BOOST,
           receiveCommunications: true,
           agreePrivacy: true,
         };

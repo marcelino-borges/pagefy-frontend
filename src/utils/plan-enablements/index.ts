@@ -7,9 +7,9 @@ export const canCreatePage = (
   if (!userProfile || userPagesLength === undefined) return false;
   if (userProfile?.plan === PlansTypes.FREE) {
     return userPagesLength < 1;
-  } else if (userProfile?.plan === PlansTypes.VIP) {
+  } else if (userProfile?.plan === PlansTypes.NEON) {
     return userPagesLength < 5;
-  } else if (userProfile?.plan === PlansTypes.PLATINUM) {
+  } else if (userProfile?.plan === PlansTypes.BOOST) {
     return true;
   }
   return false;

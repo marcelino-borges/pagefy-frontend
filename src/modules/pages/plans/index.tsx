@@ -1,16 +1,17 @@
 import Navigation from "../../components/navigation";
-import PlansCards1 from "../../components/plans-cards1";
-import PrivateRouteChecker from "../../components/private-route-checker";
 import FullWidthContent from "./../../components/site-content/full-width";
 import TriplePageTitle from "./../../components/page-title/index";
 import strings from "../../../localization";
+import PlansCards2 from "../../components/plans-cards2";
+import { useMediaQuery } from "@mui/material";
 
 const PlansPage = () => {
+  const isSmallerThan900 = useMediaQuery("(max-width: 900px");
+
   return (
     <>
-      <PrivateRouteChecker />
       <Navigation />
-      <FullWidthContent>
+      <FullWidthContent pt="170px">
         <TriplePageTitle
           titles={[
             strings.youAreSpecial,
@@ -20,7 +21,12 @@ const PlansPage = () => {
           sizes={[1, 2, 1]}
           increasingSize
         />
-        <PlansCards1 px="0px" />
+        <PlansCards2
+          pt={isSmallerThan900 ? "50px" : "100px"}
+          pb="100px"
+          pl="24px"
+          pr="24px"
+        />
       </FullWidthContent>
     </>
   );

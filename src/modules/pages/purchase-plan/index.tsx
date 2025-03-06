@@ -215,7 +215,7 @@ const PurchasePlanPage = () => {
             </CurrencyContainer>
             <SectionTitle>{strings.selectARecurrency}</SectionTitle>
             {/* VIP */}
-            {purchaseState.plan === PlansTypes.VIP && (
+            {purchaseState.plan === PlansTypes.NEON && (
               <RecurrencyContainer>
                 <RecurrencyCard
                   isSelected={selectedRecurrency === "month"}
@@ -270,7 +270,7 @@ const PurchasePlanPage = () => {
               </RecurrencyContainer>
             )}
             {/* PLATINUM */}
-            {purchaseState.plan === PlansTypes.PLATINUM && (
+            {purchaseState.plan === PlansTypes.BOOST && (
               <RecurrencyContainer gap="16px">
                 <RecurrencyCard
                   isSelected={selectedRecurrency === "month"}

@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { RECAPTCHA_SITE_KEY } from "../../constants";
 import { verifyRecaptcha } from "../../services/recaptcha";
 
@@ -13,7 +12,7 @@ export const callRecaptcha = (
   window: any,
   successCallback: (token?: string | undefined) => void | null
 ): void => {
-  (window as any).grecaptcha.ready(function () {
+  (window as any).grecaptcha.ready(() => {
     (window as any).grecaptcha
       .execute(RECAPTCHA_SITE_KEY, { action: "submit" })
       .then((token: any) => {
@@ -30,12 +29,8 @@ export const runAfterValidateRecaptcha = (
   callRecaptcha(window, (token?: string) => {
     if (token) {
       verifyRecaptcha(token)
-        .then((result: AxiosResponse) => {
-          if (result.status === 200) {
-            onValidatedCallback();
-          } else {
-            if (onErrorCallback) onErrorCallback(result.data);
-          }
+        .then(() => {
+          onValidatedCallback();
         })
         .catch((error: any) => {
           if (onErrorCallback) onErrorCallback(error);

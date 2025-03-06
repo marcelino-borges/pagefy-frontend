@@ -97,7 +97,7 @@ const PlansCards1 = ({ px, py }: IPlansCards1Props) => {
             to={routes.signUp}
             onClick={() => {
               loadSignUpOrPurchase(
-                PlansTypes.VIP,
+                PlansTypes.NEON,
                 formatFloatingNumberFromInt(PRICES.vip.usd.year),
                 "usd"
               );
@@ -116,7 +116,7 @@ const PlansCards1 = ({ px, py }: IPlansCards1Props) => {
             {strings.getLanguage() === "pt"
               ? formatFloatingNumberFromInt(PRICES.vip.brl.month)
               : formatFloatingNumberFromInt(PRICES.vip.usd.month)}
-            /{strings.recurrency.month} or {strings.currency}{" "}
+            /{strings.recurrency.month} {strings.or} {strings.currency}{" "}
             {strings.getLanguage() === "pt"
               ? formatFloatingNumberFromInt(PRICES.vip.brl.year)
               : formatFloatingNumberFromInt(PRICES.vip.usd.year)}
@@ -148,7 +148,7 @@ const PlansCards1 = ({ px, py }: IPlansCards1Props) => {
             to={routes.signUp}
             onClick={() => {
               loadSignUpOrPurchase(
-                PlansTypes.PLATINUM,
+                PlansTypes.BOOST,
                 formatFloatingNumberFromInt(PRICES.platinum.usd.year),
                 "usd"
               );
@@ -167,7 +167,7 @@ const PlansCards1 = ({ px, py }: IPlansCards1Props) => {
             {strings.getLanguage() === "pt"
               ? formatFloatingNumberFromInt(PRICES.platinum.brl.month)
               : formatFloatingNumberFromInt(PRICES.platinum.usd.month)}
-            /{strings.recurrency.month} or {strings.currency}{" "}
+            /{strings.recurrency.month} {strings.or} {strings.currency}{" "}
             {strings.getLanguage() === "pt"
               ? formatFloatingNumberFromInt(PRICES.platinum.brl.year)
               : formatFloatingNumberFromInt(PRICES.platinum.usd.year)}

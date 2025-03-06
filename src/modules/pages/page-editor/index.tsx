@@ -574,7 +574,7 @@ const PageEditor = () => {
 
         <CustomTooltip
           title={
-            userProfile?.plan === PlansTypes.PLATINUM
+            userProfile?.plan === PlansTypes.BOOST
               ? strings.customScripts.insertCustomScript
               : strings.upgradeYourPlan
           }
@@ -582,7 +582,7 @@ const PageEditor = () => {
           <Grid item>
             <IconButton
               size={isSmallerThan370 ? "small" : "medium"}
-              disabled={userProfile?.plan !== PlansTypes.PLATINUM}
+              disabled={userProfile?.plan !== PlansTypes.BOOST}
               onClick={() => {
                 setOpenCustomScriptDialog(true);
               }}

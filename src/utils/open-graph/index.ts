@@ -16,9 +16,7 @@ export const createOpenGraphTags = (pageToRender: IUserPage, document: any) => {
 
   metaUrl.setAttribute(
     "content",
-    (APP_ENVIROMENT === "PROD"
-      ? "https://pagefy.me"
-      : "https://pagefy-frontend-dev.me") + urlNormalized
+    process.env.REACT_APP_DOMAIN_URL + urlNormalized
   );
   document.getElementsByTagName("head")[0].appendChild(metaUrl);
 
@@ -81,9 +79,7 @@ export const getOpenGraphTags = (
 
   metaUrl.setAttribute(
     "content",
-    (APP_ENVIROMENT === "PROD"
-      ? "https://pagefy.me"
-      : "https://pagefy-frontend-dev.me") + urlNormalized
+    process.env.REACT_APP_DOMAIN_URL + urlNormalized
   );
   tags.push(metaUrl);
 

@@ -5,9 +5,15 @@ import strings from "../../../../localization";
 import routes from "../../../../routes/paths";
 import { HeaderLinkDesktop } from "../style";
 import UserLoggedIn from "../user-loggedin";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../../store";
 
 const DesktopHeader = () => {
   const location = useLocation();
+
+  const accessToken = useSelector(
+    (state: IApplicationState) => state.auth.auth?.accessToken
+  );
 
   return (
     <Grid
@@ -28,12 +34,22 @@ const DesktopHeader = () => {
             {strings.home}
           </HeaderLinkDesktop>
         </Grid>
+        {!!accessToken?.length && (
+          <Grid item padding={2}>
+            <HeaderLinkDesktop
+              to={routes.pages}
+              isLocation={location.pathname === routes.pages}
+            >
+              {strings.pages}
+            </HeaderLinkDesktop>
+          </Grid>
+        )}
         <Grid item padding={2}>
           <HeaderLinkDesktop
-            to={routes.pages}
-            isLocation={location.pathname === routes.pages}
+            to={routes.plans}
+            isLocation={location.pathname === routes.plans}
           >
-            {strings.pages}
+            {strings.plans}
           </HeaderLinkDesktop>
         </Grid>
         <Grid item padding={2}>

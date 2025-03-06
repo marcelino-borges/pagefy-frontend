@@ -16,6 +16,7 @@ export const en: IDictionary = {
     year: "Year",
   },
   home: "Home",
+  plans: "Plans",
   pages: "Pages",
   theme: "Theme",
   statistics: "Statistics",
@@ -371,8 +372,10 @@ export const en: IDictionary = {
   nowItsTimeToSubscribe: "Now it's time to finish your subscription",
   subscription: "Subscription",
   noSubscriptions: "No subscriptions",
+  subscribe: "Subscribe",
   subscriptionPayment: {
     succeeded: "Subscription payment succeeded!",
+    paymentCancelled: "Payment was cancelled",
     processing: "Your payment is processing.",
     failed: "Your payment was not successful, please try again.",
     declined: "Your payment was declined. Please check it with your bank.",
@@ -394,6 +397,7 @@ export const en: IDictionary = {
       succeeded: "Succeeded",
     },
     amountPaid: "Amount paid",
+    clickHereToSeeInvoice: "Click here to see your invoice",
   },
   upgradeYourPlan: "Upgrade your plan",
   plan: "Plan",
@@ -563,4 +567,6 @@ export const en: IDictionary = {
     },
   },
   signInWith: "Sign in with",
+  congratulations: "Congratulations",
+  accessDashboard: "Access dashboard",
 };

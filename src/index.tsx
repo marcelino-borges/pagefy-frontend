@@ -10,10 +10,10 @@ import App from "./App";
 import store from "./store";
 import theme from "./theme";
 import "./styles/global-style.css";
-import "react-toastify/dist/ReactToastify.css";
 import strings from "./localization";
 import LoadingSpinner from "./modules/components/loading-spinner";
 import ErrorBoundary from "./modules/components/error-boundaries";
+import { Toaster } from "react-hot-toast";
 
 let persistor = persistStore(store);
 
@@ -30,6 +30,12 @@ ReactDOM.render(
               dateAdapter={DateAdapter}
               locale={strings.getInterfaceLanguage()}
             >
+              <Toaster
+                toastOptions={{
+                  duration: 5000,
+                  position: "bottom-center",
+                }}
+              />
               <App className="App" />
             </LocalizationProvider>
           </ThemeProvider>

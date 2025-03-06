@@ -16,6 +16,7 @@ export const pt: IDictionary = {
     year: "Ano",
   },
   home: "Início",
+  plans: "Planos",
   pages: "Páginas",
   theme: "Tema",
   statistics: "Estatísticas",
@@ -364,6 +365,7 @@ export const pt: IDictionary = {
   getAPlanNow: "Assine um plano agora!",
   yourPlanIs: "Seu plano é",
   thePlanYouSelectedIs: "O plano selecionado foi o",
+  subscribe: "Assinar",
   youreCloserNowBecomeSubscriber:
     "Você está mais perto agora de se tornar um assinante cheio de mimos",
   nowChooseTheRecurrency:
@@ -372,7 +374,8 @@ export const pt: IDictionary = {
   subscription: "Assinatura",
   noSubscriptions: "Sem assinaturas",
   subscriptionPayment: {
-    succeeded: "Assinatura finalizada com sucesso!",
+    succeeded: "Assinatura contratada com sucesso!",
+    paymentCancelled: "Pagamento cancelado!",
     processing: "Sua assinatura está sendo processada.",
     failed:
       "Sua assinatura não pôde ser processada, por favor tente novamente.",
@@ -398,6 +401,7 @@ export const pt: IDictionary = {
       succeeded: "Sucesso",
     },
     amountPaid: "Valor pago",
+    clickHereToSeeInvoice: "Clique aqui para ver sua nota fiscal",
   },
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
@@ -569,4 +573,6 @@ export const pt: IDictionary = {
     },
   },
   signInWith: "Entre com",
+  congratulations: "Parabéns",
+  accessDashboard: "Acessar dashboard",
 };

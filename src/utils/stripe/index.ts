@@ -6,12 +6,12 @@ export const getPlanByPriceId = (priceId: string) => {
     priceId === "price_1LrhKuJd6mDEaHvNsxKOzxOs" ||
     priceId === "price_1LrhKuJd6mDEaHvNbBIEue6O"
   )
-    return PlansTypes.VIP;
+    return PlansTypes.NEON;
   else if (
     priceId === "price_1LrhNxJd6mDEaHvNQAJk9Poq" ||
     priceId === "price_1LrhNxJd6mDEaHvNbisiwqV5"
   )
-    return PlansTypes.PLATINUM;
+    return PlansTypes.BOOST;
   else return PlansTypes.FREE;
 };
 

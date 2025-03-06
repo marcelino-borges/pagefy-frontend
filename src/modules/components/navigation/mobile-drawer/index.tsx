@@ -12,6 +12,8 @@ import {
   MobileMenuGridItem,
 } from "../style";
 import UserLoggedIn from "../user-loggedin";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../../store";
 
 interface IMobileHeaderProps {
   toggleDrawer: () => void;
@@ -26,6 +28,10 @@ const MobileHeader = ({
 }: IMobileHeaderProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const accessToken = useSelector(
+    (state: IApplicationState) => state.auth.auth?.accessToken
+  );
 
   const onClickLinkCallback = (navigateTo: string) => {
     setTimeout(() => {
@@ -77,15 +83,28 @@ const MobileHeader = ({
             {strings.home}
           </MobileMenuGridItem>
 
+          {!!accessToken?.length && (
+            <MobileMenuGridItem
+              item
+              alignItems="center"
+              onClick={() => onClickLinkCallback(routes.pages)}
+              style={{
+                color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
+              }}
+            >
+              {strings.pages}
+            </MobileMenuGridItem>
+          )}
+
           <MobileMenuGridItem
             item
             alignItems="center"
-            onClick={() => onClickLinkCallback(routes.pages)}
+            onClick={() => onClickLinkCallback(routes.plans)}
             style={{
-              color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
+              color: location.pathname === routes.plans ? PRIMARY_COLOR : "",
             }}
           >
-            {strings.pages}
+            {strings.plans}
           </MobileMenuGridItem>
 
           <MobileMenuGridItem

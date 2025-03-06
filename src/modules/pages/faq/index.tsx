@@ -56,7 +56,7 @@ const Faq = () => {
           {`${strings.toGetSupport}`}
         </>
       );
-    } else if (profileState?.plan === PlansTypes.VIP) {
+    } else if (profileState?.plan === PlansTypes.NEON) {
       return (
         <>
           <InternalLink to={routes.root}>
