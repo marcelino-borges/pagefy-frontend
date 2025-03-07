@@ -6,6 +6,7 @@ const routes = {
   page: "/dashboard/page",
   profile: "/dashboard/profile",
   purchasePlan: "/dashboard/purchase-plan",
+  subscribe: "/dashboard/subscribe",
   purchaseSuccess: "/dashboard/subscription-success",
   support: "/support",
   plans: "/public/plans",

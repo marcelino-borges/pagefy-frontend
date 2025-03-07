@@ -3,6 +3,7 @@ export interface IWidthContentProps {
   pb?: string;
   pl?: string;
   pr?: string;
+  sx?: any;
   center?: boolean;
   children?: any;
   [x: string]: any;

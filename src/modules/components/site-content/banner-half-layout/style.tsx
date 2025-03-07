@@ -1,8 +1,10 @@
 import { styled } from "@mui/material";
 
-export const Banner = styled(({ children, ...rest }: any) => (
-  <div {...rest}>{children}</div>
-))(
+export const Banner = styled(
+  ({ children, bgPosition, image, ...rest }: any) => (
+    <div {...rest}>{children}</div>
+  )
+)(
   ({ image, bgPosition }) => `
   background-image: url(${image});
   background-size: cover;

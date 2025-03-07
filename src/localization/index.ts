@@ -93,7 +93,8 @@ export interface IDictionary {
   checkOurPlans: string;
   youAreSpecial: string;
   recurrency: {
-    title: string;
+    titleSingular: string;
+    titlePlural: string;
     monthly: string;
     month: string;
     yearly: string;
@@ -352,6 +353,7 @@ export interface IDictionary {
   haveAccessToPremiumResources: string;
   differentiate: string;
   getAPlanNow: string;
+  subscribeNow: string;
   yourPlanIs: string;
   thePlanYouSelectedIs: string;
   youreCloserNowBecomeSubscriber: string;
@@ -503,6 +505,11 @@ export interface IDictionary {
   signInWith: string;
   congratulations: string;
   accessDashboard: string;
+  benefits: string;
+  discountOf: string;
+  forMonthRecurrency: string;
+  perYear: string;
+  processingCheckout: string;
 }
 
 // Composed dictionaries

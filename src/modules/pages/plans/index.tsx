@@ -11,7 +11,7 @@ const PlansPage = () => {
   return (
     <>
       <Navigation />
-      <FullWidthContent pt="170px">
+      <FullWidthContent pt="132px">
         <TriplePageTitle
           titles={[
             strings.youAreSpecial,

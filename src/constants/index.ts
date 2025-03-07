@@ -181,3 +181,8 @@ export const PLANS = {
   neon: "Neon",
   boost: "Boost",
 };
+
+export const CURRENCY_ABBREVIATIONS = {
+  usd: "U$",
+  brl: "R$",
+} as const;

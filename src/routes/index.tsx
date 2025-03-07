@@ -29,6 +29,7 @@ import PlansPage from "../modules/pages/plans";
 import Home2 from "../modules/pages/homes/home2";
 import CheckoutSuccess from "../modules/pages/checkout-success";
 import CheckoutCancel from "../modules/pages/checkout-cancel";
+import Subscribe from "../modules/pages/subscribe";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -105,6 +106,7 @@ const AppRoutes = () => {
         <Route path={routes.terms} element={<TermsPage />} />
         <Route path={routes.cookies} element={<CoockiesPoliciesPage />} />
         <Route path={routes.purchasePlan} element={<PurchasePlanPage />} />
+        <Route path={`${routes.subscribe}/:planId`} element={<Subscribe />} />
         <Route path={routes.purchaseSuccess} element={<PaymentResult />} />
         <Route path={routes.plans} element={<PlansPage />} />
         <Route path={routes.checkoutSuccess} element={<CheckoutSuccess />} />

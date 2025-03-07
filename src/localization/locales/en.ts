@@ -9,7 +9,8 @@ export const en: IDictionary = {
   youAreSpecial: "You can be special too!",
   ok: "OK",
   recurrency: {
-    title: "Recurrency",
+    titleSingular: "Recurrency",
+    titlePlural: "Recurrencies",
     monthly: "Monthly",
     month: "Month",
     yearly: "Yearly",
@@ -363,6 +364,7 @@ export const en: IDictionary = {
     "Access premium resources with a low investment!",
   differentiate: "Differentiate from the others!",
   getAPlanNow: "Get a plan now!",
+  subscribeNow: "Subscribe now!",
   yourPlanIs: "Your plan is",
   thePlanYouSelectedIs: "The plan you selected is",
   youreCloserNowBecomeSubscriber:
@@ -431,6 +433,7 @@ export const en: IDictionary = {
       "Insert your own custom Javascript code to your page",
     ],
   },
+  benefits: "Benefits",
   currency: "U$",
   year: "year",
   purchase: "Purchase",
@@ -569,4 +572,8 @@ export const en: IDictionary = {
   signInWith: "Sign in with",
   congratulations: "Congratulations",
   accessDashboard: "Access dashboard",
+  discountOf: "Discount of",
+  forMonthRecurrency: "for monthly plan",
+  perYear: "per year",
+  processingCheckout: "Processing checkout...",
 };

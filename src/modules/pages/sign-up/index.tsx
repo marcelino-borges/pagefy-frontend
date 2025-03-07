@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Button,
   Checkbox,
@@ -12,7 +12,7 @@ import {
   Visibility as ShowPasswordIcon,
   VisibilityOff as HidePasswordIcon,
 } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
@@ -29,7 +29,6 @@ import { setSessionStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
 import { setRecaptchaScript } from "../../../utils/recaptcha-v3";
 import InternalLink from "../../components/internal-link";
-import { IApplicationState } from "../../../store";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
 
 const INITIAL_VALUES = {
@@ -42,9 +41,8 @@ const INITIAL_VALUES = {
 
 const SignUpPage = () => {
   const dispatch = useDispatch();
-  const purchaseState = useSelector(
-    (state: IApplicationState) => state.purchase
-  );
+  const [searchParams] = useSearchParams();
+  const planId = searchParams.get("planId");
 
   const { handleSubmit } = useForm();
   let navigate = useNavigate();
@@ -67,9 +65,13 @@ const SignUpPage = () => {
   };
 
   const loadDashboardOrPurchase = () => {
-    let destination = routes.pages;
-    if (purchaseState.plan !== undefined) destination = routes.purchasePlan;
-    navigate(destination);
+    if (planId?.length) {
+      navigate(`${routes.subscribe}/${planId}`);
+
+      return;
+    }
+
+    navigate(routes.pages);
   };
 
   const onSubmit = () => {
@@ -308,7 +310,9 @@ const SignUpPage = () => {
           </Button>
         </Grid>
         <Grid container item justifyContent="center" fontSize="0.9em" mt="24px">
-          <InternalLink to={routes.signIn}>
+          <InternalLink
+            to={routes.signIn + `${planId?.length ? `?planId=${planId}` : ""}`}
+          >
             {strings.alreadyHaveAccount}
           </InternalLink>
         </Grid>

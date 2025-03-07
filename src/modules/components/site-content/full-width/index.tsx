@@ -5,11 +5,12 @@ import { IWidthContentProps } from "../interfaces";
 import { Root } from "./style";
 
 const FullWidthContent = ({
-  pt,
-  pb,
-  pl,
-  pr,
+  pt = "16px",
+  pb = "16px",
+  pl = "16px",
+  pr = "16px",
   children,
+  sx,
   ...rest
 }: IWidthContentProps) => {
   useEffect(() => {
@@ -22,12 +23,17 @@ const FullWidthContent = ({
       container
       justifyContent="center"
       {...rest}
-      style={{
-        paddingTop: pt,
-        paddingBottom: pb,
-        paddingLeft: pl,
-        paddingRight: pr,
-      }}
+      sx={sx}
+      style={
+        !sx
+          ? {
+              paddingTop: pt,
+              paddingBottom: pb,
+              paddingLeft: pl,
+              paddingRight: pr,
+            }
+          : undefined
+      }
     >
       <Grid container item direction="column">
         {children}

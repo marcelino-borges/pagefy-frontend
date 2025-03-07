@@ -40,7 +40,7 @@ const SubscriptionDetailsDialog = ({
             ID: <strong>{subscription.subscriptionId}</strong>
           </div>
           <div>
-            {strings.recurrency.title}:{" "}
+            {strings.recurrency.titleSingular}:{" "}
             <strong>{subscription.recurrency}</strong>
           </div>
           <div>

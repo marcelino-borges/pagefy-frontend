@@ -1,23 +1,21 @@
 import { v4 as uuidv4 } from "uuid";
-import { Box, Grid, Stack } from "@mui/material";
+import { Box, Button, Grid, Stack } from "@mui/material";
 import strings from "../../../localization";
 import { FeaturedCardsContainer, List, ListItem } from "./style";
 import CustomButton from "../button-custom";
 import routes from "../../../routes/paths";
 import { PRIMARY_COLOR } from "../../../styles/colors";
 import { useNavigate } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
 import { PlansTypes } from "../../../store/user/types";
-import { setPlanTypeToSubscribe } from "../../../store/purchase/actions";
-import { formatFloatingNumberFromInt } from "../../../utils";
 import { PLANS } from "../../../constants";
 import FeaturedCard2 from "../feature-card2";
 import { PRIMARY_COLOR_DARK } from "./../../../styles/colors";
 import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
-import { getAllPlans } from "../../../services/payments";
 import { SubscriptionPlan } from "../../../store/plans/types";
+import { getAllPlans } from "../../../services/payments";
 
 interface IPlansCards2Props {
   pl?: string;
@@ -35,19 +33,24 @@ const PlansCards2 = ({
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
   const [plansError, setPlansError] = useState("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const userState = useSelector((state: IApplicationState) => state.user);
+  const isLoggedIn = !!userState.profile;
 
-  const loadSignUpOrPurchase = (
-    planSelected: PlansTypes,
-    price: string | undefined,
-    currency: string | undefined
-  ) => {
-    dispatch(setPlanTypeToSubscribe(planSelected, price, currency));
-    let destination = routes.signUp;
-    if (userState.profile) destination = routes.purchasePlan;
-    navigate(destination);
+  const loadSignUpOrPurchase = (planId?: string) => {
+    let route = "";
+
+    if (isLoggedIn) {
+      route = routes.subscribe;
+    } else {
+      route = routes.signUp;
+    }
+
+    if (planId?.length) {
+      route += `?planId=${planId}`;
+    }
+
+    navigate(route);
   };
 
   const fetchPlans = async () => {
@@ -148,21 +151,19 @@ const PlansCards2 = ({
               ))}
             </List>
           </Grid>
-          <Grid container justifyContent="center" pt="32px">
-            <CustomButton
-              to={routes.signUp}
-              bgColor="unset"
-              fontColor={PRIMARY_COLOR}
-              borderColor={PRIMARY_COLOR}
-              width="100%"
-              hoverBgColor={PRIMARY_COLOR_DARK}
-              onClick={() => {
-                loadSignUpOrPurchase(PlansTypes.FREE, undefined, undefined);
-              }}
-            >
-              {strings.signUp}
-            </CustomButton>
-          </Grid>
+          {!isLoggedIn && (
+            <Grid container justifyContent="center" pt="32px">
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={() => {
+                  loadSignUpOrPurchase();
+                }}
+              >
+                {strings.signUp}
+              </Button>
+            </Grid>
+          )}
         </FeaturedCard2>
       }
 
@@ -233,29 +234,15 @@ const PlansCards2 = ({
               </List>
             </Grid>
             <Grid container justifyContent="center" pt="32px">
-              <CustomButton
-                to={routes.signUp}
-                bgColor="unset"
-                fontColor={PRIMARY_COLOR}
-                borderColor={PRIMARY_COLOR}
-                width="100%"
-                hoverBgColor={PRIMARY_COLOR_DARK}
+              <Button
+                fullWidth
+                variant="contained"
                 onClick={() => {
-                  let planType = PlansTypes.FREE;
-
-                  if (plan.name === PLANS.neon) planType = PlansTypes.NEON;
-                  else if (plan.name === PLANS.boost)
-                    planType = PlansTypes.BOOST;
-
-                  loadSignUpOrPurchase(
-                    planType,
-                    formatFloatingNumberFromInt(yearPrice.unit_amount),
-                    yearPrice.currency
-                  );
+                  loadSignUpOrPurchase(plan.id);
                 }}
               >
                 {strings.subscribe}
-              </CustomButton>
+              </Button>
             </Grid>
           </FeaturedCard2>
         );

@@ -2,9 +2,16 @@ import { AxiosResponse } from "axios";
 import { paymentsApi } from "../../config/axios";
 import { PlansTypes } from "../../store/user/types";
 import { CheckoutSession } from "../../store/checkout";
+import { SubscriptionPlan } from "../../store/plans/types";
 
 export const getAllPlans = async (): Promise<AxiosResponse<any>> => {
   return paymentsApi.get("/plans");
+};
+
+export const getPlanById = async (
+  planId: string
+): Promise<AxiosResponse<SubscriptionPlan>> => {
+  return paymentsApi.get(`/plans/${planId}`);
 };
 
 export const createCheckoutSession = async (

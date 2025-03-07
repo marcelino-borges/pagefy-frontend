@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Button,
   Grid,
@@ -52,9 +52,9 @@ const SignInPage = () => {
   const { handleSubmit } = useForm();
 
   let navigate = useNavigate();
-  const purchaseState = useSelector(
-    (state: IApplicationState) => state.purchase
-  );
+  const [searchParams] = useSearchParams();
+  const planId = searchParams.get("planId");
+  const redirectTo = searchParams.get("redirectTo");
 
   const [values, setValues] = useState(INITIAL_VALUES);
   const [showingPassword, setShowingPassword] = useState(false);
@@ -72,9 +72,13 @@ const SignInPage = () => {
   };
 
   const loadDashboardOrPurchase = () => {
-    let destination = routes.pages;
-    if (purchaseState.plan !== undefined) destination = routes.purchasePlan;
-    navigate(destination);
+    if (planId?.length) {
+      navigate(`${routes.subscribe}/${planId}`);
+
+      return;
+    }
+
+    navigate(routes.pages);
   };
 
   const onSubmitSignInCredentials = () => {
@@ -92,6 +96,12 @@ const SignInPage = () => {
             dispatch(
               getUser(credentials.email, (user: IUser) => {
                 setSessionStorage("user", JSON.stringify(user));
+
+                if (redirectTo?.length) {
+                  navigate(redirectTo);
+                  return;
+                }
+
                 loadDashboardOrPurchase();
               })
             );
@@ -238,7 +248,11 @@ const SignInPage = () => {
           pt="12px"
           mt="12px"
         >
-          <InternalLink to={routes.signUp}>{strings.noAccountYet}</InternalLink>
+          <InternalLink
+            to={routes.signUp + `${planId?.length ? `?planId=${planId}` : ""}`}
+          >
+            {strings.noAccountYet}
+          </InternalLink>
         </Grid>
       </form>
     </BannerHalfLayout>

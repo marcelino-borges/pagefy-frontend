@@ -10,6 +10,7 @@ interface IPageTitleProps {
   marginTop?: string;
   marginBottom?: string;
   sizes?: number[];
+  weights?: number[];
   textAlign?:
     | "start"
     | "end"
@@ -21,6 +22,8 @@ interface IPageTitleProps {
     | undefined;
 }
 
+const FALLBACK_COLOR = "#000";
+
 const TriplePageTitle = ({
   titles = ["", "", ""],
   baseSize = 1,
@@ -31,9 +34,8 @@ const TriplePageTitle = ({
   marginBottom = "0px",
   sizes,
   textAlign,
+  weights,
 }: IPageTitleProps) => {
-  const textsColors = colors?.length === 3 ? colors : ["#000", "#000", "#000"];
-
   return (
     <div
       style={{
@@ -43,8 +45,8 @@ const TriplePageTitle = ({
       <TitleSection
         style={{
           fontSize: sizes ? sizes[0] + "em" : baseSize + "em",
-          fontWeight: 800,
-          color: textsColors[0],
+          fontWeight: weights?.[0] ?? 800,
+          color: colors?.[0] ?? FALLBACK_COLOR,
           marginTop,
           textAlign,
         }}
@@ -59,8 +61,8 @@ const TriplePageTitle = ({
               : increasingSize
               ? baseSize + 2 * sizeGrowth + "em"
               : baseSize - 2 * sizeGrowth + "em",
-            fontWeight: 800,
-            color: textsColors[1],
+            fontWeight: weights?.[1] ?? 800,
+            color: colors?.[1] ?? FALLBACK_COLOR,
             textAlign,
           }}
         >
@@ -75,8 +77,9 @@ const TriplePageTitle = ({
               : increasingSize
               ? baseSize + 2 * sizeGrowth + "em"
               : baseSize - 2 * sizeGrowth + "em",
-            color: textsColors[2],
+            color: colors?.[2] ?? FALLBACK_COLOR,
             textAlign,
+            fontWeight: weights?.[2] ?? 400,
           }}
         >
           {titles[2]}
