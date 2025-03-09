@@ -4,6 +4,8 @@ import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 export const pt: IDictionary = {
   hide: "Esconder",
   activate: "Ativar",
+  active: "Ativo",
+  inactive: "Inativo",
   inactivate: "Desativar",
   checkOurPlans: "Confira nossos planos",
   youAreSpecial: "Você também pode ser especial!",
@@ -374,6 +376,7 @@ export const pt: IDictionary = {
     "Agora falta apenas escolher uam recorrência (com ou sem desconto anual)",
   nowItsTimeToSubscribe: "Agora é hora de finalizar sua assinatura",
   subscription: "Assinatura",
+  yourSubscriptions: "Suas assinaturas",
   noSubscriptions: "Sem assinaturas",
   subscriptionPayment: {
     succeeded: "Assinatura contratada com sucesso!",
@@ -404,7 +407,14 @@ export const pt: IDictionary = {
     },
     amountPaid: "Valor pago",
     clickHereToSeeInvoice: "Clique aqui para ver sua nota fiscal",
+    cancelSubscription: "Cancelar assinatura",
+    cancelSubscriptionConfirm:
+      "Tem certeza que deseja cancelar sua assinatura?",
+    cancelSubscriptionError:
+      "Desculpe, ocorreu um erro ao cancelar sua assinatura. Tente novamente ou contate nosso suporte.",
   },
+  actionCannotBeUndone: "Esta ação não poderá ser desfeita",
+  value: "Valor",
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
   freePlan: {
@@ -582,4 +592,6 @@ export const pt: IDictionary = {
   forMonthRecurrency: "para plano mensal",
   perYear: "ao ano",
   processingCheckout: "Processando checkout...",
+  subscribeRedirectStripeDisclaimer:
+    "Ao clicar em ASSINAR você será redirecionado para uma página externa do Stripe (meio de pagamento) e será redirecionado de volta após o pagamento.",
 };

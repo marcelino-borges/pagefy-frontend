@@ -4,6 +4,8 @@ import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 export const en: IDictionary = {
   hide: "Hide",
   activate: "Activate",
+  active: "Active",
+  inactive: "Inactive",
   inactivate: "Inactivate",
   checkOurPlans: "Check our plans",
   youAreSpecial: "You can be special too!",
@@ -373,6 +375,7 @@ export const en: IDictionary = {
     "Now you only need to choose a recurrency (with or without the year discount)",
   nowItsTimeToSubscribe: "Now it's time to finish your subscription",
   subscription: "Subscription",
+  yourSubscriptions: "Your subscriptions",
   noSubscriptions: "No subscriptions",
   subscribe: "Subscribe",
   subscriptionPayment: {
@@ -400,8 +403,15 @@ export const en: IDictionary = {
     },
     amountPaid: "Amount paid",
     clickHereToSeeInvoice: "Click here to see your invoice",
+    cancelSubscription: "Cancel subscription",
+    cancelSubscriptionConfirm:
+      "Are you sure you want to cancel your subscription?",
+    cancelSubscriptionError:
+      "Sorry, there was an error canceling your subscription. Try again or contact our support.",
   },
+  actionCannotBeUndone: "This action can't be undone",
   upgradeYourPlan: "Upgrade your plan",
+  value: "Value",
   plan: "Plan",
   freePlan: {
     name: "Free",
@@ -576,4 +586,6 @@ export const en: IDictionary = {
   forMonthRecurrency: "for monthly plan",
   perYear: "per year",
   processingCheckout: "Processing checkout...",
+  subscribeRedirectStripeDisclaimer:
+    "Clicking SUBSCRIBE will redirect you to an external page maintained by Stripe (payment gateway) and you will be redirected back after payment.",
 };

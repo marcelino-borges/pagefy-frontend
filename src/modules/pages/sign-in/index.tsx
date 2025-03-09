@@ -10,7 +10,7 @@ import {
   Visibility as ShowPasswordIcon,
   VisibilityOff as HidePasswordIcon,
 } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
@@ -30,7 +30,6 @@ import {
   setRecaptchaScript,
 } from "../../../utils/recaptcha-v3";
 import InternalLink from "../../components/internal-link";
-import { IApplicationState } from "../../../store";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
 import { Icon } from "@iconify/react";
 import { LoginProviderContainer } from "./style";

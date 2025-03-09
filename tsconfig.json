@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "img-imports.d.ts"]
+  "include": ["src", "img-imports.d.ts", ".end.modules.d.ts", "mui.d.ts"]
 }

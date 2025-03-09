@@ -10,7 +10,7 @@ import strings from "../../../localization";
 
 interface IDialogConfirmationProps {
   open: boolean;
-  onClose: any;
+  onClose: () => void;
   title: string;
   message: string;
   onConfirmCallback?: () => void;

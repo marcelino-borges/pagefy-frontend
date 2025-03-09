@@ -15,10 +15,16 @@ export const getPlanById = async (
 };
 
 export const createCheckoutSession = async (
-  priceId: string
+  priceId: string,
+  email: string,
+  currency: string,
+  locale: string
 ): Promise<AxiosResponse<CheckoutSession>> => {
   return paymentsApi.post(`/checkout`, {
     priceId,
+    email,
+    currency,
+    locale,
   });
 };
 
@@ -49,7 +55,9 @@ export const createSubscription = async (
 export const cancelSubscription = async (
   subscriptionId: string
 ): Promise<AxiosResponse<any>> => {
-  return paymentsApi.put(`/subscription/cancel/${subscriptionId}`, null);
+  return paymentsApi.patch("/subscription/cancel", {
+    subscriptionId,
+  });
 };
 
 export const getUserSubscriptions = async (

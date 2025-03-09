@@ -61,6 +61,18 @@ let themeOptions: ThemeOptions = {
             color: "white",
             backgroundColor: PRIMARY_COLOR_DARK,
           },
+          variants: [
+            {
+              props: { variant: "muted" },
+              style: {
+                color: "#bcbcbc",
+                "&:hover": {
+                  backgroundColor: "#bcbcbc",
+                  color: "white",
+                },
+              },
+            },
+          ],
         },
       },
     },

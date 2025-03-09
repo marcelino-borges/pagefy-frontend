@@ -214,3 +214,58 @@ export const clamp = (value: number, min: number, max: number) => {
 
 export const getRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min;
+
+export const getCurrencyByLocale = (locale: string) => {
+  const localeToCurrency: Record<string, string> = {
+    // BRL
+    "pt-BR": "BRL",
+
+    // USD
+    "en-US": "USD",
+    "en-PH": "USD",
+    "es-US": "USD",
+
+    // EUR
+    "de-DE": "EUR",
+    "fr-FR": "EUR",
+    "es-ES": "EUR",
+    "it-IT": "EUR",
+    "nl-NL": "EUR",
+    "pt-PT": "EUR",
+    "fi-FI": "EUR",
+    "el-GR": "EUR",
+
+    // JPY
+    "ja-JP": "JPY",
+
+    // GBP
+    "en-GB": "GBP",
+
+    // AUD
+    "en-AU": "AUD",
+
+    // CAD
+    "en-CA": "CAD",
+    "fr-CA": "CAD",
+
+    // CHF
+    "de-CH": "CHF",
+    "fr-CH": "CHF",
+    "it-CH": "CHF",
+
+    // CNY
+    "zh-CN": "CNY",
+    "zh-SG": "CNY",
+
+    // HKD
+    "zh-HK": "HKD",
+    "en-HK": "HKD",
+
+    // SGD
+    "en-SG": "SGD",
+  };
+
+  const currency = localeToCurrency[locale] || "USD";
+
+  return currency;
+};

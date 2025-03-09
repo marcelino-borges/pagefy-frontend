@@ -7,7 +7,7 @@ import ProfileLeftMenu from "./left-menu";
 import { ProfileContent } from "./style";
 import PersonalData from "./personal-data";
 import { ProfileTab } from "./utils";
-import Finance from "./finance";
+import YourSubscriptions from "./your-subscriptions";
 import Gallery from "./gallery";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
@@ -39,8 +39,8 @@ const Profile = () => {
           {userProfile && selectedMenu === ProfileTab.PERSONAL && (
             <PersonalData userProfile={userProfile} />
           )}
-          {userProfile?._id && selectedMenu === ProfileTab.FINANCE && (
-            <Finance userId={userProfile._id} />
+          {userProfile?._id && selectedMenu === ProfileTab.SUBSCRIPTIONS && (
+            <YourSubscriptions userId={userProfile._id} />
           )}
           {selectedMenu === ProfileTab.GALLERY && <Gallery />}
           {selectedMenu === ProfileTab.TESTIMONIALS && <UserTestimonials />}

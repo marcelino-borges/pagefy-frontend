@@ -1,4 +1,5 @@
 import { ISubscriptionCreationResult } from "../purchase/types";
+import { UserSubscription } from "../user-subscriptions";
 
 export enum UserActionTypes {
   GET_USER_LOADING = "@user/GET_USER_LOADING",
@@ -39,5 +40,5 @@ export interface IUserState {
   loading: boolean;
   error?: any;
   profile?: IUser;
-  subscriptions?: ISubscriptionCreationResult[];
+  subscriptions?: UserSubscription[];
 }

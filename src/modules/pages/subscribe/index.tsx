@@ -21,8 +21,13 @@ import { showErrorToast } from "../../../utils/toast";
 import { List, ListItem } from "../../components/plans-cards2/style";
 import { Icon } from "@iconify/react";
 import { CURRENCY_ABBREVIATIONS } from "../../../constants";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../store";
+import { getCurrencyByLocale } from "../../../utils";
+import images from "../../../assets/img";
 
 const Subscribe = () => {
+  const userState = useSelector((state: IApplicationState) => state.user);
   const isMobile = useMediaQuery("(max-width: 600px)");
   const { planId } = useParams();
   const [isFetchingPlan, setIsFetchingPlan] = useState(true);
@@ -43,10 +48,22 @@ const Subscribe = () => {
   }, []);
 
   const createCheckout = async (priceId: string) => {
+    if (!userState.profile) {
+      showErrorToast("Entre para efetuar a assinatura.");
+      return;
+    }
+
     setIsCreatingCheckout(true);
+    const lang = strings.getInterfaceLanguage();
+    const currency = getCurrencyByLocale(lang);
 
     try {
-      const res = await createCheckoutSession(priceId);
+      const res = await createCheckoutSession(
+        priceId,
+        userState.profile.email,
+        currency,
+        lang
+      );
 
       const newSession = res.data;
       const paymentUrl = newSession.url;
@@ -54,7 +71,7 @@ const Subscribe = () => {
       window.location.href = paymentUrl;
     } catch (error) {
       showErrorToast("Desculpa, tivemos um erro ao processar seu checkout.");
-      setIsCreatingCheckout(true);
+      setIsCreatingCheckout(false);
     }
   };
 
@@ -201,7 +218,7 @@ const Subscribe = () => {
         )}
 
         {!isFetchingPlan && plan && (
-          <Stack direction="column" gap="64px">
+          <Stack direction="column" gap="64px" pb="200px">
             <Stack
               direction="row"
               gap="16px"
@@ -286,6 +303,7 @@ const Subscribe = () => {
               >
                 {plan.prices.map((price) => (
                   <FormControlLabel
+                    key={price.id}
                     value={price.id}
                     control={<Radio />}
                     label={buildPriceLabel(price)}
@@ -294,7 +312,29 @@ const Subscribe = () => {
               </RadioGroup>
             </div>
 
-            <Box width="100%" display="flex" justifyContent="flex-end">
+            <Box
+              fontSize="0.8rem"
+              fontStyle="italic"
+              display="flex"
+              flexDirection="column"
+              gap="16px"
+            >
+              {strings.subscribeRedirectStripeDisclaimer}
+              <img
+                src={images.poweredStripe}
+                alt="Powered by Stripe"
+                width={150}
+                height="auto"
+              />
+            </Box>
+
+            <Box
+              width="100%"
+              display="flex"
+              flexDirection="column"
+              alignItems="flex-end"
+              gap="16px"
+            >
               <Button
                 variant="contained"
                 fullWidth={false}

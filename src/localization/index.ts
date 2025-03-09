@@ -89,6 +89,8 @@ interface IPlanDetails {
 export interface IDictionary {
   hide: string;
   activate: string;
+  active: string;
+  inactive: string;
   inactivate: string;
   checkOurPlans: string;
   youAreSpecial: string;
@@ -360,7 +362,9 @@ export interface IDictionary {
   nowChooseTheRecurrency: string;
   nowItsTimeToSubscribe: string;
   subscription: string;
+  yourSubscriptions: string;
   noSubscriptions: string;
+  actionCannotBeUndone: string;
   subscriptionPayment: {
     succeeded: string;
     paymentCancelled: string;
@@ -384,7 +388,11 @@ export interface IDictionary {
     };
     amountPaid: string;
     clickHereToSeeInvoice: string;
+    cancelSubscription: string;
+    cancelSubscriptionConfirm: string;
+    cancelSubscriptionError: string;
   };
+  value: string;
   upgradeYourPlan: string;
   plan: string;
   freePlan: IPlanDetails;
@@ -510,6 +518,7 @@ export interface IDictionary {
   forMonthRecurrency: string;
   perYear: string;
   processingCheckout: string;
+  subscribeRedirectStripeDisclaimer: string;
 }
 
 // Composed dictionaries

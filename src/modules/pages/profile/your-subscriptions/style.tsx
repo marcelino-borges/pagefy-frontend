@@ -3,7 +3,7 @@ import {
   TableContainer as MUITableContainer,
   TableRow,
 } from "@mui/material";
-import { LIGHTER_GREY, LIGHTEST_GREY } from "./../../../../styles/colors";
+import { LIGHTER_GREY, LIGHTEST_GREY } from "../../../../styles/colors";
 
 export const InteractiveRow = styled(({ index, children, ...rest }: any) => (
   <TableRow {...rest}>{children}</TableRow>

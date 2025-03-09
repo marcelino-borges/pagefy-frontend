@@ -29,9 +29,9 @@ const ProfileLeftMenu = ({
       text: strings.personalData,
     },
     {
-      menuType: ProfileTab.FINANCE,
+      menuType: ProfileTab.SUBSCRIPTIONS,
       icon: "dashicons:money-alt",
-      text: strings.finance.title,
+      text: strings.yourSubscriptions,
     },
     {
       menuType: ProfileTab.GALLERY,

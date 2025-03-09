@@ -23,6 +23,7 @@ import banner10 from "./vertical-banner10.jpg";
 import banner11 from "./vertical-banner11.jpg";
 import banner12 from "./vertical-banner12.jpg";
 import banner13 from "./vertical-banner13.jpg";
+import poweredStripe from "./powered-stripe.png";
 
 const images = {
   logoHeader,
@@ -37,6 +38,7 @@ const images = {
   bg1home2Mobile,
   actress1,
   actress2,
+  poweredStripe,
   verticalBanners: [
     banner1,
     banner2,
