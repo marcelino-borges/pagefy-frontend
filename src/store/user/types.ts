@@ -1,4 +1,3 @@
-import { ISubscriptionCreationResult } from "../purchase/types";
 import { UserSubscription } from "../user-subscriptions";
 
 export enum UserActionTypes {

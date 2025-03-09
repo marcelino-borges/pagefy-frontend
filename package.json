@@ -7,6 +7,16 @@
     "node": "20.x",
     "npm": "10.x"
   },
+  "scripts": {
+    "start": "react-scripts start",
+    "start-dev": "env-cmd -f .env.dev react-scripts start",
+    "update-pkg-version": "ts-node ./src/utils/update-version-pkg-json/index.ts && prettier --write ./package.json",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "deploy-main": "git checkout main && git merge develop && git push origin main && git checkout develop",
+    "serve:build": "serve -s build",
+    "postbuild": "react-snap"
+  },
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
@@ -55,17 +65,9 @@
     "@types/react-redux": "^7.1.22",
     "@types/uuid": "^8.3.4",
     "prettier": "2.7.1",
+    "react-snap": "^1.23.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.1.6"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "start-dev": "env-cmd -f .env.dev react-scripts start",
-    "update-pkg-version": "ts-node ./src/utils/update-version-pkg-json/index.ts && prettier --write ./package.json",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "deploy-main": "git checkout main && git merge develop && git push origin main && git checkout develop",
-    "serve:build": "serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"

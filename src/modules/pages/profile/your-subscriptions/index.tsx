@@ -12,17 +12,12 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { IApplicationState } from "../../../../store";
-import { getPlanNameByPriceId } from "../../../../utils/stripe";
 import SubscriptionDetailsDialog from "./dialog-sub-details";
 import { InteractiveRow, TableContainer } from "./style";
 import { formatToDateOnly } from "../../../../utils/dates";
 import TriplePageTitle from "../../../components/page-title";
 import strings from "../../../../localization";
-import {
-  ACESSIBILITY_GREEN,
-  ACESSIBILITY_RED,
-  COMPLEMENTARY_COLOR,
-} from "../../../../styles/colors";
+import { COMPLEMENTARY_COLOR } from "../../../../styles/colors";
 import { UserSubscription } from "../../../../store/user-subscriptions";
 
 interface IFinanceProps {
