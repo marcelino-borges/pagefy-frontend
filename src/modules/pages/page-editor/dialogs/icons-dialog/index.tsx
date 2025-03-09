@@ -285,7 +285,7 @@ const IconsDialog = ({
                 {icon.variations.map((variation: string) => (
                   <IconsResult
                     key={variation}
-                    onClick={(e: any) => {
+                    onClick={() => {
                       setIconSelected({
                         userFriendlyName: icon.userFriendlyName,
                         icon: variation,

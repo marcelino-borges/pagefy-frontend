@@ -24,6 +24,12 @@ import banner11 from "./vertical-banner11.jpg";
 import banner12 from "./vertical-banner12.jpg";
 import banner13 from "./vertical-banner13.jpg";
 import poweredStripe from "./powered-stripe.png";
+import homeScreenshot from "./screenshots/home.jpg";
+import loginScreenshot from "./screenshots/login.jpg";
+import signupScreenshot from "./screenshots/signup.jpg";
+import supportScreenshot from "./screenshots/support.jpg";
+import pageEditorScreenshot from "./screenshots/page-editor.jpg";
+import userPagesScreenshot from "./screenshots/user-pages.jpg";
 
 const images = {
   logoHeader,
@@ -54,6 +60,14 @@ const images = {
     banner12,
     banner13,
   ],
+  screenshots: {
+    home: homeScreenshot,
+    login: loginScreenshot,
+    signup: signupScreenshot,
+    support: supportScreenshot,
+    pageEditor: pageEditorScreenshot,
+    userPages: userPagesScreenshot,
+  },
 };
 
 export default images;

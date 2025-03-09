@@ -75,6 +75,8 @@ import ProgressBarDialog from "./dialogs/progress-bar-dialog";
 import CountersDialog from "./dialogs/counters-dialog";
 import PagePreviewPhone from "./page-preview-phone";
 import { Icon } from "@iconify/react";
+import Meta from "../../components/meta";
+import images from "../../../assets/img";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -986,6 +988,13 @@ const PageEditor = () => {
 
   return (
     <>
+      <Meta
+        lang={strings.getLanguage()}
+        locale={strings.getInterfaceLanguage()}
+        title={"Pagefy"}
+        description={strings.appDescription}
+        image={images.screenshots.pageEditor}
+      />
       <PrivateRouteChecker />
       <Navigation />
       {isLargerThan1150 && renderPagePreviewPhone}

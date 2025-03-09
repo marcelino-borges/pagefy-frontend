@@ -101,6 +101,7 @@ const Faq = () => {
           faqState.faqs.length > 0 &&
           faqState.faqs.map((faq: IFaq, index: number) => (
             <Accordion
+              key={faq._id}
               position={
                 index === 0
                   ? "first"

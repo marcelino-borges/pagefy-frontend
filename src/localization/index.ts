@@ -94,6 +94,7 @@ export interface IDictionary {
   inactivate: string;
   checkOurPlans: string;
   youAreSpecial: string;
+  appDescription: string;
   recurrency: {
     titleSingular: string;
     titlePlural: string;

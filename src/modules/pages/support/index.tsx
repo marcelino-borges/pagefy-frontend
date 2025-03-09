@@ -20,6 +20,8 @@ import { IApplicationState } from "./../../../store/index";
 import InternalLink from "../../components/internal-link";
 import Footer from "../../components/footer";
 import PrivateRouteChecker from "../../components/private-route-checker";
+import Meta from "../../components/meta";
+import images from "../../../assets/img";
 
 const INITIAL_VALUES: IUserContact = {
   name: "",
@@ -76,6 +78,13 @@ const Support = () => {
 
   return (
     <>
+      <Meta
+        lang={strings.getLanguage()}
+        locale={strings.getInterfaceLanguage()}
+        title={"Pagefy"}
+        description={strings.appDescription}
+        image={images.screenshots.support}
+      />
       <PrivateRouteChecker />
       <Navigation />
       <ThinWidthContent center>

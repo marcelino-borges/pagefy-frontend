@@ -16,6 +16,8 @@ import { canCreatePage } from "../../../utils/plan-enablements";
 import { showErrorToast } from "./../../../utils/toast/index";
 import ButtonScrollUp from "../../components/button-scroll-up";
 import { UPPER_MEDIUM_GREY } from "../../../styles/colors";
+import Meta from "../../components/meta";
+import images from "../../../assets/img";
 
 const UserPages = () => {
   const isSmallerThan900 = useMediaQuery("(max-width:900px)");
@@ -36,6 +38,13 @@ const UserPages = () => {
 
   return (
     <>
+      <Meta
+        lang={strings.getLanguage()}
+        locale={strings.getInterfaceLanguage()}
+        title={"Pagefy"}
+        description={strings.appDescription}
+        image={images.screenshots.userPages}
+      />
       <PrivateRouteChecker />
       <Navigation />
       <CreatePageDialog

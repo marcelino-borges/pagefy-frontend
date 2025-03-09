@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4, v4 } from "uuid";
 import { AxiosResponse } from "axios";
 import strings from "../../../../localization";
 import { Grid } from "@mui/material";
@@ -98,7 +98,7 @@ const Gallery = () => {
         {!isLoadingImages &&
           !!images.length &&
           images.map((image: IImageDetails) => (
-            <Grid item>
+            <Grid item key={v4()}>
               <Image
                 key={uuidv4()}
                 backgroundImage={(image as IImageDetails)?.thumbnail}

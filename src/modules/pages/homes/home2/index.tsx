@@ -45,6 +45,7 @@ import ShareIcon from "../../../../assets/icons/custom-icons/share";
 import PlansCards2 from "../../../components/plans-cards2";
 import TestimonialsSlidy from "../../../components/user-testimonials-slidy";
 import strings from "../../../../localization";
+import Meta from "../../../components/meta";
 
 const Home2 = () => {
   const isSmallerThan900 = useMediaQuery("(max-width: 900px");
@@ -67,6 +68,13 @@ const Home2 = () => {
 
   return (
     <>
+      <Meta
+        lang={strings.getLanguage()}
+        locale={strings.getInterfaceLanguage()}
+        title={"Pagefy"}
+        description={strings.appDescription}
+        image={images.screenshots.home}
+      />
       <Navigation variant="sticky" />
       <FullWidthContent pt="0px">
         <ImageBackground

@@ -39,6 +39,8 @@ import {
   GoogleAuthProvider,
   OAuthProvider,
 } from "firebase/auth";
+import Meta from "../../components/meta";
+import images from "../../../assets/img";
 
 const INITIAL_VALUES = {
   email: "",
@@ -138,123 +140,142 @@ const SignInPage = () => {
   };
 
   return (
-    <BannerHalfLayout>
-      <form
-        onSubmit={handleSubmit(onSubmitSignInCredentials)}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <h2 style={{ marginBottom: "16px" }}>{strings.welcomeBack}</h2>
-        <div>{strings.fillDataToAccessAccount}</div>
-        {/* Line 1 */}
-        <Grid container item mt="24px">
-          <TextField
-            label={strings.email}
-            name="email"
-            placeholder={strings.emailExample}
-            type="text"
-            fullWidth
-            required
-            variant="filled"
-            onChange={handleInputChange}
-            value={values.email}
-          />
-        </Grid>
-
-        {/* Line 2 */}
-        <Grid container item mt="24px">
-          <TextField
-            label={strings.password}
-            name="password"
-            type={showingPassword ? "text" : "password"}
-            fullWidth
-            required
-            variant="filled"
-            onChange={handleInputChange}
-            value={values.password}
-            InputProps={{
-              endAdornment: (
-                <>
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowingPassword(!showingPassword)}
-                      edge="end"
-                    >
-                      {!showingPassword ? (
-                        <ShowPasswordIcon fontSize="medium" color="primary" />
-                      ) : (
-                        <HidePasswordIcon fontSize="medium" color="primary" />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                </>
-              ),
-            }}
-          />
-        </Grid>
-
-        {/* Last line - Buttons */}
-        <Grid container item justifyContent="center" mt="24px">
-          <Button type="submit" variant="contained" fullWidth>
-            {strings.signIn}
-          </Button>
-        </Grid>
-        <Grid container item justifyContent="center" fontSize="0.9em" mt="36px">
-          {strings.signInWith}:
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="center"
-          alignItems="center"
-          fontSize="0.9em"
-          pt="12px"
-          gap="24px"
+    <>
+      <Meta
+        lang={strings.getLanguage()}
+        locale={strings.getInterfaceLanguage()}
+        title={"Pagefy"}
+        description={strings.appDescription}
+        image={images.screenshots.login}
+      />
+      <BannerHalfLayout>
+        <form
+          onSubmit={handleSubmit(onSubmitSignInCredentials)}
+          style={{ width: "100%", height: "100%" }}
         >
-          <LoginProviderContainer item>
-            <CustomTooltip title="Google">
-              <Icon
-                icon="logos:google-icon"
-                onClick={() => onSignInWithProvider(new GoogleAuthProvider())}
-              />
-            </CustomTooltip>
-          </LoginProviderContainer>
-          <LoginProviderContainer item>
-            <CustomTooltip title="Facebook">
-              <Icon
-                icon="uiw:facebook"
-                color="#4267B2"
-                onClick={() => onSignInWithProvider(new FacebookAuthProvider())}
-              />
-            </CustomTooltip>
-          </LoginProviderContainer>
-          <LoginProviderContainer item>
-            <CustomTooltip title="Microsoft">
-              <Icon
-                icon="logos:microsoft-icon"
-                fontSize="0.9em"
-                onClick={() =>
-                  onSignInWithProvider(new OAuthProvider("microsoft.com"))
-                }
-              />
-            </CustomTooltip>
-          </LoginProviderContainer>
-        </Grid>
-        <Grid
-          container
-          item
-          justifyContent="center"
-          fontSize="0.9em"
-          pt="12px"
-          mt="12px"
-        >
-          <InternalLink
-            to={routes.signUp + `${planId?.length ? `?planId=${planId}` : ""}`}
+          <h2 style={{ marginBottom: "16px" }}>{strings.welcomeBack}</h2>
+          <div>{strings.fillDataToAccessAccount}</div>
+          {/* Line 1 */}
+          <Grid container item mt="24px">
+            <TextField
+              label={strings.email}
+              name="email"
+              placeholder={strings.emailExample}
+              type="text"
+              fullWidth
+              required
+              variant="filled"
+              onChange={handleInputChange}
+              value={values.email}
+            />
+          </Grid>
+
+          {/* Line 2 */}
+          <Grid container item mt="24px">
+            <TextField
+              label={strings.password}
+              name="password"
+              type={showingPassword ? "text" : "password"}
+              fullWidth
+              required
+              variant="filled"
+              onChange={handleInputChange}
+              value={values.password}
+              InputProps={{
+                endAdornment: (
+                  <>
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowingPassword(!showingPassword)}
+                        edge="end"
+                      >
+                        {!showingPassword ? (
+                          <ShowPasswordIcon fontSize="medium" color="primary" />
+                        ) : (
+                          <HidePasswordIcon fontSize="medium" color="primary" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  </>
+                ),
+              }}
+            />
+          </Grid>
+
+          {/* Last line - Buttons */}
+          <Grid container item justifyContent="center" mt="24px">
+            <Button type="submit" variant="contained" fullWidth>
+              {strings.signIn}
+            </Button>
+          </Grid>
+          <Grid
+            container
+            item
+            justifyContent="center"
+            fontSize="0.9em"
+            mt="36px"
           >
-            {strings.noAccountYet}
-          </InternalLink>
-        </Grid>
-      </form>
-    </BannerHalfLayout>
+            {strings.signInWith}:
+          </Grid>
+          <Grid
+            container
+            item
+            justifyContent="center"
+            alignItems="center"
+            fontSize="0.9em"
+            pt="12px"
+            gap="24px"
+          >
+            <LoginProviderContainer item>
+              <CustomTooltip title="Google">
+                <Icon
+                  icon="logos:google-icon"
+                  onClick={() => onSignInWithProvider(new GoogleAuthProvider())}
+                />
+              </CustomTooltip>
+            </LoginProviderContainer>
+            <LoginProviderContainer item>
+              <CustomTooltip title="Facebook">
+                <Icon
+                  icon="uiw:facebook"
+                  color="#4267B2"
+                  onClick={() =>
+                    onSignInWithProvider(new FacebookAuthProvider())
+                  }
+                />
+              </CustomTooltip>
+            </LoginProviderContainer>
+            <LoginProviderContainer item>
+              <CustomTooltip title="Microsoft">
+                <Icon
+                  icon="logos:microsoft-icon"
+                  fontSize="0.9em"
+                  onClick={() =>
+                    onSignInWithProvider(new OAuthProvider("microsoft.com"))
+                  }
+                />
+              </CustomTooltip>
+            </LoginProviderContainer>
+          </Grid>
+          <Grid
+            container
+            item
+            justifyContent="center"
+            fontSize="0.9em"
+            pt="12px"
+            mt="12px"
+          >
+            <InternalLink
+              to={
+                routes.signUp + `${planId?.length ? `?planId=${planId}` : ""}`
+              }
+            >
+              {strings.noAccountYet}
+            </InternalLink>
+          </Grid>
+        </form>
+      </BannerHalfLayout>
+    </>
   );
 };
 

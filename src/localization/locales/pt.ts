@@ -2,6 +2,8 @@ import { IDictionary } from "..";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const pt: IDictionary = {
+  appDescription:
+    "Pagefy é uma plataforma que permite qualquer pessoa a criar uma landing page para ser utilizada como link de uma bio em rede social, como Instagram, Twitter, LinkedIn, Facebook, TikTok, Snapchat, Kwai, dentre outros. Aqui você encontra uma alternativa ao Linktree e outros.",
   hide: "Esconder",
   activate: "Ativar",
   active: "Ativo",
