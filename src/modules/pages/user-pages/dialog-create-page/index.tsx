@@ -49,9 +49,8 @@ const CreatePageDialog = ({ open, onClose, title }: ICreatePageDialogProps) => {
   };
 
   const onSubmit = () => {
-    if (!canCreatePage(userProfile, userPagesLength) || !userProfile?._id)
-      return;
-    if (!userProfile) return;
+    if (!userProfile?._id) return;
+
     setErrorPageNameField(undefined);
     setErrorPageUrlField(undefined);
     let hasErrors = false;

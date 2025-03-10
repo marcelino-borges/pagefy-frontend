@@ -6,11 +6,12 @@ import { showErrorToast } from "./../../utils/toast/index";
 import { IApplicationState } from "../../store";
 import getStorage from "redux-persist/es/storage/getStorage";
 
-const getConfig = async (config: any) => {
+const requestConfigInterceptor = async (config: any) => {
   const token = await getFirebaseToken();
   config.headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
+    lang: strings.getLanguage(),
   };
   return config;
 };
@@ -39,12 +40,15 @@ export const registrationApi = axios.create({
   baseURL: `${process.env.REACT_APP_REGISTRATION_ENDPOINT}`,
 });
 
-registrationApi.interceptors.request.use(getConfig, rejectRequest);
+registrationApi.interceptors.request.use(
+  requestConfigInterceptor,
+  rejectRequest
+);
 registrationApi.interceptors.response.use(undefined, responseInterceptor);
 
 export const paymentsApi = axios.create({
   baseURL: `${process.env.REACT_APP_PAYMENTS_ENDPOINT}`,
 });
 
-paymentsApi.interceptors.request.use(getConfig, rejectRequest);
+paymentsApi.interceptors.request.use(requestConfigInterceptor, rejectRequest);
 paymentsApi.interceptors.response.use(undefined, responseInterceptor);
