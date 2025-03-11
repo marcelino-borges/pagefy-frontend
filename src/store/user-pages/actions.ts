@@ -33,7 +33,9 @@ export const getAllUserPages =
         dispatch(getAllUserPagesError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -76,7 +78,9 @@ export const createPage =
         dispatch(createUserPageError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -123,7 +127,9 @@ export const updatePage =
         dispatch(updatePageError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError, e);
         } else {
           if (onErrorCallback) onErrorCallback(undefined, e);
@@ -279,7 +285,9 @@ export const deleteMiddleComponentFromPage =
         const error: IAppResult = e.response?.data;
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -344,7 +352,9 @@ export const deleteTopComponentFromPage =
         const error: IAppResult = e.response?.data;
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -425,7 +435,9 @@ export const deletePage =
         dispatch(deletePageError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -496,7 +508,9 @@ export const uploadAndSetPageImage =
         dispatch(setPageImageError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -537,7 +551,7 @@ export const deleteImage = async (
       const error: IAppResult = e.response?.data;
 
       if (error && error.message) {
-        const translatedError = translateError(error.message);
+        const translatedError = translateError(error.message ?? error.message);
         if (onErrorCallback) onErrorCallback(translatedError);
       } else {
         if (onErrorCallback) onErrorCallback();
@@ -571,7 +585,9 @@ export const setPageBGImage =
         dispatch(setPageBGImageError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();
@@ -633,7 +649,9 @@ export const uploadAndSetComponentImage =
         dispatch(setComponentImageError(error));
 
         if (error && error.message) {
-          const translatedError = translateError(error.message);
+          const translatedError = translateError(
+            error.message ?? error.message
+          );
           if (onErrorCallback) onErrorCallback(translatedError);
         } else {
           if (onErrorCallback) onErrorCallback();

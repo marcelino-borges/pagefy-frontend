@@ -16,6 +16,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.7.0] - 2025-03-11
+
+- Feature: plans page with random banner and layout improvements
+
 ### [1.6.0] - 2025-03-08
 
 - Feature: plans, payment handling and react-snap for pre-rendering

@@ -33,7 +33,8 @@ export const getUser =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
         }
       });
   };
@@ -107,7 +108,8 @@ export const getSubscriptions =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
         }
       });
   };
@@ -145,7 +147,8 @@ export const updateUser =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
         } else if (onErrorCallback) onErrorCallback();
       });
   };
@@ -229,7 +232,8 @@ export const uploadAndSetUserProfileImage =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
         } else if (onErrorCallback) onErrorCallback();
       });
   };

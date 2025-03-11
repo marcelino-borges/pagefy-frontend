@@ -139,7 +139,8 @@ export const signOut =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
         } else if (onErrorCallback)
           onErrorCallback(strings.generalErrors.errorSignOut);
       });

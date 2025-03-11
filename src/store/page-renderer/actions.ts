@@ -23,7 +23,8 @@ export const getPageByUrl =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
           return;
         }
         if (onErrorCallback) onErrorCallback(strings.couldntFindPage);
@@ -59,7 +60,8 @@ export const getRendererPageByUrl =
 
         if (error && error.errorDetails) {
           const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback) onErrorCallback(translatedError);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
           return;
         }
         if (onErrorCallback) onErrorCallback(strings.couldntFindPage);
@@ -92,7 +94,9 @@ export const incrementComponentClicks = (
       const error: IAppResult = e.response?.data;
 
       if (error && error.errorDetails) {
-        const translatedError = translateError(error.errorDetails);
+        const translatedError = translateError(
+          error.errorDetails ?? error.message
+        );
         console.log(
           "Error incrementing click on component with ID " + componentId
         );

@@ -9,6 +9,10 @@ const FullWidthContent = ({
   pb = "16px",
   pl = "16px",
   pr = "16px",
+  mt = "0px",
+  mb = "0px",
+  ml = "0px",
+  mr = "0px",
   children,
   sx,
   ...rest
@@ -31,6 +35,10 @@ const FullWidthContent = ({
               paddingBottom: pb,
               paddingLeft: pl,
               paddingRight: pr,
+              marginTop: mt,
+              marginBottom: mb,
+              marginLeft: ml,
+              marginRight: mr,
             }
           : undefined
       }

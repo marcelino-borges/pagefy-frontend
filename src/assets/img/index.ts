@@ -23,6 +23,13 @@ import banner10 from "./vertical-banner10.jpg";
 import banner11 from "./vertical-banner11.jpg";
 import banner12 from "./vertical-banner12.jpg";
 import banner13 from "./vertical-banner13.jpg";
+import banner14 from "./horizontal-banner-14.jpg";
+import banner15 from "./horizontal-banner-15.jpg";
+import banner16 from "./horizontal-banner-16.jpg";
+import banner17 from "./horizontal-banner-17.jpg";
+import banner18 from "./horizontal-banner-18.jpg";
+import banner19 from "./horizontal-banner-19.jpg";
+import banner20 from "./horizontal-banner-20.jpg";
 import poweredStripe from "./powered-stripe.png";
 import homeScreenshot from "./screenshots/home.jpg";
 import loginScreenshot from "./screenshots/login.jpg";
@@ -60,6 +67,15 @@ const images = {
     banner12,
     banner13,
   ],
+  horizontalBanners: [
+    banner14,
+    banner15,
+    banner16,
+    banner17,
+    banner18,
+    banner19,
+    banner20,
+  ],
   screenshots: {
     home: homeScreenshot,
     login: loginScreenshot,
@@ -68,6 +84,6 @@ const images = {
     pageEditor: pageEditorScreenshot,
     userPages: userPagesScreenshot,
   },
-};
+} as const;
 
 export default images;

@@ -17,6 +17,7 @@ interface IPlansCards2Props {
   pr?: string;
   pt?: string;
   pb?: string;
+  featuredCardIndex?: number;
 }
 
 const PlansCards2 = ({
@@ -24,6 +25,7 @@ const PlansCards2 = ({
   pr = "0px",
   pt = "0px",
   pb = "0px",
+  featuredCardIndex = 0,
 }: IPlansCards2Props) => {
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
   const [plansError, setPlansError] = useState("");
@@ -124,6 +126,7 @@ const PlansCards2 = ({
        **/}
       {
         <FeaturedCard2
+          isFeatured={featuredCardIndex === 0}
           row1={strings.freePlan.name.toUpperCase()}
           row2={
             <Grid container justifyContent="center" fontSize="0.85em" pt="8px">
@@ -162,7 +165,7 @@ const PlansCards2 = ({
         </FeaturedCard2>
       }
 
-      {plans.map((plan) => {
+      {plans.map((plan, index) => {
         const monthPrice = plan.prices.find(
           (price) =>
             price.currency === "brl" && price.recurring.interval === "month"
@@ -181,6 +184,7 @@ const PlansCards2 = ({
         return (
           <FeaturedCard2
             key={plan.id}
+            isFeatured={featuredCardIndex === index + 1}
             row1={
               <Stack direction="column" alignItems="center" gap="8px">
                 <div>
