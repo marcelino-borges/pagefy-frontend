@@ -114,7 +114,6 @@ export const updatePage =
   ) =>
   async (dispatch: any) => {
     dispatch(updatePageLoading());
-
     PagesService.updatePage(page)
       .then((res: AxiosResponse) => {
         const pageFromServer: IUserPage = res.data;

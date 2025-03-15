@@ -54,7 +54,7 @@ interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const IconsDialog = ({
@@ -208,7 +208,7 @@ const IconsDialog = ({
     };
     clearSearchAndStates();
     dispatch(addTopComponentInPage(newComponent, pageId));
-    onUpdatePage();
+    onUpdatePage?.();
     handleClose();
   };
 

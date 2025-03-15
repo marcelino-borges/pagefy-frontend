@@ -11,11 +11,13 @@ import { formatToDateOnly } from "../../../../../utils/dates";
 import { UserSubscription } from "../../../../../store/user-subscriptions";
 import DialogConfirmation from "../../../../components/dialog-confirmation";
 import { useState } from "react";
-import { cancelSubscription } from "../../../../../services/payments";
 import { showErrorToast } from "../../../../../utils/toast";
 import LoadingSpinner from "../../../../components/loading-spinner";
 import { Delete } from "@mui/icons-material";
 import { ACESSIBILITY_RED } from "../../../../../styles/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { cancelSubscription } from "../../../../../store/user/actions";
+import { IApplicationState } from "../../../../../store";
 interface ISubscriptionDetailsDialogProps {
   subscription: UserSubscription;
   onClose: () => void;
@@ -27,20 +29,26 @@ const SubscriptionDetailsDialog = ({
   onClose,
   onCancel,
 }: ISubscriptionDetailsDialogProps) => {
+  const dispatch = useDispatch();
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
-  const [isCanceling, setIsCanceling] = useState(false);
+  const isUserStateLoading = useSelector(
+    (state: IApplicationState) => state.user.loading
+  );
 
   const onCancelSubscription = async () => {
-    setIsCanceling(true);
-    try {
-      await cancelSubscription(subscription.subscriptionId);
-      onCancel();
-      onClose();
-    } catch (error) {
-      console.log("Error canceling subscription: ", error);
-      showErrorToast(strings.subscriptionPayment.cancelSubscriptionError);
-    }
-    setIsCanceling(false);
+    dispatch(
+      cancelSubscription(
+        subscription.subscriptionId,
+        () => {
+          onCancel();
+          onClose();
+        },
+        (error) => {
+          console.log("Error canceling subscription: ", error);
+          showErrorToast(strings.subscriptionPayment.cancelSubscriptionError);
+        }
+      )
+    );
   };
 
   return (
@@ -101,10 +109,10 @@ const SubscriptionDetailsDialog = ({
               color: ACESSIBILITY_RED,
               "&:hover": { backgroundColor: ACESSIBILITY_RED },
             }}
-            disabled={isCanceling}
+            disabled={isUserStateLoading}
           >
             <Stack direction="row" gap="8px" alignItems="center">
-              {isCanceling && <LoadingSpinner color="black" size={12} />}
+              {isUserStateLoading && <LoadingSpinner color="black" size={12} />}
               <Delete fontSize="small" />
               {strings.subscriptionPayment.cancelSubscription}
             </Stack>
@@ -113,7 +121,7 @@ const SubscriptionDetailsDialog = ({
             onClick={() => {
               onClose();
             }}
-            disabled={isCanceling}
+            disabled={isUserStateLoading}
           >
             {strings.back}
           </Button>

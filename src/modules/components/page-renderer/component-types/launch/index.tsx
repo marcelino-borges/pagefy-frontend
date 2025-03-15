@@ -21,12 +21,26 @@ interface ILaunchComponentProps {
   isPagePreview?: boolean;
 }
 
+interface RendererProps {
+  days: string | number;
+  hours: string | number;
+  minutes: string | number;
+  seconds: string | number;
+  completed: boolean;
+}
+
 const LaunchComponent = ({
   component,
   pageId,
   isPagePreview,
 }: ILaunchComponentProps) => {
-  const renderer = ({ days, hours, minutes, seconds, completed }: any) => {
+  const renderer = ({
+    days,
+    hours,
+    minutes,
+    seconds,
+    completed,
+  }: RendererProps) => {
     return (
       <Grid container direction="column" wrap="nowrap">
         <Grid container item wrap="nowrap" alignItems="center">
@@ -151,10 +165,7 @@ const LaunchComponent = ({
           {strings.launchPrefixText}
         </Grid>
         {component.launchDate && (
-          <Countdown
-            date={new Date(component.launchDate)}
-            renderer={renderer}
-          />
+          <Countdown date={new Date(2025, 9, 15)} renderer={renderer} />
         )}
         <Grid
           container

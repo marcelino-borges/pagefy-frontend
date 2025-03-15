@@ -13,7 +13,6 @@ import { v4 as uuidv4 } from "uuid";
 import DialogActions from "@mui/material/DialogActions/DialogActions";
 import { Icon } from "@iconify/react";
 import { ANALYTICS_EVENTS } from "../../../../../constants";
-import PAGES_ROUTES from "../../../../../routes/paths";
 import { logAnalyticsEvent } from "../../../../../services/firebase-analytics";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../../../store";

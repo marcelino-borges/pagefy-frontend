@@ -126,6 +126,7 @@ export interface IDictionary {
   rows: string;
   clicks: string;
   type: string;
+  typeHere: string;
   backgroundColor: string;
   fontColor: string;
   fillColor: string;
@@ -279,6 +280,10 @@ export interface IDictionary {
   selectAnOption: string;
   selectACurrency: string;
   selectARecurrency: string;
+  doYouHaveACoupon: string;
+  coupon: string;
+  couponExample: string;
+  status: string;
   duration: string;
   startDelay: string;
   animation: string;
@@ -342,7 +347,12 @@ export interface IDictionary {
     errorSignOut: string;
     internalError: string;
     signUpNotAllowed: string;
-    unexpectedERror: string;
+    unexpectedError: string;
+  };
+  subscribeErrors: {
+    fetchPlan: string;
+    signInToSubscribe: string;
+    activeSubscriptionFoundCancel: string;
   };
   maximumFileSizeOf: string;
   animations: IAnimations;
@@ -421,6 +431,7 @@ export interface IDictionary {
   errorUpdateUser: string;
   sorry: string;
   pagePreview: string;
+  buttonPreview: string;
   message: string;
   messageExample: string;
   errorSendingSupportContact: string;

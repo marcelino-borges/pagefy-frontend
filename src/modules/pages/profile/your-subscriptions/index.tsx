@@ -184,7 +184,7 @@ const YourSubscriptions = ({
                 <TableCell>
                   {strings.finance.profileTableHeaders.endDate}
                 </TableCell>
-                <TableCell>{strings.active}</TableCell>
+                <TableCell>{strings.status}</TableCell>
               </TableRow>
             </TableHead>
 

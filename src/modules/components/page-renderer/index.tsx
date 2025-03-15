@@ -33,6 +33,7 @@ import MapComponent from "./component-types/map";
 import SpotifyComponent from "./component-types/spotify";
 import ProgressBarComponent from "./component-types/progress-bar";
 import CountersComponent from "./component-types/counters";
+import { shouldComponentBeVisible } from "./utils";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -121,96 +122,89 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
     }
   }, [page, page?.bottomComponents]);
 
-  const renderButtonByType = (component: any) => {
+  const renderButtonByType = (component: IUserComponent) => {
     const type: ComponentType = component.type;
 
-    switch (type) {
-      case ComponentType.Image:
-        return (
-          <ImageComponent
-            pageId={page?._id}
-            component={component}
-            key={component._id}
-          />
-        );
-      case ComponentType.Text:
-        return (
-          <TextComponent
-            pageId={page?._id}
-            component={component}
-            key={component._id}
-          />
-        );
-      case ComponentType.TextImage:
-        return (
-          <TextImageComponent
-            pageId={page?._id}
-            component={component}
-            key={component._id}
-          />
-        );
-      case ComponentType.Video:
-        return (
-          <VideoComponent
-            pageId={page?._id}
-            component={component}
-            key={component._id}
-          />
-        );
-      case ComponentType.Launch:
-        return (
-          <LaunchComponent
-            pageId={page?._id}
-            component={component}
-            key={component._id}
-            isPagePreview={isPagePreview}
-          />
-        );
-      case ComponentType.TextOverImage:
-        return (
-          <TextOverImageComponent
-            pageId={page?._id}
-            component={component}
-            key={component._id}
-          />
-        );
-      case ComponentType.Map:
-        return (
-          <MapComponent
-            pageId={page?._id}
-            component={component}
-            fontColor={page?.style?.color}
-            key={component._id}
-          />
-        );
-      case ComponentType.Spotify:
-        return (
-          <SpotifyComponent
-            pageId={page?._id}
-            component={component}
-            fontColor={page?.style?.color}
-            key={component._id}
-          />
-        );
-      case ComponentType.ProgressBar:
-        return (
-          <ProgressBarComponent
-            pageId={page?._id}
-            component={component}
-            fontColor={page?.style?.color}
-            key={component._id}
-          />
-        );
-      case ComponentType.Counter:
-        return (
-          <CountersComponent
-            pageId={page?._id}
-            component={component}
-            fontColor={page?.style?.color}
-            key={component._id}
-          />
-        );
-    }
+    const buttonByType = {
+      [ComponentType.Image]: (
+        <ImageComponent
+          pageId={page?._id}
+          component={component}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Text]: (
+        <TextComponent
+          pageId={page?._id}
+          component={component}
+          key={component._id}
+        />
+      ),
+      [ComponentType.TextImage]: (
+        <TextImageComponent
+          pageId={page?._id}
+          component={component}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Video]: (
+        <VideoComponent
+          pageId={page?._id}
+          component={component}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Launch]: (
+        <LaunchComponent
+          pageId={page?._id}
+          component={component}
+          key={component._id}
+          isPagePreview={isPagePreview}
+        />
+      ),
+      [ComponentType.TextOverImage]: (
+        <TextOverImageComponent
+          pageId={page?._id}
+          component={component}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Map]: (
+        <MapComponent
+          pageId={page?._id}
+          component={component}
+          fontColor={page?.style?.color}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Spotify]: (
+        <SpotifyComponent
+          pageId={page?._id}
+          component={component}
+          fontColor={page?.style?.color}
+          key={component._id}
+        />
+      ),
+      [ComponentType.ProgressBar]: (
+        <ProgressBarComponent
+          pageId={page?._id}
+          component={component}
+          fontColor={page?.style?.color}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Counter]: (
+        <CountersComponent
+          pageId={page?._id}
+          component={component}
+          fontColor={page?.style?.color}
+          key={component._id}
+        />
+      ),
+      [ComponentType.Icon]: null,
+    };
+
+    return buttonByType[type] ?? null;
   };
 
   useEffect(() => {
@@ -334,22 +328,14 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
 
               {/* MIDDLE COMPONENTS */}
               <Grid container item>
-                {middleComponents && middleComponents.length > 0 && (
-                  <>
-                    {middleComponents &&
-                      middleComponents.length > 0 &&
-                      middleComponents.map((comp: IUserComponent) => {
-                        if (
-                          comp.visible &&
-                          (!comp.visibleDate ||
-                            new Date(comp.visibleDate) >= new Date())
-                        ) {
-                          return renderButtonByType(comp);
-                        }
-                        return null;
-                      })}
-                  </>
-                )}
+                {middleComponents &&
+                  middleComponents.length > 0 &&
+                  middleComponents.map((comp: IUserComponent) => {
+                    if (shouldComponentBeVisible(comp)) {
+                      return renderButtonByType(comp);
+                    }
+                    return null;
+                  })}
               </Grid>
 
               {/* BOTTOM COMPONENTS */}

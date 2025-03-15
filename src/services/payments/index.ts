@@ -21,13 +21,15 @@ export const createCheckoutSession = async (
   priceId: string,
   email: string,
   currency: string,
-  locale: string
+  locale: string,
+  coupon: string
 ): Promise<AxiosResponse<CheckoutSession>> => {
   return paymentsApi.post(`/checkout`, {
     priceId,
     email,
     currency,
     locale,
+    coupon,
   });
 };
 

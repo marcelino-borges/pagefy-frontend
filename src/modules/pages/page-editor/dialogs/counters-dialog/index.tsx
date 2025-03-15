@@ -39,7 +39,7 @@ interface ICountersDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const BLANK_COUNTER: ICounter = {
@@ -107,7 +107,7 @@ const CountersDialog = ({
       counters,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
-    onUpdatePage();
+    onUpdatePage?.();
     clearStates();
     handleClose();
   };

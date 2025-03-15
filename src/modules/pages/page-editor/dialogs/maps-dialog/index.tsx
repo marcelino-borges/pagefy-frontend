@@ -24,7 +24,7 @@ interface IMapsDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const MapsDialog = ({
@@ -74,7 +74,7 @@ const MapsDialog = ({
       type: ComponentType.Map,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
-    onUpdatePage();
+    onUpdatePage?.();
     clearStates();
     handleClose();
   };

@@ -267,7 +267,13 @@ export const pt: IDictionary = {
     unknownError: "Error desconhecido.",
     internalError: "Erro interno.",
     signUpNotAllowed: "Pagefy ainda não está disponível para o público.",
-    unexpectedERror: "Desculpe, tivemos um erro inesperado.",
+    unexpectedError: "Desculpe, tivemos um erro inesperado.",
+  },
+  subscribeErrors: {
+    fetchPlan: "Erro ao buscar os detalhes do plano",
+    signInToSubscribe: "Entre para efetuar a assinatura",
+    activeSubscriptionFoundCancel:
+      "Você possui uma assinatura ativa. Acesse seu perfil e faça o cancelamento para adquirir outra",
   },
   profile: "Perfil",
   profileSubtitle: "Verifique e atualize seus dados pessoais aqui",
@@ -417,6 +423,10 @@ export const pt: IDictionary = {
       "Desculpe, ocorreu um erro ao cancelar sua assinatura. Tente novamente ou contate nosso suporte.",
   },
   actionCannotBeUndone: "Esta ação não poderá ser desfeita",
+  typeHere: "Digite aqui",
+  doYouHaveACoupon: "Possui cupom?",
+  coupon: "Cupom",
+  couponExample: "MEUCUPOM123",
   value: "Valor",
   upgradeYourPlan: "Aumente o nível do seu plano",
   plan: "Plano",
@@ -470,6 +480,7 @@ export const pt: IDictionary = {
   errorUpdateUser: "Erro ao atualizar usuário.",
   sorry: "Desculpe",
   pagePreview: "Pré-visualização da página",
+  buttonPreview: "Pré-visualização do botão",
   message: "Mensagem",
   messageExample:
     "Oi! Aqui é a Maria. Tudo bem? Estou entrando em contato porque tenho uma oportunidade de negócio para você!",
@@ -541,6 +552,7 @@ export const pt: IDictionary = {
   },
   phoneNumber: "Telefone",
   color: "Cor",
+  status: "Status",
   home2: {
     mainHeader: "Tudo o que você faz. Simples e direto.",
     mainSubheader: "Mostre para o mundo o conteúdo que só você sabe fazer.",

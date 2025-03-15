@@ -28,6 +28,7 @@ import Home2 from "../modules/pages/homes/home2";
 import CheckoutSuccess from "../modules/pages/checkout-success";
 import CheckoutCancel from "../modules/pages/checkout-cancel";
 import Subscribe from "../modules/pages/subscribe";
+import { getActiveSubscription } from "../store/user/actions";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -68,6 +69,11 @@ const AppRoutes = () => {
       );
     }
   }, [dispatch, appState.userPages.pageBeingSaved]);
+
+  useEffect(() => {
+    if (appState.user.profile?._id)
+      dispatch(getActiveSubscription(appState.user.profile._id));
+  }, [appState.user.profile?._id, dispatch]);
 
   useEffect(() => {
     const hasConsentedGDPR = getStorage(GDPR_CONSENT_STORAGE_KEY);

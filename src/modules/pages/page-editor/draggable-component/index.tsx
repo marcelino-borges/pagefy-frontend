@@ -95,7 +95,7 @@ export interface DraggableUserComponentProps {
   index: number;
   pageId: string | undefined;
   onClick?: () => any;
-  onUpdatePage: () => any;
+  onUpdatePage?: () => any;
 }
 
 const DraggableUserComponent = ({
@@ -228,7 +228,7 @@ const DraggableUserComponent = ({
   const toggleVisibility = () => {
     if (!component._id || !pageId) return;
     dispatch(toggleComponentVisibility(pageId, component._id));
-    onUpdatePage();
+    onUpdatePage?.();
   };
 
   const handleChangeBackgroundColorComplete = (color: any) => {
@@ -256,7 +256,7 @@ const DraggableUserComponent = ({
           }}
           onConfirmCallback={() => {
             deleteComponent();
-            onUpdatePage();
+            onUpdatePage?.();
           }}
           title={strings.removeIcon}
           message={strings.removeComponentConfirmation}
@@ -304,7 +304,7 @@ const DraggableUserComponent = ({
                   clearLoadingFromState
                 )
               );
-              onUpdatePage();
+              onUpdatePage?.();
             }
 
             setOpenChooseFileDialog(false);
@@ -324,7 +324,7 @@ const DraggableUserComponent = ({
             if (!pageId || !component._id) return;
 
             dispatch(setComponentAnimation(pageId, component._id, animation));
-            onUpdatePage();
+            onUpdatePage?.();
           }}
           existingAnimation={component.animation}
         />
@@ -337,7 +337,7 @@ const DraggableUserComponent = ({
             if (!pageId || !component._id) return;
 
             dispatch(setComponentVisibleDate(pageId, component._id, dateTime));
-            onUpdatePage();
+            onUpdatePage?.();
           }}
         />
       </>
@@ -1008,7 +1008,7 @@ const DraggableUserComponent = ({
                     pageId
                   )
                 );
-                onUpdatePage();
+                onUpdatePage?.();
               }}
             >
               <CopyAllIcon style={{ transform: "scale(0.7)" }} />

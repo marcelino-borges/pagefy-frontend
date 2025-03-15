@@ -24,7 +24,7 @@ interface ISpotifyDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const SpotifyDialog = ({
@@ -74,7 +74,7 @@ const SpotifyDialog = ({
       type: ComponentType.Spotify,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
-    onUpdatePage();
+    onUpdatePage?.();
     clearStates();
     handleClose();
   };

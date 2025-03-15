@@ -40,6 +40,7 @@ const BaseComponentType = ({
           if (url) openExternalLink(url, window);
           onClick();
         }}
+        id="Root Base Component"
       >
         <a
           href={url}

@@ -1,4 +1,4 @@
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 
 interface ITooltipProps {
   title: string;
@@ -35,7 +35,7 @@ const CustomTooltip = ({
       disableInteractive={disableInteractive !== undefined}
       placement={placement || "bottom"}
     >
-      <div>{children}</div>
+      {children}
     </Tooltip>
   );
 };

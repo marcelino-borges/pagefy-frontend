@@ -338,7 +338,6 @@ const PageEditor = () => {
       if (!page || !page._id) return;
 
       dispatch(setPageBackgroundColor(page._id, String(color)));
-      onUpdatePage();
       setShowBackgroundColorPicker(false);
     },
     [dispatch, page]
@@ -348,7 +347,6 @@ const PageEditor = () => {
     (color: any) => {
       if (page && page._id) {
         dispatch(setPageFontColor(page._id, String(color)));
-        onUpdatePage();
         setShowFontColorPicker(false);
       }
     },
@@ -463,10 +461,6 @@ const PageEditor = () => {
     },
     [chosenImage, dispatch, page]
   );
-
-  const onUpdatePage = () => {
-    window.location.reload();
-  };
 
   const BottomToolbar = useCallback(() => {
     return (
@@ -947,49 +941,41 @@ const PageEditor = () => {
         open={openComponentDialog}
         handleClose={handleCloseComponentDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <IconsDialog
         open={openIconsDialog}
         handleClose={handleCloseIconsDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <VideoDialog
         open={openVideoDialog}
         handleClose={handleCloseVideoDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <LaunchDialog
         open={openLaunchDialog}
         handleClose={handleCloseLaunchDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <MapsDialog
         open={openMapDialog}
         handleClose={handleCloseMapDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <SpotifyDialog
         open={openSpotifyDialog}
         handleClose={handleCloseSpotifyDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <ProgressBarDialog
         open={openProgressBarDialog}
         handleClose={handleCloseProgressBarDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
       <CountersDialog
         open={openCountersDialog}
         handleClose={handleCloseCountersDialog}
         pageId={page?._id}
-        onUpdatePage={onUpdatePage}
       />
     </>
   );
@@ -1005,7 +991,6 @@ const PageEditor = () => {
                 index={index}
                 pageId={page?._id}
                 key={uuidv4()}
-                onUpdatePage={onUpdatePage}
               />
             )
           )}

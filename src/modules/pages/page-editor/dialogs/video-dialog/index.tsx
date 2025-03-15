@@ -29,7 +29,7 @@ interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const MIN_VIDEO_ID_LENGTH = 6;
@@ -94,7 +94,7 @@ const VideoDialog = ({
       iconDetails: undefined,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
-    onUpdatePage();
+    onUpdatePage?.();
     clearStates();
     handleClose();
   };

@@ -16,6 +16,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## Versions
 
+### [1.8.0] - 2025-03-15
+
+- Feature: coupon field on subscribe
+- Feature: new plan validations on UI
+- Feature: button and launch components previews on respective dialogs
+- Fix: tooltip breaking button layout (columns) on page renderer
+
 ### [1.7.0] - 2025-03-11
 
 - Feature: plans page with random banner and layout improvements

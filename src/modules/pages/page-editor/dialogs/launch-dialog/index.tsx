@@ -26,6 +26,7 @@ import moment from "moment";
 import {
   ComponentBorderRadius,
   ComponentShadowStyle,
+  RENDERED_PAGE_COMPONENT_HEIGHT,
   RENDERED_PAGE_LAUNCH_COMPONENT_ROWS,
 } from "../../../../../constants";
 import { LIGHT_GREY, PRIMARY_COLOR } from "../../../../../styles/colors";
@@ -34,12 +35,13 @@ import BackgroundColorIcon from "../../../../../assets/icons/custom-icons/backgr
 import ColorPicker from "../../../../components/color-picker";
 import FontColorIcon from "../../../../../assets/icons/custom-icons/font-color";
 import { translateShadowStyleEnum } from "../../../../../utils";
+import LaunchComponent from "../../../../components/page-renderer/component-types/launch";
 
 interface IIconsDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const LaunchDialog = ({
@@ -62,7 +64,7 @@ const LaunchDialog = ({
   const [dateTimeFieldError, setDateTimeFieldError] = useState<string>();
   const [launchTime, setLaunchTime] = useState<string>(defaultLaunchDate);
 
-  const [fontColor, setFontColor] = useState<string>("black");
+  const [fontColor, setFontColor] = useState<string>("white");
   const [backgroundColor, setBackgroundColor] = useState<string>(PRIMARY_COLOR);
   const [showBackgroundColorPicker, setShowBackgroundColorPicker] =
     useState<boolean>(false);
@@ -127,11 +129,10 @@ const LaunchDialog = ({
       },
       launchDate: launch.toISOString(),
       type: ComponentType.Launch,
-      mediaUrl: message,
       iconDetails: undefined,
     };
     dispatch(addMiddleComponentInPage(newComponent, pageId));
-    onUpdatePage();
+    onUpdatePage?.();
     clearStates();
     handleClose();
   };
@@ -356,6 +357,27 @@ const LaunchDialog = ({
                 )}
               </TextField>
             </Grid>
+          </Grid>
+          <Grid item height={RENDERED_PAGE_COMPONENT_HEIGHT * 3} mt="32px">
+            <LaunchComponent
+              component={{
+                clicks: 0,
+                layout: {
+                  columns: 2,
+                  rows: 2,
+                },
+                type: ComponentType.Launch,
+                visible: true,
+                style: {
+                  boxShadow: shadowStyle,
+                  borderRadius: String(selectedBorder) + "px",
+                  backgroundColor,
+                  color: fontColor,
+                },
+                launchDate,
+              }}
+              isPagePreview={false}
+            />
           </Grid>
         </Grid>
       </DialogContent>

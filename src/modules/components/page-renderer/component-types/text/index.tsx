@@ -16,6 +16,7 @@ const TextComponent = ({ component, pageId }: ITextComponentProps) => {
       layout={component.layout}
       style={component.style}
       animation={component.animation}
+      width="100%"
       onClick={() => {
         if (pageId && component._id)
           incrementComponentClicks(pageId, component._id);
@@ -25,6 +26,7 @@ const TextComponent = ({ component, pageId }: ITextComponentProps) => {
         container
         justifyContent="center"
         alignItems="center"
+        width="100%"
         style={{
           ...component.style,
           boxShadow: component.style?.boxShadow || ComponentShadowStyle.NONE,

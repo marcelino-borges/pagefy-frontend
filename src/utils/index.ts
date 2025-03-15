@@ -210,7 +210,8 @@ export const isClickableType = (type: ComponentType) =>
 export const clamp = (value: number, min: number, max: number) => {
   if (value < min) return min;
   else if (value > max) return max;
-  else return value;
+
+  return value;
 };
 
 export const getRandomInt = (min: number, max: number) =>

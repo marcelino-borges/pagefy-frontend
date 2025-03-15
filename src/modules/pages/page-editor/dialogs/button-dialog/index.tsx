@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -35,6 +36,7 @@ import strings from "../../../../../localization";
 import {
   ACESSIBILITY_GREEN,
   ACESSIBILITY_RED,
+  COMPLEMENTARY_COLOR,
   LIGHTER_GREY,
   LIGHT_GREY,
   PRIMARY_COLOR,
@@ -51,6 +53,7 @@ import {
   COMPONENT_MAX_ROWS,
   GalleryContext,
   IMAGE_EXTENSIONS,
+  RENDERED_PAGE_COMPONENT_HEIGHT,
 } from "../../../../../constants";
 import {
   ComponentType,
@@ -67,7 +70,7 @@ import { clearLoading, setLoading } from "../../../../../store/shared/actions";
 import { IApplicationState } from "../../../../../store";
 import { UserStorageFolder } from "../../../../../store/shared/types";
 import WhatsappDialog from "../whatsapp-dialog";
-import { clamp, translateShadowStyleEnum } from "../../../../../utils";
+import { translateShadowStyleEnum } from "../../../../../utils";
 import {
   ComponentDetailsButton,
   LayoutPickerContainer,
@@ -79,7 +82,7 @@ interface IComponentDialogProps {
   pageId?: string;
   open: boolean;
   handleClose: () => void;
-  onUpdatePage: () => void;
+  onUpdatePage?: () => void;
 }
 
 const ButtonDialog = ({
@@ -111,9 +114,8 @@ const ButtonDialog = ({
   const [selectedBorder, setSelectedBorder] = useState<ComponentBorderRadius>(
     ComponentBorderRadius.SQUARE
   );
-  const [shadowStyle, setShadowStyle] = useState<ComponentShadowStyle>(
-    ComponentShadowStyle.NONE
-  );
+  const [selectedShadowStyle, setSelectedShadowStyle] =
+    useState<ComponentShadowStyle>(ComponentShadowStyle.NONE);
 
   const [typeError, setTypeError] = useState<string>();
   const [columnsError, setColumnsError] = useState<string>();
@@ -214,7 +216,7 @@ const ButtonDialog = ({
             selectedType !== ComponentType.TextOverImage ? backgroundColor : "",
           color: fontColor,
           borderRadius: selectedBorder.toString() + "px",
-          boxShadow: shadowStyle,
+          boxShadow: selectedShadowStyle,
         },
         visible: isVisible,
         clicks: 0,
@@ -231,7 +233,7 @@ const ButtonDialog = ({
 
       if (pageId) {
         dispatch(addMiddleComponentInPage(newComponent, pageId));
-        onUpdatePage();
+        onUpdatePage?.();
       }
       handleClose();
       clearStates();
@@ -334,6 +336,41 @@ const ButtonDialog = ({
       </LayoutPickerHeaderText>
     </SectionHeader>
   );
+
+  const renderPreview = () => {
+    if (showStep2) return null;
+
+    return (
+      <Grid
+        container
+        wrap={isSmallerThanXM ? "wrap" : "nowrap"}
+        flexDirection="column"
+        justifyContent="flex-start"
+        mt="32px"
+        gap="16px"
+      >
+        <Grid
+          container
+          bgcolor={COMPLEMENTARY_COLOR}
+          xs={6 * selectedColumnsCount}
+          width="100%"
+          borderRadius={`${selectedBorder}px`}
+          boxShadow={selectedShadowStyle}
+        >
+          <Box
+            height={RENDERED_PAGE_COMPONENT_HEIGHT * selectedRowsCount}
+            width="100%"
+            color="white"
+            display="center"
+            justifyContent="center"
+            alignItems="center"
+          >
+            {strings.buttonPreview}
+          </Box>
+        </Grid>
+      </Grid>
+    );
+  };
 
   return (
     <Dialog
@@ -488,7 +525,10 @@ const ButtonDialog = ({
                     value={selectedRowsCount}
                     onChange={(event: any) => {
                       const value: number = Number(event.target.value);
-                      setSelectedRowsCount(clamp(value, COMPONENT_MAX_ROWS, 1));
+                      if (value > COMPONENT_MAX_ROWS)
+                        setSelectedRowsCount(COMPONENT_MAX_ROWS);
+
+                      setSelectedRowsCount(value);
                     }}
                     InputProps={{
                       inputProps: { min: 1, max: COMPONENT_MAX_ROWS },
@@ -555,10 +595,12 @@ const ButtonDialog = ({
                         <ComponentDetailsButton
                           size="60px"
                           fontSize="0.9em"
-                          isSelected={shadowStyle === shadow}
+                          isSelected={selectedShadowStyle === shadow}
                           shadow={shadow}
                           onClick={() => {
-                            setShadowStyle(shadow as ComponentShadowStyle);
+                            setSelectedShadowStyle(
+                              shadow as ComponentShadowStyle
+                            );
                           }}
                         >
                           {translateShadowStyleEnum(
@@ -570,6 +612,7 @@ const ButtonDialog = ({
                   }
                 )}
               </Grid>
+              {renderPreview()}
             </Grid>
           </Grid>
         </DialogContent>

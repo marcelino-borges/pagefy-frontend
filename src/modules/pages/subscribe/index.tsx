@@ -13,6 +13,7 @@ import {
   Radio,
   RadioGroup,
   Stack,
+  TextField,
   useMediaQuery,
 } from "@mui/material";
 import { createCheckoutSession, getPlanById } from "../../../services/payments";
@@ -36,6 +37,7 @@ const Subscribe = () => {
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [plan, setPlan] = useState<SubscriptionPlan>();
   const [selectedPrice, setSelectedPrice] = useState<string>();
+  const [coupon, setCoupon] = useState<string>("");
 
   const fetchPlanDetails = useCallback(async (planId: string) => {
     try {
@@ -43,7 +45,7 @@ const Subscribe = () => {
       setPlan(res.data);
     } catch (error) {
       console.log("Error fetching plan: ", error);
-      showErrorToast("Erro ao buscar os detalhes do plano");
+      showErrorToast(strings.subscribeErrors.fetchPlan);
     }
 
     setIsFetchingPlan(false);
@@ -59,7 +61,12 @@ const Subscribe = () => {
 
   const createCheckout = async (priceId: string) => {
     if (!userState.profile) {
-      showErrorToast("Entre para efetuar a assinatura.");
+      showErrorToast(strings.subscribeErrors.signInToSubscribe);
+      return;
+    }
+
+    if (userState.activeSubscription) {
+      showErrorToast(strings.subscribeErrors.activeSubscriptionFoundCancel);
       return;
     }
 
@@ -72,7 +79,8 @@ const Subscribe = () => {
         priceId,
         userState.profile.email,
         currency,
-        lang
+        lang,
+        coupon
       );
 
       const newSession = res.data;
@@ -320,6 +328,26 @@ const Subscribe = () => {
                   />
                 ))}
               </RadioGroup>
+            </div>
+
+            <div>
+              <TriplePageTitle
+                titles={[strings.doYouHaveACoupon, strings.typeHere]}
+                baseSize={1.5}
+                sizes={[1.5, 1]}
+                weights={[800, 400]}
+                colors={["black"]}
+              />
+              <Box mt="32px">
+                <TextField
+                  placeholder={strings.couponExample}
+                  value={coupon}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    setCoupon(value);
+                  }}
+                />
+              </Box>
             </div>
 
             <Box
