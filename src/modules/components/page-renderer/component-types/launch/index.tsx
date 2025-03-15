@@ -165,7 +165,10 @@ const LaunchComponent = ({
           {strings.launchPrefixText}
         </Grid>
         {component.launchDate && (
-          <Countdown date={new Date(2025, 9, 15)} renderer={renderer} />
+          <Countdown
+            date={new Date(component.launchDate)}
+            renderer={renderer}
+          />
         )}
         <Grid
           container
