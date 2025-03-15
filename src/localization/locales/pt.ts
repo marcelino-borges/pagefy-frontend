@@ -112,6 +112,7 @@ export const pt: IDictionary = {
   },
   removeIcon: "Remover Ícone",
   removeComponent: "Remover Componente",
+  findingSubscriptionsHistory: "Buscando histórico de assinaturas",
   removePage: "Remover Página",
   iconName: "Nome do ícone",
   back: "Voltar",
@@ -254,11 +255,11 @@ export const pt: IDictionary = {
     passwordMustAttendRequirements:
       "Senha precisa atender aos requisitos mínimos.",
     invalidToken: "Erro de autenticação. Tente entrar novamente.",
-    signInAgain: "Por favor entre novamente.",
     notAllowed: "Não permitido.",
     accountExistsWithDifferentCredential:
       "Conta existe, porém possui outro método de entrar. Tente novamente com o método correto.",
   },
+  signInAgain: "Por favor entre novamente.",
   generalErrors: {
     errorSignUp: "Erro ao criar sua conta.",
     errorSignIn: "Erro ao entrar.",
@@ -422,16 +423,14 @@ export const pt: IDictionary = {
   freePlan: {
     name: "Free",
     benefits: [
-      "Cadastre-se sem cartão de crédito",
-      "Crie uma página única e atraente",
-      "Crie botões ilimitados",
-      "Crie ícones ilimitados",
-      "Crie videos ilimitados",
-      "Crie lançamentos ilimitados",
-      "Compartilhe sem limites",
-      "Incorpore qualquer vídeo do Youtube",
-      "Utilize um link único para sua página",
-      "Personalize cada cor de fundo e de texto da sua página",
+      "Botões ilimitados",
+      "Ícones ilimitados",
+      "Vídeos ilimitados",
+      "Lançamentos ilimitados",
+      "Compartilhamento sem limites",
+      "Incorporação de vídeos do Youtube",
+      "Link único para página",
+      "Personalização de cores",
     ],
   },
   vipPlan: {
@@ -596,4 +595,15 @@ export const pt: IDictionary = {
   processingCheckout: "Processando checkout...",
   subscribeRedirectStripeDisclaimer:
     "Ao clicar em ASSINAR você será redirecionado para uma página externa do Stripe (meio de pagamento) e será redirecionado de volta após o pagamento.",
+  endsAt: "Termina em",
+  planFeatures: {
+    whatYourPlanHas: "O que seu plano tem",
+    analytics: "Analytics",
+    customJs: "Javascript personalizado",
+    animations: "Animações",
+    launchDateComponent: "Componente com data de lançamento",
+    maxPages: "Máximo de páginas",
+    specialSupport: "Suporte especial",
+    watermark: "Marca d'água",
+  },
 };

@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Box, Button, Grid, Stack } from "@mui/material";
 import strings from "../../../localization";
 import { FeaturedCardsContainer, List, ListItem } from "./style";
-import routes from "../../../routes/paths";
+import PAGES_ROUTES from "../../../routes/paths";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
@@ -11,6 +11,9 @@ import { Icon } from "@iconify/react";
 import { useEffect, useState } from "react";
 import { SubscriptionPlan } from "../../../store/plans/types";
 import { getAllPlans } from "../../../services/payments";
+import { ANALYTICS_EVENTS } from "../../../constants";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { toBase64 } from "../../../utils";
 
 interface IPlansCards2Props {
   pl?: string;
@@ -38,13 +41,11 @@ const PlansCards2 = ({
     let route = "";
 
     if (isLoggedIn) {
-      route = routes.subscribe;
+      route = `${PAGES_ROUTES.subscribe}${planId?.length ? `/${planId}` : ""}`;
     } else {
-      route = routes.signUp;
-    }
-
-    if (planId?.length) {
-      route += `?planId=${planId}`;
+      route = `${PAGES_ROUTES.signUp}${
+        planId?.length ? `?planId=${planId}` : ""
+      }`;
     }
 
     navigate(route);
@@ -71,7 +72,13 @@ const PlansCards2 = ({
 
   useEffect(() => {
     fetchPlans();
-  }, []);
+
+    logAnalyticsEvent(ANALYTICS_EVENTS.viewItemList, {
+      item_list_name: "Plans cards",
+      location: window.location.pathname,
+      email: toBase64(userState.profile?.email),
+    });
+  }, [userState]);
 
   const ListIcon = () => (
     <Icon
@@ -155,6 +162,11 @@ const PlansCards2 = ({
                 fullWidth
                 variant="contained"
                 onClick={() => {
+                  logAnalyticsEvent(ANALYTICS_EVENTS.selectItem, {
+                    item_list_id: "free",
+                    item_list_name: "Free plan",
+                    email: toBase64(userState.profile?.email),
+                  });
                   loadSignUpOrPurchase();
                 }}
               >
@@ -237,6 +249,11 @@ const PlansCards2 = ({
                 fullWidth
                 variant="contained"
                 onClick={() => {
+                  logAnalyticsEvent(ANALYTICS_EVENTS.selectItem, {
+                    item_list_id: plan.id,
+                    item_list_name: plan.name,
+                    email: toBase64(userState.profile?.email),
+                  });
                   loadSignUpOrPurchase(plan.id);
                 }}
               >

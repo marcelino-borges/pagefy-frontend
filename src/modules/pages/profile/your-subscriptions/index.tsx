@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getSubscriptions } from "../../../../store/user/actions";
+import { useCallback, useEffect, useState } from "react";
 import {
+  Box,
+  Grid,
   Stack,
   Table,
   TableBody,
@@ -11,41 +11,70 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { IApplicationState } from "../../../../store";
 import SubscriptionDetailsDialog from "./dialog-sub-details";
 import { InteractiveRow, TableContainer } from "./style";
 import { formatToDateOnly } from "../../../../utils/dates";
 import TriplePageTitle from "../../../components/page-title";
 import strings from "../../../../localization";
 import { COMPLEMENTARY_COLOR } from "../../../../styles/colors";
-import { UserSubscription } from "../../../../store/user-subscriptions";
+import {
+  PlanFeatures,
+  UserSubscription,
+} from "../../../../store/user-subscriptions";
+import { getUserSubscriptions } from "../../../../services/payments";
+import { toBase64, translateBoolToYesNo } from "../../../../utils";
+import LoadingSpinner from "../../../components/loading-spinner";
+import { ANALYTICS_EVENTS } from "../../../../constants";
+import PAGES_ROUTES from "../../../../routes/paths";
+import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../../store";
 
 interface IFinanceProps {
   userId: string;
+  activeSubscription?: UserSubscription;
+  planFeatures?: PlanFeatures;
 }
 
-const YourSubscriptions = ({ userId }: IFinanceProps) => {
-  const dispatch = useDispatch();
+const YourSubscriptions = ({
+  userId,
+  activeSubscription,
+  planFeatures,
+}: IFinanceProps) => {
   const isSmallerThan500 = useMediaQuery("(max-width: 500px");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isFetchingSubscription, setIsFetchingSubscription] = useState(false);
   const [subscriptionToShowDetails, setSubscriptionToShowDetails] =
     useState<UserSubscription>();
 
-  const subscriptions = useSelector(
-    (state: IApplicationState) => state.user.subscriptions
+  const [subscriptions, setSubscriptions] = useState<UserSubscription[]>([]);
+
+  const userProfile = useSelector(
+    (state: IApplicationState) => state.user.profile
   );
 
-  const fetchSubscriptions = () => {
-    dispatch(
-      getSubscriptions(userId, undefined, (errorDetails: string) => {
-        setErrorMessage(errorDetails);
-      })
-    );
-  };
+  const fetchSubscriptions = useCallback(async () => {
+    setIsFetchingSubscription(true);
+    try {
+      const subs = await getUserSubscriptions(userId);
+      setSubscriptions(subs.data);
+    } catch (error) {
+      setErrorMessage((error as Error).message);
+    }
+    setIsFetchingSubscription(false);
+  }, [userId]);
 
   useEffect(() => {
     fetchSubscriptions();
-  }, []);
+  }, [fetchSubscriptions]);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.profile + "/your-subscriptions",
+      page_title: "Profile Your Subscriptions",
+      email: toBase64(userProfile?.email),
+    });
+  }, [userProfile?.email]);
 
   return (
     <>
@@ -53,7 +82,88 @@ const YourSubscriptions = ({ userId }: IFinanceProps) => {
         titles={[strings.yourSubscriptions, strings.finance.subtitle, ""]}
         increasingSize
       />
-      {subscriptions?.length && !errorMessage && (
+      <Grid item pb="8px" mt="32px">
+        <h3 style={{ fontWeight: 400 }}>
+          <span>{`${strings.yourPlanIs}: `}</span>
+          <span>
+            <strong>
+              <i>
+                {activeSubscription
+                  ? activeSubscription.planName
+                  : strings.freePlan.name}
+              </i>
+            </strong>
+          </span>
+          {activeSubscription && (
+            <span>
+              {" "}
+              ({strings.endsAt}{" "}
+              {formatToDateOnly(activeSubscription.currentPeriodEnd)})
+            </span>
+          )}
+        </h3>
+        <h3>{strings.planFeatures.whatYourPlanHas}:</h3>
+        <Stack direction="column" gap="8px" mt="16px" fontSize="0.8rem">
+          <Stack direction="column" gap="8px">
+            {strings.freePlan.benefits.map((benefit) => (
+              <div key={benefit + Math.round(Math.random() * 10000)}>
+                - {benefit}: <strong>{translateBoolToYesNo(true)}</strong>
+              </div>
+            ))}
+          </Stack>
+          <div>
+            - {strings.planFeatures.maxPages}:{" "}
+            <strong>{planFeatures ? planFeatures.maxPages : 1}</strong>
+          </div>
+          <div>
+            - {strings.planFeatures.animations}:{" "}
+            <strong>
+              {translateBoolToYesNo(
+                planFeatures ? planFeatures.animations : false
+              )}
+            </strong>
+          </div>
+          <div>
+            - {strings.planFeatures.customJs}:{" "}
+            <strong>
+              {translateBoolToYesNo(
+                planFeatures ? planFeatures.customJs : false
+              )}
+            </strong>
+          </div>
+          <div>
+            - {strings.planFeatures.launchDateComponent}:{" "}
+            <strong>
+              {translateBoolToYesNo(
+                planFeatures ? planFeatures.componentActivationSchedule : false
+              )}
+            </strong>
+          </div>
+          <div>
+            - {strings.planFeatures.analytics}:{" "}
+            <strong>
+              {translateBoolToYesNo(
+                planFeatures ? planFeatures.analytics : false
+              )}
+            </strong>
+          </div>
+          <div>
+            - {strings.planFeatures.specialSupport}:{" "}
+            <strong>
+              {translateBoolToYesNo(
+                planFeatures ? planFeatures.specialSupport : false
+              )}
+            </strong>
+          </div>
+        </Stack>
+      </Grid>
+      {isFetchingSubscription && (
+        <Stack direction="row" gap="16px" mt="50px" alignItems="center">
+          <LoadingSpinner color="black" size={30} />
+          {strings.findingSubscriptionsHistory}
+        </Stack>
+      )}
+      {!isFetchingSubscription && !!subscriptions?.length && !errorMessage && (
         <TableContainer component={Paper} style={{ marginTop: "50px" }}>
           <Table>
             <TableHead>
@@ -124,11 +234,10 @@ const YourSubscriptions = ({ userId }: IFinanceProps) => {
                             : "black",
                         }}
                       >
-                        {subscription.canceledAt
+                        {!!subscription.canceledAt
                           ? strings.subscriptionPayment.subscriptionStatuses
-                          : subscription.isActive
-                          ? strings.yes
-                          : strings.no}
+                              .canceled
+                          : translateBoolToYesNo(subscription.isActive)}
                       </span>
                     </TableCell>
                   </InteractiveRow>

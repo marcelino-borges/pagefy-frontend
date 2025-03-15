@@ -1,8 +1,11 @@
 import { AxiosResponse } from "axios";
 import { paymentsApi } from "../../config/axios";
-import { PlansTypes } from "../../store/user/types";
 import { CheckoutSession } from "../../store/checkout";
 import { SubscriptionPlan } from "../../store/plans/types";
+import {
+  SubscriptionDetails,
+  UserSubscription,
+} from "../../store/user-subscriptions";
 
 export const getAllPlans = async (): Promise<AxiosResponse<any>> => {
   return paymentsApi.get("/plans");
@@ -34,24 +37,6 @@ export const getCheckoutSessionById = async (
   return paymentsApi.get(`/checkout/session/${sessionId}`);
 };
 
-export const getPaymentIntent = async (
-  paymentIntentId: string
-): Promise<AxiosResponse<any>> => {
-  return paymentsApi.get(`/subscription/paymentintent/${paymentIntentId}`);
-};
-
-export const createSubscription = async (
-  currency: string,
-  recurrency: string,
-  planType: PlansTypes
-): Promise<AxiosResponse<any>> => {
-  return paymentsApi.post(`/subscription`, {
-    currency,
-    recurrency,
-    planType,
-  });
-};
-
 export const cancelSubscription = async (
   subscriptionId: string
 ): Promise<AxiosResponse<any>> => {
@@ -62,6 +47,12 @@ export const cancelSubscription = async (
 
 export const getUserSubscriptions = async (
   userId: string
-): Promise<AxiosResponse<any>> => {
+): Promise<AxiosResponse<UserSubscription[]>> => {
   return paymentsApi.get(`/subscription/user/${userId}`);
+};
+
+export const getUserActiveSubscription = (
+  userId: string
+): Promise<AxiosResponse<SubscriptionDetails>> => {
+  return paymentsApi.get(`/subscription/active/user/${userId}`);
 };

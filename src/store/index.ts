@@ -18,7 +18,6 @@ import { IPageManagementState } from "./page-management/types";
 import { IPageRenderedState } from "./page-renderer/types";
 import { IAuthState } from "./auth/types";
 import { ISharedState } from "./shared/types";
-import { IPurchaseState } from "./purchase/types";
 import { ISupportState } from "./support/types";
 import { ITestimonialState } from "./testimonials/types";
 import { IFaqState } from "./faq/types";
@@ -30,7 +29,6 @@ import pageRendererReducer from "./page-renderer/reducer";
 import userPagesReducer from "./user-pages/reducer";
 import authReducer from "./auth/reducer";
 import sharedReducer from "./shared/reducer";
-import purchaseReducer from "./purchase/reducer";
 import supportReducer from "./support/reducer";
 import testimonialReducer from "./testimonials/reducer";
 import faqReducer from "./faq/reducer";
@@ -42,7 +40,6 @@ export interface IApplicationState {
   pageManagement: IPageManagementState;
   pageRendered: IPageRenderedState;
   shared: ISharedState;
-  purchase: IPurchaseState;
   support: ISupportState;
   testimonials: ITestimonialState;
   faq: IFaqState;
@@ -77,7 +74,6 @@ const rootReducer = combineReducers({
   pageManagement: pageManagementReducer,
   pageRendered: pageRendererReducer,
   shared: sharedReducer,
-  purchase: purchaseReducer,
   support: supportReducer,
   testimonials: testimonialReducer,
   faq: faqReducer,

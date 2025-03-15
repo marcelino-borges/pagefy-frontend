@@ -18,13 +18,17 @@ import Navigation from "../../components/navigation";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { useEffect, useState } from "react";
 import strings from "../../../localization";
-import { ALLOW_SIGNUP, EMAIL_REGEX, PASSWORD_REGEX } from "../../../constants";
+import {
+  ALLOW_SIGNUP,
+  ANALYTICS_EVENTS,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+} from "../../../constants";
 import { signIn, signOut, signUp } from "../../../store/auth/actions";
 import { showErrorToast } from "./../../../utils/toast";
-import routes from "./../../../routes/paths";
-import { PlansTypes, IUser } from "../../../store/user/types";
+import PAGES_ROUTES from "./../../../routes/paths";
 import { getUser } from "./../../../store/user/actions";
-import { capitalizeOnlyFirstLetter } from "../../../utils";
+import { capitalizeOnlyFirstLetter, toBase64 } from "../../../utils";
 import { setSessionStorage } from "../../../utils/storage";
 import { IUserAuth } from "../../../store/auth/types";
 import { setRecaptchaScript } from "../../../utils/recaptcha-v3";
@@ -32,6 +36,8 @@ import InternalLink from "../../components/internal-link";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
 import Meta from "../../components/meta";
 import images from "../../../assets/img";
+import { IUser } from "../../../store/user/types";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 
 const INITIAL_VALUES = {
   firstName: "",
@@ -59,6 +65,13 @@ const SignUpPage = () => {
     setRecaptchaScript(document);
   }, [dispatch]);
 
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.signUp,
+      page_title: "Sign Up",
+    });
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
       ...values,
@@ -68,12 +81,12 @@ const SignUpPage = () => {
 
   const loadDashboardOrPurchase = () => {
     if (planId?.length) {
-      navigate(`${routes.subscribe}/${planId}`);
+      navigate(`${PAGES_ROUTES.subscribe}/${planId}`);
 
       return;
     }
 
-    navigate(routes.pages);
+    navigate(PAGES_ROUTES.pages);
   };
 
   const onSubmit = () => {
@@ -91,7 +104,6 @@ const SignUpPage = () => {
       confirmPassword: values.confirmPassword,
       receiveCommunications,
       agreePrivacy,
-      plan: PlansTypes.FREE,
     };
 
     if (!newUser.email.match(EMAIL_REGEX)) {
@@ -107,12 +119,23 @@ const SignUpPage = () => {
     dispatch(
       signUp(
         newUser,
-        async (user: IUser) => {
+        async (user: IUser, providerName: string) => {
+          logAnalyticsEvent(ANALYTICS_EVENTS.signUp, {
+            method: providerName,
+          });
+
           dispatch(
             signIn(
               { email: values.email, password: values.password },
-              (_: string, auth: IUserAuth) => {
+              (_: string, auth: IUserAuth, userData: IUser) => {
                 setSessionStorage("auth", JSON.stringify(auth));
+                logAnalyticsEvent(ANALYTICS_EVENTS.login, {
+                  method: providerName,
+                  userAuthId: auth.uid,
+                  username: `${userData.firstName} ${userData.lastName}`,
+                  email: toBase64(userData.email),
+                });
+
                 dispatch(
                   getUser(user.email, (user: IUser) => {
                     setSessionStorage("user", JSON.stringify(user));
@@ -288,11 +311,11 @@ const SignUpPage = () => {
               label={
                 <>
                   {strings.agreeWith}{" "}
-                  <InternalLink to={routes.terms}>
+                  <InternalLink to={PAGES_ROUTES.terms}>
                     {strings.termsOfUse}
                   </InternalLink>{" "}
                   {strings.and}{" "}
-                  <InternalLink to={routes.privacy}>
+                  <InternalLink to={PAGES_ROUTES.privacy}>
                     {strings.privacyPolicies}
                   </InternalLink>
                 </>
@@ -328,7 +351,8 @@ const SignUpPage = () => {
           >
             <InternalLink
               to={
-                routes.signIn + `${planId?.length ? `?planId=${planId}` : ""}`
+                PAGES_ROUTES.signIn +
+                `${planId?.length ? `?planId=${planId}` : ""}`
               }
             >
               {strings.alreadyHaveAccount}

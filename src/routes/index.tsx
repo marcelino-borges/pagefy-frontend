@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { IApplicationState } from "../store";
-import routes from "./paths";
+import PAGES_ROUTES from "./paths";
 import Support from "./../modules/pages/support";
 import UserPages from "./../modules/pages/user-pages";
 import strings from "./../localization";
@@ -23,8 +23,6 @@ import CoockiesPoliciesPage from "../modules/pages/cookies-policies";
 import GDPRPopup from "../modules/components/gdpr-popup";
 import { getStorage, setStorage } from "./../utils/storage/index";
 import { GDPR_CONSENT_STORAGE_KEY } from "../constants";
-import PurchasePlanPage from "../modules/pages/purchase-plan";
-import PaymentResult from "../modules/pages/purchase-plan/payment-result/index";
 import PlansPage from "../modules/pages/plans";
 import Home2 from "../modules/pages/homes/home2";
 import CheckoutSuccess from "../modules/pages/checkout-success";
@@ -93,24 +91,31 @@ const AppRoutes = () => {
       )}
       {isLoading && <LoadingSpinner isFullPage />}
       <Routes>
-        <Route path={routes.root} element={<Home2 />} />
-        <Route path={routes.signIn} element={<SignInPage />} />
-        <Route path={routes.signUp} element={<SignUpPage />} />
-        <Route path={routes.pages} element={<UserPages />} />
-        <Route path={`${routes.page}/:id`} element={<UserPage />} />
+        <Route path={PAGES_ROUTES.root} element={<Home2 />} />
+        <Route path={PAGES_ROUTES.signIn} element={<SignInPage />} />
+        <Route path={PAGES_ROUTES.signUp} element={<SignUpPage />} />
+        <Route path={PAGES_ROUTES.pages} element={<UserPages />} />
+        <Route path={`${PAGES_ROUTES.page}/:id`} element={<UserPage />} />
         <Route path="/:url" element={<PageRenderer />} />
-        <Route path={routes.faq} element={<Faq />} />
-        <Route path={routes.support} element={<Support />} />
-        <Route path={routes.profile} element={<Profile />} />
-        <Route path={routes.privacy} element={<PrivacyPage />} />
-        <Route path={routes.terms} element={<TermsPage />} />
-        <Route path={routes.cookies} element={<CoockiesPoliciesPage />} />
-        <Route path={routes.purchasePlan} element={<PurchasePlanPage />} />
-        <Route path={`${routes.subscribe}/:planId`} element={<Subscribe />} />
-        <Route path={routes.purchaseSuccess} element={<PaymentResult />} />
-        <Route path={routes.plans} element={<PlansPage />} />
-        <Route path={routes.checkoutSuccess} element={<CheckoutSuccess />} />
-        <Route path={routes.checkoutCancel} element={<CheckoutCancel />} />
+        <Route path={PAGES_ROUTES.faq} element={<Faq />} />
+        <Route path={PAGES_ROUTES.support} element={<Support />} />
+        <Route path={PAGES_ROUTES.profile} element={<Profile />} />
+        <Route path={PAGES_ROUTES.privacy} element={<PrivacyPage />} />
+        <Route path={PAGES_ROUTES.terms} element={<TermsPage />} />
+        <Route path={PAGES_ROUTES.cookies} element={<CoockiesPoliciesPage />} />
+        <Route
+          path={`${PAGES_ROUTES.subscribe}/:planId`}
+          element={<Subscribe />}
+        />
+        <Route path={PAGES_ROUTES.plans} element={<PlansPage />} />
+        <Route
+          path={PAGES_ROUTES.checkoutSuccess}
+          element={<CheckoutSuccess />}
+        />
+        <Route
+          path={PAGES_ROUTES.checkoutCancel}
+          element={<CheckoutCancel />}
+        />
         <Route
           path="*"
           element={

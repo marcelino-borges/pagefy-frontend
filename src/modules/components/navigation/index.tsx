@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { Parent } from "./style";
-import routes from "./../../../routes/paths";
+import PAGES_ROUTES from "./../../../routes/paths";
 import { Link } from "react-router-dom";
 import logos from "../../../assets/img/logos";
 import { useSelector } from "react-redux";
@@ -103,7 +103,9 @@ const Navigation = ({ variant = "fixed" }: INavigationProps) => {
             : HEADER_HEIGHT_DESKTOP,
         }}
       >
-        <Link to={userState.profile?._id ? routes.pages : routes.root}>
+        <Link
+          to={userState.profile?._id ? PAGES_ROUTES.pages : PAGES_ROUTES.root}
+        >
           {isSmallerThan420 ? (
             <img
               src={logos.LogoIconColorPng}

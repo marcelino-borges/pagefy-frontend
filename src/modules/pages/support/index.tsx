@@ -15,13 +15,16 @@ import {
 import { showErrorToast } from "./../../../utils/toast/index";
 import { SentUserContactResult } from "./../../../store/support/types";
 import { callRecaptcha, setRecaptchaScript } from "../../../utils/recaptcha-v3";
-import routes from "./../../../routes/paths";
+import PAGES_ROUTES from "./../../../routes/paths";
 import { IApplicationState } from "./../../../store/index";
 import InternalLink from "../../components/internal-link";
 import Footer from "../../components/footer";
 import PrivateRouteChecker from "../../components/private-route-checker";
 import Meta from "../../components/meta";
 import images from "../../../assets/img";
+import { ANALYTICS_EVENTS } from "../../../constants";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { toBase64 } from "../../../utils";
 
 const INITIAL_VALUES: IUserContact = {
   name: "",
@@ -43,6 +46,14 @@ const Support = () => {
   useEffect(() => {
     setRecaptchaScript(document);
   }, []);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.support,
+      page_title: "Support",
+      email: toBase64(userProfile?.email),
+    });
+  }, [userProfile?.email]);
 
   const onSubmit = () => {
     callRecaptcha(window, (token?: string) => {
@@ -110,7 +121,7 @@ const Support = () => {
                   color={PRIMARY_COLOR}
                   fontWeight={600}
                 >
-                  <InternalLink to={routes.root}>
+                  <InternalLink to={PAGES_ROUTES.root}>
                     {strings.goToHomePage}
                   </InternalLink>{" "}
                 </Grid>
@@ -121,7 +132,7 @@ const Support = () => {
                   color={PRIMARY_COLOR}
                   fontWeight={600}
                 >
-                  <InternalLink to={routes.pages}>
+                  <InternalLink to={PAGES_ROUTES.pages}>
                     {strings.goToPages}
                   </InternalLink>
                 </Grid>

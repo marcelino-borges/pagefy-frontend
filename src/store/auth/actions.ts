@@ -12,7 +12,7 @@ import { translateError } from "../../utils/api-errors-mapping";
 import strings from "../../localization";
 import { IAppResult } from "../shared/types";
 import { getFirebaseToken } from "../../config/firebase/index";
-import { IUser, PlansTypes } from "../user/types";
+import { IUser } from "../user/types";
 import { clearUserState, getUserSuccess } from "../user/actions";
 import { clearPageManagementState } from "../page-management/actions";
 import { clearUserPagesState } from "../user-pages/actions";
@@ -22,28 +22,49 @@ import { clearStorage } from "../../utils/storage";
 export const signIn =
   (
     credentials: IUserCredentials,
-    onSuccessCallback: any = null,
+    onSuccessCallback:
+      | ((
+          token: string,
+          auth: IUserAuth,
+          userData: IUser,
+          providerName?: string
+        ) => void)
+      | null = null,
     onErrorCallback: any = null
   ) =>
   (dispatch: any) => {
     dispatch(signInLoading());
     AuthService.signIn(credentials)
-      .then(async (user: UserCredential) => {
+      .then(async (credential: UserCredential) => {
         const token = await getFirebaseToken();
 
-        if (!token) {
-          if (onErrorCallback) onErrorCallback(user);
+        const [firstName, lastName] = credential.user.displayName
+          ? credential.user.displayName.split(" ")
+          : ["Name", "Lastname"];
+
+        if (!token || !credential.user.email) {
+          if (onErrorCallback) onErrorCallback(credential);
           return;
         }
 
         const auth: IUserAuth = {
           accessToken: token,
-          uid: user.user.uid,
+          uid: credential.user.uid,
+        };
+
+        const userData: IUser = {
+          email: credential.user.email,
+          firstName,
+          lastName,
+          authId: credential.user.uid,
+          receiveCommunications: true,
+          agreePrivacy: true,
         };
 
         dispatch(signInSuccess(auth));
 
-        if (onSuccessCallback) onSuccessCallback(token, auth);
+        if (onSuccessCallback)
+          onSuccessCallback(token, auth, userData, "credential");
       })
       .catch((e: FirebaseError) => {
         const errorCode: string = e.code;
@@ -72,7 +93,13 @@ const signInError = (error: any) => ({
 });
 
 export const signUp =
-  (user: any, onSuccessCallback: any = null, onErrorCallback: any = null) =>
+  (
+    user: any,
+    onSuccessCallback:
+      | ((userData: IUser, providerName: string) => void)
+      | null = null,
+    onErrorCallback: ((errorMessage: string) => void) | null = null
+  ) =>
   (dispatch: any) => {
     dispatch(signUpLoading());
 
@@ -89,7 +116,7 @@ export const signUp =
           .then((res: AxiosResponse) => {
             dispatch(signUpSuccess());
             dispatch(getUserSuccess(res.data));
-            if (onSuccessCallback) onSuccessCallback(res.data);
+            if (onSuccessCallback) onSuccessCallback(res.data, "credentials");
           })
           .catch((error: AxiosError) => {
             AuthService.deleteUserAuth();
@@ -165,7 +192,12 @@ export const signInWithProvider =
   (
     provider: GoogleAuthProvider | FacebookAuthProvider | OAuthProvider,
     onSuccessCallback:
-      | ((token: string, auth: IUserAuth, userData: IUser) => void)
+      | ((
+          token: string,
+          auth: IUserAuth,
+          userData: IUser,
+          providerName?: string
+        ) => void)
       | null = null,
     onErrorCallback: ((error?: string) => void) | null = null
   ) =>
@@ -174,13 +206,18 @@ export const signInWithProvider =
     AuthService.signInWithProvider(provider)
       .then(async (result: UserCredential) => {
         let credential;
+        let providerName;
 
-        if (provider instanceof GoogleAuthProvider)
+        if (provider instanceof GoogleAuthProvider) {
           credential = GoogleAuthProvider.credentialFromResult(result);
-        else if (provider instanceof FacebookAuthProvider)
+          providerName = "Google";
+        } else if (provider instanceof FacebookAuthProvider) {
           credential = FacebookAuthProvider.credentialFromResult(result);
-        else if (provider instanceof OAuthProvider)
+          providerName = "Facebook";
+        } else if (provider instanceof OAuthProvider) {
           credential = OAuthProvider.credentialFromResult(result);
+          providerName = "OAuth";
+        }
 
         const email = result.user.email;
         const [firstName, lastName] = result.user.displayName
@@ -218,15 +255,14 @@ export const signInWithProvider =
           firstName,
           lastName,
           authId: user.uid,
-          plan: PlansTypes.BOOST,
           receiveCommunications: true,
           agreePrivacy: true,
         };
 
         dispatch(signInWithProviderSuccess(auth));
-        console.log("4");
 
-        if (onSuccessCallback) onSuccessCallback(token, auth, userData);
+        if (onSuccessCallback)
+          onSuccessCallback(token, auth, userData, providerName);
       })
       .catch((error: FirebaseError) => {
         const errorCode: string = error.code;

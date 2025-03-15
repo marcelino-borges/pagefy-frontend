@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Grid, useMediaQuery } from "@mui/material";
 import Navigation from "../../../components/navigation";
 import strings from "../../../../localization";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import { clearLoading } from "../../../../store/shared/actions";
 import FullWidthContent from "../../../components/site-content/full-width";
 import homeImages, { IHomepageBanner } from "../../../../assets/img/home/home";
@@ -22,7 +22,6 @@ import {
 import { clearBackgroundImage, setBackgroundImage } from "./utils";
 import UserTestimonialCard from "../../../components/user-testimonial-card";
 import TriplePageTitle from "../../../components/page-title";
-import PlansCards1 from "../../../components/plans-cards1";
 import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
@@ -104,7 +103,7 @@ const Home1 = () => {
         </Grid>
 
         {/* PLANS FEATURED CARDS */}
-        <PlansCards1 py="70px" />
+        {/* <PlansCards1 py="70px" /> */}
 
         {/* LAST SECTION */}
         <SignUpSection container direction="column">
@@ -118,7 +117,9 @@ const Home1 = () => {
           </CreateYourBio>
           <PromoDuration item>30 {strings.days}</PromoDuration>
           <Grid container justifyContent="center">
-            <SignupButton to={routes.signUp}>{strings.clickHere}</SignupButton>
+            <SignupButton to={PAGES_ROUTES.signUp}>
+              {strings.clickHere}
+            </SignupButton>
           </Grid>
         </SignUpSection>
         <Grid

@@ -16,3 +16,8 @@ export const deleteUser = async (
   authId: string
 ): Promise<AxiosResponse<any>> =>
   await registrationApi.delete(`/user?userId=${userId}&authId=${authId}`);
+
+export const canUserCreatePage = async (
+  userId: string
+): Promise<AxiosResponse<any>> =>
+  await registrationApi.get(`/user/${userId}/can-create-page`);

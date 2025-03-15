@@ -1,6 +1,7 @@
 import { Grid, Stack, useMediaQuery } from "@mui/material";
 import images from "../../../../assets/img";
 import {
+  ANALYTICS_EVENTS,
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from "../../../../constants";
@@ -34,7 +35,7 @@ import {
   COMPLEMENTARY_COLOR_DARK,
   PRIMARY_COLOR,
 } from "../../../../styles/colors";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import { PRIMARY_COLOR_DARK } from "./../../../../styles/colors";
 import { Icon } from "@iconify/react";
 import TriplePageTitle from "../../../components/page-title";
@@ -46,6 +47,8 @@ import PlansCards2 from "../../../components/plans-cards2";
 import TestimonialsSlidy from "../../../components/user-testimonials-slidy";
 import strings from "../../../../localization";
 import Meta from "../../../components/meta";
+import { useEffect } from "react";
+import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
 
 const Home2 = () => {
   const isSmallerThan900 = useMediaQuery("(max-width: 900px");
@@ -65,6 +68,13 @@ const Home2 = () => {
       ))}
     </Stack>
   );
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.root,
+      page_title: "Home 2",
+    });
+  }, []);
 
   return (
     <>
@@ -97,7 +107,7 @@ const Home2 = () => {
                   bgColor={PRIMARY_COLOR}
                   fontColor="white"
                   hoverBgColor={PRIMARY_COLOR_DARK}
-                  to={routes.signUp}
+                  to={PAGES_ROUTES.signUp}
                 >
                   {strings.home2.buttonCreateFreeAccount}
                 </CustomButton>
@@ -191,7 +201,7 @@ const Home2 = () => {
             fontColor="white"
             hoverBgColor={COMPLEMENTARY_COLOR_DARK}
             style={{ width: "fit-content" }}
-            to={routes.signUp}
+            to={PAGES_ROUTES.signUp}
           >
             {`${strings.home2.section1.button[0]} `}
             {strings.platinumPlan.name}

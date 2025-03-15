@@ -1,28 +1,4 @@
 import strings from "../../localization";
-import { PlansTypes } from "../../store/user/types";
-
-export const getPlanByPriceId = (priceId: string) => {
-  if (
-    priceId === "price_1LrhKuJd6mDEaHvNsxKOzxOs" ||
-    priceId === "price_1LrhKuJd6mDEaHvNbBIEue6O"
-  )
-    return PlansTypes.NEON;
-  else if (
-    priceId === "price_1LrhNxJd6mDEaHvNQAJk9Poq" ||
-    priceId === "price_1LrhNxJd6mDEaHvNbisiwqV5"
-  )
-    return PlansTypes.BOOST;
-  else return PlansTypes.FREE;
-};
-
-export const getPlanNameByType = (type: PlansTypes): any => {
-  return Object.values(PlansTypes)[type].toString();
-};
-
-export const getPlanNameByPriceId = (priceId: string): any => {
-  const planType: PlansTypes = getPlanByPriceId(priceId);
-  return getPlanNameByType(planType);
-};
 
 export const translateStatus = (status: string) => {
   switch (status) {

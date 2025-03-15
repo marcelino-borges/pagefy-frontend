@@ -20,11 +20,13 @@ import { Price, SubscriptionPlan } from "../../../store/plans/types";
 import { showErrorToast } from "../../../utils/toast";
 import { List, ListItem } from "../../components/plans-cards2/style";
 import { Icon } from "@iconify/react";
-import { CURRENCY_ABBREVIATIONS } from "../../../constants";
+import { ANALYTICS_EVENTS, CURRENCY_ABBREVIATIONS } from "../../../constants";
 import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../store";
-import { getCurrencyByLocale } from "../../../utils";
+import { getCurrencyByLocale, toBase64 } from "../../../utils";
 import images from "../../../assets/img";
+import PAGES_ROUTES from "../../../routes/paths";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 
 const Subscribe = () => {
   const userState = useSelector((state: IApplicationState) => state.user);
@@ -46,6 +48,14 @@ const Subscribe = () => {
 
     setIsFetchingPlan(false);
   }, []);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.subscribe,
+      page_title: "Subscribe",
+      email: toBase64(userState?.profile?.email),
+    });
+  }, [userState?.profile?.email]);
 
   const createCheckout = async (priceId: string) => {
     if (!userState.profile) {

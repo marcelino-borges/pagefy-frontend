@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Grid, Stack, useMediaQuery } from "@mui/material";
 import { Banner } from "./style";
 import images from "../../../../assets/img";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import Logos from "../../../../assets/img/logos";
 import { getRandomInt } from "../../../../utils";
 import { PropsWithChildren, useEffect } from "react";
@@ -41,7 +41,7 @@ const BannerHalfLayout = ({
         image={images.verticalBanners[bannerIndex]}
         bgPosition={bgPosition}
       >
-        <Link to={routes.root}>
+        <Link to={PAGES_ROUTES.root}>
           <img
             src={Logos.LogoHorizontalDarkBGBorderPNG}
             alt="Pagefy"

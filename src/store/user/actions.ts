@@ -1,13 +1,13 @@
 import { IUser, UserActionTypes } from "./../user/types";
 import * as UserService from "./../../services/user";
 import * as AuthService from "./../../services/firebase-auth";
-import * as PaymentService from "./../../services/payments";
 import * as FilesService from "./../../services/files";
 import { AxiosError, AxiosResponse } from "axios";
 import { IAppResult, UserStorageFolder } from "../shared/types";
 import { translateError } from "../../utils/api-errors-mapping";
 import { getAllUserPages } from "./../user-pages/actions";
-import { ISubscriptionCreationResult } from "./../purchase/types";
+import { getUserActiveSubscription } from "../../services/payments";
+import { SubscriptionDetails } from "../user-subscriptions";
 
 export const getUser =
   (
@@ -26,6 +26,7 @@ export const getUser =
         if (onSuccessCallback) onSuccessCallback(user);
 
         if (user._id) dispatch(getAllUserPages(user._id));
+        dispatch(getActiveSubscription);
       })
       .catch((e: AxiosError) => {
         const error: IAppResult = e.response?.data;
@@ -48,9 +49,51 @@ export const getUserSuccess = (user: IUser) => ({
   type: UserActionTypes.GET_USER_SUCCESS,
 });
 
-const getUserError = (e: IAppResult) => ({
-  payload: e,
+const getUserError = (result: IAppResult) => ({
+  payload: result,
   type: UserActionTypes.GET_USER_ERROR,
+});
+
+export const getActiveSubscription =
+  (
+    userId: string,
+    onSuccessCallback: ((user: SubscriptionDetails) => void) | null = null,
+    onErrorCallback: ((error: string) => void) | null = null
+  ) =>
+  async (dispatch: any) => {
+    dispatch(getActiveSubscriptionLoading());
+
+    getUserActiveSubscription(userId)
+      .then((res: AxiosResponse) => {
+        const subscription: SubscriptionDetails = res.data;
+        dispatch(getActiveSubscriptionSuccess(res.data));
+
+        if (onSuccessCallback) onSuccessCallback(subscription);
+      })
+      .catch((e: AxiosError) => {
+        const error: IAppResult = e.response?.data;
+        dispatch(getActiveSubscriptionError(error));
+
+        if (error && error.errorDetails) {
+          const translatedError = translateError(error.errorDetails);
+          if (onErrorCallback)
+            onErrorCallback(translatedError ?? error.message);
+        }
+      });
+  };
+
+const getActiveSubscriptionLoading = () => ({
+  type: UserActionTypes.GET_ACTIVE_SUBSCRIPTION_LOADING,
+});
+
+export const getActiveSubscriptionSuccess = (user: IUser) => ({
+  payload: user,
+  type: UserActionTypes.GET_ACTIVE_SUBSCRIPTION_SUCCESS,
+});
+
+const getActiveSubscriptionError = (result: IAppResult) => ({
+  payload: result,
+  type: UserActionTypes.GET_ACTIVE_SUBSCRIPTION_ERROR,
 });
 
 export const getUserOrCreate =
@@ -84,50 +127,6 @@ export const getUserOrCreate =
 
 const getUserOrCreateLoading = () => ({
   type: UserActionTypes.GET_USER_LOADING,
-});
-
-export const getSubscriptions =
-  (
-    userId: string,
-    onSuccessCallback: any = null,
-    onErrorCallback: any = null
-  ) =>
-  async (dispatch: any) => {
-    dispatch(getSubscriptionsLoading());
-
-    PaymentService.getUserSubscriptions(userId)
-      .then((res: AxiosResponse) => {
-        const subscriptions: ISubscriptionCreationResult[] = res.data;
-        dispatch(getSubscriptionsSuccess(subscriptions));
-
-        if (onSuccessCallback) onSuccessCallback(subscriptions);
-      })
-      .catch((e: AxiosError) => {
-        const error: IAppResult = e.response?.data;
-        dispatch(getSubscriptionsError(error));
-
-        if (error && error.errorDetails) {
-          const translatedError = translateError(error.errorDetails);
-          if (onErrorCallback)
-            onErrorCallback(translatedError ?? error.message);
-        }
-      });
-  };
-
-const getSubscriptionsLoading = () => ({
-  type: UserActionTypes.GET_SUBSCRIPTIONS_LOADING,
-});
-
-export const getSubscriptionsSuccess = (
-  subscriptions: ISubscriptionCreationResult[]
-) => ({
-  payload: subscriptions,
-  type: UserActionTypes.GET_SUBSCRIPTIONS_SUCCESS,
-});
-
-const getSubscriptionsError = (error: IAppResult) => ({
-  payload: error,
-  type: UserActionTypes.GET_SUBSCRIPTIONS_ERROR,
 });
 
 export const updateUser =

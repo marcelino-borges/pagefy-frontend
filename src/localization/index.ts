@@ -321,6 +321,7 @@ export interface IDictionary {
   noAccountYet: string;
   alreadyHaveAccount: string;
   couldntFindPage: string;
+  findingSubscriptionsHistory: string;
   authErrors: {
     urlAlreadyExists: string;
     userAlreadyExists: string;
@@ -330,10 +331,10 @@ export interface IDictionary {
     invalidEmail: string;
     passwordMustAttendRequirements: string;
     invalidToken: string;
-    signInAgain: string;
     notAllowed: string;
     accountExistsWithDifferentCredential: string;
   };
+  signInAgain: string;
   generalErrors: {
     unknownError: string;
     errorSignUp: string;
@@ -520,6 +521,17 @@ export interface IDictionary {
   perYear: string;
   processingCheckout: string;
   subscribeRedirectStripeDisclaimer: string;
+  endsAt: string;
+  planFeatures: {
+    whatYourPlanHas: string;
+    analytics: string;
+    customJs: string;
+    animations: string;
+    launchDateComponent: string;
+    maxPages: string;
+    specialSupport: string;
+    watermark: string;
+  };
 }
 
 // Composed dictionaries

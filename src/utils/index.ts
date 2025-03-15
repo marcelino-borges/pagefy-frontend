@@ -6,6 +6,7 @@ import {
 } from "../constants";
 import strings from "../localization";
 import { ComponentType } from "../store/user-pages/types";
+import { Buffer } from "buffer";
 
 /**
  * Shortens a string to the `maxSize` length
@@ -269,3 +270,9 @@ export const getCurrencyByLocale = (locale: string) => {
 
   return currency;
 };
+
+export const translateBoolToYesNo = (bool: boolean) =>
+  bool ? strings.yes : strings.no;
+
+export const toBase64 = (original?: string) =>
+  original ? Buffer.from(original).toString("base64") : undefined;

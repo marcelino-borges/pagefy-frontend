@@ -1,6 +1,6 @@
 import InternalLink from "../internal-link";
 import { GDPRPopupRoot } from "./style";
-import routes from "./../../../routes/paths";
+import PAGES_ROUTES from "./../../../routes/paths";
 import strings from "../../../localization";
 import { Grid } from "@mui/material";
 import CustomButton from "./../button-custom/index";
@@ -20,11 +20,15 @@ const GDPRPopup = ({ onConsentCallback }: IGDPRPopupProps) => {
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
           <p>
-            <InternalLink to={routes.cookies}>{strings.cookies}</InternalLink>
+            <InternalLink to={PAGES_ROUTES.cookies}>
+              {strings.cookies}
+            </InternalLink>
             {" | "}
-            <InternalLink to={routes.privacy}>{strings.privacy}</InternalLink>
+            <InternalLink to={PAGES_ROUTES.privacy}>
+              {strings.privacy}
+            </InternalLink>
             {" | "}
-            <InternalLink to={routes.terms}>{strings.terms}</InternalLink>
+            <InternalLink to={PAGES_ROUTES.terms}>{strings.terms}</InternalLink>
           </p>
         </Grid>
         <Grid item>

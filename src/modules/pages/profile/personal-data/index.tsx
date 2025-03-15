@@ -12,12 +12,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import strings from "../../../../localization";
 import { deleteUser } from "../../../../services/user";
 import { signOut } from "../../../../store/auth/actions";
-import { IUser, PlansTypes } from "../../../../store/user/types";
+import { IUser } from "../../../../store/user/types";
 import { showErrorToast, showSuccessToast } from "../../../../utils/toast";
 import InternalLink from "../../../components/internal-link";
 import TriplePageTitle from "../../../components/page-title";
 import ProfileEditableAvatar from "../../../components/profile-editable-avatar";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import {
   setUserProfileImage,
   updateUser,
@@ -26,16 +26,20 @@ import {
 import { ACESSIBILITY_RED } from "../../../../styles/colors";
 import DialogConfirmation from "../../../components/dialog-confirmation";
 import UploadImageDialog from "../../../components/dialog-upload-image";
-import { GalleryContext, IMAGE_EXTENSIONS } from "../../../../constants";
+import {
+  ANALYTICS_EVENTS,
+  GalleryContext,
+  IMAGE_EXTENSIONS,
+} from "../../../../constants";
 import { clearLoading } from "../../../../store/shared/actions";
 import CustomLink from "./../../../components/button-custom";
-import { getPlanNameByType } from "../../../../utils/stripe";
+import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
+import { toBase64 } from "../../../../utils";
 
 const INITIAL_STATE: IUser = {
   firstName: "",
   lastName: "",
   email: "",
-  plan: PlansTypes.FREE,
   agreePrivacy: false,
   receiveCommunications: false,
 };
@@ -57,13 +61,19 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
   const [chosenImage, setChosenImage] = useState<File>();
 
   useEffect(() => {
-    if (userProfile) {
-      setValues(userProfile);
-      setProfileImageTemporaryUrl(userProfile.profileImageUrl);
-    }
+    if (!userProfile?._id) return;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile]);
+    setValues(userProfile);
+    setProfileImageTemporaryUrl(userProfile.profileImageUrl);
+  }, [dispatch, userProfile]);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.profile + "/personal-data",
+      page_title: "Profile Personal Data",
+      email: toBase64(userProfile.email),
+    });
+  }, [userProfile.email]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
@@ -144,14 +154,6 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
               value={values.email}
             />
           </Grid>
-          <Grid item pt="16px" pb="8px">
-            <span>{`${strings.yourPlanIs}: `}</span>
-            <span>
-              <strong>
-                <i>{getPlanNameByType(values.plan)}</i>
-              </strong>
-            </span>
-          </Grid>
           <Grid container item direction="row" justifyContent="space-between">
             <FormControlLabel
               label={strings.wishesCommunications}
@@ -171,11 +173,11 @@ const PersonalData = ({ userProfile }: IPersonalDataProps) => {
               label={
                 <>
                   {strings.agreeWith}{" "}
-                  <InternalLink to={routes.terms}>
+                  <InternalLink to={PAGES_ROUTES.terms}>
                     {strings.termsOfUse}
                   </InternalLink>{" "}
                   {strings.and}{" "}
-                  <InternalLink to={routes.privacy}>
+                  <InternalLink to={PAGES_ROUTES.privacy}>
                     {strings.privacyPolicies}
                   </InternalLink>
                 </>

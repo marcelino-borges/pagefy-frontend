@@ -418,8 +418,8 @@ export const setComponentVisibleDate = (
 export const deletePage =
   (
     pageId: string,
-    onSuccessCallback: any = null,
-    onErrorCallback: any = null
+    onSuccessCallback: (() => void) | null = null,
+    onErrorCallback: ((errorMessage?: string) => void) | null = null
   ) =>
   async (dispatch: any) => {
     dispatch(deletePageLoading());

@@ -244,6 +244,7 @@ export const en: IDictionary = {
     "Password requirements: \n * Minimum 8 characters \n * At least 1 lowercase letter \n * At least 1 number",
 
   requiredPrivacyAccept: "You must accept terms and privacy to continue.",
+  findingSubscriptionsHistory: "Finding subscriptions history",
   authErrors: {
     urlAlreadyExists: "URl already exists.",
     userAlreadyExists: "User already exists, try another email.",
@@ -254,11 +255,11 @@ export const en: IDictionary = {
     passwordMustAttendRequirements:
       "Password must attend minimum requirements.",
     invalidToken: "Authentication error. Try to sign in again.",
-    signInAgain: "Please sign in again",
     notAllowed: "Not allowed",
     accountExistsWithDifferentCredential:
       "Account exists, but it has another sign in method. Try again with the right sign in method.",
   },
+  signInAgain: "Please sign in again",
   generalErrors: {
     errorSignUp: "Error creating your account.",
     errorSignIn: "Error to sign in.",
@@ -418,16 +419,14 @@ export const en: IDictionary = {
   freePlan: {
     name: "Free",
     benefits: [
-      "Register with no credit card",
-      "Create a single marvelous page for you",
-      "Create unlimited buttons in your page",
-      "Create unlimited icons in your page",
-      "Create unlimited videos in your page",
-      "Create unlimited launchs in your page",
-      "Share with no limits",
-      "Embed any Youtube video",
-      "Use an unique link for your page",
-      "Customize colors for each background and text",
+      "Unlimited buttons",
+      "Unlimited icons",
+      "Unlimited videos",
+      "Unlimited launchs",
+      "Unlimited share",
+      "Embedding of Youtube video",
+      "Unique page link",
+      "Custom colors",
     ],
   },
   vipPlan: {
@@ -590,4 +589,15 @@ export const en: IDictionary = {
   processingCheckout: "Processing checkout...",
   subscribeRedirectStripeDisclaimer:
     "Clicking SUBSCRIBE will redirect you to an external page maintained by Stripe (payment gateway) and you will be redirected back after payment.",
+  endsAt: "Ends at",
+  planFeatures: {
+    whatYourPlanHas: "What your plan has",
+    analytics: "Analytics",
+    customJs: "Custom Javascript",
+    animations: "Animations",
+    launchDateComponent: "Component with launch date",
+    maxPages: "Max pages",
+    specialSupport: "Special support",
+    watermark: "Watermark",
+  },
 };

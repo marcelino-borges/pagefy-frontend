@@ -1,7 +1,7 @@
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import strings from "../../../localization";
 import { FooterRoot } from "./style";
-import routes from "./../../../routes/paths";
+import PAGES_ROUTES from "./../../../routes/paths";
 import { PRIMARY_COLOR, UPPER_MEDIUM_GREY } from "../../../styles/colors";
 import ExternalLink from "../external-link";
 import InternalLink from "./../internal-link/index";
@@ -36,16 +36,22 @@ const Footer = () => {
           >
             <SectionTitle title={strings.company} />
             <Grid item>
-              <InternalLink to={routes.about}>{strings.about}</InternalLink>
+              <InternalLink to={PAGES_ROUTES.about}>
+                {strings.about}
+              </InternalLink>
             </Grid>
             <Grid item>
               <a href="https://instagram.com">Instagram</a>
             </Grid>
             <Grid item>
-              <InternalLink to={routes.signIn}>{strings.signIn2}</InternalLink>
+              <InternalLink to={PAGES_ROUTES.signIn}>
+                {strings.signIn2}
+              </InternalLink>
             </Grid>
             <Grid item>
-              <InternalLink to={routes.signUp}>{strings.signUp}</InternalLink>
+              <InternalLink to={PAGES_ROUTES.signUp}>
+                {strings.signUp}
+              </InternalLink>
             </Grid>
           </Grid>
           <Grid
@@ -59,10 +65,12 @@ const Footer = () => {
           >
             <SectionTitle title={strings.support} />
             <Grid item>
-              <InternalLink to={routes.faq}>FAQ</InternalLink>
+              <InternalLink to={PAGES_ROUTES.faq}>FAQ</InternalLink>
             </Grid>
             <Grid item>
-              <InternalLink to={routes.faq}>{strings.support}</InternalLink>
+              <InternalLink to={PAGES_ROUTES.faq}>
+                {strings.support}
+              </InternalLink>
             </Grid>
           </Grid>
           <Grid

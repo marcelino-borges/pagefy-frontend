@@ -12,6 +12,12 @@ import strings from "../../../../../localization";
 import { v4 as uuidv4 } from "uuid";
 import DialogActions from "@mui/material/DialogActions/DialogActions";
 import { Icon } from "@iconify/react";
+import { ANALYTICS_EVENTS } from "../../../../../constants";
+import PAGES_ROUTES from "../../../../../routes/paths";
+import { logAnalyticsEvent } from "../../../../../services/firebase-analytics";
+import { useSelector } from "react-redux";
+import { IApplicationState } from "../../../../../store";
+import { toBase64 } from "../../../../../utils";
 
 interface ITool {
   label: string;
@@ -49,6 +55,9 @@ const ToolsDialog = ({
 }: IToolsDialogProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const userProfile = useSelector(
+    (state: IApplicationState) => state.user.profile
+  );
 
   const ToolButton = ({ tool }: { tool: ITool }) => {
     return (
@@ -56,6 +65,11 @@ const ToolsDialog = ({
         <Grid container item direction="column">
           <ToolbarButton
             onClick={() => {
+              logAnalyticsEvent(ANALYTICS_EVENTS.selectContent, {
+                content_type: "PageEditor / ToolsDialog",
+                item_id: tool.label,
+                email: toBase64(userProfile?.email),
+              });
               tool.handleClick();
               handleClose();
             }}

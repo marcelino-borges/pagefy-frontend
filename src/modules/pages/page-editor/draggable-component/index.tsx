@@ -85,7 +85,6 @@ import ColorPicker from "./../../../components/color-picker/index";
 import { MEDIUM_GREY } from "./../../../../styles/colors";
 import { clearLoading } from "../../../../store/shared/actions";
 import { getLocalizedStringByComponentType } from "../../../../localization/utils";
-import { PlansTypes } from "../../../../store/user/types";
 import { showSuccessToast } from "../../../../utils/toast";
 import { showErrorToast } from "./../../../../utils/toast/index";
 import MapEmbed from "../../../components/map-embed";
@@ -142,6 +141,10 @@ const DraggableUserComponent = ({
 
   const userState = useSelector(
     (state: IApplicationState) => state.user.profile
+  );
+
+  const planFeatures = useSelector(
+    (state: IApplicationState) => state.user.planFeatures
   );
 
   const AnalyticsItem = ({ tooltipKey, tooltipValue, icon }: any) => {
@@ -755,7 +758,7 @@ const DraggableUserComponent = ({
               <AnalyticsItem
                 tooltipKey={strings.clicks}
                 tooltipValue={
-                  userState?.plan !== PlansTypes.FREE
+                  planFeatures && planFeatures.analytics
                     ? component.clicks
                     : strings.upgradeYourPlan
                 }
@@ -896,7 +899,7 @@ const DraggableUserComponent = ({
             disableInteractive
             leaveDelay={0.1}
             title={
-              userState?.plan === PlansTypes.FREE
+              !planFeatures || !planFeatures.componentActivationSchedule
                 ? strings.upgradeYourPlan
                 : strings.scheduleComponentVisibleDate
             }
@@ -905,12 +908,18 @@ const DraggableUserComponent = ({
             <ToolGridItem item id="schedule-visibility">
               <ToolIconButton
                 size="small"
-                disabled={userState?.plan === PlansTypes.FREE}
+                disabled={
+                  !planFeatures || !planFeatures.componentActivationSchedule
+                }
                 hoveringWhite
                 transitionDuration="0.4s"
                 isHoveringComponent={isHovering}
                 onClick={() => {
-                  if (userState?.plan === PlansTypes.FREE) return;
+                  if (
+                    !planFeatures ||
+                    !planFeatures.componentActivationSchedule
+                  )
+                    return;
                   setOpenVisibleDateDialog(true);
                 }}
               >
@@ -927,7 +936,7 @@ const DraggableUserComponent = ({
             disableInteractive
             leaveDelay={0.1}
             title={
-              userState?.plan === PlansTypes.FREE
+              !planFeatures || !planFeatures.animations
                 ? strings.upgradeYourPlan
                 : strings.chooseAnimation
             }
@@ -936,12 +945,12 @@ const DraggableUserComponent = ({
             <ToolGridItem item id="choose-animation">
               <ToolIconButton
                 size="small"
-                disabled={userState?.plan === PlansTypes.FREE}
+                disabled={!planFeatures || !planFeatures.animations}
                 hoveringWhite
                 transitionDuration="0.4s"
                 isHoveringComponent={isHovering}
                 onClick={() => {
-                  if (userState?.plan === PlansTypes.FREE) return;
+                  if (!planFeatures || !planFeatures.animations) return;
                   setOpenChooseAnimationDialog(true);
                 }}
               >

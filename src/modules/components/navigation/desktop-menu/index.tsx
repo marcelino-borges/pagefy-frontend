@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import strings from "../../../../localization";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import { HeaderLinkDesktop } from "../style";
 import UserLoggedIn from "../user-loggedin";
 import { useSelector } from "react-redux";
@@ -28,8 +28,8 @@ const DesktopHeader = () => {
       <Grid container item padding={2} justifyContent="center">
         <Grid item padding={2}>
           <HeaderLinkDesktop
-            to={routes.root}
-            isLocation={location.pathname === routes.root}
+            to={PAGES_ROUTES.root}
+            isLocation={location.pathname === PAGES_ROUTES.root}
           >
             {strings.home}
           </HeaderLinkDesktop>
@@ -37,8 +37,8 @@ const DesktopHeader = () => {
         {!!accessToken?.length && (
           <Grid item padding={2}>
             <HeaderLinkDesktop
-              to={routes.pages}
-              isLocation={location.pathname === routes.pages}
+              to={PAGES_ROUTES.pages}
+              isLocation={location.pathname === PAGES_ROUTES.pages}
             >
               {strings.pages}
             </HeaderLinkDesktop>
@@ -46,18 +46,18 @@ const DesktopHeader = () => {
         )}
         <Grid item padding={2}>
           <HeaderLinkDesktop
-            to={routes.plans}
-            isLocation={location.pathname === routes.plans}
+            to={PAGES_ROUTES.plans}
+            isLocation={location.pathname === PAGES_ROUTES.plans}
           >
             {strings.plans}
           </HeaderLinkDesktop>
         </Grid>
         <Grid item padding={2}>
           <HeaderLinkDesktop
-            to={routes.faq}
+            to={PAGES_ROUTES.faq}
             isLocation={
-              location.pathname === routes.faq ||
-              location.pathname === routes.support
+              location.pathname === PAGES_ROUTES.faq ||
+              location.pathname === PAGES_ROUTES.support
             }
           >
             {strings.support}

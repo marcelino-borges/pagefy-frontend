@@ -22,14 +22,15 @@ import {
   ViewsIcon,
   DeleteIcon,
 } from "./style";
-import { stringShortener } from "../../../../utils";
+import { stringShortener, toBase64 } from "../../../../utils";
 import CustomTooltip from "../../../components/tooltip";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import DialogConfirmation from "./../../../components/dialog-confirmation/index";
 import images from "./../../../../assets/img/index";
 import { showErrorToast } from "../../../../utils/toast";
 import { IApplicationState } from "./../../../../store/index";
-import { PlansTypes } from "../../../../store/user/types";
+import { ANALYTICS_EVENTS } from "../../../../constants";
+import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
 
 interface IPageCardProps {
   page: IUserPage;
@@ -40,7 +41,10 @@ const URL_MAX_LENGTH = 10;
 const PageCard = ({ page }: IPageCardProps) => {
   const dispatch = useDispatch();
   const isSmallerThan600 = useMediaQuery("(max-width: 600px)");
-  const userState = useSelector(
+  const activeSubscription = useSelector(
+    (state: IApplicationState) => state.user.activeSubscription
+  );
+  const userProfile = useSelector(
     (state: IApplicationState) => state.user.profile
   );
   const navigate = useNavigate();
@@ -57,15 +61,25 @@ const PageCard = ({ page }: IPageCardProps) => {
 
   const onSubmitNameForm = () => {
     if (!page._id) return;
+
     if (pageName !== page.name)
       dispatch(updateUserPageName(page._id, pageName));
+
     setIsEditting(false);
   };
 
   const loadPage = () => {
     if (!page._id) return;
 
-    navigate(routes.page + "/" + page._id);
+    if (userProfile) {
+      logAnalyticsEvent(ANALYTICS_EVENTS.selectContent, {
+        content_type: "load_page_edit",
+        item_id: page._id,
+        email: toBase64(userProfile.email),
+      });
+    }
+
+    navigate(PAGES_ROUTES.page + "/" + page._id);
   };
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,12 +99,24 @@ const PageCard = ({ page }: IPageCardProps) => {
           setShowDeletePageDialog(false);
         }}
         onConfirmCallback={() => {
-          if (page._id)
+          if (page._id) {
             dispatch(
-              deletePage(page._id, null, (errorMsg: string) => {
-                showErrorToast(errorMsg);
-              })
+              deletePage(
+                page._id,
+                () => {
+                  if (page._id) {
+                    logAnalyticsEvent(ANALYTICS_EVENTS.userPageDelete, {
+                      page_id: page._id,
+                      email: toBase64(userProfile?.email),
+                    });
+                  }
+                },
+                (errorMsg?: string) => {
+                  if (errorMsg) showErrorToast(errorMsg);
+                }
+              )
             );
+          }
         }}
         title={strings.removePage}
         message={strings.removePageConfirmation}
@@ -184,9 +210,7 @@ const PageCard = ({ page }: IPageCardProps) => {
             <Grid container item wrap="nowrap">
               <ViewsIcon />
               <PageDataKey>{strings.views}: </PageDataKey>
-              {userState?.plan === PlansTypes.BOOST
-                ? page.views
-                : strings.upgradeYourPlan}
+              {activeSubscription ? page.views : strings.upgradeYourPlan}
             </Grid>
           </Grid>
         </Grid>

@@ -1,39 +1,90 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getCheckoutSessionById } from "../../../services/payments";
 import { Button, Link, Stack } from "@mui/material";
 import strings from "../../../localization";
 import { CheckoutSession } from "../../../store/checkout";
 import LoadingSpinner from "../../components/loading-spinner";
 import { Invoice } from "../../../store/invoice";
-import routes from "../../../routes/paths";
+import PAGES_ROUTES from "../../../routes/paths";
+import { useDispatch } from "react-redux";
+import { getActiveSubscription, getUser } from "../../../store/user/actions";
+import { showErrorToast } from "../../../utils/toast";
+import { IUser } from "../../../store/user/types";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { ANALYTICS_EVENTS } from "../../../constants";
 
 const CheckoutSuccess = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const sessionIdParam = searchParams.get("session_id");
+  const productIdParam = searchParams.get("product_id");
+  const productNameParam = searchParams.get("product_name");
   const [sessionDetails, setSessionDetails] = useState<CheckoutSession>();
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  const fetchCheckoutSession = async (sessionId: string) => {
-    try {
-      const res = await getCheckoutSessionById(sessionId);
-      const checkoutSession = res?.data;
+  const fetchCheckoutSession = useCallback(
+    async (sessionId: string) => {
+      try {
+        const res = await getCheckoutSessionById(sessionId);
+        const checkoutSession = res.data;
 
-      setIsLoading(false);
-
-      if (checkoutSession) {
+        setIsLoading(false);
         setSessionDetails(checkoutSession);
+
+        logAnalyticsEvent(ANALYTICS_EVENTS.purchase, {
+          transaction_id: checkoutSession.id,
+          value: checkoutSession.amount_total,
+          currency: checkoutSession.currency,
+          items: [
+            {
+              creative_name: productNameParam ?? undefined,
+              item_name: productNameParam ?? undefined,
+              item_id: productIdParam ?? undefined,
+              coupon: checkoutSession.discounts[0].coupon,
+              discount: checkoutSession.total_details.amount_discount,
+              price: checkoutSession.amount_total,
+            },
+          ],
+        });
+
+        if (checkoutSession.customer_email) {
+          dispatch(
+            getUser(
+              checkoutSession.customer_email,
+              (user: IUser) => {
+                if (!user._id) return;
+
+                dispatch(
+                  getActiveSubscription(user._id, null, (error) => {
+                    showErrorToast(`${error}. ${strings.signInAgain}`);
+                  })
+                );
+              },
+              (error) => {
+                showErrorToast(`${error}. ${strings.signInAgain}`);
+              }
+            )
+          );
+        }
+      } catch (error) {
+        console.log("Error fetching session details: ", error);
       }
-    } catch (error) {
-      console.log("Error fetching session details: ", error);
-    }
-  };
+    },
+    [dispatch, productIdParam, productNameParam]
+  );
 
   useEffect(() => {
     if (sessionIdParam) fetchCheckoutSession(sessionIdParam);
-  }, [sessionIdParam]);
+  }, [sessionIdParam, fetchCheckoutSession]);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.checkoutSuccess,
+    });
+  }, []);
 
   return (
     <BannerHalfLayout bannerIndexToUse={3} bgPosition="0% 100%">
@@ -45,7 +96,7 @@ const CheckoutSuccess = () => {
           <Button
             variant="contained"
             fullWidth={false}
-            onClick={() => navigate(routes.pages)}
+            onClick={() => navigate(PAGES_ROUTES.pages)}
           >
             {strings.accessDashboard}
           </Button>

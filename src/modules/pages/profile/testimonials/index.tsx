@@ -11,6 +11,10 @@ import { ITestimonial } from "../../../../store/testimonials/types";
 import UserTestimonialCard from "./card";
 import { showErrorToast } from "./../../../../utils/toast";
 import CreateTestimonialsDialog from "./create-edit-testimonial-dialog";
+import { ANALYTICS_EVENTS } from "../../../../constants";
+import PAGES_ROUTES from "../../../../routes/paths";
+import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
+import { toBase64 } from "../../../../utils";
 
 const UserTestimonials = () => {
   const dispatch = useDispatch();
@@ -36,6 +40,14 @@ const UserTestimonials = () => {
       showErrorToast(userTestimonials.error);
     }
   }, [userTestimonials.error]);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.profile + "/testimonials",
+      page_title: "Profile Testimonials",
+      email: toBase64(userProfile?.email),
+    });
+  }, [userProfile?.email]);
 
   const testimonials = useMemo(() => {
     if (!userTestimonials.userTestimonials) return null;

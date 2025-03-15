@@ -22,7 +22,7 @@ import VideoComponent from "./component-types/video/index";
 import strings from "../../../localization";
 import LaunchComponent from "./component-types/launch/index";
 import Logos from "./../../../assets/img/logos";
-import routes from "./../../../routes/paths";
+import PAGES_ROUTES from "./../../../routes/paths";
 import LoadingSpinner from "../loading-spinner";
 import { PRIMARY_COLOR } from "./../../../styles/colors";
 import InternalLink from "../internal-link";
@@ -280,7 +280,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
           (!page || !page.isPublic) && (
             <Grid container p="12px">
               <Grid container justifyContent="center">
-                <InternalLink to={routes.root}>
+                <InternalLink to={PAGES_ROUTES.root}>
                   <img
                     src={Logos.LogoVerticalLightBGPNG}
                     style={{ width: "100%", maxWidth: "300px" }}
@@ -299,7 +299,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
               </Grid>
               <Grid container justifyContent="center" pt="50px">
                 <Grid container justifyContent="center">
-                  <InternalLink to={routes.root}>
+                  <InternalLink to={PAGES_ROUTES.root}>
                     {strings.createNowYourPage}
                   </InternalLink>
                 </Grid>
@@ -359,7 +359,7 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
                 )}
               </Grid>
               <Grid container item justifyContent="center">
-                <Link to={routes.root}>
+                <Link to={PAGES_ROUTES.root}>
                   <Grid
                     item
                     mt="150px"

@@ -19,7 +19,7 @@ import {
   signInWithProvider,
   signOut,
 } from "../../../store/auth/actions";
-import routes from "../../../routes/paths";
+import PAGES_ROUTES from "../../../routes/paths";
 import { IUserAuth, IUserCredentials } from "../../../store/auth/types";
 import { showErrorToast } from "../../../utils/toast";
 import { getUser, getUserOrCreate } from "../../../store/user/actions";
@@ -41,6 +41,8 @@ import {
 } from "firebase/auth";
 import Meta from "../../components/meta";
 import images from "../../../assets/img";
+import { ANALYTICS_EVENTS } from "../../../constants";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 
 const INITIAL_VALUES = {
   email: "",
@@ -65,6 +67,13 @@ const SignInPage = () => {
     setRecaptchaScript(document);
   }, [dispatch]);
 
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.signIn,
+      page_title: "Sign In",
+    });
+  }, []);
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
       ...values,
@@ -74,12 +83,12 @@ const SignInPage = () => {
 
   const loadDashboardOrPurchase = () => {
     if (planId?.length) {
-      navigate(`${routes.subscribe}/${planId}`);
+      navigate(`${PAGES_ROUTES.subscribe}/${planId}`);
 
       return;
     }
 
-    navigate(routes.pages);
+    navigate(PAGES_ROUTES.pages);
   };
 
   const onSubmitSignInCredentials = () => {
@@ -92,8 +101,18 @@ const SignInPage = () => {
       dispatch(
         signIn(
           credentials,
-          (auth: IUserAuth) => {
+          (
+            _token: string,
+            auth: IUserAuth,
+            _userData: IUser,
+            providerName?: string
+          ) => {
             setSessionStorage("auth", JSON.stringify(auth));
+            logAnalyticsEvent(ANALYTICS_EVENTS.login, {
+              method: providerName,
+              userAuthId: auth.uid,
+            });
+
             dispatch(
               getUser(credentials.email, (user: IUser) => {
                 setSessionStorage("user", JSON.stringify(user));
@@ -122,8 +141,13 @@ const SignInPage = () => {
       dispatch(
         signInWithProvider(
           provider,
-          (_: string, auth: IUserAuth, user: IUser) => {
+          (_: string, auth: IUserAuth, user: IUser, providerName?: string) => {
             setSessionStorage("auth", JSON.stringify(auth));
+            logAnalyticsEvent(ANALYTICS_EVENTS.login, {
+              method: providerName ?? "externalProvider",
+              userAuthId: auth.uid,
+            });
+
             dispatch(
               getUserOrCreate(user, (user: IUser) => {
                 setSessionStorage("user", JSON.stringify(user));
@@ -267,7 +291,8 @@ const SignInPage = () => {
           >
             <InternalLink
               to={
-                routes.signUp + `${planId?.length ? `?planId=${planId}` : ""}`
+                PAGES_ROUTES.signUp +
+                `${planId?.length ? `?planId=${planId}` : ""}`
               }
             >
               {strings.noAccountYet}

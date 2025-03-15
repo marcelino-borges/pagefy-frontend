@@ -15,8 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPage } from "../../../../store/user-pages/actions";
 import { IApplicationState } from "./../../../../store/index";
 import { useNavigate } from "react-router-dom";
-import routes from "../../../../routes/paths";
-import { canCreatePage } from "../../../../utils/plan-enablements";
+import PAGES_ROUTES from "../../../../routes/paths";
 
 interface ICreatePageDialogProps {
   open: boolean;
@@ -29,9 +28,6 @@ const CreatePageDialog = ({ open, onClose, title }: ICreatePageDialogProps) => {
   const navigate = useNavigate();
   const userProfile = useSelector(
     (state: IApplicationState) => state.user.profile
-  );
-  const userPagesLength = useSelector(
-    (state: IApplicationState) => state.userPages.pages.length
   );
 
   const [errorPageNameField, setErrorPageNameField] = useState<string>();
@@ -105,7 +101,7 @@ const CreatePageDialog = ({ open, onClose, title }: ICreatePageDialogProps) => {
           clearStates();
           if (!newPage._id) return;
 
-          navigate(routes.page + "/" + newPage._id);
+          navigate(PAGES_ROUTES.page + "/" + newPage._id);
         },
         (errorMsg: string) => {
           console.log(errorMsg);

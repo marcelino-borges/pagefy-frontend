@@ -16,11 +16,23 @@ import {
   Image,
   ImageOverlay,
 } from "../../../components/gallery-user/style";
+import { ANALYTICS_EVENTS } from "../../../../constants";
+import PAGES_ROUTES from "../../../../routes/paths";
+import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
+import { toBase64 } from "../../../../utils";
 
 const Gallery = () => {
   const userState = useSelector((state: IApplicationState) => state.user);
   const [images, setImages] = useState<IImageDetails[]>([]);
   const [isLoadingImages, setIsLoadingImages] = useState(false);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.profile + "/gallery",
+      page_title: "Profile Gallery",
+      email: toBase64(userState.profile?.email),
+    });
+  }, [userState.profile?.email]);
 
   const getUserImages = async () => {
     if (!userState.profile?._id) return;

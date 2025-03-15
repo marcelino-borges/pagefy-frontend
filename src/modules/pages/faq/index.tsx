@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import strings from "../../../localization";
-import routes from "../../../routes/paths";
+import PAGES_ROUTES from "../../../routes/paths";
 import { IApplicationState } from "../../../store";
-import { IUser, PlansTypes } from "../../../store/user/types";
+import { IUser } from "../../../store/user/types";
 import Accordion from "../../components/accordion";
 import Footer from "../../components/footer";
 import Navigation from "../../components/navigation";
@@ -14,6 +14,8 @@ import { IFaq, IFaqState } from "./../../../store/faq/types";
 import { getAllFaqs } from "./../../../store/faq/actions";
 import LoadingSpinner from "../../components/loading-spinner";
 import { PRIMARY_COLOR } from "../../../styles/colors";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { ANALYTICS_EVENTS } from "../../../constants";
 
 const Faq = () => {
   const dispatch = useDispatch();
@@ -26,6 +28,10 @@ const Faq = () => {
     (state: IApplicationState) => state.user.profile
   );
 
+  const planFeatures = useSelector(
+    (state: IApplicationState) => state.user.planFeatures
+  );
+
   const faqState: IFaqState = useSelector(
     (state: IApplicationState) => state.faq
   );
@@ -33,6 +39,13 @@ const Faq = () => {
   useEffect(() => {
     dispatch(getAllFaqs(strings.getLanguage()));
   }, [dispatch]);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.faq,
+      page_title: "FAQ",
+    });
+  }, []);
 
   const handleChange =
     (panel: string) => (_: React.SyntheticEvent, newExpanded: boolean) => {
@@ -43,24 +56,16 @@ const Faq = () => {
     if (!profileState) {
       return (
         <>
-          <InternalLink to={routes.signIn}>{strings.signIn}</InternalLink>
+          <InternalLink to={PAGES_ROUTES.signIn}>{strings.signIn}</InternalLink>
           &nbsp;
           {strings.toGetSupport}
         </>
       );
-    } else if (profileState?.plan === PlansTypes.FREE) {
+    } else if (!planFeatures || !planFeatures.specialSupport) {
       return (
         <>
-          <InternalLink to={routes.root}>{strings.getAPlanNow}</InternalLink>
-          &nbsp;
-          {`${strings.toGetSupport}`}
-        </>
-      );
-    } else if (profileState?.plan === PlansTypes.NEON) {
-      return (
-        <>
-          <InternalLink to={routes.root}>
-            {strings.upgradeYourPlan}
+          <InternalLink to={PAGES_ROUTES.root}>
+            {strings.getAPlanNow}
           </InternalLink>
           &nbsp;
           {`${strings.toGetSupport}`}
@@ -70,7 +75,9 @@ const Faq = () => {
       return (
         <>
           {`${strings.faq.stillNeedHelp}`}&nbsp;
-          <InternalLink to={routes.support}>{strings.getInTouch}</InternalLink>
+          <InternalLink to={PAGES_ROUTES.support}>
+            {strings.getInTouch}
+          </InternalLink>
         </>
       );
     }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IApplicationState } from "./../../../../store/index";
 import ProfileEditableAvatar from "../../profile-editable-avatar";
 import { SubtitleLinks, UserName } from "./style";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import strings from "../../../../localization";
 import { signOut } from "./../../../../store/auth/actions";
 import { useNavigate } from "react-router-dom";
@@ -101,7 +101,9 @@ const UserLoggedIn = () => {
           justifyContent={isSmallerThanMD ? "center" : undefined}
           flexWrap="nowrap"
         >
-          <SubtitleLinks to={routes.profile}>{strings.profile}</SubtitleLinks>
+          <SubtitleLinks to={PAGES_ROUTES.profile}>
+            {strings.profile}
+          </SubtitleLinks>
           <Grid item px="8px" color={LIGHTER_GREY}>
             |
           </Grid>
@@ -109,7 +111,7 @@ const UserLoggedIn = () => {
             onClick={() => {
               dispatch(
                 signOut(() => {
-                  navigate(routes.root);
+                  navigate(PAGES_ROUTES.root);
                 })
               );
             }}

@@ -17,7 +17,7 @@ import { IUserComponent, IUserPage } from "../../../store/user-pages/types";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { IApplicationState } from "./../../../store";
-import routes from "./../../../routes/paths";
+import PAGES_ROUTES from "./../../../routes/paths";
 import ThinWidthContent from "../../components/site-content/thin-width";
 import { setPageBeingManaged } from "../../../store/page-management/actions";
 import {
@@ -51,7 +51,11 @@ import VideoDialog from "./dialogs/video-dialog";
 import LaunchDialog from "./dialogs/launch-dialog";
 import UploadImageDialog from "../../components/dialog-upload-image";
 import Navigation from "./../../components/navigation";
-import { GalleryContext, IMAGE_EXTENSIONS } from "../../../constants";
+import {
+  ANALYTICS_EVENTS,
+  GalleryContext,
+  IMAGE_EXTENSIONS,
+} from "../../../constants";
 import IconsComponent from "../../components/page-renderer/component-types/icon";
 import DialogConfirmation from "./../../components/dialog-confirmation";
 import ProfileEditableAvatar from "../../components/profile-editable-avatar";
@@ -67,7 +71,6 @@ import { LIGHT_GREY } from "../../../styles/colors";
 import PagePreviewDialog from "./dialogs/page-preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./dialogs/custom-script-dialog";
-import { PlansTypes } from "../../../store/user/types";
 import ButtonScrollUp from "../../components/button-scroll-up";
 import MapsDialog from "./dialogs/maps-dialog";
 import SpotifyDialog from "./dialogs/spotify-dialog";
@@ -77,6 +80,8 @@ import PagePreviewPhone from "./page-preview-phone";
 import { Icon } from "@iconify/react";
 import Meta from "../../components/meta";
 import images from "../../../assets/img";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { toBase64 } from "../../../utils";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -132,6 +137,10 @@ const PageEditor = () => {
     (state: IApplicationState) => state.user.profile
   );
 
+  const planFeatures = useSelector(
+    (state: IApplicationState) => state.user.planFeatures
+  );
+
   const listContainer = useRef(null);
 
   useEffect(() => {
@@ -152,7 +161,7 @@ const PageEditor = () => {
       if (pageFound) {
         setPage({ ...pageFound });
       } else {
-        navigate(routes.notFound);
+        navigate(PAGES_ROUTES.notFound);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -165,6 +174,14 @@ const PageEditor = () => {
       setPageUrl(page.url);
     }
   }, [dispatch, page, page?._id]);
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.page,
+      page_title: "Page Editor",
+      email: toBase64(userProfile?.email),
+    });
+  }, [userProfile?.email]);
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageName(event.target.value);
@@ -184,7 +201,6 @@ const PageEditor = () => {
   const onSubmitPageUrlForm = useCallback(() => {
     const savePage = () => {
       if (page && page._id && pageUrl !== page.url) {
-        console.log("saving");
         dispatch(updateUserPageUrl(page._id, pageUrl));
       }
     };
@@ -341,8 +357,19 @@ const PageEditor = () => {
 
   const toggleIsPublic = useCallback(() => {
     if (!page || !page._id) return;
+
     dispatch(togglePageIsPublic(page._id));
-  }, [dispatch, page]);
+
+    logAnalyticsEvent(
+      page.isPublic
+        ? ANALYTICS_EVENTS.userTurnsPagePrivate
+        : ANALYTICS_EVENTS.userTurnsPagePublic,
+      {
+        page_id: page._id,
+        email: toBase64(userProfile?.email),
+      }
+    );
+  }, [dispatch, page, userProfile?.email]);
 
   const savePageImage = async (imageUrl?: string) => {
     if (!page || !page._id) return;
@@ -438,11 +465,10 @@ const PageEditor = () => {
   );
 
   const onUpdatePage = () => {
-    console.log("reloading");
     window.location.reload();
   };
 
-  const BottomTooolbar = useCallback(() => {
+  const BottomToolbar = useCallback(() => {
     return (
       <BottomToolbarRoot
         container
@@ -576,7 +602,7 @@ const PageEditor = () => {
 
         <CustomTooltip
           title={
-            userProfile?.plan === PlansTypes.BOOST
+            planFeatures?.customJs
               ? strings.customScripts.insertCustomScript
               : strings.upgradeYourPlan
           }
@@ -584,7 +610,7 @@ const PageEditor = () => {
           <Grid item>
             <IconButton
               size={isSmallerThan370 ? "small" : "medium"}
-              disabled={userProfile?.plan !== PlansTypes.BOOST}
+              disabled={!planFeatures?.customJs}
               onClick={() => {
                 setOpenCustomScriptDialog(true);
               }}
@@ -663,15 +689,16 @@ const PageEditor = () => {
       </BottomToolbarRoot>
     );
   }, [
-    isSmallerThan370,
     page,
-    showBackgroundColorPicker,
-    handleChangeBackgroundColorComplete,
+    isSmallerThan370,
     showFontColorPicker,
     handleChangeFontColorComplete,
+    showBackgroundColorPicker,
+    handleChangeBackgroundColorComplete,
     openChooseFileBGDialog,
     chosenImage,
-    userProfile?.plan,
+    planFeatures,
+    userPagesState.pages.length,
     openCustomScriptDialog,
     toggleIsPublic,
     savePageBGImage,
@@ -862,8 +889,16 @@ const PageEditor = () => {
         }}
         onConfirmCallback={() => {
           if (page && page._id) {
-            dispatch(deletePage(page._id));
-            navigate(routes.pages);
+            dispatch(
+              deletePage(page._id, () => {
+                if (page && page._id)
+                  logAnalyticsEvent(ANALYTICS_EVENTS.userPageDelete, {
+                    page_id: page._id,
+                    email: toBase64(userProfile?.email),
+                  });
+              })
+            );
+            navigate(PAGES_ROUTES.pages);
           }
         }}
         message={strings.removePageConfirmation}
@@ -1009,7 +1044,7 @@ const PageEditor = () => {
           />
         )}
         <ToolBar />
-        <BottomTooolbar />
+        <BottomToolbar />
         {page && page.topComponents && page.topComponents.length > 0 && (
           <IconsComponent
             iconsList={page.topComponents}

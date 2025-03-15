@@ -14,6 +14,8 @@ import { useState } from "react";
 import { cancelSubscription } from "../../../../../services/payments";
 import { showErrorToast } from "../../../../../utils/toast";
 import LoadingSpinner from "../../../../components/loading-spinner";
+import { Delete } from "@mui/icons-material";
+import { ACESSIBILITY_RED } from "../../../../../styles/colors";
 interface ISubscriptionDetailsDialogProps {
   subscription: UserSubscription;
   onClose: () => void;
@@ -66,7 +68,10 @@ const SubscriptionDetailsDialog = ({
             </div>
             <div>
               {strings.subscriptionPayment.amountPaid}:{" "}
-              <strong>{Number(subscription.price).toFixed(2)}</strong>
+              <strong>
+                {Number(subscription.price / 100).toFixed(2)} (
+                {subscription.currency.toUpperCase()})
+              </strong>
             </div>
             <div>
               {strings.finance.profileTableHeaders.status}:{" "}
@@ -92,10 +97,15 @@ const SubscriptionDetailsDialog = ({
               setCancelDialogOpen(true);
             }}
             variant="muted"
+            sx={{
+              color: ACESSIBILITY_RED,
+              "&:hover": { backgroundColor: ACESSIBILITY_RED },
+            }}
             disabled={isCanceling}
           >
             <Stack direction="row" gap="8px" alignItems="center">
               {isCanceling && <LoadingSpinner color="black" size={12} />}
+              <Delete fontSize="small" />
               {strings.subscriptionPayment.cancelSubscription}
             </Stack>
           </Button>

@@ -28,6 +28,7 @@ const userReducer = (
     case UserActionTypes.GET_USER_LOADING:
     case UserActionTypes.GET_USER_OR_CREATE_LOADING:
     case UserActionTypes.GET_SUBSCRIPTIONS_LOADING:
+    case UserActionTypes.GET_ACTIVE_SUBSCRIPTION_LOADING:
       return {
         ...state,
         loading: true,
@@ -47,6 +48,7 @@ const userReducer = (
     case UserActionTypes.GET_USER_ERROR:
     case UserActionTypes.GET_USER_OR_CREATE_ERROR:
     case UserActionTypes.GET_SUBSCRIPTIONS_ERROR:
+    case UserActionTypes.GET_ACTIVE_SUBSCRIPTION_ERROR:
       return {
         ...state,
         error: action.payload,
@@ -63,6 +65,14 @@ const userReducer = (
 
     case UserActionTypes.CLEAR_STATE:
       return { ...initialState };
+
+    case UserActionTypes.GET_ACTIVE_SUBSCRIPTION_SUCCESS:
+      return {
+        ...state,
+        activeSubscription: action.payload.subscription,
+        planFeatures: action.payload.features,
+        loading: false,
+      };
 
     default:
       return { ...state };

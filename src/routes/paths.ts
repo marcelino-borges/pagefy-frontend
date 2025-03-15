@@ -1,4 +1,4 @@
-const routes = {
+const PAGES_ROUTES = {
   root: "/",
   signIn: "/signin",
   signUp: "/signup",
@@ -20,4 +20,4 @@ const routes = {
   checkoutCancel: "/checkout/cancel",
 };
 
-export default routes;
+export default PAGES_ROUTES;

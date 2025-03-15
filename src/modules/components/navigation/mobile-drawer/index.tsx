@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import strings from "../../../../localization";
-import routes from "../../../../routes/paths";
+import PAGES_ROUTES from "../../../../routes/paths";
 import { PRIMARY_COLOR } from "../../../../styles/colors";
 import {
   CloseIcon,
@@ -75,9 +75,10 @@ const MobileHeader = ({
           <MobileMenuGridItem
             item
             alignItems="center"
-            onClick={() => onClickLinkCallback(routes.root)}
+            onClick={() => onClickLinkCallback(PAGES_ROUTES.root)}
             style={{
-              color: location.pathname === routes.root ? PRIMARY_COLOR : "",
+              color:
+                location.pathname === PAGES_ROUTES.root ? PRIMARY_COLOR : "",
             }}
           >
             {strings.home}
@@ -87,9 +88,10 @@ const MobileHeader = ({
             <MobileMenuGridItem
               item
               alignItems="center"
-              onClick={() => onClickLinkCallback(routes.pages)}
+              onClick={() => onClickLinkCallback(PAGES_ROUTES.pages)}
               style={{
-                color: location.pathname === routes.pages ? PRIMARY_COLOR : "",
+                color:
+                  location.pathname === PAGES_ROUTES.pages ? PRIMARY_COLOR : "",
               }}
             >
               {strings.pages}
@@ -99,9 +101,10 @@ const MobileHeader = ({
           <MobileMenuGridItem
             item
             alignItems="center"
-            onClick={() => onClickLinkCallback(routes.plans)}
+            onClick={() => onClickLinkCallback(PAGES_ROUTES.plans)}
             style={{
-              color: location.pathname === routes.plans ? PRIMARY_COLOR : "",
+              color:
+                location.pathname === PAGES_ROUTES.plans ? PRIMARY_COLOR : "",
             }}
           >
             {strings.plans}
@@ -110,11 +113,11 @@ const MobileHeader = ({
           <MobileMenuGridItem
             item
             alignItems="center"
-            onClick={() => onClickLinkCallback(routes.faq)}
+            onClick={() => onClickLinkCallback(PAGES_ROUTES.faq)}
             style={{
               color:
-                location.pathname === routes.faq ||
-                location.pathname === routes.support
+                location.pathname === PAGES_ROUTES.faq ||
+                location.pathname === PAGES_ROUTES.support
                   ? PRIMARY_COLOR
                   : "",
             }}

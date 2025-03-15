@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import strings from "../../../localization";
-import routes from "../../../routes/paths";
+import PAGES_ROUTES from "../../../routes/paths";
 import { SignInButton, SignUpButton } from "./style";
 
 interface ISignInRegisterButtonsProps {
@@ -15,10 +15,10 @@ const SignInRegisterButtons = ({
   return (
     <Stack direction="row" pl="12px" alignItems="center" gap="16px">
       {signIn && (
-        <SignInButton to={routes.signIn}>{strings.signIn2}</SignInButton>
+        <SignInButton to={PAGES_ROUTES.signIn}>{strings.signIn2}</SignInButton>
       )}
       {signUp && (
-        <SignUpButton to={routes.signUp}>
+        <SignUpButton to={PAGES_ROUTES.signUp}>
           {strings.registerImperative}
         </SignUpButton>
       )}

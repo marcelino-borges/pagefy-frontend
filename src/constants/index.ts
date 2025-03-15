@@ -184,3 +184,94 @@ export const CURRENCY_ABBREVIATIONS = {
   usd: "U$",
   brl: "R$",
 } as const;
+
+export const ANALYTICS_EVENTS = {
+  /**
+   * User logs in (Google default)
+   */
+  login: "login",
+  /**
+   * User completes a purchase (Google default)
+   */
+  purchase: "purchase",
+  /**
+   * User receives a refund (Google default)
+   */
+  refund: "refund",
+  /**
+   * User selects content on your website or app (Google default)
+   */
+  selectContent: "select_content",
+  /**
+   * User shares content from your website or app (Google default)
+   */
+  share: "share",
+  /**
+   * User signs up for an account on your website or app (Google default)
+   */
+  signUp: "sign_up",
+  /**
+   * User begins checkout (Google default)
+   */
+  beginCheckout: "begin_checkout",
+  /**
+   * User selects an item from a list of items or offerings (Google default)
+   */
+  selectItem: "select_item",
+  /**
+   * User selects a promotion (Google default)
+   */
+  selectPromotion: "select_promotion",
+  /**
+   * User views an item (Google default)
+   */
+  viewItem: "view_item",
+  /**
+   * User views a list of items or offerings (Google default)
+   */
+  viewItemList: "view_item_list",
+  /**
+   * User views a promotion (Google default)
+   */
+  viewPromotion: "view_promotion",
+  /**
+   * User submits a form or a request for information (Google default)
+   */
+  generateLead: "generate_lead",
+  /**
+   * User is marked as fitting the criteria to become a qualified lead (Google default)
+   */
+  qualifyLead: "qualify_lead",
+  /**
+   * User is marked as disqualified to become a lead for one of several reasons (Google default)
+   */
+  disqualifyLead: "disqualify_lead",
+  /**
+   * User contacts or is contacted by a representative (Google default)
+   */
+  working_lead: "working_lead",
+  /**
+   * User contacts or is contacted by a representative (Google default)
+   */
+  exception: "exception",
+  /**
+   * User views a page (Google default)
+   */
+  pageView: "page_view",
+  /**
+   * User cancels a purchase (custom)
+   */
+  purchaseCancel: "purchase_cancel",
+  /**
+   * User deletes a page (custom)
+   */
+  userPageDelete: "user_page_delete",
+  /**
+   * User turns a page as public (custom)
+   */
+  userTurnsPagePublic: "user_turns_page_private",
+  /**
+   * User turns a page as private (custom)
+   */
+  userTurnsPagePrivate: "user_turns_page_private",
+} as const;

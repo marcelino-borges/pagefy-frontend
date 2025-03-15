@@ -6,6 +6,10 @@ import PlansCards2 from "../../components/plans-cards2";
 import { useMediaQuery } from "@mui/material";
 import images from "../../../assets/img";
 import { useRandomElementOnRender } from "../../../assets/hooks/use-random-image";
+import { useEffect } from "react";
+import { ANALYTICS_EVENTS } from "../../../constants";
+import PAGES_ROUTES from "../../../routes/paths";
+import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 
 const BANNER_HEIGHT = "65vh";
 
@@ -14,6 +18,13 @@ const PlansPage = () => {
   const { element } = useRandomElementOnRender(
     images.horizontalBanners.slice(1)
   );
+
+  useEffect(() => {
+    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+      page_path: PAGES_ROUTES.plans,
+      page_title: "Plans",
+    });
+  }, []);
 
   return (
     <>

@@ -66,7 +66,6 @@ import { uploadImage } from "../../../../../services/files";
 import { clearLoading, setLoading } from "../../../../../store/shared/actions";
 import { IApplicationState } from "../../../../../store";
 import { UserStorageFolder } from "../../../../../store/shared/types";
-import { PlansTypes } from "../../../../../store/user/types";
 import WhatsappDialog from "../whatsapp-dialog";
 import { clamp, translateShadowStyleEnum } from "../../../../../utils";
 import {
@@ -96,6 +95,10 @@ const ButtonDialog = ({
 
   const userState = useSelector(
     (state: IApplicationState) => state.user.profile
+  );
+
+  const planFeatures = useSelector(
+    (state: IApplicationState) => state.user.planFeatures
   );
 
   const { handleSubmit, register } = useForm();
@@ -803,7 +806,7 @@ const ButtonDialog = ({
                   disableInteractive
                   leaveDelay={0.1}
                   title={
-                    userState?.plan === PlansTypes.FREE
+                    !planFeatures || !planFeatures.componentActivationSchedule
                       ? strings.plansBlockings
                           .yourPlanDoesntAllowComponentScheduling
                       : strings.scheduleComponentVisibleDate
@@ -812,7 +815,10 @@ const ButtonDialog = ({
                 >
                   <Grid item>
                     <IconButton
-                      disabled={userState?.plan === PlansTypes.FREE}
+                      disabled={
+                        !planFeatures ||
+                        !planFeatures.componentActivationSchedule
+                      }
                       onClick={() => {
                         setShowVisibleDateDialog(true);
                       }}
@@ -829,7 +835,7 @@ const ButtonDialog = ({
                   disableInteractive
                   leaveDelay={0.1}
                   title={
-                    userState?.plan === PlansTypes.FREE
+                    !planFeatures || !planFeatures.componentActivationSchedule
                       ? strings.plansBlockings.yourPlanDoesntAllowAnimation
                       : strings.chooseAnimation
                   }
@@ -837,9 +843,16 @@ const ButtonDialog = ({
                 >
                   <Grid item>
                     <IconButton
-                      disabled={userState?.plan === PlansTypes.FREE}
+                      disabled={
+                        !planFeatures ||
+                        !planFeatures.componentActivationSchedule
+                      }
                       onClick={() => {
-                        if (userState?.plan === PlansTypes.FREE) return;
+                        if (
+                          !planFeatures ||
+                          !planFeatures.componentActivationSchedule
+                        )
+                          return;
                         setShowAnimationDialog(true);
                       }}
                     >
