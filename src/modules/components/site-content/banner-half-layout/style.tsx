@@ -28,7 +28,6 @@ export const Banner = styled(
 
     & #logo-signin {
       width: 200px;
-      height: 34px;
       margin-bottom: 32px;
       margin-left: 0px;
     }

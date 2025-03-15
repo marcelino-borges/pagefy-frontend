@@ -119,6 +119,8 @@ export const signUp =
             if (onSuccessCallback) onSuccessCallback(res.data, "credentials");
           })
           .catch((error: AxiosError) => {
+            if (onErrorCallback)
+              onErrorCallback(strings.generalErrors.errorSignUp);
             AuthService.deleteUserAuth();
             throw error;
           });
