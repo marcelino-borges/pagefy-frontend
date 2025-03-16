@@ -7,6 +7,7 @@ import Logos from "../../../../assets/img/logos";
 import { getRandomInt } from "../../../../utils";
 import { PropsWithChildren, useEffect } from "react";
 import { useState } from "react";
+import strings from "../../../../localization";
 
 interface BannerHalfLayoutProps {
   bannerIndexToUse?: number;
@@ -44,7 +45,7 @@ const BannerHalfLayout = ({
         <Link to={PAGES_ROUTES.root}>
           <img
             src={Logos.LogoHorizontalDarkBGBorderPNG}
-            alt="Pagefy"
+            alt={strings.appName}
             id="logo-signin"
           />
         </Link>

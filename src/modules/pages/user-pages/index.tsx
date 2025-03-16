@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Joyride from "react-joyride";
 import { Button, Grid, useMediaQuery } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { IApplicationState } from "../../../store";
@@ -22,15 +23,20 @@ import { ANALYTICS_EVENTS } from "../../../constants";
 import PAGES_ROUTES from "../../../routes/paths";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { toBase64 } from "../../../utils";
+import { ONBOARDING_STEPS_USER_PAGES } from "./constants";
+import OnboardingTour from "../../components/onboarding-tour";
+import { useLocation } from "react-router-dom";
 
 const UserPages = () => {
   const isSmallerThan900 = useMediaQuery("(max-width:900px)");
+  const [runTour, setRunTour] = useState(false);
+  const { pathname } = useLocation();
+
+  const [showCreatePageDialog, setShowCreatePageDialog] = useState(false);
 
   const userPagesState = useSelector(
     (state: IApplicationState) => state.userPages
   );
-
-  const [showCreatePageDialog, setShowCreatePageDialog] = useState(false);
 
   const profileState: IUser | undefined = useSelector(
     (state: IApplicationState) => state.user.profile
@@ -38,11 +44,19 @@ const UserPages = () => {
 
   useEffect(() => {
     logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
-      page_path: PAGES_ROUTES.pages,
+      page_path: PAGES_ROUTES.userPages,
       page_title: "User Pages",
       email: toBase64(profileState?.email),
     });
   }, [profileState?.email]);
+
+  useEffect(() => {
+    if (
+      !userPagesState.pages.length &&
+      pathname.includes(PAGES_ROUTES.userPages)
+    )
+      setRunTour(true);
+  }, [userPagesState?.pages, pathname]);
 
   const handleCreatePage = async () => {
     if (!profileState?._id) return;
@@ -59,10 +73,11 @@ const UserPages = () => {
 
   return (
     <>
+      <OnboardingTour steps={ONBOARDING_STEPS_USER_PAGES} run={runTour} />
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
-        title={"Pagefy"}
+        title={strings.appName}
         description={strings.appDescription}
         image={images.screenshots.userPages}
       />
@@ -93,7 +108,11 @@ const UserPages = () => {
           bgcolor="white"
           boxShadow="0px 4px 4px rgba(0, 0, 0, 0.06)"
         >
-          <Button onClick={handleCreatePage} sx={{ color: UPPER_MEDIUM_GREY }}>
+          <Button
+            onClick={handleCreatePage}
+            sx={{ color: UPPER_MEDIUM_GREY }}
+            id="btn-create-page"
+          >
             <Add style={{ fontSize: "20px", marginRight: "4px" }} />
             {strings.createPage}
           </Button>

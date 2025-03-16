@@ -22,6 +22,15 @@ export enum UserActionTypes {
   CLEAR_STATE = "@user/CLEAR_STATE",
 }
 
+export interface UserOnboardings {
+  userPages?: boolean;
+  pageEditor?: {
+    general?: boolean;
+    createDialog?: boolean;
+    createButton?: boolean;
+  };
+}
+
 export interface IUser {
   _id?: string;
   authId?: string;
@@ -32,6 +41,7 @@ export interface IUser {
   email: string;
   receiveCommunications?: boolean;
   agreePrivacy?: boolean;
+  onboardings?: UserOnboardings;
 }
 
 export interface IUserState {

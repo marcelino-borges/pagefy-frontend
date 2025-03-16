@@ -2,6 +2,7 @@ import { IDictionary } from "..";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const pt: IDictionary = {
+  appName: "Pagefy",
   appDescription:
     "Pagefy é uma plataforma que permite qualquer pessoa a criar uma landing page para ser utilizada como link de uma bio em rede social, como Instagram, Twitter, LinkedIn, Facebook, TikTok, Snapchat, Kwai, dentre outros. Aqui você encontra uma alternativa ao Linktree e outros.",
   hide: "Esconder",
@@ -55,6 +56,10 @@ export const pt: IDictionary = {
   makePagePrivate: "Tornar página invisível ao público",
   remove: "Remover",
   removeExisting: "Remover existente",
+  close: "Fechar",
+  last: "Último",
+  open: "Abrir",
+  step: "Passo",
   tools: {
     button: {
       name: "Botão",
@@ -125,10 +130,15 @@ export const pt: IDictionary = {
   invalidUrl: "URL inválida",
   hasToBeYoutubeVideo: "Precisa ser uma URL de um vídeo do YouTube",
   colorPicker: "Escolha outra cor",
+  pickBGColor: "Escolha uma cor de fundo",
+  pickFontColor: "Escolha uma cor de fonte",
+  pickBGColorUserPage: "Escolha cor de fundo da página",
+  pickFontColorUserPage: "Escolha cor de fonte da página",
   removeComponentConfirmation: "Deseja realmente remover este componente?",
   removeIconConfirmation: "Deseja realmente remover este ícone?",
   removePageConfirmation: "Deseja realmente remover esta página?",
   removeUserConfirmation: "Deseja realmente excluir sua conta?",
+  notAvailableInYourPlan: "Não disponível em seu plano, faça upgrade.",
   yes: "Sim",
   no: "Não",
   or: "ou",
@@ -170,22 +180,23 @@ export const pt: IDictionary = {
     'Abra o Spotify, localize a playlist, o artista, o álbum ou a faixa que você quer, clique no "...", selecione "Compartilhar" e então "Copiar link...". Então cole a URL aqui.',
   youtubeVideoId: "ID do video do Youtube",
   clickHere: "Clique aqui",
-  step: "Passo",
   share: "Compartilhar",
   understood: "Entendi",
+  skip: "Pular",
   invalidId: " ID inválido",
   warningPrivatePage: "Esta página não está disponível publicamente.",
   create: "Criar",
+  of: "de",
   chooseOneToCreate: "Escolha uma para criar",
   createPage: "Criar Página",
   pageName: "Nome da página",
   pageUrl: "URL da página",
   requiredField: "Campo obrigatório",
   requiredFields: "Campos obrigatórios",
-  pageUrlExample: "/nome-unico-da-sua-pagina",
+  pageUrlExample: "/link-unico-da-pagina",
   createPageError: {
     pageUrlBadFormat:
-      "URL mal formatada. Necessário conter mais de 3 caracteres e só é permitido letras (sem acento) e hífens, como no exemplo: /minha-pagina",
+      "Link mal formatado. Requisitos: conter mais de 3 caracteres, letras minúsculas sem acento, sem caracteres especiais (exceto hífen) e sem espaços em branco, como no exemplo: /minha-pagina",
     cannotContainWhiteSpaces: "Não pode haver espaços em branco.",
   },
   launchMessageLabel: "Mensagem",
@@ -617,5 +628,50 @@ export const pt: IDictionary = {
     maxPages: "Máximo de páginas",
     specialSupport: "Suporte especial",
     watermark: "Marca d'água",
+  },
+  understoodEverything: "Entendi tudo",
+  onboardings: {
+    userPages: {
+      step1: "Clique aqui para criar uma página",
+    },
+    pageEditor: {
+      general: {
+        step1:
+          "Nesta tela você pode editar a forma como sua página final parecerá, desde deverá ficar visível ao público, cores de fonte e fundo da página e dos componentes, poderá criar elementos como botões, ícones etc., poderá escolher a ordem em que seus componentes aparecem, dentre muitas outras coisas. \n\nSiga adiante para saber mais.",
+        step2:
+          "Aqui você pode alterar a foto principal, que aparece no topo da sua página.",
+        step3:
+          "Aqui você pode alterar o nome (que aparece logo abaixo da foto principal) e o link que as pessoas usarão para acessar sua página (precisa ser um nome ainda não utilizado na plataforma, conter apenas letras minúsculas, sem caracteres especiais (apenas hífens), exemplo: /este-e-meu-link).",
+        step4:
+          "Aqui você poderá criar os elementos que serão exibidos na sua página.",
+        step5:
+          "Aqui você pode escolher se sua página deve ficar pública (aberta para a internet) ou não.",
+        step6:
+          "Aqui você pode alterar a cor dos textos da sua página (exceto os textos dos elementos da página, que você pode configurar uma cor própria).",
+        step7:
+          "Aqui você pode alterar a cor de fundo da sua página (exceto dos fundos dos elementos da página, que você também pode configurar uma cor própria). Caso você envie uma imagem de fundo, esta cor não aparece.",
+        step8:
+          "Aqui você pode enviar uma imagem para o fundo da sua página (esconderá a cor de fundo, caso alguma tenha sido selecionada)",
+        step9:
+          "Caso seu plano permita e você seja um usuário avançado, aqui você pode inserir um código Javascript personalizado para sua página (códigos maliciosos serão removidos).",
+        step10: "Caso queira excluir sua página, basta clicar aqui.",
+        step11:
+          "Abra sua página em outra aba para visualizar como ela realmente será exibida para seu público.",
+      },
+      createDialog: {
+        step1: "",
+        step2: "",
+        step3: "",
+        step4: "",
+        step5: "",
+      },
+      createButton: {
+        step1: "",
+        step2: "",
+        step3: "",
+        step4: "",
+        step5: "",
+      },
+    },
   },
 };

@@ -443,7 +443,7 @@ const DraggableUserComponent = ({
           >
             {/* Label */}
             {component.text && component.text.length > 0 && (
-              <ContentRow alignItems="center">
+              <ContentRow alignItems="center" direction="row">
                 {isEdittingLabel ? (
                   <form onSubmit={handleSubmitLabel(onSubmitLabelForm)}>
                     <LabelText item>
@@ -489,6 +489,7 @@ const DraggableUserComponent = ({
             {/* Video (Only in Video type) */}
             {component.url && component.type === ComponentType.Video && (
               <ContentRow
+                direction="row"
                 alignItems="center"
                 style={{
                   paddingLeft: "16px",
@@ -519,6 +520,7 @@ const DraggableUserComponent = ({
             {/* Map (Only in Map type) */}
             {component.url && component.type === ComponentType.Map && (
               <ContentRow
+                direction="row"
                 alignItems="center"
                 style={{
                   paddingLeft: "16px",
@@ -548,6 +550,7 @@ const DraggableUserComponent = ({
             {/* Spotify (Only in Spotify type) */}
             {component.url && component.type === ComponentType.Spotify && (
               <ContentRow
+                direction="row"
                 alignItems="center"
                 style={{
                   paddingLeft: "16px",
@@ -578,6 +581,7 @@ const DraggableUserComponent = ({
             {component.progressValue !== undefined &&
               component.type === ComponentType.ProgressBar && (
                 <ContentRow
+                  direction="row"
                   alignItems="center"
                   style={{
                     paddingLeft: "16px",
@@ -645,7 +649,7 @@ const DraggableUserComponent = ({
             {/* URL */}
             {isUrlEditable(component.type) && component.url && (
               <CustomTooltip title={component.url || ""}>
-                <ContentRow alignItems="center" width="70%">
+                <ContentRow alignItems="center" width="70%" direction="row">
                   <PrefixIconItem item>
                     <LinkIcon fontSize="small" />
                   </PrefixIconItem>
@@ -709,7 +713,7 @@ const DraggableUserComponent = ({
             {isImageType(component.type) &&
               component.mediaUrl &&
               component.mediaUrl.length > 0 && (
-                <ContentRow alignItems="center">
+                <ContentRow alignItems="center" direction="row">
                   <img
                     src={removeCssUrlWrapper(component.mediaUrl)}
                     alt="Component media"
@@ -760,7 +764,7 @@ const DraggableUserComponent = ({
                 tooltipValue={
                   planFeatures && planFeatures.analytics
                     ? component.clicks
-                    : strings.upgradeYourPlan
+                    : strings.notAvailableInYourPlan
                 }
                 icon={<ClicksCountIcon />}
               />
@@ -900,7 +904,7 @@ const DraggableUserComponent = ({
             leaveDelay={0.1}
             title={
               !planFeatures || !planFeatures.componentActivationSchedule
-                ? strings.upgradeYourPlan
+                ? strings.notAvailableInYourPlan
                 : strings.scheduleComponentVisibleDate
             }
             placement={isLargerThan400 ? "right" : "bottom"}
@@ -937,7 +941,7 @@ const DraggableUserComponent = ({
             leaveDelay={0.1}
             title={
               !planFeatures || !planFeatures.animations
-                ? strings.upgradeYourPlan
+                ? strings.notAvailableInYourPlan
                 : strings.chooseAnimation
             }
             placement={isLargerThan400 ? "right" : "bottom"}

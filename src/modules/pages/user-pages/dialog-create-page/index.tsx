@@ -101,7 +101,7 @@ const CreatePageDialog = ({ open, onClose, title }: ICreatePageDialogProps) => {
           clearStates();
           if (!newPage._id) return;
 
-          navigate(PAGES_ROUTES.page + "/" + newPage._id);
+          navigate(PAGES_ROUTES.pageEditor + "/" + newPage._id);
         },
         (errorMsg: string) => {
           console.log(errorMsg);

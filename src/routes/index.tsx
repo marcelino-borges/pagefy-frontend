@@ -100,8 +100,8 @@ const AppRoutes = () => {
         <Route path={PAGES_ROUTES.root} element={<Home2 />} />
         <Route path={PAGES_ROUTES.signIn} element={<SignInPage />} />
         <Route path={PAGES_ROUTES.signUp} element={<SignUpPage />} />
-        <Route path={PAGES_ROUTES.pages} element={<UserPages />} />
-        <Route path={`${PAGES_ROUTES.page}/:id`} element={<UserPage />} />
+        <Route path={PAGES_ROUTES.userPages} element={<UserPages />} />
+        <Route path={`${PAGES_ROUTES.pageEditor}/:id`} element={<UserPage />} />
         <Route path="/:url" element={<PageRenderer />} />
         <Route path={PAGES_ROUTES.faq} element={<Faq />} />
         <Route path={PAGES_ROUTES.support} element={<Support />} />

@@ -81,7 +81,7 @@ const Home2 = () => {
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
-        title={"Pagefy"}
+        title={strings.appName}
         description={strings.appDescription}
         image={images.screenshots.home}
       />

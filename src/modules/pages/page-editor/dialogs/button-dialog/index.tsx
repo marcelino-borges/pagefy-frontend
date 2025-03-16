@@ -351,6 +351,7 @@ const ButtonDialog = ({
       >
         <Grid
           container
+          item
           bgcolor={COMPLEMENTARY_COLOR}
           xs={6 * selectedColumnsCount}
           width="100%"

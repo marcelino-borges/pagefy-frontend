@@ -1,11 +1,10 @@
-import { Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import strings from "../../../../localization";
 import PAGES_ROUTES from "../../../../routes/paths";
 import { HeaderLinkDesktop } from "../style";
-import UserLoggedIn from "../user-loggedin";
-import { useSelector } from "react-redux";
 import { IApplicationState } from "../../../../store";
 
 const DesktopHeader = () => {
@@ -16,16 +15,19 @@ const DesktopHeader = () => {
   );
 
   return (
-    <Grid
-      container
-      item
-      md={8}
-      justifyContent="center"
+    <Stack
+      flexDirection="row"
+      justifyContent="space-evenly"
       direction="row"
-      pr="32px"
-      wrap="nowrap"
+      flexWrap="nowrap"
+      flexGrow={2}
     >
-      <Grid container item padding={2} justifyContent="center">
+      <Stack
+        flexDirection="row"
+        padding={2}
+        justifyContent="center"
+        flexWrap="nowrap"
+      >
         <Grid item padding={2}>
           <HeaderLinkDesktop
             to={PAGES_ROUTES.root}
@@ -37,8 +39,8 @@ const DesktopHeader = () => {
         {!!accessToken?.length && (
           <Grid item padding={2}>
             <HeaderLinkDesktop
-              to={PAGES_ROUTES.pages}
-              isLocation={location.pathname === PAGES_ROUTES.pages}
+              to={PAGES_ROUTES.userPages}
+              isLocation={location.pathname === PAGES_ROUTES.userPages}
             >
               {strings.pages}
             </HeaderLinkDesktop>
@@ -63,9 +65,8 @@ const DesktopHeader = () => {
             {strings.support}
           </HeaderLinkDesktop>
         </Grid>
-      </Grid>
-      <UserLoggedIn />
-    </Grid>
+      </Stack>
+    </Stack>
   );
 };
 

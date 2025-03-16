@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
+  Box,
   Button,
   Grid,
   IconButton,
@@ -88,7 +89,7 @@ const SignInPage = () => {
       return;
     }
 
-    navigate(PAGES_ROUTES.pages);
+    navigate(PAGES_ROUTES.userPages);
   };
 
   const onSubmitSignInCredentials = () => {
@@ -168,7 +169,7 @@ const SignInPage = () => {
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
-        title={"Pagefy"}
+        title={strings.appName}
         description={strings.appDescription}
         image={images.screenshots.login}
       />
@@ -298,6 +299,12 @@ const SignInPage = () => {
               {strings.noAccountYet}
             </InternalLink>
           </Grid>
+          <Box mt="32px" fontSize="0.7rem" color="gray">
+            This site is protected by reCAPTCHA and the Google{" "}
+            <a href="https://policies.google.com/privacy">Privacy Policy</a> and{" "}
+            <a href="https://policies.google.com/terms">Terms of Service</a>{" "}
+            apply.
+          </Box>
         </form>
       </BannerHalfLayout>
     </>

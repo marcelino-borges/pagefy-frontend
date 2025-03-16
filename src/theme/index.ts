@@ -13,6 +13,22 @@ declare module "@mui/material/styles" {
 
 const defaultTheme = createTheme();
 
+export const MUI_BUTTON_STYLES = {
+  borderRadius: "32px",
+  padding: "16px 24px",
+  textTransform: "unset",
+  fontSize: "0.9em",
+  boxShadow: "none",
+  paddingTop: "8px",
+  paddingBottom: "8px",
+  paddingLeft: "16px",
+  paddingRight: "16px",
+  "&:hover": {
+    color: "white",
+    backgroundColor: PRIMARY_COLOR_DARK,
+  },
+} as const;
+
 let themeOptions: ThemeOptions = {
   typography: {
     fontFamily: [
@@ -48,19 +64,7 @@ let themeOptions: ThemeOptions = {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "32px",
-          padding: "16px 24px",
-          textTransform: "unset",
-          fontSize: "0.9em",
-          boxShadow: "none",
-          paddingTop: "8px",
-          paddingBottom: "8px",
-          paddingLeft: "16px",
-          paddingRight: "16px",
-          "&:hover": {
-            color: "white",
-            backgroundColor: PRIMARY_COLOR_DARK,
-          },
+          ...MUI_BUTTON_STYLES,
           variants: [
             {
               props: { variant: "muted" },

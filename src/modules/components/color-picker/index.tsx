@@ -26,6 +26,7 @@ interface IColorPickerProps {
   onCancel: () => void;
   onChooseColor: (selectedColor: string) => void;
   id?: string;
+  title?: string;
 }
 
 const ColorPicker = ({
@@ -33,6 +34,7 @@ const ColorPicker = ({
   onCancel,
   onChooseColor,
   id,
+  title,
 }: IColorPickerProps) => {
   const theme = useTheme();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -74,7 +76,7 @@ const ColorPicker = ({
       fullScreen={isSmallerThanSM}
       maxWidth="xs"
     >
-      <DialogTitle>{strings.colorPicker}</DialogTitle>
+      <DialogTitle>{title ?? strings.colorPicker}</DialogTitle>
       <DialogContent>
         <ColorPickerStyleOverride>
           <HexColorPicker color={color} onChange={handleOnChange} />

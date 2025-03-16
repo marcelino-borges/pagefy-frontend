@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AxiosResponse } from "axios";
 import { useForm } from "react-hook-form";
 import { Button, Grid, useMediaQuery } from "@mui/material";
@@ -62,12 +62,12 @@ import ProfileEditableAvatar from "../../components/profile-editable-avatar";
 import PrivateRouteChecker from "./../../components/private-route-checker";
 import CustomTooltip from "../../components/tooltip";
 import ColorPicker from "./../../components/color-picker";
-import { getUser } from "../../../store/user/actions";
+import { getUser, updateUser } from "../../../store/user/actions";
 import IconButton from "../../components/icon-button";
 import { getPageByUrl } from "../../../services/user-pages";
 import { showErrorToast, showSuccessToast } from "./../../../utils/toast";
 import { clearLoading } from "../../../store/shared/actions";
-import { LIGHT_GREY } from "../../../styles/colors";
+import { ACESSIBILITY_GREEN, LIGHT_GREY } from "../../../styles/colors";
 import PagePreviewDialog from "./dialogs/page-preview-dialog";
 import Footer from "./../../components/footer";
 import CustomScriptDialog from "./dialogs/custom-script-dialog";
@@ -82,6 +82,10 @@ import Meta from "../../components/meta";
 import images from "../../../assets/img";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { toBase64 } from "../../../utils";
+import OnboardingTour from "../../components/onboarding-tour";
+import { ONBOARDING_STEPS_PAGE_EDITOR_GENERAL } from "./constants";
+import { ONBOARDING_STEPS_USER_PAGES } from "../user-pages/constants";
+import { UserOnboardings } from "../../../store/user/types";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -90,6 +94,7 @@ const PageEditor = () => {
   const isSmallerThan600 = useMediaQuery("(max-width:600px)");
   const isSmallerThan500 = useMediaQuery("(max-width:500px)");
   const isSmallerThan370 = useMediaQuery("(max-width:370px)");
+  const { pathname } = useLocation();
 
   const [page, setPage] = useState<IUserPage>();
   const [isEdittingPageName, setIsEdittingPageName] = useState(false);
@@ -123,6 +128,8 @@ const PageEditor = () => {
   const [openProgressBarDialog, setOpenProgressBarDialog] =
     useState<boolean>(false);
   const [openCountersDialog, setOpenCountersDialog] = useState<boolean>(false);
+  const [runTourGeneral, setRunTourGeneral] = useState(false);
+  const [runTourCreateDialog, setRunTourCreateDialog] = useState(false);
 
   const { handleSubmit } = useForm();
 
@@ -141,47 +148,78 @@ const PageEditor = () => {
     (state: IApplicationState) => state.user.planFeatures
   );
 
+  const onboardings = useSelector(
+    (state: IApplicationState) => state.user.profile?.onboardings
+  );
+
   const listContainer = useRef(null);
 
-  useEffect(() => {
-    if (userProfile?.email) dispatch(getUser(userProfile.email, null));
-  }, [dispatch, userProfile?.email]);
+  useEffect(
+    function getUserPageEditor() {
+      if (userProfile?.email) dispatch(getUser(userProfile.email, null));
+    },
+    [dispatch, userProfile?.email]
+  );
 
-  useEffect(() => {
-    if (
-      id &&
-      !!userPagesState &&
-      userPagesState.pages &&
-      userPagesState.pages.length > 0
-    ) {
-      const pageFound = userPagesState.pages.find(
-        (page: IUserPage) => page._id === id
-      );
+  useEffect(
+    function findPageOrNotFoundPageEditor() {
+      if (
+        id &&
+        !!userPagesState &&
+        userPagesState.pages &&
+        userPagesState.pages.length > 0
+      ) {
+        const pageFound = userPagesState.pages.find(
+          (page: IUserPage) => page._id === id
+        );
 
-      if (pageFound) {
-        setPage({ ...pageFound });
-      } else {
-        navigate(PAGES_ROUTES.notFound);
+        if (pageFound) {
+          setPage({ ...pageFound });
+        } else {
+          navigate(PAGES_ROUTES.notFound);
+        }
       }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, userPagesState]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [id, userPagesState]
+  );
 
-  useEffect(() => {
-    if (page && page._id) {
-      dispatch(setPageBeingManaged(page._id));
-      setPageName(page.name);
-      setPageUrl(page.url);
-    }
-  }, [dispatch, page, page?._id]);
+  useEffect(
+    function setPageBeingManagedPageEditor() {
+      if (page && page._id) {
+        dispatch(setPageBeingManaged(page._id));
+        setPageName(page.name);
+        setPageUrl(page.url);
+      }
+    },
+    [dispatch, page, page?._id]
+  );
 
-  useEffect(() => {
-    logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
-      page_path: PAGES_ROUTES.page,
-      page_title: "Page Editor",
-      email: toBase64(userProfile?.email),
-    });
-  }, [userProfile?.email]);
+  useEffect(
+    function logAnalyticsPageViewEventPageEditor() {
+      logAnalyticsEvent(ANALYTICS_EVENTS.pageView, {
+        page_path: PAGES_ROUTES.pageEditor,
+        page_title: "Page Editor",
+        email: toBase64(userProfile?.email),
+      });
+    },
+    [userProfile?.email]
+  );
+
+  useEffect(
+    function decideToRunTourPageEditor() {
+      console.log({
+        "onboardings?.pageEditor?.general": onboardings?.pageEditor?.general,
+        includes: pathname.includes(PAGES_ROUTES.pageEditor),
+        pathname,
+      });
+      setRunTourGeneral(
+        !onboardings?.pageEditor?.general &&
+          pathname.includes(PAGES_ROUTES.pageEditor)
+      );
+    },
+    [onboardings, pathname]
+  );
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageName(event.target.value);
@@ -353,6 +391,34 @@ const PageEditor = () => {
     [dispatch, page]
   );
 
+  const updateUserOnboardingGeneral = (
+    key: typeof userProfile extends undefined
+      ? never
+      : keyof NonNullable<UserOnboardings["pageEditor"]>
+  ) => {
+    if (!userProfile) return;
+
+    try {
+      dispatch(
+        updateUser({
+          ...userProfile,
+          onboardings: {
+            ...userProfile?.onboardings,
+            pageEditor: {
+              ...userProfile?.onboardings?.pageEditor,
+              [key]: true,
+            },
+          },
+        })
+      );
+    } catch (error) {
+      console.log(
+        "Couldn't update onboarding event for pageEditor.general",
+        error
+      );
+    }
+  };
+
   const toggleIsPublic = useCallback(() => {
     if (!page || !page._id) return;
 
@@ -479,10 +545,13 @@ const PageEditor = () => {
               size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => toggleIsPublic()}
               hoverBackgroundColor={LIGHT_GREY}
+              id="page-editor-general-tour5"
             >
               {page?.isPublic ? (
                 <PublicIcon
-                  color="primary"
+                  style={{
+                    color: ACESSIBILITY_GREEN,
+                  }}
                   fontSize={isSmallerThan370 ? "small" : "medium"}
                 />
               ) : (
@@ -495,7 +564,7 @@ const PageEditor = () => {
         </CustomTooltip>
 
         <CustomTooltip title={strings.fontColor}>
-          <Grid item>
+          <Grid item id="page-editor-general-tour6">
             <IconButton
               hoverBackgroundColor={LIGHT_GREY}
               size={isSmallerThan370 ? "small" : "medium"}
@@ -505,7 +574,7 @@ const PageEditor = () => {
             >
               <FontColorIcon
                 size={isSmallerThan370 ? 16 : 26}
-                bucketColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
+                bucketColor="rgba(0, 0, 0, 0.54)"
                 selectedColor={page?.style?.color || "rgba(0, 0, 0, 0.54)"}
               />
             </IconButton>
@@ -515,13 +584,14 @@ const PageEditor = () => {
                 initialColor={page?.style?.color || "white"}
                 onChooseColor={handleChangeFontColorComplete}
                 onCancel={() => setShowFontColorPicker(false)}
+                title={strings.pickFontColorUserPage}
               />
             )}
           </Grid>
         </CustomTooltip>
 
         <CustomTooltip title={strings.backgroundColor}>
-          <Grid item>
+          <Grid item id="page-editor-general-tour7">
             <IconButton
               size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => {
@@ -531,9 +601,7 @@ const PageEditor = () => {
             >
               <BackgroundColorIcon
                 size={isSmallerThan370 ? 16 : 26}
-                bucketColor={
-                  page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
-                }
+                bucketColor="rgba(0, 0, 0, 0.54)"
                 selectedColor={
                   page?.style?.backgroundColor || "rgba(0, 0, 0, 0.54)"
                 }
@@ -545,13 +613,14 @@ const PageEditor = () => {
                 initialColor={page?.style?.backgroundColor || "white"}
                 onChooseColor={handleChangeBackgroundColorComplete}
                 onCancel={() => setShowBackgroundColorPicker(false)}
+                title={strings.pickBGColorUserPage}
               />
             )}
           </Grid>
         </CustomTooltip>
 
         <CustomTooltip title={strings.uploadBackgroundImage}>
-          <Grid item>
+          <Grid item id="page-editor-general-tour8">
             <IconButton
               size={isSmallerThan370 ? "small" : "medium"}
               onClick={() => {
@@ -598,7 +667,7 @@ const PageEditor = () => {
           title={
             planFeatures?.customJs
               ? strings.customScripts.insertCustomScript
-              : strings.upgradeYourPlan
+              : strings.notAvailableInYourPlan
           }
         >
           <Grid item>
@@ -609,6 +678,7 @@ const PageEditor = () => {
                 setOpenCustomScriptDialog(true);
               }}
               hoverBackgroundColor={LIGHT_GREY}
+              id="page-editor-general-tour9"
             >
               <Code
                 fontSize={isSmallerThan370 ? "small" : "medium"}
@@ -638,7 +708,7 @@ const PageEditor = () => {
           </Grid>
         </CustomTooltip>
 
-        <CustomTooltip title={strings.remove}>
+        <CustomTooltip title={strings.remove} id="page-editor-general-tour10">
           <Grid item>
             <IconButton
               size={isSmallerThan370 ? "small" : "medium"}
@@ -646,6 +716,7 @@ const PageEditor = () => {
                 setShowDeletePageConfirmation(true);
               }}
               hoverBackgroundColor={LIGHT_GREY}
+              id="page-editor-general-tour10"
             >
               <DeleteIcon fontSize={isSmallerThan370 ? "small" : "medium"} />
             </IconButton>
@@ -653,7 +724,7 @@ const PageEditor = () => {
         </CustomTooltip>
 
         <CustomTooltip title={strings.viewPage}>
-          <Grid item>
+          <Grid item id="page-editor-general-tour11">
             {page?.isPublic ? (
               <Link
                 to={"/" + page?.url}
@@ -707,10 +778,16 @@ const PageEditor = () => {
         direction={!isSmallerThan500 ? "row" : "column"}
         alignItems="center"
         justifyContent="space-between"
+        position="relative"
       >
+        <span
+          id="page-editor-general-tour1"
+          style={{ position: "absolute", left: 0, top: 30, width: "30px" }}
+        />
         <Grid item justifyContent="center" alignItems="center">
           {page && (
             <ProfileEditableAvatar
+              id="page-editor-general-tour2"
               width="15vw"
               height="15vw"
               maxWidth="100px"
@@ -724,7 +801,7 @@ const PageEditor = () => {
           )}
         </Grid>
 
-        <Grid item alignItems="center">
+        <Grid item alignItems="center" id="page-editor-general-tour3">
           <PageName item>
             {isEdittingPageName ? (
               <form onSubmit={handleSubmit(onSubmitPageNameForm)}>
@@ -814,6 +891,7 @@ const PageEditor = () => {
                 onClick={() => {
                   setOpenToolsDialog(true);
                 }}
+                id="page-editor-general-tour4"
               >
                 <AddIcon color="inherit" sx={{ marginRight: "4px" }} />
                 {strings.create}
@@ -892,7 +970,7 @@ const PageEditor = () => {
                   });
               })
             );
-            navigate(PAGES_ROUTES.pages);
+            navigate(PAGES_ROUTES.userPages);
           }
         }}
         message={strings.removePageConfirmation}
@@ -1008,10 +1086,18 @@ const PageEditor = () => {
 
   return (
     <>
+      <OnboardingTour
+        steps={ONBOARDING_STEPS_PAGE_EDITOR_GENERAL}
+        run={runTourGeneral}
+        scrollToFirstStep={false}
+        disableScrolling
+        onFinishTour={() => updateUserOnboardingGeneral("general")}
+        continuous
+      />
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
-        title={"Pagefy"}
+        title={strings.appName}
         description={strings.appDescription}
         image={images.screenshots.pageEditor}
       />

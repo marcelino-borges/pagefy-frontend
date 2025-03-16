@@ -2,6 +2,7 @@ import { IDictionary } from "..";
 import { RENDERED_PAGE_COMPONENT_HEIGHT } from "./../../constants/index";
 
 export const en: IDictionary = {
+  appName: "Pagefy",
   appDescription:
     "Pagefy is a platform that allows anyone to create a landing page to be used as a bio link on social media platforms such as Instagram, Twitter, LinkedIn, Facebook, TikTok, Snapchat, Kwai, and more. Here, you'll find an alternative to Linktree and others.",
   hide: "Hide",
@@ -12,6 +13,7 @@ export const en: IDictionary = {
   checkOurPlans: "Check our plans",
   youAreSpecial: "You can be special too!",
   ok: "OK",
+  understoodEverything: "Understood everything",
   recurrency: {
     titleSingular: "Recurrency",
     titlePlural: "Recurrencies",
@@ -124,6 +126,10 @@ export const en: IDictionary = {
   invalidUrl: "Invalid URL",
   hasToBeYoutubeVideo: "Has to be a YouTube video",
   colorPicker: "Pick a color",
+  pickBGColor: "Pick a background color",
+  pickFontColor: "Pick a font color",
+  pickBGColorUserPage: "Pick a background color for the page",
+  pickFontColorUserPage: "Pick a font color for the page",
   removeComponentConfirmation: "Do you really wish to remove this component?",
   removeIconConfirmation: "Do you really wish to remove this icon?",
   removePageConfirmation: "Do you really want to remove this page?",
@@ -157,6 +163,7 @@ export const en: IDictionary = {
   imageInComponentRequired: "Choose an image to your component",
   selectAllOptions: "Select all the options!",
   videoUrl: "Video URL",
+  notAvailableInYourPlan: "Not available in your plan, do an upgrade",
   videoComponentDescription:
     "Your video will ocupy 2 columns and 2 rows in your landing page",
   youtubeUrlExample: "https://www.youtube.com/embed/Lq2lNYKYpYw",
@@ -169,8 +176,11 @@ export const en: IDictionary = {
   spotifyInstructions:
     'Open Spotify, find the playlist, artist, album or track you want, click on the "...", select "Share" and then "Copy link to XXX". Then past the URL here.',
   clickHere: "Click here",
+  open: "Open",
   step: "Step",
   share: "Share",
+  of: "of",
+  skip: "Skip",
   understood: "Got it",
   invalidId: " Invalid ID",
   warningPrivatePage: "This page is not publicly available.",
@@ -181,10 +191,12 @@ export const en: IDictionary = {
   pageUrl: "Page URL",
   requiredField: "Required field",
   requiredFields: "Required fields",
-  pageUrlExample: "/unique-name-of-your-page",
+  pageUrlExample: "/page-unique-link",
+  close: "Close",
+  last: "Last",
   createPageError: {
     pageUrlBadFormat:
-      "Badly formatted URL. It must have more than 3 characters and it's allowed only letters and hyphens, like this: /my-page",
+      "Badly formatted link. Requirements: more than 3 characters, low case letters, no special characters (except hyphen) and no white spaces, eg.: /my-page",
     cannotContainWhiteSpaces: "Cannot contain white spaces",
   },
   launchMessageLabel: "Message",
@@ -611,5 +623,43 @@ export const en: IDictionary = {
     maxPages: "Max pages",
     specialSupport: "Special support",
     watermark: "Watermark",
+  },
+  onboardings: {
+    userPages: {
+      step1: "Click here to create a new page",
+    },
+    pageEditor: {
+      general: {
+        step1: "",
+        step2: "",
+        step3: "",
+        step4: "",
+        step5: "",
+        step6: "",
+        step7: "",
+        step8: "",
+        step9: "",
+        step10: "",
+        step11: "",
+        step12: "",
+        step13: "",
+        step14: "",
+        step15: "",
+      },
+      createDialog: {
+        step1: "",
+        step2: "",
+        step3: "",
+        step4: "",
+        step5: "",
+      },
+      createButton: {
+        step1: "",
+        step2: "",
+        step3: "",
+        step4: "",
+        step5: "",
+      },
+    },
   },
 };

@@ -1,5 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
+  Box,
   Button,
   Checkbox,
   FormControlLabel,
@@ -86,7 +87,7 @@ const SignUpPage = () => {
       return;
     }
 
-    navigate(PAGES_ROUTES.pages);
+    navigate(PAGES_ROUTES.userPages);
   };
 
   const onSubmit = () => {
@@ -174,7 +175,7 @@ const SignUpPage = () => {
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
-        title={"Pagefy"}
+        title={strings.appName}
         description={strings.appDescription}
         image={images.screenshots.signup}
       />
@@ -297,7 +298,9 @@ const SignUpPage = () => {
           </Grid>
           <Grid container item mt="24px">
             <FormControlLabel
-              label={strings.wishesCommunications}
+              label={
+                <Box fontSize="0.8rem">{strings.wishesCommunications}</Box>
+              }
               control={
                 <Checkbox
                   checked={receiveCommunications}
@@ -309,7 +312,7 @@ const SignUpPage = () => {
             />
             <FormControlLabel
               label={
-                <>
+                <Box fontSize="0.8rem">
                   {strings.agreeWith}{" "}
                   <InternalLink to={PAGES_ROUTES.terms}>
                     {strings.termsOfUse}
@@ -318,7 +321,7 @@ const SignUpPage = () => {
                   <InternalLink to={PAGES_ROUTES.privacy}>
                     {strings.privacyPolicies}
                   </InternalLink>
-                </>
+                </Box>
               }
               control={
                 <Checkbox
@@ -358,6 +361,13 @@ const SignUpPage = () => {
               {strings.alreadyHaveAccount}
             </InternalLink>
           </Grid>
+
+          <Box mt="32px" fontSize="0.7rem" color="gray">
+            This site is protected by reCAPTCHA and the Google{" "}
+            <a href="https://policies.google.com/privacy">Privacy Policy</a> and{" "}
+            <a href="https://policies.google.com/terms">Terms of Service</a>{" "}
+            apply.
+          </Box>
         </form>
       </BannerHalfLayout>
     </>

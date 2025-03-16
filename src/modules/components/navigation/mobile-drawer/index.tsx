@@ -42,12 +42,7 @@ const MobileHeader = ({
 
   return (
     <Grid item xs={2}>
-      <Grid
-        container
-        item
-        justifyContent="flex-end"
-        style={{ paddingRight: "36px" }}
-      >
+      <Grid container item justifyContent="flex-end">
         <HamburguerMenuIcon onClick={toggleDrawer} />
       </Grid>
 
@@ -88,10 +83,12 @@ const MobileHeader = ({
             <MobileMenuGridItem
               item
               alignItems="center"
-              onClick={() => onClickLinkCallback(PAGES_ROUTES.pages)}
+              onClick={() => onClickLinkCallback(PAGES_ROUTES.userPages)}
               style={{
                 color:
-                  location.pathname === PAGES_ROUTES.pages ? PRIMARY_COLOR : "",
+                  location.pathname === PAGES_ROUTES.userPages
+                    ? PRIMARY_COLOR
+                    : "",
               }}
             >
               {strings.pages}

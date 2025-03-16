@@ -36,7 +36,7 @@ interface IPageCardProps {
   page: IUserPage;
 }
 
-const URL_MAX_LENGTH = 10;
+const URL_MAX_LENGTH = 20;
 
 const PageCard = ({ page }: IPageCardProps) => {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const PageCard = ({ page }: IPageCardProps) => {
       });
     }
 
-    navigate(PAGES_ROUTES.page + "/" + page._id);
+    navigate(PAGES_ROUTES.pageEditor + "/" + page._id);
   };
 
   const handleChangePageName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -191,27 +191,39 @@ const PageCard = ({ page }: IPageCardProps) => {
             style={{ paddingRight: "32px" }}
           >
             <Grid container item wrap="nowrap">
-              <ElementIcon />
+              <ElementIcon
+                style={{
+                  transform: "translateY(-1px)",
+                }}
+              />
               <PageDataKey>Elementos: </PageDataKey>
               {page.middleComponents?.length || 0}
             </Grid>
-            <Grid container item wrap="nowrap">
-              {isUrlLong ? (
-                <CustomTooltip title={page.url}>
-                  <LinkIcon />
-                </CustomTooltip>
-              ) : (
-                <LinkIcon />
-              )}
-              <PageDataKey>URL: </PageDataKey>/
-              {stringShortener(page.url, URL_MAX_LENGTH)}
-            </Grid>
+            <CustomTooltip title={page.url}>
+              <Grid container item wrap="nowrap">
+                <LinkIcon
+                  style={{
+                    transform: "translateY(-1px)",
+                  }}
+                />
+                <PageDataKey>URL: </PageDataKey>/
+                {isUrlLong
+                  ? stringShortener(page.url, URL_MAX_LENGTH)
+                  : page.url}
+              </Grid>
+            </CustomTooltip>
 
-            <Grid container item wrap="nowrap">
-              <ViewsIcon />
-              <PageDataKey>{strings.views}: </PageDataKey>
-              {activeSubscription ? page.views : strings.upgradeYourPlan}
-            </Grid>
+            {activeSubscription && (
+              <Grid container item wrap="nowrap">
+                <ViewsIcon
+                  style={{
+                    transform: "translateY(3px)",
+                  }}
+                />
+                <PageDataKey>{strings.views}: </PageDataKey>
+                {page.views}
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </CardContent>

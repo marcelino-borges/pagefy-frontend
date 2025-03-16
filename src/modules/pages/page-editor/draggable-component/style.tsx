@@ -74,11 +74,10 @@ export const DragHandle = styled(({ isHoveringComponent, ...rest }: any) => (
 `
 );
 
-export const ContentRow = styled(({ children }: any) => (
-  <Stack direction="row">{children}</Stack>
-))`
+export const ContentRow = styled(Stack)`
   @media (max-width: 600px) {
     margin-left: 0px;
+
     .MuiGrid-item,
     svg {
       font-size: 16px;

@@ -87,6 +87,7 @@ interface IPlanDetails {
 }
 
 export interface IDictionary {
+  appName: string;
   hide: string;
   activate: string;
   active: string;
@@ -206,6 +207,10 @@ export interface IDictionary {
   invalidUrl: string;
   hasToBeYoutubeVideo: string;
   colorPicker: string;
+  pickBGColor: string;
+  pickFontColor: string;
+  pickBGColorUserPage: string;
+  pickFontColorUserPage: string;
   removeComponentConfirmation: string;
   removeIconConfirmation: string;
   removePageConfirmation: string;
@@ -248,6 +253,8 @@ export interface IDictionary {
   spotifyInstructions: string;
   clickHere: string;
   step: string;
+  skip: string;
+  of: string;
   share: string;
   understood: string;
   invalidId: string;
@@ -355,6 +362,10 @@ export interface IDictionary {
     activeSubscriptionFoundCancel: string;
   };
   maximumFileSizeOf: string;
+  close: string;
+  last: string;
+  understoodEverything: string;
+  open: string;
   animations: IAnimations;
   recommended: string;
   checkout: string;
@@ -533,6 +544,7 @@ export interface IDictionary {
   processingCheckout: string;
   subscribeRedirectStripeDisclaimer: string;
   endsAt: string;
+  notAvailableInYourPlan: string;
   planFeatures: {
     whatYourPlanHas: string;
     analytics: string;
@@ -542,6 +554,16 @@ export interface IDictionary {
     maxPages: string;
     specialSupport: string;
     watermark: string;
+  };
+  onboardings: {
+    userPages: {
+      step1: string;
+    };
+    pageEditor: {
+      general: Record<string, string>;
+      createDialog: Record<string, string>;
+      createButton: Record<string, string>;
+    };
   };
 }
 

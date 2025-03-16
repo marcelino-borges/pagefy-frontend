@@ -71,7 +71,7 @@ const CheckoutCancel = () => {
           <Button
             variant="contained"
             fullWidth={false}
-            onClick={() => navigate(PAGES_ROUTES.pages)}
+            onClick={() => navigate(PAGES_ROUTES.userPages)}
           >
             {strings.accessDashboard}
           </Button>

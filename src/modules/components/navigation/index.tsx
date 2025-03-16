@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Grid, Stack, useMediaQuery, useTheme } from "@mui/material";
 import { Parent } from "./style";
 import PAGES_ROUTES from "./../../../routes/paths";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import {
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from "../../../constants";
+import UserLoggedIn from "./user-loggedin";
 
 import DesktopHeader from "./desktop-menu";
 import MobileHeader from "./mobile-drawer";
@@ -27,7 +28,6 @@ interface INavigationProps {
 const Navigation = ({ variant = "fixed" }: INavigationProps) => {
   const theme = useTheme();
   const isSmallerThanMD = useMediaQuery(theme.breakpoints.down("md"));
-  const isSmallerThan420 = useMediaQuery("(max-width:420px)");
 
   const userState = useSelector((state: IApplicationState) => state.user);
 
@@ -81,6 +81,8 @@ const Navigation = ({ variant = "fixed" }: INavigationProps) => {
     }
   }, [isSmallerThanMD]);
 
+  const paddingsParent = isSmallerThanMD ? "16px" : "32px";
+
   return (
     <Parent
       container
@@ -88,45 +90,37 @@ const Navigation = ({ variant = "fixed" }: INavigationProps) => {
       justifyContent="space-between"
       transparent={transparent}
       isFixed={isFixed}
+      maxWidth="100vw"
+      pr={paddingsParent}
+      pl={paddingsParent}
     >
-      <Grid
-        container
-        item
-        xs={10}
-        md={4}
+      <Stack
+        direction="row"
         justifyContent="space-between"
         alignItems="center"
         style={{
-          paddingLeft: "32px",
           height: isSmallerThanMD
             ? HEADER_HEIGHT_MOBILE
             : HEADER_HEIGHT_DESKTOP,
         }}
       >
         <Link
-          to={userState.profile?._id ? PAGES_ROUTES.pages : PAGES_ROUTES.root}
+          to={
+            userState.profile?._id ? PAGES_ROUTES.userPages : PAGES_ROUTES.root
+          }
         >
-          {isSmallerThan420 ? (
-            <img
-              src={logos.LogoIconColorPng}
-              style={{
-                margin: "8px",
-                height: "50px",
-              }}
-              alt="Logo"
-            />
-          ) : (
-            <img
-              src={logos.LogoHorizontalLightBgPng}
-              style={{
-                margin: "8px",
-                height: "50px",
-              }}
-              alt="Logo"
-            />
-          )}
+          <img
+            src={logos.LogoHorizontalLightBgPng}
+            style={{
+              margin: "8px",
+              height: isSmallerThanMD
+                ? `${Number(HEADER_HEIGHT_MOBILE.replace("px", "")) * 0.5}px`
+                : "50px",
+            }}
+            alt="Logo"
+          />
         </Link>
-      </Grid>
+      </Stack>
       {isSmallerThanMD ? (
         <MobileHeader
           toggleDrawer={toggleDrawer}
@@ -136,6 +130,7 @@ const Navigation = ({ variant = "fixed" }: INavigationProps) => {
       ) : (
         <DesktopHeader />
       )}
+      {!isSmallerThanMD && <UserLoggedIn />}
     </Parent>
   );
 };

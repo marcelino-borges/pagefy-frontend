@@ -191,7 +191,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 13px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -230,4 +230,10 @@ a {
 
 .grecaptcha-badge {
   z-index: 99999;
+  visibility: hidden;
+}
+
+.legible-text {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }

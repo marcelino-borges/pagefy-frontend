@@ -92,7 +92,7 @@ const Support = () => {
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
-        title={"Pagefy"}
+        title={strings.appName}
         description={strings.appDescription}
         image={images.screenshots.support}
       />
@@ -132,7 +132,7 @@ const Support = () => {
                   color={PRIMARY_COLOR}
                   fontWeight={600}
                 >
-                  <InternalLink to={PAGES_ROUTES.pages}>
+                  <InternalLink to={PAGES_ROUTES.userPages}>
                     {strings.goToPages}
                   </InternalLink>
                 </Grid>

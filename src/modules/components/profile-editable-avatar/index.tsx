@@ -10,17 +10,18 @@ import { MEDIUM_GREY } from "../../../styles/colors";
 
 interface IProfileEditableAvatarProps {
   onClick: any;
-  text?: string | undefined;
-  imageUrl?: string | undefined;
-  height?: string | undefined;
-  width?: string | undefined;
-  maxWidth?: string | undefined;
-  maxHeight?: string | undefined;
-  minWidth?: string | undefined;
-  minHeight?: string | undefined;
-  badgeBgSize?: string | undefined;
-  badgeIconSize?: string | undefined;
-  noUserIconSize?: string | undefined;
+  text?: string;
+  imageUrl?: string;
+  height?: string;
+  width?: string;
+  maxWidth?: string;
+  maxHeight?: string;
+  minWidth?: string;
+  minHeight?: string;
+  badgeBgSize?: string;
+  badgeIconSize?: string;
+  noUserIconSize?: string;
+  id?: string;
   isEditable?: boolean;
 }
 
@@ -38,9 +39,11 @@ const ProfileEditableAvatar = ({
   badgeIconSize = "20px",
   noUserIconSize = "48px",
   isEditable = true,
+  id,
 }: IProfileEditableAvatarProps) => {
   return (
     <Badge
+      id={id}
       overlap="circular"
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
       onClick={isEditable === true ? onClick : undefined}
