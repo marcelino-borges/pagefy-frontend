@@ -84,8 +84,7 @@ import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { toBase64 } from "../../../utils";
 import OnboardingTour from "../../components/onboarding-tour";
 import { ONBOARDING_STEPS_PAGE_EDITOR_GENERAL } from "./constants";
-import { ONBOARDING_STEPS_USER_PAGES } from "../user-pages/constants";
-import { UserOnboardings } from "../../../store/user/types";
+import { PageEditorOnboardingEvent } from "./types";
 
 const PageEditor = () => {
   const dispatch = useDispatch();
@@ -129,7 +128,6 @@ const PageEditor = () => {
     useState<boolean>(false);
   const [openCountersDialog, setOpenCountersDialog] = useState<boolean>(false);
   const [runTourGeneral, setRunTourGeneral] = useState(false);
-  const [runTourCreateDialog, setRunTourCreateDialog] = useState(false);
 
   const { handleSubmit } = useForm();
 
@@ -181,7 +179,7 @@ const PageEditor = () => {
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [id, userPagesState]
+    [id, navigate, userPagesState]
   );
 
   useEffect(
@@ -208,11 +206,6 @@ const PageEditor = () => {
 
   useEffect(
     function decideToRunTourPageEditor() {
-      console.log({
-        "onboardings?.pageEditor?.general": onboardings?.pageEditor?.general,
-        includes: pathname.includes(PAGES_ROUTES.pageEditor),
-        pathname,
-      });
       setRunTourGeneral(
         !onboardings?.pageEditor?.general &&
           pathname.includes(PAGES_ROUTES.pageEditor)
@@ -391,11 +384,7 @@ const PageEditor = () => {
     [dispatch, page]
   );
 
-  const updateUserOnboardingGeneral = (
-    key: typeof userProfile extends undefined
-      ? never
-      : keyof NonNullable<UserOnboardings["pageEditor"]>
-  ) => {
+  const updateUserOnboardingGeneral = (key: PageEditorOnboardingEvent) => {
     if (!userProfile) return;
 
     try {
@@ -413,7 +402,7 @@ const PageEditor = () => {
       );
     } catch (error) {
       console.log(
-        "Couldn't update onboarding event for pageEditor.general",
+        `Couldn't update onboarding event for pageEditor.${key}`,
         error
       );
     }

@@ -658,20 +658,8 @@ export const pt: IDictionary = {
         step11:
           "Abra sua página em outra aba para visualizar como ela realmente será exibida para seu público.",
       },
-      createDialog: {
-        step1: "",
-        step2: "",
-        step3: "",
-        step4: "",
-        step5: "",
-      },
-      createButton: {
-        step1: "",
-        step2: "",
-        step3: "",
-        step4: "",
-        step5: "",
-      },
+      createDialog: {},
+      createButton: {},
     },
   },
 };
