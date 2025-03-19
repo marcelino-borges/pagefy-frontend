@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import DialogActions from "@mui/material/DialogActions/DialogActions";
 import { Icon } from "@iconify/react";
@@ -11,19 +10,13 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ToolbarButton, ToolbarIconText } from "../../style";
 import strings from "../../../../../localization";
 import { ANALYTICS_EVENTS } from "../../../../../constants";
 import { logAnalyticsEvent } from "../../../../../services/firebase-analytics";
 import { IApplicationState } from "../../../../../store";
 import { toBase64 } from "../../../../../utils";
-import OnboardingTour from "../../../../components/onboarding-tour";
-import { ONBOARDING_STEPS_PAGE_EDITOR_CREATE_DIALOG } from "../../constants";
-import { PageEditorOnboardingEvent } from "../../types";
-import { useLocation } from "react-router-dom";
-import PAGES_ROUTES from "../../../../../routes/paths";
-import { updateUser } from "../../../../../store/user/actions";
 
 interface ITool {
   label: string;
@@ -60,61 +53,14 @@ const ToolsDialog = ({
   handleOpenCountersDialog,
 }: IToolsDialogProps) => {
   const theme = useTheme();
-  const { pathname } = useLocation();
-  const dispatch = useDispatch();
   const isSmallerThanSM = useMediaQuery(theme.breakpoints.down("sm"));
   const userProfile = useSelector(
     (state: IApplicationState) => state.user.profile
   );
-  const [runTourCreateDialog, setRunTourCreateDialog] = useState(false);
 
-  useEffect(
-    function decideToRunTourPageEditor() {
-      if (
-        !runTourCreateDialog &&
-        !userProfile?.onboardings?.pageEditor?.createDialog &&
-        pathname.includes(PAGES_ROUTES.pageEditor)
-      ) {
-        setRunTourCreateDialog(true);
-      }
-    },
-    [
-      pathname,
-      userProfile?.onboardings?.pageEditor?.createDialog,
-      runTourCreateDialog,
-    ]
-  );
-
-  const updateUserOnboardingGeneral = useCallback(() => {
-    if (!userProfile) return;
-    console.log("has user");
-
-    if (userProfile.onboardings?.pageEditor?.createDialog) return;
-
-    try {
-      dispatch(
-        updateUser({
-          ...userProfile,
-          onboardings: {
-            ...userProfile?.onboardings,
-            pageEditor: {
-              ...userProfile?.onboardings?.pageEditor,
-              createDialog: true,
-            },
-          },
-        })
-      );
-    } catch (error) {
-      console.log(
-        `Couldn't update onboarding event for pageEditor.createDialog`,
-        error
-      );
-    }
-  }, [dispatch, userProfile]);
-
-  const ToolButton = ({ tool }: { tool: ITool }) => {
+  const ToolButton = ({ tool, id }: { tool: ITool; id?: string }) => {
     return (
-      <Grid item xs={3} py="16px">
+      <Grid item xs={3} py="16px" id={id}>
         <Grid container item direction="column">
           <ToolbarButton
             onClick={() => {
@@ -179,22 +125,6 @@ const ToolsDialog = ({
     },
   ];
 
-  const steps = useMemo(() => ONBOARDING_STEPS_PAGE_EDITOR_CREATE_DIALOG, []);
-
-  const onboardingElement = useMemo(
-    () => (
-      <OnboardingTour
-        steps={steps}
-        run={runTourCreateDialog}
-        scrollToFirstStep={false}
-        disableScrolling
-        onFinishTour={updateUserOnboardingGeneral}
-        continuous
-      />
-    ),
-    [runTourCreateDialog, steps, updateUserOnboardingGeneral]
-  );
-
   return (
     <Dialog
       open={open}
@@ -203,7 +133,6 @@ const ToolsDialog = ({
       fullScreen={isSmallerThanSM}
       maxWidth="sm"
     >
-      {onboardingElement}
       <DialogTitle>{strings.chooseOneToCreate}</DialogTitle>
       <DialogContent>
         <Grid
@@ -213,6 +142,7 @@ const ToolsDialog = ({
           justifyContent="flex-start"
           alignItems="flex-start"
           paddingTop={isSmallerThan600 ? "24px" : "0"}
+          id="page-editor-createDialog-tour1"
         >
           {tools.map((tool: ITool) => (
             <ToolButton tool={tool} key={uuidv4()} />

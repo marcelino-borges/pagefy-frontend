@@ -1,6 +1,13 @@
-import Joyride, { CallBackProps, Props as JoyrideProps, STATUS } from "react-joyride";
+import Joyride, {
+  CallBackProps,
+  Props as JoyrideProps,
+  LIFECYCLE,
+  ORIGIN,
+  STATUS,
+} from "react-joyride";
 import strings from "../../../localization";
 import { COMPLEMENTARY_COLOR, PRIMARY_COLOR } from "../../../styles/colors";
+import { memo } from "react";
 
 interface OnboardingTourProps extends JoyrideProps {
   keyJoyrider?: string;
@@ -12,11 +19,33 @@ const OnboardingTour = ({
   onFinishTour,
   ...originalProps
 }: OnboardingTourProps) => {
+  const tourId = "Tour open. First Target " + originalProps.steps[0].target;
+
+  if (originalProps.run) console.log(tourId);
+
   return (
     <Joyride
-      callback={(data: CallBackProps) => {
-        if (data.status === STATUS.FINISHED) onFinishTour?.();
-      }}
+      callback={
+        originalProps.callback ??
+        (({ status, origin, lifecycle, ...rest }: CallBackProps) => {
+          if (
+            status === STATUS.FINISHED &&
+            origin === ORIGIN.BUTTON_PRIMARY &&
+            lifecycle === LIFECYCLE.COMPLETE
+          )
+            onFinishTour?.();
+
+          console.log({
+            tour: tourId,
+            callback: {
+              status,
+              origin,
+              lifecycle,
+              ...rest,
+            },
+          });
+        })
+      }
       {...originalProps}
       key={keyJoyrider}
       locale={{
@@ -50,14 +79,19 @@ const OnboardingTour = ({
         },
         beaconInner: {
           backgroundColor: COMPLEMENTARY_COLOR,
+          zIndex: 999_999,
         },
         beaconOuter: {
           borderColor: COMPLEMENTARY_COLOR,
           backgroundColor: COMPLEMENTARY_COLOR + "50",
+          zIndex: 999_999,
+        },
+        beacon: {
+          zIndex: 999_999,
         },
       }}
     />
   );
 };
 
-export default OnboardingTour;
+export default memo(OnboardingTour);

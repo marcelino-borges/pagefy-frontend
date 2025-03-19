@@ -658,7 +658,10 @@ export const pt: IDictionary = {
         step11:
           "Abra sua página em outra aba para visualizar como ela realmente será exibida para seu público.",
       },
-      createDialog: {},
+      createDialog: {
+        step1:
+          "Todos os elementos podem ser criados por aqui, basta selecionar qual deles você quer criar agora.",
+      },
       createButton: {},
     },
   },

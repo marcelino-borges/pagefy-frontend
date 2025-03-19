@@ -83,7 +83,10 @@ import images from "../../../assets/img";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { toBase64 } from "../../../utils";
 import OnboardingTour from "../../components/onboarding-tour";
-import { ONBOARDING_STEPS_PAGE_EDITOR_GENERAL } from "./constants";
+import {
+  ONBOARDING_STEPS_PAGE_EDITOR_CREATE_DIALOG,
+  ONBOARDING_STEPS_PAGE_EDITOR_GENERAL,
+} from "./constants";
 import { PageEditorOnboardingEvent } from "./types";
 
 const PageEditor = () => {
@@ -128,6 +131,7 @@ const PageEditor = () => {
     useState<boolean>(false);
   const [openCountersDialog, setOpenCountersDialog] = useState<boolean>(false);
   const [runTourGeneral, setRunTourGeneral] = useState(false);
+  const [runTourCreateDialog, setRunTourCreateDialog] = useState(false);
 
   const { handleSubmit } = useForm();
 
@@ -991,6 +995,7 @@ const PageEditor = () => {
       <ToolsDialog
         open={openToolsDialog}
         handleClose={() => {
+          setRunTourCreateDialog(false);
           setOpenToolsDialog(false);
         }}
         isSmallerThan600={isSmallerThan600}
@@ -1073,16 +1078,97 @@ const PageEditor = () => {
     [page]
   );
 
+  useEffect(
+    function () {
+      console.log({
+        runTourCreateDialog,
+      });
+    },
+    [runTourCreateDialog]
+  );
+
+  console.log("------------ render");
+
+  useEffect(
+    function decideToRunTourPageEditor() {
+      console.log({
+        createDialogSeen: userProfile?.onboardings?.pageEditor?.createDialog,
+        isPageEditor: pathname.includes(PAGES_ROUTES.pageEditor),
+      });
+      if (
+        openToolsDialog &&
+        !userProfile?.onboardings?.pageEditor?.createDialog &&
+        pathname.includes(PAGES_ROUTES.pageEditor)
+      ) {
+        console.log("Activating run create dialog tour");
+        setTimeout(() => {
+          setRunTourCreateDialog(true);
+          console.log("Tour create dialog activated");
+        }, 300);
+      }
+    },
+    [
+      pathname,
+      userProfile?.onboardings?.pageEditor?.createDialog,
+      openToolsDialog,
+    ]
+  );
+
+  const updateUserOnboardingCreateDialog = useCallback(() => {
+    if (!userProfile) return;
+
+    if (userProfile.onboardings?.pageEditor?.createDialog) return;
+
+    try {
+      dispatch(
+        updateUser({
+          ...userProfile,
+          onboardings: {
+            ...userProfile?.onboardings,
+            pageEditor: {
+              ...userProfile?.onboardings?.pageEditor,
+              createDialog: true,
+            },
+          },
+        })
+      );
+    } catch (error) {
+      console.log(
+        `Couldn't update onboarding event for pageEditor.createDialog`,
+        error
+      );
+    }
+  }, [dispatch, userProfile]);
+
   return (
     <>
-      <OnboardingTour
-        steps={ONBOARDING_STEPS_PAGE_EDITOR_GENERAL}
-        run={runTourGeneral}
-        scrollToFirstStep={false}
-        disableScrolling
-        onFinishTour={() => updateUserOnboardingGeneral("general")}
-        continuous
-      />
+      {runTourGeneral && (
+        <OnboardingTour
+          steps={ONBOARDING_STEPS_PAGE_EDITOR_GENERAL}
+          run={runTourGeneral}
+          scrollToFirstStep={false}
+          disableScrolling
+          onFinishTour={() => {
+            setRunTourGeneral(false);
+            updateUserOnboardingGeneral("general");
+          }}
+          continuous
+        />
+      )}
+
+      {/* {runTourCreateDialog && openToolsDialog && (
+        <OnboardingTour
+          steps={ONBOARDING_STEPS_PAGE_EDITOR_CREATE_DIALOG}
+          run={openToolsDialog && runTourCreateDialog}
+          scrollToFirstStep={false}
+          disableScrolling
+          onFinishTour={() => {
+            setRunTourCreateDialog(false);
+            updateUserOnboardingCreateDialog();
+          }}
+          continuous
+        />
+      )} */}
       <Meta
         lang={strings.getLanguage()}
         locale={strings.getInterfaceLanguage()}
