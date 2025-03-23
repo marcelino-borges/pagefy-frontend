@@ -12,6 +12,8 @@ interface ISpotifyComponentProps {
   fontColor?: string | undefined;
 }
 
+const DEFAULT_ROWS = 3;
+
 const SpotifyComponent = ({
   component,
   pageId,
@@ -31,15 +33,16 @@ const SpotifyComponent = ({
 
   if (!component.url) return null;
 
+  const height =
+    RENDERED_PAGE_COMPONENT_HEIGHT * DEFAULT_ROWS - widthMultiplier;
+
   return (
     <BaseComponentType
       url={component.url}
       layout={component.layout}
       style={{
         ...component.style,
-        height:
-          RENDERED_PAGE_COMPONENT_HEIGHT * (6 - widthMultiplier) +
-          "px !important",
+        height: `${height}px !important`,
       }}
       onClick={() => {
         if (pageId && component._id)
@@ -56,12 +59,7 @@ const SpotifyComponent = ({
         >
           {component.text}
         </div>
-        <SpotifyEmbed
-          url={component.url}
-          height={String(
-            RENDERED_PAGE_COMPONENT_HEIGHT * (6 - widthMultiplier)
-          )}
-        />
+        <SpotifyEmbed url={component.url} height={String(height)} />
       </Grid>
     </BaseComponentType>
   );
