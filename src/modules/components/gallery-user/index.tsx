@@ -79,6 +79,7 @@ const UserGallery = ({
       if (response.data) addImages(response.data);
     });
   };
+  console.log("--------- Gallery user images: ", images);
 
   const getButtonsTemplates = async () => {
     if (!userId) return;

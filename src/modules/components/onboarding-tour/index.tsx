@@ -21,8 +21,6 @@ const OnboardingTour = ({
 }: OnboardingTourProps) => {
   const tourId = "Tour open. First Target " + originalProps.steps[0].target;
 
-  if (originalProps.run) console.log(tourId);
-
   return (
     <Joyride
       callback={

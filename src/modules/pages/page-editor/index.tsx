@@ -83,10 +83,7 @@ import images from "../../../assets/img";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { toBase64 } from "../../../utils";
 import OnboardingTour from "../../components/onboarding-tour";
-import {
-  ONBOARDING_STEPS_PAGE_EDITOR_CREATE_DIALOG,
-  ONBOARDING_STEPS_PAGE_EDITOR_GENERAL,
-} from "./constants";
+import { ONBOARDING_STEPS_PAGE_EDITOR_GENERAL } from "./constants";
 import { PageEditorOnboardingEvent } from "./types";
 
 const PageEditor = () => {
@@ -432,6 +429,7 @@ const PageEditor = () => {
     if (!page || !page._id) return;
 
     const successCallback = (url: string) => {
+      console.log("------- upload url:", url);
       const pageToSave: IUserPage = {
         ...page,
         pageImageUrl: url,
@@ -454,9 +452,11 @@ const PageEditor = () => {
     };
 
     const errorCallback = (errorTranslated: string) => {
+      console.log("------- upload error:", errorTranslated);
       showErrorToast(errorTranslated);
       dispatch(clearLoading());
     };
+
     if (chosenImage) {
       dispatch(
         uploadAndSetPageImage(chosenImage, page, successCallback, errorCallback)
@@ -637,16 +637,6 @@ const PageEditor = () => {
               submitDialog={async (imageUrl?: string) => {
                 savePageBGImage(imageUrl);
                 setOpenChooseFileBGDialog(false);
-
-                if (imageUrl === undefined && page) {
-                  setPage({
-                    ...page,
-                    style: {
-                      ...page.style,
-                      backgroundImage: undefined,
-                    },
-                  });
-                }
               }}
               cancelDialog={() => {
                 setChosenImage(undefined);
@@ -1079,22 +1069,7 @@ const PageEditor = () => {
   );
 
   useEffect(
-    function () {
-      console.log({
-        runTourCreateDialog,
-      });
-    },
-    [runTourCreateDialog]
-  );
-
-  console.log("------------ render");
-
-  useEffect(
     function decideToRunTourPageEditor() {
-      console.log({
-        createDialogSeen: userProfile?.onboardings?.pageEditor?.createDialog,
-        isPageEditor: pathname.includes(PAGES_ROUTES.pageEditor),
-      });
       if (
         openToolsDialog &&
         !userProfile?.onboardings?.pageEditor?.createDialog &&
