@@ -662,4 +662,7 @@ export const en: IDictionary = {
       },
     },
   },
+  validate: "Validate",
+  couponApplied: "Coupon applied!",
+  couponNotFound: "Coupon not found",
 };

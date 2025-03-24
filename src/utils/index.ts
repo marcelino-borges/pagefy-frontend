@@ -275,5 +275,8 @@ export const getCurrencyByLocale = (locale: string) => {
 export const translateBoolToYesNo = (bool: boolean) =>
   bool ? strings.yes : strings.no;
 
+export const translateBoolToActiveInactive = (bool: boolean) =>
+  bool ? strings.active : strings.inactive;
+
 export const toBase64 = (original?: string) =>
   original ? Buffer.from(original).toString("base64") : undefined;

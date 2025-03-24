@@ -16,7 +16,11 @@ import {
   TextField,
   useMediaQuery,
 } from "@mui/material";
-import { createCheckoutSession, getPlanById } from "../../../services/payments";
+import {
+  createCheckoutSession,
+  getCouponById,
+  getPlanById,
+} from "../../../services/payments";
 import { Price, SubscriptionPlan } from "../../../store/plans/types";
 import { showErrorToast } from "../../../utils/toast";
 import { List, ListItem } from "../../components/plans-cards2/style";
@@ -28,6 +32,7 @@ import { getCurrencyByLocale, toBase64 } from "../../../utils";
 import images from "../../../assets/img";
 import PAGES_ROUTES from "../../../routes/paths";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { ACESSIBILITY_GREEN, ACESSIBILITY_RED } from "../../../styles/colors";
 
 const Subscribe = () => {
   const userState = useSelector((state: IApplicationState) => state.user);
@@ -37,7 +42,10 @@ const Subscribe = () => {
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [plan, setPlan] = useState<SubscriptionPlan>();
   const [selectedPrice, setSelectedPrice] = useState<string>();
-  const [coupon, setCoupon] = useState<string>("");
+  const [coupon, setCoupon] = useState("");
+  const [couponDescription, setCouponDescription] = useState("");
+  const [couponError, setCouponError] = useState("");
+  const [isLoadingCoupon, setIsLoadingCoupon] = useState(false);
 
   const fetchPlanDetails = useCallback(async (planId: string) => {
     try {
@@ -199,6 +207,36 @@ const Subscribe = () => {
     return strings.subscribe;
   };
 
+  const validateCoupon = async () => {
+    try {
+      setIsLoadingCoupon(true);
+      const res = await getCouponById(coupon);
+      const couponFound = res.data;
+
+      if (couponFound?.id) {
+        const discount = couponFound.amount_off
+          ? `${(couponFound.amount_off / 100).toFixed(2)}${
+              couponFound.currency?.length
+                ? ` (${couponFound.currency.toUpperCase()})`
+                : ""
+            }`
+          : couponFound.percent_off
+          ? ` ${couponFound.percent_off}%`
+          : "";
+
+        setCouponDescription(
+          `${strings.couponApplied} ${strings.discountOf} ${discount}`
+        );
+      } else {
+        setCouponError(strings.couponNotFound);
+      }
+    } catch (error) {
+      setCouponError(strings.couponNotFound);
+    }
+
+    setIsLoadingCoupon(false);
+  };
+
   return (
     <>
       <PrivateRouteChecker />
@@ -338,16 +376,42 @@ const Subscribe = () => {
                 weights={[800, 400]}
                 colors={["black"]}
               />
-              <Box mt="32px">
-                <TextField
-                  placeholder={strings.couponExample}
-                  value={coupon}
-                  onChange={(event) => {
-                    const value = event.target.value;
-                    setCoupon(value);
-                  }}
-                />
-              </Box>
+              <Stack mt="32px" direction="row" gap="16px">
+                <Stack direction="column" gap="8px">
+                  <TextField
+                    placeholder={strings.couponExample}
+                    value={coupon}
+                    onChange={(event) => {
+                      setCouponDescription("");
+                      setCouponError("");
+                      const value = event.target.value;
+                      setCoupon(value);
+                    }}
+                  />
+                  <Box
+                    color={
+                      couponError?.length
+                        ? ACESSIBILITY_RED
+                        : couponDescription?.length
+                        ? ACESSIBILITY_GREEN
+                        : "black"
+                    }
+                  >
+                    {couponError?.length ? couponError : couponDescription}
+                  </Box>
+                </Stack>
+                <Button
+                  variant="contained"
+                  style={{ borderRadius: "4px", height: "56px" }}
+                  onClick={validateCoupon}
+                  disabled={isLoadingCoupon}
+                >
+                  <Stack direction="row" gap="8px" alignItems="center">
+                    {isLoadingCoupon && <LoadingSpinner size={15} />}
+                    <Box>{strings.validate}</Box>
+                  </Stack>
+                </Button>
+              </Stack>
             </div>
 
             <Box
@@ -382,7 +446,11 @@ const Subscribe = () => {
                     md: "200px",
                   },
                 }}
-                disabled={!selectedPrice?.length || isCreatingCheckout}
+                disabled={
+                  !selectedPrice?.length ||
+                  isCreatingCheckout ||
+                  isLoadingCoupon
+                }
                 onClick={() => {
                   if (selectedPrice?.length) createCheckout(selectedPrice);
                 }}

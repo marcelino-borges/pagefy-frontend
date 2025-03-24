@@ -209,6 +209,9 @@ export interface IDictionary {
   colorPicker: string;
   pickBGColor: string;
   pickFontColor: string;
+  validate: string;
+  couponApplied: string;
+  couponNotFound: string;
   pickBGColorUserPage: string;
   pickFontColorUserPage: string;
   removeComponentConfirmation: string;

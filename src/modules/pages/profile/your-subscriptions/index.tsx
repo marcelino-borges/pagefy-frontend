@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import {
-  Box,
   Grid,
   Stack,
   Table,
@@ -22,7 +21,11 @@ import {
   UserSubscription,
 } from "../../../../store/user-subscriptions";
 import { getUserSubscriptions } from "../../../../services/payments";
-import { toBase64, translateBoolToYesNo } from "../../../../utils";
+import {
+  toBase64,
+  translateBoolToActiveInactive,
+  translateBoolToYesNo,
+} from "../../../../utils";
 import LoadingSpinner from "../../../components/loading-spinner";
 import { ANALYTICS_EVENTS } from "../../../../constants";
 import PAGES_ROUTES from "../../../../routes/paths";
@@ -237,7 +240,9 @@ const YourSubscriptions = ({
                         {!!subscription.canceledAt
                           ? strings.subscriptionPayment.subscriptionStatuses
                               .canceled
-                          : translateBoolToYesNo(subscription.isActive)}
+                          : translateBoolToActiveInactive(
+                              subscription.isActive
+                            )}
                       </span>
                     </TableCell>
                   </InteractiveRow>

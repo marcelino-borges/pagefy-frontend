@@ -665,4 +665,7 @@ export const pt: IDictionary = {
       createButton: {},
     },
   },
+  validate: "Validar",
+  couponApplied: "Cupom aplicado!",
+  couponNotFound: "Cupom não existe",
 };

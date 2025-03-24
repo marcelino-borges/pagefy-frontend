@@ -3,6 +3,7 @@ import { paymentsApi } from "../../config/axios";
 import { CheckoutSession } from "../../store/checkout";
 import { SubscriptionPlan } from "../../store/plans/types";
 import {
+  Coupon,
   SubscriptionDetails,
   UserSubscription,
 } from "../../store/user-subscriptions";
@@ -57,4 +58,10 @@ export const getUserActiveSubscription = (
   userId: string
 ): Promise<AxiosResponse<SubscriptionDetails>> => {
   return paymentsApi.get(`/subscription/active/user/${userId}`);
+};
+
+export const getCouponById = (
+  couponId: string
+): Promise<AxiosResponse<Coupon>> => {
+  return paymentsApi.get(`/coupon/${couponId}`);
 };
