@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import Helmet from "react-helmet";
 
 const APP_URL = process.env.REACT_APP_DOMAIN_URL;
@@ -12,6 +13,7 @@ interface MetaProps {
   type?: "article" | "website";
   width?: string;
   height?: string;
+  customTags?: ReactNode;
 }
 
 const Meta = (data: MetaProps) => {
@@ -62,6 +64,7 @@ const Meta = (data: MetaProps) => {
           hrefLang={lang}
         />
       ) : null}
+      {data.customTags}
     </Helmet>
   );
 };
