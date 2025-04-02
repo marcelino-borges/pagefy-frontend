@@ -1,8 +1,8 @@
+import { Grid } from "@mui/material";
 import InternalLink from "../internal-link";
 import { GDPRPopupRoot } from "./style";
 import PAGES_ROUTES from "./../../../routes/paths";
 import strings from "../../../localization";
-import { Grid } from "@mui/material";
 import CustomButton from "./../button-custom/index";
 import { DEEP_DARK_GREEN, PRIMARY_COLOR } from "./../../../styles/colors";
 

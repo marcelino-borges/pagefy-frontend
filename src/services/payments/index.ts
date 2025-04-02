@@ -4,6 +4,7 @@ import { CheckoutSession } from "../../store/checkout";
 import { SubscriptionPlan } from "../../store/plans/types";
 import {
   Coupon,
+  StripeSubscription,
   SubscriptionDetails,
   UserSubscription,
 } from "../../store/user-subscriptions";
@@ -38,6 +39,12 @@ export const getCheckoutSessionById = async (
   sessionId: string
 ): Promise<AxiosResponse<CheckoutSession>> => {
   return paymentsApi.get(`/checkout/session/${sessionId}`);
+};
+
+export const getSubscriptionById = async (
+  subscriptionId: string
+): Promise<AxiosResponse<StripeSubscription>> => {
+  return paymentsApi.get(`/subscription/${subscriptionId}`);
 };
 
 export const cancelSubscription = async (

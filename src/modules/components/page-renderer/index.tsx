@@ -34,6 +34,7 @@ import SpotifyComponent from "./component-types/spotify";
 import ProgressBarComponent from "./component-types/progress-bar";
 import CountersComponent from "./component-types/counters";
 import { shouldComponentBeVisible } from "./utils";
+import Meta from "../meta";
 
 interface IPageRendererProps {
   pageToRender?: IUserPage;
@@ -218,53 +219,33 @@ const PageRenderer = ({ pageToRender, isPagePreview }: IPageRendererProps) => {
     }
   }, [page]);
 
-  const CustomHelmet = ({ pageTitle, url, imageUrl }: any) => {
-    return (
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta property="og:title" content={pageTitle} />
-        <meta
-          property="og:url"
-          content={(() => {
-            let urlNormalized = "";
-
-            if (url[0] !== "/") urlNormalized = "/" + url;
-            else urlNormalized = url;
-
-            return process.env.REACT_APP_DOMAIN_URL + urlNormalized;
-          })()}
-        />
-        <meta property="og:image" content={imageUrl || ""} />
-        <meta property="og:image:alt" content={pageTitle} />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:type" content="image/jpg" />
-        <meta property="og:image:type" content="image/gif" />
-        <meta property="og:image:type" content="image/webp" />
-        <meta property="og:image:width" content="1024" />
-        <meta property="og:image:height" content="1024" />
-        <script>
-          {(function run() {
-            if (!pageToRender?.customScripts?.header) return;
-            // eslint-disable-next-line no-new-func
-            return Function(
-              '"use strict";' + pageToRender?.customScripts?.header
-            )();
-          })()}
-        </script>
-      </Helmet>
-    );
-  };
-
   return (
     <>
       {page && (
-        <CustomHelmet
-          pageTitle={page?.name}
-          url={page?.url}
-          imageUrl={page?.pageImageUrl}
+        <Meta
+          lang={strings.getInterfaceLanguage()}
+          locale={strings.getInterfaceLanguage()}
+          title={page.name ?? strings.appName}
+          description={page.name ?? strings.appName}
+          canonical={`${process.env.REACT_APP_DOMAIN_URL}/${page.url}`}
+          image={page.pageImageUrl}
+          keywords={[...page.name.split(" "), strings.appName]}
+          customTags={() => (
+            <>
+              <script>
+                {(function run() {
+                  if (!pageToRender?.customScripts?.header) return;
+                  // eslint-disable-next-line no-new-func
+                  return Function(
+                    '"use strict";' + pageToRender?.customScripts?.header
+                  )();
+                })()}
+              </script>
+            </>
+          )}
         />
       )}
+
       <PageRendererContent>
         {renderedPageState.loading && (
           <LoadingSpinner isFullPage color={PRIMARY_COLOR} />

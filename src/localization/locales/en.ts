@@ -564,7 +564,7 @@ export const en: IDictionary = {
     mainHeader: "Everything you do. Simple and straight forward.",
     mainSubheader: "Show the world the content only you know how to do.",
     buttonCreateFreeAccount: "Create my free account",
-    earnSubscriptionLifetime: ["Earn a lifetime", "subscription"],
+    subscriptionFree: ["Get now your subscription", "now"],
     areYouGonnaLoseIt: "Are you gonna lose it?",
     tripleTitles: [
       "For you or your company",
@@ -590,13 +590,13 @@ export const en: IDictionary = {
       title: "The best way to share your content",
       subtitle:
         "Follow up analytics about your links, schedule events, show videos and guide your audience to the right content.",
-      button: ["Earn my lifetime", "subscription now!"],
+      button: ["Get my free", "subscription now!"],
     },
     section2: {
       title: "Manage all your content from a single workspace.",
       chips: [
-        "Platinum lifetime subscription",
-        "Unlimited team members",
+        "Start with Free subscription",
+        "Unlimited components in your page",
         "Cancel anytime",
       ],
     },

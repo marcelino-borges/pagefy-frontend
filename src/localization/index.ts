@@ -517,7 +517,7 @@ export interface IDictionary {
     mainHeader: string;
     mainSubheader: string;
     buttonCreateFreeAccount: string;
-    earnSubscriptionLifetime: string[];
+    subscriptionFree: string[];
     areYouGonnaLoseIt: string;
     tripleTitles: string[];
     iconTextCards: {

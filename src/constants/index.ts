@@ -275,3 +275,6 @@ export const ANALYTICS_EVENTS = {
    */
   userTurnsPagePrivate: "user_turns_page_private",
 } as const;
+
+export const CAMPAIGN_ID_PARAM = "campaign_id";
+export const CAMPAIGN_ORIGIN_PARAM = "campaign_origin";

@@ -2,10 +2,9 @@ import React from "react";
 import strings from "../../../localization";
 import { ANALYTICS_EVENTS } from "../../../constants";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
-import { Box, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { ErrorOutline } from "@mui/icons-material";
 import ThinWidthContent from "../site-content/thin-width";
-import { Link } from "react-router-dom";
 import PAGES_ROUTES from "../../../routes/paths";
 
 class ErrorBoundary extends React.Component<any, any> {

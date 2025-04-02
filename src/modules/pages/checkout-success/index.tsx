@@ -1,7 +1,10 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import BannerHalfLayout from "../../components/site-content/banner-half-layout";
 import { useCallback, useEffect, useState } from "react";
-import { getCheckoutSessionById } from "../../../services/payments";
+import {
+  getCheckoutSessionById,
+  getSubscriptionById,
+} from "../../../services/payments";
 import { Button, Link, Stack } from "@mui/material";
 import strings from "../../../localization";
 import { CheckoutSession } from "../../../store/checkout";
@@ -14,6 +17,7 @@ import { showErrorToast } from "../../../utils/toast";
 import { IUser } from "../../../store/user/types";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { ANALYTICS_EVENTS } from "../../../constants";
+import { logPixelDefaultEvent } from "../../../services/pixel";
 
 const CheckoutSuccess = () => {
   const navigate = useNavigate();
@@ -27,9 +31,11 @@ const CheckoutSuccess = () => {
 
   const fetchCheckoutSession = useCallback(
     async (sessionId: string) => {
+      let checkoutSession: CheckoutSession | undefined;
+
       try {
         const res = await getCheckoutSessionById(sessionId);
-        const checkoutSession = res.data;
+        checkoutSession = res.data;
 
         setIsLoading(false);
         setSessionDetails(checkoutSession);
@@ -70,7 +76,44 @@ const CheckoutSuccess = () => {
           );
         }
       } catch (error) {
-        console.log("Error fetching session details: ", error);
+        console.log(`Error fetching session (${sessionId}) details: `, error);
+      }
+
+      if (!checkoutSession?.subscription) return;
+
+      try {
+        const subscription = await getSubscriptionById(
+          checkoutSession.subscription
+        );
+
+        if (!subscription.data.items.data?.length) return;
+
+        const item = subscription.data.items.data[0];
+
+        logPixelDefaultEvent("Purchase", {
+          contents: [
+            {
+              id: item.price.id,
+              quantity: 1,
+            },
+          ],
+          content_ids: [item.price.id],
+          currency: item.price.currency,
+          value: item.price.unit_amount / 100,
+          num_items: 1,
+          content_type: "product",
+        });
+
+        logPixelDefaultEvent("Subscribe", {
+          currency: item.price.currency,
+          value: item.price.unit_amount / 100,
+          predicted_ltv: item.price.unit_amount / 100,
+        });
+      } catch (error) {
+        console.log(
+          `Error fetching subscription (${checkoutSession.subscription}) details: `,
+          error
+        );
       }
     },
     [dispatch, productIdParam, productNameParam]

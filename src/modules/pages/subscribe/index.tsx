@@ -33,6 +33,7 @@ import images from "../../../assets/img";
 import PAGES_ROUTES from "../../../routes/paths";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
 import { ACESSIBILITY_GREEN, ACESSIBILITY_RED } from "../../../styles/colors";
+import { logPixelDefaultEvent } from "../../../services/pixel";
 
 const Subscribe = () => {
   const userState = useSelector((state: IApplicationState) => state.user);
@@ -50,7 +51,9 @@ const Subscribe = () => {
   const fetchPlanDetails = useCallback(async (planId: string) => {
     try {
       const res = await getPlanById(planId);
-      setPlan(res.data);
+      const planDetails: SubscriptionPlan = res.data;
+
+      setPlan(planDetails);
     } catch (error) {
       console.log("Error fetching plan: ", error);
       showErrorToast(strings.subscribeErrors.fetchPlan);
@@ -91,6 +94,24 @@ const Subscribe = () => {
         coupon
       );
 
+      if (plan) {
+        const price = plan.prices.find((price) => price.id === priceId);
+
+        if (price) {
+          logPixelDefaultEvent("InitiateCheckout", {
+            contents: [
+              {
+                id: price.id,
+                quantity: 1,
+              },
+            ],
+            content_ids: [price.id],
+            currency: price.currency,
+            value: price.unit_amount / 100,
+            num_items: 1,
+          });
+        }
+      }
       const newSession = res.data;
       const paymentUrl = newSession.url;
 
@@ -102,7 +123,9 @@ const Subscribe = () => {
   };
 
   useEffect(() => {
-    if (planId?.length) fetchPlanDetails(planId);
+    if (planId?.length) {
+      fetchPlanDetails(planId);
+    }
   }, [planId, fetchPlanDetails]);
 
   if (!planId?.length) {

@@ -39,6 +39,7 @@ import Meta from "../../components/meta";
 import images from "../../../assets/img";
 import { IUser } from "../../../store/user/types";
 import { logAnalyticsEvent } from "../../../services/firebase-analytics";
+import { logPixelDefaultEvent } from "../../../services/pixel";
 
 const INITIAL_VALUES = {
   firstName: "",
@@ -123,6 +124,15 @@ const SignUpPage = () => {
         async (user: IUser, providerName: string) => {
           logAnalyticsEvent(ANALYTICS_EVENTS.signUp, {
             method: providerName,
+          });
+
+          logPixelDefaultEvent("CompleteRegistration", {
+            status: true,
+            value: 0,
+          });
+
+          logPixelDefaultEvent("Lead", {
+            value: 0,
           });
 
           dispatch(

@@ -4,8 +4,8 @@ import Helmet from "react-helmet";
 const APP_URL = process.env.REACT_APP_DOMAIN_URL;
 
 interface MetaProps {
-  lang: string;
-  locale: string;
+  lang?: string;
+  locale?: string;
   title: string;
   description: string;
   image?: string;
@@ -14,6 +14,7 @@ interface MetaProps {
   width?: string;
   height?: string;
   customTags?: ReactNode;
+  keywords?: string[];
 }
 
 const Meta = (data: MetaProps) => {
@@ -32,6 +33,7 @@ const Meta = (data: MetaProps) => {
       <html lang={lang} />
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="keywords" content={data.keywords?.join(",")} />
       {canonical ? <link rel="canonical" href={canonical} /> : null}
       {image ? <link rel="image_src" href={image} /> : null}
       {image ? <meta itemProp="image" content={image} /> : null}

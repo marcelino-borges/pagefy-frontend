@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ReactPixel from "react-facebook-pixel";
 import { IApplicationState } from "../store";
 import PAGES_ROUTES from "./paths";
 import Support from "./../modules/pages/support";
@@ -92,6 +93,7 @@ const AppRoutes = () => {
           onConsentCallback={() => {
             setOpenCookiesConsent(false);
             setStorage(GDPR_CONSENT_STORAGE_KEY, "true");
+            ReactPixel.grantConsent();
           }}
         />
       )}

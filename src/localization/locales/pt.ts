@@ -150,7 +150,7 @@ export const pt: IDictionary = {
     dropYourImageHere: "Solte sua imagem aqui...",
     fileReadyToUpload: "Arquivo pronto para enviar",
     fileDeletedSuccessfully: "Arquivo apagada com sucesso.",
-    errorToDeleteFile: "Não foi possível apgar o arquivo.",
+    errorToDeleteFile: "Não foi possível apagar o arquivo.",
   },
   clickToSearchIt: "Clique para procurar",
   next: "Avançar",
@@ -568,11 +568,11 @@ export const pt: IDictionary = {
     mainHeader: "Tudo o que você faz. Simples e direto.",
     mainSubheader: "Mostre para o mundo o conteúdo que só você sabe fazer.",
     buttonCreateFreeAccount: "Criar minha conta grátis agora",
-    earnSubscriptionLifetime: ["Ganhe uma assinatura", "vitalícia"],
+    subscriptionFree: ["Faça sua assinatura", "agora"],
     areYouGonnaLoseIt: "Vai perder?",
     tripleTitles: [
       "Para você ou para sua empresa",
-      "Recursos excelusivos e interativos",
+      "Recursos exclusivos e interativos",
     ],
     iconTextCards: [
       {
@@ -595,14 +595,14 @@ export const pt: IDictionary = {
       title: "A melhor forma de compartilhar seu conteúdo",
       subtitle:
         "Acompanhe dados sobre seus links, agende eventos, mostre vídeos e direcione seu público para o conteúdo certo.",
-      button: ["Ganhar minha assinatura", "vitalícia agora!"],
+      button: ["Obter assinatura", "agora!"],
     },
     section2: {
       title: "Gerencie todo o seu conteúdo de um só lugar.",
       chips: [
-        "Assinatura Platinum vitalícia",
-        "Membros de equipe ilimitados",
-        "Cancelar a qualquer momento",
+        "Comece com o plano Free",
+        "Componentes ilimitados na página",
+        "Cancelamento a qualquer momento",
       ],
     },
     section3: {

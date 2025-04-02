@@ -2,6 +2,8 @@ import { Grid, Stack, useMediaQuery } from "@mui/material";
 import images from "../../../../assets/img";
 import {
   ANALYTICS_EVENTS,
+  CAMPAIGN_ID_PARAM,
+  CAMPAIGN_ORIGIN_PARAM,
   HEADER_HEIGHT_DESKTOP,
   HEADER_HEIGHT_MOBILE,
 } from "../../../../constants";
@@ -49,9 +51,14 @@ import strings from "../../../../localization";
 import Meta from "../../../components/meta";
 import { useEffect } from "react";
 import { logAnalyticsEvent } from "../../../../services/firebase-analytics";
+import { useSearchParams } from "react-router-dom";
+import { logPixelCustomEvent } from "../../../../services/pixel";
 
 const Home2 = () => {
   const isSmallerThan900 = useMediaQuery("(max-width: 900px");
+  const [searchParams] = useSearchParams();
+  const campaignIdParam = searchParams.get(CAMPAIGN_ID_PARAM);
+  const campaignOriginParam = searchParams.get(CAMPAIGN_ORIGIN_PARAM);
 
   const Section2Chip = ({ items }: { items: string[] }) => (
     <Stack
@@ -75,6 +82,16 @@ const Home2 = () => {
       page_title: "Home 2",
     });
   }, []);
+
+  useEffect(() => {
+    if (campaignIdParam?.length && campaignOriginParam?.length) {
+      logPixelCustomEvent(`campaign_${campaignIdParam}`, {
+        location: "home2",
+        campaignId: campaignIdParam,
+        origin: campaignOriginParam,
+      });
+    }
+  }, [campaignIdParam, campaignOriginParam]);
 
   return (
     <>
@@ -141,9 +158,9 @@ const Home2 = () => {
                   {strings.home2.areYouGonnaLoseIt}
                 </div>
                 <div>
-                  {`${strings.home2.earnSubscriptionLifetime[0]} `}
-                  <strong>{strings.platinumPlan.name}</strong>
-                  {` ${strings.home2.earnSubscriptionLifetime[1]}`}
+                  {`${strings.home2.subscriptionFree[0]} `}
+                  <strong>{strings.freePlan.name}</strong>
+                  {` ${strings.home2.subscriptionFree[1]}`}
                 </div>
               </Stack>
             </SmallActressCard>
@@ -204,7 +221,7 @@ const Home2 = () => {
             to={PAGES_ROUTES.signUp}
           >
             {`${strings.home2.section1.button[0]} `}
-            {strings.platinumPlan.name}
+            {strings.freePlan.name}
             {` ${strings.home2.section1.button[1]}`}
           </CustomButton>
         </Stack>
